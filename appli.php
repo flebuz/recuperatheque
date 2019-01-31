@@ -8,12 +8,7 @@
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="theme-color" content="#f44336">
-		<!--<script src="dist/js/jquery.min.js"></script>
-		<script src="dist/js/standalone/selectize.js"></script>
-		<script src="dist/js/index.js"></script>
-		<link rel="stylesheet" href="dist/css/styles.css"> 
-		<link rel="stylesheet" href="normalize.css"> 
-		<link rel="stylesheet" href="dist/css/selectize.default.css"> -->
+		<link rel="stylesheet" href="style.css"> 
 		
 
       <!--Import Google Icon Font-->
@@ -33,142 +28,7 @@
     </body>
   </html>
 
-		<style>  
 		
-		<!--
-		#container {
-	width: 95% ;
-    margin: 0px auto;
-    
-	max-height: 225px;
-    
-    border: 0px #333 solid;
-	background-color: dimgrey;
-}
--->
-<!--
-#video {
-    width: 100% ;
-    max-height: 225px;
-  <!--  width: 500px;
-    height: 375px;
-	-->
-	<!--
-    background-color: #666;
-}
--->
-
-.mobile-app-toggle {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-<!--  border: 0px solid #1779ba;
-  border-radius: 0.625rem; -->
-  border: 1px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  margin-top: 0.5rem;
-  -webkit-appearance: none;
-}
-
-.mobile-app-toggle .button {
-  background: transparent;
-  color: #1779ba;
-  border: 0px ;
-  margin-bottom: 0;
-  -webkit-flex: 1 0 0;
-      -ms-flex: 1 0 0px;
-          flex: 1 0 0;
-}
-
-.mobile-app-toggle .button:nth-child(n+1) {
- <!-- border-left: 1px solid #1779ba; -->
-}
-
-.mobile-app-toggle .button.is-active {
-  background: #1779ba;
-  color: #fefefe;
-}
-<!--
-body {
-	padding: 0 0 10px 0;
-	font-family: 'Open Sans', Helvetica, arial, sans-serif;
-	font-size: 20px !important;
-	line-height: 24px;
-	font-weight: 500;
-	color: #444B58;
-	background: #fff;
-	text-shadow: 0 1px 0 rgba(0,0,0,0.05);
-	-webkit-font-smoothing: antialiased;
-}
--->
-
-.breadcrumb {
- 
-  font-size: 14px;
- height: 10px !important; <!-- tentative de changer la hauteur de ces breadcrumbs -->
- padding: 0px 0px 0px 0px !important; <!-- tentative de changer la hauteur de ces breadcrumbs -->
-           margin: 0 0px 0 0px !important;
-}
-&:after
-{
-        height: 20px;
-}
-
-.breadcrumb li a {
-
-  padding: 10px 0 10px 20px;
-          height: 20px;
-}
-
-.btn-flat {
-
-  border-radius: 0px !important;
-  border-right: 1px solid #bdbdbd;
-  background-color: #ffff;
-}
-
-.tabs .indicator{
-    background-color: grey;/*your color*/
-    }
-
-.zone_camera {
-    background-image: url("");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
-
-input[type='range']
-
-{ -webkit-appearance: none;  height:30px;  } 
-
-
-input[type='range']::-webkit-slider-thumb
-
-{  height:20px; width:20px; border-radius: 20px;
-margin: -7px; /* alignment fix for Chrome */ } 
-
-input[type="range"]::-ms-thumb {
-  margin: 0; /* Reset margin in Edge since it supports -webkit-slider-thumb as well */
-}
-
-/* fin des trucs nécessaires pour l'usabilité - le reste c'est du bazar*/
-
-
-/* Customizer le track pour améliorer l'usabilité ? Pour le moment DESACTIVE */
-
-
-.no-gutter > [class*='col-'] {
-    padding-right:0;
-    padding-left:0;
-}
-<!-- https://codepen.io/ncerminara/pen/hfvix/ ne semble pas marcher... -->
-
-
-</style>
 <script>
 $(function() {
 	$('select').selectize(options);
