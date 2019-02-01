@@ -33,9 +33,6 @@
 $(function() {
 	$('select').selectize(options);
 });
-
-
-
 </script>
 
 </head>
@@ -60,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 
 <div class = "zone_camera" >
-    <div class = "container grey darken-1 z-depth-0" style="width: 100%; max-width:720px;">
+    <div class = "container grey darken-1 z-depth-0" style="width: 100%; max-width:720px;  z-index: 1">
         
 
    
@@ -74,12 +71,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
    
     			</div>
 <video  class="responsive-video" id="video" autoplay></video>
+<canvas style="position: absolute;    margin-top: -125px; margin-left: 2px; z-index: 10"></canvas>
+
+<!-- bouton prise de vue -->
+<img id="snap">
+
+<div class="controls" style="position: relative;
+    top: -150px; left: 50px; margin-top:-24px; z-index: 15" >
+      <!--<a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a>-->
+      <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a>
+      <!--<a href="#" id="download-photo" download="selfie.png" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a>  -->
+    </div>
+<!-- bouton prise de vue -->
+	
+
 <!--  <div class="row"></div> pour fixer le layout ? de la vidéo en dessous du bandeau ? -->
 	<script>
 // Ne fonctionne pas ? pourtant fonctionne très bien dans testcamera4.php -> fonctionne avec le div
 // La solution miraculeuse ici : https://jsfiddle.net/jib1/aLn0dpvd/
 
 //var log = msg => div.innerHTML += msg + "<br>";
+
+var video = document.querySelector("#video");
+var take_photo_btn = document.querySelector('#take-photo');
+
+var hidden_canvas = document.querySelector('canvas'),
+      context = hidden_canvas.getContext('2d');
+	  hidden_canvas.width = 125;
+    hidden_canvas.height = 125;
 
 var orgGetSupportedConstraints = navigator.mediaDevices.getSupportedConstraints.bind(navigator.mediaDevices);
 
@@ -88,12 +107,67 @@ var orgGetSupportedConstraints = navigator.mediaDevices.getSupportedConstraints.
 navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment"} }, audio: false })
   .then(stream => video.srcObject = stream)
   //.catch(e => log(e.name + ": "+ e.message));
+
+  
+take_photo_btn.addEventListener("click", function(e){
+
+  e.preventDefault(); 
+ 
+
+  var snap = takeSnapshot();
+
+  // Show image. 
+  image.setAttribute('src', snap);
+  image.classList.add("visible");
+
+  // Enable delete and save buttons
+  delete_photo_btn.classList.remove("disabled");
+  download_photo_btn.classList.remove("disabled");
+
+  // Set the href attribute of the download button to the snap url.
+  download_photo_btn.href = snap;
+
+  // Pause video playback of stream.
+  navigator.mediaDevices.getUserMedia.stop();
+  
+
+
+});
+function takeSnapshot(){
+  // Here we're using a trick that involves a hidden canvas element.  
+
+  var hidden_canvas = document.querySelector('canvas'),
+      context = hidden_canvas.getContext('2d');
+
+  var width = video.videoWidth,
+      height = video.videoHeight;
+
+  if (width && height) {
+
+    // Setup a canvas with the same dimensions as the video.
+    hidden_canvas.width = 125;
+    hidden_canvas.height = 125;
+
+    // Make a copy of the current frame in the video on the canvas.
+	
+   //context.drawImage(video, 200, 0, width, height); //Suppression Xime
+    
+	context.drawImage(video, 0, 0, 125, 125); //Suppression Xime
+
+	
+    // Turn the canvas image into a dataURL that can be used as a src for our photo.
+    return hidden_canvas.toDataURL('image/png');
+  }
+}
+
+
+
 </script>
 		
 			
 	</div>
 	
-
+</div>
 	
 	<div class="row" style="width: 100%; max-width:720px; padding-top: 10px !important; ">
 	   
@@ -191,7 +265,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment
 	<li class="divider" tabindex="-1"></li>
 	<li><a href="#!" style="color:#fe0002;"><i class="material-icons">more_horiz</i>Autres construction</a></li>
 </ul>
-
+<!--
  <ul id="select-mobilier" class="dropdown-content">
 	<li><a href="#!" style="color:#fe0002;">table</a></li>
 	<li><a href="#!" style="color:#fe0002;">table a dessin</a></li>
@@ -201,6 +275,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment
 	<li class="divider" tabindex="-1"></li>
 	<li><a href="#!" style="color:#fe0002;"><i class="material-icons">more_horiz</i>Autre mobilier</a></li>
 </ul>
+-->
     <script> document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.dropdown-trigger');
 	var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false});
@@ -255,12 +330,12 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment
   <!-- <div class="input-field  col s3 offset-s6">
    </div>-->
 	</div>
+  
 
 
 
-
-<div class ="row" style="margin-top: 0px; padding-left:0px;">
-	<div class="col s12" style="margin-top: 0px; padding-left:0px;">
+<div class ="row" style="margin-top: 0px; padding-left:0px;>
+	<div class="col s12">
 				
 			
 				
@@ -374,7 +449,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment
 	
 		 </div>
 		<a class='dropdown-trigger btn' href='#' data-target='select-bois' style="background-color:#fe0002; visibility: hidden;">Bois</a><a class='dropdown-trigger btn' href='#' data-target='select-metal'style="background-color:#fe0002; visibility: hidden;">Métaux</a>   <a class='dropdown-trigger btn' href='#' data-target='select-papier' style="background-color:#fe0002; visibility: hidden;">papier</a>   <a class='dropdown-trigger btn' href='#' data-target='select-plastique' style="background-color:#fe0002; visibility: hidden;">Plastique</a>   <a class='dropdown-trigger btn' href='#' data-target='select-verre' style="background-color:#fe0002; visibility: hidden;">verre</a> <a class='dropdown-trigger btn' href='#' data-target='select-construction' style="background-color:#fe0002; visibility: hidden;">Construction</a>
-<a class='dropdown-trigger btn' href='#' data-target='select-mobilier' style="background-color:#fe0002; visibility: hidden;">mobilier</a>		
+<!--<a class='dropdown-trigger btn' href='#' data-target='select-mobilier' style="background-color:#fe0002; visibility: hidden;">mobilier</a>		-->
 </form>
 
 </body>
