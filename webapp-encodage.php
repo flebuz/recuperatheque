@@ -16,14 +16,14 @@
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="js/materialize.min.js"></script>
 	  
       
     </head>
 
     <body>
-      <!--Import jQuery before materialize.js-->
+     
      
     </body>
   </html>
@@ -50,13 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
  {echo "<script>M.toast({html: 'Objet encodé, merci !'});</script>";}
  ?>
 	  
-<!--
-
-
-<div class="wrapper tab-content" id="formulaire">-->
-<!-- <div id="contenant_general" style="text-align: center"> <!--parent-wrapper ; ne semble définit nulle part-->
-<!--<h4>Encodage d'un nouvel objet</h4>-->
-
 
 
 <div class = "zone_camera" >
@@ -65,29 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
    
 				<div class="grey darken-4 z-depth-2" style="padding: 20 !important; color:#FFFFFF; line-height:0px ; text-align: center">
-      
-	<!-- <p style="padding: 0 !important; "><i class="material-icons" style="line-height:0px; vertical-align: -5px;">add_box</i>&nbsp; Encoder un objet</p>-->
-      
-        <a href="#!" class="breadcrumb">Récupérathèque</a>
+  
+  <a href="#!" class="breadcrumb">Récupérathèque</a>
         <a href="#!" class="breadcrumb">Encoder un objet</a>
        
    
     			</div>
 <video  class="responsive-video" id="video" autoplay></video>
-<!--  <div class="row"></div> pour fixer le layout ? de la vidéo en dessous du bandeau ? -->
+
 	<script>
-// Ne fonctionne pas ? pourtant fonctionne très bien dans testcamera4.php -> fonctionne avec le div
-// La solution miraculeuse ici : https://jsfiddle.net/jib1/aLn0dpvd/
-
-//var log = msg => div.innerHTML += msg + "<br>";
-
 var orgGetSupportedConstraints = navigator.mediaDevices.getSupportedConstraints.bind(navigator.mediaDevices);
-
-//log(JSON.stringify(navigator.mediaDevices.getSupportedConstraints()));
 
 navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment"} }, audio: false })
   .then(stream => video.srcObject = stream)
-  //.catch(e => log(e.name + ": "+ e.message));
+ 
 </script>
 		
 			
@@ -98,11 +82,6 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment
 	<div class="row" style="width: 100%; max-width:720px; padding-top: 10px !important; ">
 	   
 	  
-	  
-	
-
-
-
 	  
     <div class="col s12" style="width: 100% !important; max-width:720px !important; height:41px; margin-bottom:0 !important; padding-bottom:0 !important;"> <!-- Tout est dans le height:41px, c'est pas la marge qui créait un espace entre les deux colonnes !-->
 		          
@@ -222,7 +201,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment
 	<div class="card-content black-text">
 	
 	  <div class="row" id="range_row" style="padding-left:0px;">
-	  <!--<label for="range_div" style="display:block; margin-bottom:0px; margin-top:0px;">Mesure :</label>-->
+	  
       <div class="input-field col s6" id="range_div" style="margin-top: 0px; padding-left:0px;"><input type="range" id="mesure" min="1" max="20" value="5" name="mesure" onchange="updateTextInput(this.value);" /> </div>
 
 	   <div class="input-field col s2" style="margin-top: 0px;"><input type="text" id="indicateur_range" value="5" style="inline; text-align: center; "></div>
@@ -263,100 +242,10 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment
 	<div class="col s12" style="margin-top: 0px; padding-left:0px;">
 				
 			
-				
-		<!--
-			
-				<div class="control-group">
-					
-					<select id="input-tags" class="kapoueh" placeholder="Entrer les tags...">
-						<option value="">Entrer les tags...</option>
-						<option value="1">brillant</option>
-						<option value="2">mat</option>
-						<option value="3">bosselé</option>
-						<option value="4">torsadé</option>
-						<option value="5">fendu</option>
-				</div>
-				<script type="text/javascript" style="display: none" class="hide">
-				
-				$('#input-tags').selectize({
-					persist: true,
-					createOnBlur: true,
-					create: true,
-				    maxItems: null
-				});
-				
-				</script>
-				-->
-				
-				<!--<div class="control-group">-->
 					
 					<input type="text" id="categ-descr" class="contacts" placeholder="Ajouter des tags ...">
 					
-					<!--
-				<script>
-				$('#categ-descr').selectize({
-    persist: false,
-    maxItems: null,
-    valueField: 'email',
-    labelField: 'name',
-    searchField: ['name', 'email'],
-    options: [
-        {email: 'brian@thirdroute.com', name: 'Brian Reavis'},
-        {email: 'nikola@tesla.com', name: 'Nikola Tesla'},
-        {email: 'someone@gmail.com'}
-    ],
-    render: {
-        item: function(item, escape) {
-            return '<div>' +
-                (item.name ? '<span class="name" style="float:left;">' + escape(item.name) + '</span>' : '') +
-                (item.email ? '<small><span class="email" style="float:right;">' + escape(item.email) + '</span></small>' : '') +
-            '</div>';
-        },
-        option: function(item, escape) {
-            var label = item.name || item.email;
-            var caption = item.name ? item.email : null;
-            return '<div>' +
-                '<span class="label">' + escape(label) + '</span>' +
-                (caption ? '<span class="caption">' + escape(caption) + '</span>' : '') +
-            '</div>';
-        }
-    },
-    createFilter: function(input) {
-        var match, regex;
-
-        // email@address.com
-        regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
-        match = input.match(regex);
-        if (match) return !this.options.hasOwnProperty(match[0]);
-
-        // name <email@address.com>
-        regex = new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i');
-        match = input.match(regex);
-        if (match) return !this.options.hasOwnProperty(match[2]);
-
-        return false;
-    },
-    create: function(input) {
-        if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
-            return {email: input};
-        }
-        var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
-        if (match) {
-            return {
-                email : match[2],
-                name  : $.trim(match[1])
-            };
-        }
-        alert('Invalid email address.');
-        return false;
-    }
-});
-		
-		</script>
-		</div>
-		-->
-			<!--https://github.com/selectize/selectize.js/issues/1322 Créer des nouveaux tags & cie -->
-			
+					
 			&nbsp;&nbsp;&nbsp;
 	</div>
 </div>
