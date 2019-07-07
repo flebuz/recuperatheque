@@ -16,6 +16,8 @@
       <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers) -->
+      <script type="text/javascript" src="js/module_camera.js"></script>
     </head>
 
     <body>
@@ -37,86 +39,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 
           <video  class="responsive-video" id="video" autoplay ></video>
-          <canvas style="position: absolute;  margin-top: -155px; margin-left: 50px; z-index: 10"></canvas>
+          <canvas style="position: relative;  margin-top: -175px; margin-left: 55px; z-index: 10"></canvas>
 
-<!-- boutons prise de vue (NON FONCTIONNELS)- Bug :  sur mobile, ajoute un espace blanc scrollable à gauche du container principal-->
+<!-- boutons prise de vue (NON FONCTIONNELS) -->
 <!-- Désolé, c'est fait super à l'arrache cette partie-ci :p -->
           <img id="snap">
 
-          <div class="controls" style="position: relative;
-              top: -125px; left: 20px; margin-top:-24px; z-index: 15; width:50px" >
-              <div class="row nomargin">
-                <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">delete</i></a></div>
-                <div class="row nomargin">
-                <a href="#" id="take-photo" title="Take Photo"><i class="material-icons">camera_alt</i></a></div>
-                <div class="row nomargin">
-                <a href="#" id="download-photo" download="objet.png" title="Save Photo" class="disabled"><i class="material-icons">file_download</i></a>
+          <div id="controls" class="controls" style="position: relative;
+              top: -175px; left: 20px; margin-top:-24px; z-index: 15; width:50px" >
+
+              <div class="row nomargin"> <!-- bouton upload photo -->
+              <label for="file"><i class="material-icons photo-controls" title="Uploader une photo">cloud_upload</i></label>
+              <input id="file" type="file" accept="image/*" capture style="display:none;"></div>
+
+              <div class="row nomargin"> <!-- bouton prise de vue -->
+                <a href="#" id="take-photo" title="Prendre un cliché"><i class="material-icons photo-controls">camera_alt</i></a></div>
+
               </div>
-              </div>
-          <!-- boutons prise de vue -->
+
 
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
   	<script>
-            // La solution miraculeuse vient d'ici : https://jsfiddle.net/jib1/aLn0dpvd/
 
-          var video = document.querySelector("#video");
-          var take_photo_btn = document.querySelector('#take-photo');
 
-          var hidden_canvas = document.querySelector('canvas'),
-                context = hidden_canvas.getContext('2d');
-          	  hidden_canvas.width = 125;
-              hidden_canvas.height = 125;
+    var take_photo_btn = document.querySelector('#take-photo');
+    var input_btn = document.getElementById('file');
+    var controls_div =  document.getElementById('controls');
 
-          var orgGetSupportedConstraints = navigator.mediaDevices.getSupportedConstraints.bind(navigator.mediaDevices);
+    if (hasGetUserMedia()) {
+            //M.toast({html: "Tip top"});
+            init_getusermedia();
 
-          //log(JSON.stringify(navigator.mediaDevices.getSupportedConstraints()));
+    } else {
+     M.toast({html: "getUserMedia() n'est pas supporté par votre navigateur :("});
 
-          navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment"} }, audio: false })
-            .then(stream => video.srcObject = stream)
-            //.catch(e => log(e.name + ": "+ e.message));
+       controls_div.classList.add("centered"); //on centre les contrôles pour les mettre en évidence
+       take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
 
-          take_photo_btn.addEventListener("click", function(e){
+    }
 
-            e.preventDefault();
-            var snap = takeSnapshot();
 
-            // Show image.
-            image.setAttribute('src', snap);
-            image.classList.add("visible");
-
-            // Enable delete and save buttons
-            delete_photo_btn.classList.remove("disabled");
-            download_photo_btn.classList.remove("disabled");
-
-            // Set the href attribute of the download button to the snap url.
-            download_photo_btn.href = snap;
-
-            // Pause video playback of stream.
-            navigator.mediaDevices.getUserMedia.stop();
-          });
-
-          //-- NON FONCTIONNEL, à rétablir (Xime)
-          function takeSnapshot(){
-            // Here we're using a trick that involves a hidden canvas element.
-            var hidden_canvas = document.querySelector('canvas'),
-                context = hidden_canvas.getContext('2d');
-
-            var width = video.videoWidth,
-                height = video.videoHeight;
-
-            if (width && height) {
-              // Setup a canvas with the same dimensions as the video.
-              hidden_canvas.width = 125;
-              hidden_canvas.height = 125;
-
-              // Make a copy of the current frame in the video on the canvas.
-            	context.drawImage(video, 0, 0, 125, 125); //Suppression Xime
-
-              // Turn the canvas image into a dataURL that can be used as a src for our photo.
-              return hidden_canvas.toDataURL('image/png');
-            }
-          }
+      take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
+      input_btn.addEventListener('change', handleFiles); //on active le bouton d'upload de photo
 
 
 
@@ -127,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 </div>
 
 <!-- Les onglets avec les catégories de matériaux-->
-	<div class="row" style="padding-top: 10px !important; ">
+	<div class="row" style="padding-top: 10px !important;  position:relative; z-index:11;">
     <div class="col s12" style="height:41px; margin-bottom:0 !important; padding-bottom:0 !important;"> <!-- Tout est dans le height:41px, c'est pas la marge qui créait un espace entre les deux colonnes !-->
 
 <!-- Début du formulaire-->
@@ -299,21 +264,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			</div>
 			<div class="col s4"></div>
 </div>
-<div class="row"></div>
 		</div>
 	</div>
 		</div>
 		 </div>
 
-<!-- Alors ci-dessous ça peut paraitre bizarre, mais il s'agit d'un bouton (invisible) que j'utilise pour faire s'afficher le menu déroulant correctement. L'origine de la difficulté est que je combine deux composants Materialize, les Tabs https://materializecss.com/tabs.html et les Dropdown https://materializecss.com/dropdown.html . Il y a sûrement un moyen plus simple de produire le même effet... :p -->
-
-		<a class='dropdown-trigger btn' href='#' data-target='select-bois' style="visibility: hidden;">Bois</a>
-    <a class='dropdown-trigger btn' href='#' data-target='select-metal'style="visibility: hidden;">Métaux</a>
-    <a class='dropdown-trigger btn' href='#' data-target='select-papier' style="visibility: hidden;">Papier</a>
-    <a class='dropdown-trigger btn' href='#' data-target='select-plastique' style="visibility: hidden;">Plastique</a>
-    <a class='dropdown-trigger btn' href='#' data-target='select-verre' style="visibility: hidden;">verre</a>
-    <a class='dropdown-trigger btn' href='#' data-target='select-construction' style="visibility: hidden;">Construction</a>
-    <a class='dropdown-trigger btn' href='#' data-target='select-mobilier' style="visibility: hidden;">mobilier</a>
+<!-- Alors ci-dessous ça peut paraitre bizarre, mais il s'agit d'une série de boutons (invisibles) que j'utilise pour faire s'afficher le menu déroulant correctement. L'origine de la difficulté est que je combine deux composants Materialize, les Tabs https://materializecss.com/tabs.html et les Dropdown https://materializecss.com/dropdown.html . Il y a sûrement un moyen plus simple de produire le même effet... :p -->
+<div >
+		<a class='dropdown-trigger btn invisible' href='#' data-target='select-bois'>Bois</a>
+    <a class='dropdown-trigger btn invisible' href='#' data-target='select-metal'>Métaux</a>
+    <a class='dropdown-trigger btn invisible' href='#' data-target='select-papier'>Papier</a>
+    <a class='dropdown-trigger btn invisible' href='#' data-target='select-plastique'>Plastique</a>
+    <a class='dropdown-trigger btn invisible' href='#' data-target='select-verre'>verre</a>
+    <a class='dropdown-trigger btn invisible' href='#' data-target='select-construction'>Construction</a>
+    <a class='dropdown-trigger btn invisible' href='#' data-target='select-mobilier'>mobilier</a>
+  </div>
 </form>
 
 </body>
