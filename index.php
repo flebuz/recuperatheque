@@ -8,7 +8,9 @@
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f44336">
-  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/add_form.css">
 
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
@@ -16,58 +18,47 @@
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers) -->
+  <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
   <script type="text/javascript" src="js/module_camera.js"></script>
 </head>
 
 <body>
 
-  <!-- Message toast quand un objet est encodé -->
-  <?php
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-      echo "<script>M.toast({html: 'Objet encodé, merci !'});</script>";
-    }
-  ?>
+  <div class="global_container">
 
-  <div class = "container" style="width: 100%; max-width:720px; text-align=center;">
-    <div class="row nomargin">
-      <div class = "col s12" style="height:225px">
+    <div class="header">
+      <a href="#!" class="breadcrumb">Récupérathèque</a>
+      <a href="#!" class="breadcrumb">Encoder un objet</a>
+    </div>
 
-				<div class="grey darken-4 z-depth-2 bandeau-noir">
-          <a href="#!" class="breadcrumb">Récupérathèque</a>
-          <a href="#!" class="breadcrumb">Encoder un objet</a>
-    		</div>
+    <div class="cam_container">
 
-        <video  class="responsive-video" id="video" autoplay ></video>
-        <canvas style="position: relative;  margin-top: -175px; margin-left: 55px; z-index: 10"></canvas>
+      <video id="video" autoplay ></video>
+      <canvas id="canvas"></canvas>
 
-        <!-- boutons prise de vue (NON FONCTIONNELS) -->
-        <!-- Désolé, c'est fait super à l'arrache cette partie-ci :p -->
-        <img id="snap" />
+      <!-- boutons prise de vue (NON FONCTIONNELS) -->
+      <div id="cam_controls">
 
-        <div id="controls" class="controls" style="position: relative;
-            top: -175px; left: 20px; margin-top:-24px; z-index: 15; width:50px" >
-
-          <div class="row nomargin"> <!-- bouton upload photo -->
-            <label for="file">
-              <i class="material-icons photo-controls" title="Uploader une photo">cloud_upload</i>
-            </label>
-
-            <input id="file" type="file" accept="image/*" capture style="display:none;">
-          </div>
-
-          <div class="row nomargin"> <!-- bouton prise de vue -->
-            <a href="#" id="take-photo" title="Prendre un cliché">
-              <i class="material-icons photo-controls">camera_alt</i>
-            </a>
-          </div>
-
+        <!-- bouton upload photo -->
+        <div class="row nomargin">
+          <label for="file">
+            <i class="material-icons photo-controls" title="Uploader une photo">cloud_upload</i>
+          </label>
+          <input id="file" type="file" accept="image/*" capture style="display:none;">
         </div>
 
-        <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
-      	<script type="text/javascript" src="js/add_form_cam.js"></script>
+        <!-- bouton prise de vue -->
+        <div class="row nomargin">
+          <a href="#" id="take-photo" title="Prendre un cliché">
+            <i class="material-icons photo-controls">camera_alt</i>
+          </a>
+        </div>
 
       </div>
+
+      <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
+      <script type="text/javascript" src="js/add_form_cam.js"></script>
+
     </div>
 
     <!-- Les onglets avec les catégories de matériaux-->
@@ -100,12 +91,12 @@
 
       <!-- Script requis par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
       <script>
-              var instance = M.Tabs.init(el, {swipeable : true});
-              // Or with jQuery
-              $(document).ready(function(){
-                $('.tabs').tabs();
-              });
-            </script>
+        var instance = M.Tabs.init(el, {swipeable : true});
+        // Or with jQuery
+        $(document).ready(function(){
+          $('.tabs').tabs();
+        });
+      </script>
 
       <!-- Ici les sous-catégories de matériaux qui s'affichent des les menus déroulants-->
       <ul id="select-bois" class="dropdown-content">

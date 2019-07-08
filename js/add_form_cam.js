@@ -5,17 +5,18 @@ var input_btn = document.getElementById('file');
 var controls_div =  document.getElementById('controls');
 
 if (hasGetUserMedia()) {
-        //M.toast({html: "Tip top"});
-        init_getusermedia();
-
-} else {
- M.toast({html: "getUserMedia() n'est pas supporté par votre navigateur :("});
-
-   controls_div.classList.add("centered"); //on centre les contrôles pour les mettre en évidence
-   take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
+  //M.toast({html: "Tip top"});
+  init_getusermedia();
 
 }
 
+else {
+  //M.toast({html: "getUserMedia() n'est pas supporté par votre navigateur :("});
+  take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
 
-  take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
-  input_btn.addEventListener('change', handleFiles); //on active le bouton d'upload de photo
+}
+
+take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
+input_btn.addEventListener('change', handleFiles); //on active le bouton d'upload de photo
+
+var video = document.querySelector("#video");
