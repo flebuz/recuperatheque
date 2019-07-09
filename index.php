@@ -36,7 +36,7 @@
       <video id="video" autoplay ></video>
       <canvas id="canvas"></canvas>
 
-      <!-- boutons prise de vue (NON FONCTIONNELS) -->
+      <!-- boutons prise de vue (pas complètement fonctionnels) -->
       <div id="cam_controls">
 
         <!-- bouton upload photo -->
@@ -58,6 +58,7 @@
 
       <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
       <script type="text/javascript" src="js/add_form_cam.js"></script>
+
 
     </div>
 
@@ -259,6 +260,7 @@
     </div>
 
   </form>
+
 
 </body>
 
