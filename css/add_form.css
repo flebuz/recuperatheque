@@ -58,9 +58,14 @@
   left: 200px !important;
 }
 
+#cam_controls
+{  position: relative;
+  z-index: 15;
+}
 
 .photo-controls
-{color:#EF5350 !important;
+{
+  color:#EF5350 !important;
 cursor: pointer !important;
 font-size: 48px !important;}
 
