@@ -18,5 +18,3 @@ else {
 
 take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
 input_btn.addEventListener('change', handleFiles); //on active le bouton d'upload de photo
-
-var video = document.querySelector("#video");

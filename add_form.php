@@ -19,14 +19,14 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
-  <script type="text/javascript" src="js/module_camera.js"></script>
+  <!-- <script type="text/javascript" src="js/module_camera.js"></script> -->
 </head>
 
 <body>
 
   <div class="global_container">
 
-    <div class="header">
+    <div class=header>
       <a href="#!" class="breadcrumb">Récupérathèque</a>
       <a href="#!" class="breadcrumb">Encoder un objet</a>
     </div>
@@ -57,7 +57,7 @@
       </div>
 
       <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
-      <script type="text/javascript" src="js/add_form_cam.js"></script>
+      <!-- <script type="text/javascript" src="js/add_form_cam.js"></script> -->
 
     </div>
 
