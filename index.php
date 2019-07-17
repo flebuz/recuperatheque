@@ -91,10 +91,14 @@
       <!-- Script requis par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
       <script>
         var instance = M.Tabs.init(el, {swipeable : true});
+
+        /*
         // Or with jQuery
         $(document).ready(function(){
           $('.tabs').tabs();
         });
+        */
+
       </script>
 
       <!-- Ici les sous-catégories de matériaux qui s'affichent des les menus déroulants-->
@@ -164,8 +168,10 @@
           var elems = document.querySelectorAll('.dropdown-trigger');
     	    var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false});
         });
+        /*
         // Or with jQuery
         $('.dropdown-trigger').dropdown();
+        */
       </script>
 
       <div class="col s12" style="margin-top:0px !important; padding-top:0px !important;">
