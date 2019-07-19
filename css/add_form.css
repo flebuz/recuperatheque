@@ -46,6 +46,9 @@ max-height: 200px;
 .nomargin{
 	margin: 0px 0px 0px 0px !important;
 }
+.nopadding{
+	padding: 0px 0px 0px 0px !important;
+}
 
 .invisible{
   display:none !important;
