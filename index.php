@@ -21,45 +21,44 @@
 </head>
 
 <body>
+  <div class="header">
+    <a href="#!" class="breadcrumb">Récupérathèque</a>
+    <a href="#!" class="breadcrumb">Encoder un objet</a>
+  </div>
 
-  <div class="global_container">
+  <div class="container" id="cam_container">
+      <div class="row">
 
-    <div class="header">
-      <a href="#!" class="breadcrumb">Récupérathèque</a>
-      <a href="#!" class="breadcrumb">Encoder un objet</a>
-    </div>
+        <!-- boutons prise de vue (pas complètement fonctionnels) -->
+          <div class="col s1 offset-s1 offset-m2 offset-l3" id="cam_controls">
+              <div class="row"></div>
+              <!-- bouton upload photo -->
+              <label for="file">
+              <div class="btn-floating red lighten-1"><i class="material-icons photo-controls" title="Uploader une photo">cloud_upload</i></div>
+              </label>
+              <input id="file" type="file" accept="image/*" capture style="display:none;">
 
-    <div class="cam_container">
+              <!-- bouton prise de vue -->
+              <div  id="take-photo" title="Prendre un cliché" class="btn-floating red lighten-1 left"><i class="material-icons photo-controls">camera_alt</i></div>
+              
+          </div>
 
-      <video id="video" autoplay ></video>
-      <canvas id="canvas"></canvas>
 
-      <!-- boutons prise de vue (pas complètement fonctionnels) -->
-      <div id="cam_controls">
+          <div class="col s8 m5 l5 center">
+                  <video id="video" autoplay class="responsive-video"></video>
 
-        <!-- bouton upload photo -->
-        <div class="row nomargin">
-          <label for="file">
-            <i class="material-icons photo-controls" title="Uploader une photo">cloud_upload</i>
-          </label>
-          <input id="file" type="file" accept="image/*" capture style="display:none;">
-        </div>
-
-        <!-- bouton prise de vue -->
-        <div class="row nomargin">
-          <a href="#" id="take-photo" title="Prendre un cliché">
-            <i class="material-icons photo-controls">camera_alt</i>
-          </a>
-        </div>
-
+          </div>
+          <div class="col s1" style="margin-left:-100px"> <!--oui je sais le css inline c'est mal mais j'arrivais pas à décaler le petit thumbnail et de toute façon c'est provisoire :o) -->
+          <canvas id="canvas"></canvas>
+          </div>
       </div>
+  </div>
 
       <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
       <script type="text/javascript" src="js/add_form_cam.js"></script>
 
 
-    </div>
-
+<div class="container" id="formulaire">
     <!-- Les onglets avec les catégories de matériaux-->
     <div class="row" style="padding-top: 10px !important;  position:relative; z-index:11;">
       <!-- Tout est dans le height:41px, c'est pas la marge qui créait un espace entre les deux colonnes !-->
@@ -71,17 +70,17 @@
           <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
           <!--Les tabs reprenant les différentes catégories de matériaux -->
           <ul class="tabs z-depth-1">
-            <li class="tab col s2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#bois" data-target='select-bois' style="color:#ffffff ">bois</a></li>
-            <li class="tab col s2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#metal" data-target='select-metal' style="color:#ffffff ">métal</a></li>
-            <li class="tab col s2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#papier" data-target='select-papier' style="color:#ffffff ">papier</a></li>
-            <li class="tab col s2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#plastique" data-target='select-plastique' style="color:#ffffff ">plastique</a></li>
-	          <li class="tab col s2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#verre" data-target='select-verre' style="color:#ffffff ">verre</a></li>
-	          <li class="tab col s2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#construction" data-target='select-construction' style="color:#ffffff ">construction</a></li>
-	          <li class="tab col s2"><a href="#test4">textile</a></li> <!-- pas encore fonctionnel -->
-	          <li class="tab col s2"><a href="#test4">quincaillerie</a></li>
-	          <li class="tab col s2"><a href="#test4">mobilier</a></li>
-	          <li class="tab col s2"><a href="#test4">électronique</a></li>
-	          <li class="tab col s2"><a href="#test4">insolite</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#bois" data-target='select-bois' style="color:#ffffff ">bois</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#metal" data-target='select-metal' style="color:#ffffff ">métal</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#papier" data-target='select-papier' style="color:#ffffff ">papier</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#plastique" data-target='select-plastique' style="color:#ffffff ">plastique</a></li>
+	          <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#verre" data-target='select-verre' style="color:#ffffff ">verre</a></li>
+	          <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#construction" data-target='select-construction' style="color:#ffffff ">construction</a></li>
+	          <li class="tab col s3 l2"><a href="#test4">textile</a></li> <!-- pas encore fonctionnel -->
+	          <li class="tab col s3 l2"><a href="#test4">quincaillerie</a></li>
+	          <li class="tab col s3 l2"><a href="#test4">mobilier</a></li>
+	          <li class="tab col s3 l2"><a href="#test4">électronique</a></li>
+	          <li class="tab col s3 l2"><a href="#test4">insolite</a></li>
           </ul>
 
           <!-- Cf. https://codepen.io/anon/pen/XoLqyd un pen qui montre comment accéder aux div (avec un carousel ?) spécifique à chaque catégorie de matériaux (à implémenter si on veut faire joli?)-->
@@ -180,7 +179,7 @@
 
             <div class="row" id="range_row" style="padding-left:0px;">
 
-              <div class="input-field col s6" id="range_div" style="margin-top: 0px; padding-left:0px;">
+              <div class="range-field col s6" id="range_div" style="margin-top: 0px; padding-left:0px;">
                 <input type="range" id="mesure" min="1" max="20" value="5" name="mesure" onchange="updateTextInput(this.value);" />
               </div>
 
@@ -195,42 +194,43 @@
                 }
               </script>
 
-              <div class="input-field col s2">
-                <label>
-                  <input name="group1" type="radio" checked />
-                  <span>kg</span>
-                </label>
-              </div>
+                    <div class="col s2 l1">
+                      <label>
+                        <input name="unit" type="radio" checked />
+                        <span>kg</span>
+                      </label>
+                    </div>
 
-              <div class="input-field col s2">
-                <label>
-                  <input name="group1" type="radio"/>
-                  <span>m²</span>
-                </label>
-              </div>
+                    <div class="col s2 l1">
+                      <label>
+                        <input name="unit" type="radio"/>
+                        <span>m²</span>
+                      </label>
+                    </div>
 
-              <div class="input-field col s2">
-                <label>
-                  <input name="group1" type="radio"/>
-                  <span>litre</span>
-                </label>
-              </div>
+                    <div class="col s2 l1">
+                      <label>
+                        <input name="unit" type="radio"/>
+                        <span>l</span>
+                      </label>
+                    </div>
 
-              <div class="input-field col s2">
-                <label>
-                  <input name="group1" type="radio"/>
-                  <span>pcs</span>
-                </label>
-              </div>
+                    <div class="col s2 l1">
+                      <label>
+                        <input name="unit" type="radio"/>
+                        <span>pcs</span>
+                      </label>
+                    </div>
 
-            </div>
+        </div>
 
             <div class ="row" style="margin-top: 0px; padding-left:0px;">
-              <div class="col s12" style="margin-top: 0px; padding-left:0px;">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">label</i>
+                <input id="tags" type="text">
+                <label for="tags">Ajouter des descriptifs :</label>
+              </div>
 
-                <input type="text" id="categ-descr" class="contacts" placeholder="Ajouter des tags ...">
-                  &nbsp;&nbsp;&nbsp;
-	            </div>
             </div>
 
             <div class="row">
@@ -251,7 +251,7 @@
       </div>
 
 		</div>
-
+</div>
     <!-- Alors ci-dessous ça peut paraitre bizarre, mais il s'agit d'une série de boutons (invisibles) que j'utilise pour faire s'afficher le menu déroulant correctement. L'origine de la difficulté est que je combine deux composants Materialize, les Tabs https://materializecss.com/tabs.html et les Dropdown https://materializecss.com/dropdown.html . Il y a sûrement un moyen plus simple de produire le même effet... :p -->
     <div >
   		<a class='dropdown-trigger btn invisible' href='#' data-target='select-bois'>Bois</a>
