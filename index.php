@@ -17,7 +17,7 @@
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
-  <script type="text/javascript" src="js/module_camera.js"></script>
+
 </head>
 
 <body>
@@ -27,20 +27,22 @@
   </div>
 
   <div class="container" id="cam_container">
-      <div class="row">
+      <div class="row nomargin">
 
         <!-- boutons prise de vue (pas complètement fonctionnels) -->
-          <div class="col s1 offset-s1 offset-m2 offset-l3" id="cam_controls">
+          <div class="col s1 offset-s1 offset-m2 offset-l2" id="cam_controls">
               <div class="row"></div>
               <!-- bouton upload photo -->
               <label for="file">
-              <div class="btn-floating red lighten-1"><i class="material-icons photo-controls" title="Uploader une photo">cloud_upload</i></div>
+              <div class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls" title="Uploader une photo">cloud_upload</i></div>
               </label>
               <input id="file" type="file" accept="image/*" capture style="display:none;">
 
               <!-- bouton prise de vue -->
-              <div  id="take-photo" title="Prendre un cliché" class="btn-floating red lighten-1 left"><i class="material-icons photo-controls">camera_alt</i></div>
-              
+              <div  id="take-photo" title="Prendre un cliché" class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls">camera_alt</i></div>
+              <!--<div  id="play" title="Activer la camera" class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls">play</i></div>
+              <div  id="stop" title="Stopper la camera" class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls">stop</i></div> -->
+
           </div>
 
 
@@ -54,13 +56,12 @@
       </div>
   </div>
 
-      <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
-      <script type="text/javascript" src="js/add_form_cam.js"></script>
+
 
 
 <div class="container" id="formulaire">
     <!-- Les onglets avec les catégories de matériaux-->
-    <div class="row" style="padding-top: 10px !important;  position:relative; z-index:11;">
+    <div class="row nopadding" >
       <!-- Tout est dans le height:41px, c'est pas la marge qui créait un espace entre les deux colonnes !-->
       <div class="col s12" style="height:41px; margin-bottom:0 !important; padding-bottom:0 !important;">
 
@@ -269,6 +270,8 @@
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
+<!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
+<script type="text/javascript" src="js/add_form_cam.js"></script>
 </body>
 
 </html>
