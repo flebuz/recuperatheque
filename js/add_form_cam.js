@@ -1,7 +1,8 @@
 //"use strict";
 
 var take_photo_btn = document.querySelector('#take-photo');
-var input_btn = document.getElementById('file');
+var upload_file_default_btn = document.querySelector('#upload-file-default');
+var file_upload = document.getElementById('file');
 //var play_btn = document.getElementById('play');
 //var stop_btn = document.getElementById('stop');
 var is_camera_active = false;
@@ -16,15 +17,19 @@ if (hasGetUserMedia()) {
 
 
 else {
-  M.toast({html: "Pas de getUserMedia"});
+  M.toast({html: "GetUserMedia pas supporté :()"});
   console.log("getUserMedia() n'est pas supporté par votre navigateur :(");
   take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
+  var video = document.querySelector('video');
+  video.classList.add("invisible");
+  var upload_file_default = document.getElementById("upload-file-default");
+  upload_file_default.classList.add("pulse");
 
 }
 
 
 take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
-input_btn.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
+file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
 //play_btn.addEventListener("click", PlayVideo); //on active le bouton prise de vue
 //stop_btn.addEventListener("click", StopVideo); //on active le bouton prise de vue
 
@@ -76,11 +81,23 @@ function init_getusermedia_simple() {
           video.play();
 
           is_camera_active = true;
-
+          var upload_file_default = document.getElementById("upload-file-default");
+          upload_file_default.classList.add("invisible");
+          take_photo_btn.classList.remove("invisible");
+          take_photo_btn.classList.add("pulse");
+          take_photo_btn.classList.remove("grey");
+          take_photo_btn.classList.add("red");
           //M.toast({html: "Camera Tip top"});
         };
       })
-      .catch(function(err) { console.log(err.name + ": " + err.message); }); // always check for errors at the end.
+      .catch(function(err) { M.toast({html: err.name + ": " + err.message});
+        console.log(err.name + ": " + err.message);
+        take_photo_btn.classList.add("invisible");
+        video.classList.add("invisible");
+        var upload_file_default = document.getElementById("upload-file-default");
+        upload_file_default.classList.add("pulse");
+      });
+       // always check for errors at the end.
       //M.toast({html: "Utilisez une connexion sécurisée (https)"});
 
 }
@@ -164,6 +181,9 @@ function PrisePhoto(e){
      var vignette = DessineVignette();
 
       SwitchCameraActiveState();
+      take_photo_btn.classList.remove("pulse");
+      take_photo_btn.classList.remove("red");
+      take_photo_btn.classList.add("grey");
 }
 
 function UploadFichier(e) {
@@ -176,6 +196,12 @@ function UploadFichier(e) {
   img.onload = function() {
     var vignette = DessineVignette(img);
     //context.drawImage(img, 0,0);
+
+    var upload_file_default = document.getElementById("upload-file-default");
+    upload_file_default.classList.remove("pulse");
+    upload_file_default.classList.remove("red");
+    upload_file_default.classList.add("grey");
+
   }
 }
 
