@@ -33,22 +33,29 @@
           <div class="col s1 offset-s1 offset-m2 offset-l2" id="cam_controls">
               <div class="row"></div>
               <!-- bouton upload photo -->
-              <label for="file">
+              <!--<label for="file">
               <div class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls" title="Uploader une photo">cloud_upload</i></div>
               </label>
-              <input id="file" type="file" accept="image/*" capture style="display:none;">
+              <input id="file" type="file" accept="image/*" capture style="display:none;">-->
 
               <!-- bouton prise de vue -->
-              <div  id="take-photo" title="Prendre un cliché" class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls">camera_alt</i></div>
+              <div class="row">
+                <div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large red lighten-1 waves-effect invisible"><i class="material-icons photo-controls">camera_alt</i></div>
+              </div>
               <!--<div  id="play" title="Activer la camera" class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls">play</i></div>
               <div  id="stop" title="Stopper la camera" class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls">stop</i></div> -->
 
           </div>
 
 
-          <div class="col s8 m5 l5 center">
+          <div class="col s8 m5 l5 center" style="position:relative">
+                  <div class="video-container center">
                   <video id="video" autoplay class="responsive-video"></video>
-
+                  <label for="file">
+                  <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="btn-floating btn-large cam_btn_default red lighten-1 waves-effect "><i class="material-icons photo-controls">camera_alt</i></div>
+                </label>
+                <input id="file" type="file" accept="image/*" capture style="display:none;">
+                  </div>
           </div>
           <div class="col s1" style="margin-left:-100px"> <!--oui je sais le css inline c'est mal mais j'arrivais pas à décaler le petit thumbnail et de toute façon c'est provisoire :o) -->
           <canvas id="canvas"></canvas>
