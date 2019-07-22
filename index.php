@@ -41,6 +41,7 @@
               <!-- bouton prise de vue -->
               <div class="row">
                 <div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large red lighten-1 waves-effect invisible"><i class="material-icons photo-controls">camera_alt</i></div>
+
               </div>
               <!--<div  id="play" title="Activer la camera" class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls">play</i></div>
               <div  id="stop" title="Stopper la camera" class="btn-floating red lighten-1 waves-effect"><i class="material-icons photo-controls">stop</i></div> -->
@@ -78,7 +79,7 @@
           <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
           <!--Les tabs reprenant les différentes catégories de matériaux -->
           <ul class="tabs z-depth-1">
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#bois" data-target='select-bois' style="color:#ffffff ">bois</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect' href="#bois" data-target='select-bois'>bois</a></li>
             <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#metal" data-target='select-metal' style="color:#ffffff ">métal</a></li>
             <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#papier" data-target='select-papier' style="color:#ffffff ">papier</a></li>
             <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect red lighten-1' href="#plastique" data-target='select-plastique' style="color:#ffffff ">plastique</a></li>
@@ -181,8 +182,8 @@
         */
       </script>
 
-      <div class="col s12" style="margin-top:0px !important; padding-top:0px !important;">
-        <div class="card white" style="padding-left:15px; padding-right:15px;" >
+      <div class="col s12" style="margin-top:0 !important; padding-top:0px !important;">
+        <div class="card white z-depth-1" style="padding-left:15px; padding-right:15px;" >
           <div class="card-content black-text">
 
             <div class="row" id="range_row" style="padding-left:0px;">
