@@ -6,7 +6,7 @@ var file_upload = document.getElementById('file');
 //var play_btn = document.getElementById('play');
 //var stop_btn = document.getElementById('stop');
 var is_camera_active = false;
-
+const ShutterSound = new Audio("/assets/inspectorj__camera-shutter-fast-a.wav"); //On prépare le son "Camera Shutter, Fast, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
 var controls_div =  document.getElementById('controls'); // ? Obsolète je pense ?
 
 if (hasGetUserMedia()) {
@@ -159,7 +159,11 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: true })
 function SwitchCameraActiveState()
 {
   if (is_camera_active)
-  {StopVideo();}
+  {
+
+   ShutterSound.play(); //jouer le son seulement quand on prend la photo
+   StopVideo();
+ }
   else
     {PlayVideo();}
 }
@@ -178,12 +182,17 @@ function SwitchCameraPausedState()
 function PrisePhoto(e){
      e.preventDefault();
 
+
+
      var vignette = DessineVignette();
 
       SwitchCameraActiveState();
       take_photo_btn.classList.remove("pulse");
       take_photo_btn.classList.remove("red");
       take_photo_btn.classList.add("grey");
+
+
+
 }
 
 function UploadFichier(e) {
