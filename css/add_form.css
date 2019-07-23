@@ -4,6 +4,18 @@
  * Mozilla Public License 2.0 (https://opensource.org/licenses/MPL-2.0)
 */
 
+/*
+|========|
+| header |
+|========|
+*/
+
+.header{
+  background: #202020;
+ 	padding: 10px;
+ 	color:#FFFFFF;
+ 	text-align: center
+}
 
 /*
 |=========|
@@ -16,21 +28,32 @@
 }
 
 #video {
-  position: absolute;
-  width: 100% ;
-  max-height: 225px;
+position:absolute;
+left:0;
+ right:0;
+
+ margin-left: auto;
+ margin-right: auto;
+max-height: 200px;
+  z-index: 1;
 }
 
 #canvas {
   position: absolute;
-  width: 100% ;
-  max-height: 225px;
+  width: 100 ;
+  height: 100 ;
+
+
+/*  max-height: 225px;*/
   z-index: 10;
 }
 
 
 .nomargin{
 	margin: 0px 0px 0px 0px !important;
+}
+.nopadding{
+	padding: 0px 0px 0px 0px !important;
 }
 
 .invisible{
@@ -46,11 +69,23 @@
   left: 200px !important;
 }
 
+.btn-floating.btn-large.cam_btn_default
+{
 
-.photo-controls
-{color:#EF5350 !important;
-cursor: pointer !important;
-font-size: 48px !important;}
+  width: 100px;
+height: 100px;;
+  z-index: 0;
+
+}
+
+#take-photo
+{z-index:3;}
+
+.btn-floating.btn-large.cam_btn_default i
+{
+line-height: 100px;
+font-size: 3.5rem;
+}
 
 .btn-flat {
 
