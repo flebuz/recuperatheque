@@ -2,13 +2,7 @@
 body{
 
   padding: 0 0 0 0;
-  font-family: 'Open Sans', Helvetica, arial, sans-serif;
-  font-size: 20px !important;
-  line-height: 24px;
-  font-weight: 500;
 
-  color: #444B58;
-  background: #fff;
 
   text-shadow: 0 1px 0 rgba(0,0,0,0.05);
   -webkit-font-smoothing: antialiased;
