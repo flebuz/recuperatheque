@@ -16,23 +16,18 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  <!--Import jQuery before materialize.js-->
-  <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
-  <!-- <script type="text/javascript" src="js/module_camera.js"></script> -->
+
+
 </head>
 
 <body>
+  <div class="header">
+    <a href="#!" class="breadcrumb">Récupérathèque</a>
+    <a href="#!" class="breadcrumb">Encodage</a>
+  </div>
 
-
-    <div class=header>
-      <a href="#!" class="breadcrumb">Récupérathèque</a>
-      <a href="#!" class="breadcrumb">Encoder un objet</a>
-    </div>
-
-    <div class="cam_container">
-
-      <div class="row nomargin">
+  <div class="container" id="cam_container">
+    <div class="row nomargin">
 
         <!-- boutons prise de vue (pas complètement fonctionnels) -->
           <div class="col s1 offset-s1 offset-m2 offset-l2" id="cam_controls">
@@ -54,26 +49,33 @@
           </div>
 
 
-          <div class="col s8 m5 l5 center" style="position:relative">
-                  <div class="video-container center">
-                  <video id="video" autoplay class="responsive-video"></video>
-                  <label for="file">
-                  <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="btn-floating btn-large cam_btn_default red lighten-1 waves-effect "><i class="material-icons photo-controls">camera_alt</i></div>
-                </label>
-                <input id="file" type="file" accept="image/*" capture style="display:none;">
-                  </div>
+          <div id="video_container" class="col s8 m5 l5 center invisible" >
+
+                  <video id="video" autoplay class="responsive-video" style="position:relative"></video>
+
           </div>
+
+        <div id="file_upload_container" class="col s8 m5 l5 center" style="position:relative">
+                <label for="file">
+                <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="btn-floating btn-large cam_btn_default red lighten-1 waves-effect "><i class="material-icons photo-controls">camera_alt</i></div>
+              </label>
+              <input id="file" type="file" accept="image/*" capture style="display:none;">
+        </div>
+
           <div class="col s1" style="margin-left:-100px"> <!--oui je sais le css inline c'est mal mais j'arrivais pas à décaler le petit thumbnail et de toute façon c'est provisoire :o) -->
           <canvas id="canvas"></canvas>
           </div>
       </div>
   </div>
 
+
+
+
 <div class="container" id="formulaire">
     <!-- Les onglets avec les catégories de matériaux-->
     <div class="row nopadding" >
       <!-- Tout est dans le height:41px, c'est pas la marge qui créait un espace entre les deux colonnes !-->
-      <div class="col s12" style="height:41px; margin-bottom:0 !important; padding-bottom:0 !important;">
+      <div class="col s12" style="height:41px;">
 
         <!-- Début du formulaire-->
         <form name="formulaire_encodage" id="formulaire_encodage" method="post" action="?">
@@ -184,13 +186,15 @@
         */
       </script>
 
-      <div class="col s12" style="margin-top:0 !important; padding-top:0px !important;">
-        <div class="card white z-depth-1" style="padding-left:15px; padding-right:15px;" >
-          <div class="card-content black-text">
+</div>
+<div class="container">
+      <div class="col s12" style="">
 
-            <div class="row" id="range_row" style="padding-left:0px;">
 
-              <div class="range-field col s6" id="range_div" style="margin-top: 0px; padding-left:0px;">
+
+            <div class="row" id="row_range">
+
+              <div class="range-field col s5" id="range_div" >
                 <input type="range" id="mesure" min="1" max="20" value="5" name="mesure" onchange="updateTextInput(this.value);" />
               </div>
 
@@ -205,37 +209,67 @@
                 }
               </script>
 
-                    <div class="col s2 l1">
+                    <div class="col s2 l2">
                       <label>
                         <input name="unit" type="radio" checked />
                         <span>kg</span>
                       </label>
                     </div>
 
-                    <div class="col s2 l1">
+                    <div class="col s2 l2">
                       <label>
                         <input name="unit" type="radio"/>
                         <span>m²</span>
                       </label>
                     </div>
 
-                    <div class="col s2 l1">
+                    <div class="col s2 l2">
                       <label>
                         <input name="unit" type="radio"/>
                         <span>l</span>
                       </label>
                     </div>
 
-                    <div class="col s2 l1">
+                    <div class="col s2 l2">
                       <label>
                         <input name="unit" type="radio"/>
-                        <span>pcs</span>
+                        <span>cm</span>
                       </label>
                     </div>
 
         </div>
+            <div class ="row" >
+              <div class="input-field col s2 m2">
+                <label for="pieces">Nb de pièce(s):</label>
+              </div>
+                <div class="input-field col s2">
+                  <input type="number" id="pieces" value="1" min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="text-align: center; ">
+                </div>
+                <div class="input-field col s4">
+                  <div class="btn" style="width:38px;" onclick="IncrementPieces()">+</div><div class="btn" style="width:38px" onclick="DecrementPieces()">-</div>
+                </div>
 
-            <div class ="row" style="margin-top: 0px; padding-left:0px;">
+
+                <!--Script pour mettre à jour l'affichage de la valeur du curseur "mesure"-->
+                <script>
+                  function IncrementPieces(){
+                    var number=document.getElementById('pieces').value;
+                    number++;
+                    document.getElementById('pieces').value=number;
+                  }
+                  function DecrementPieces(){
+                    var number=document.getElementById('pieces').value;
+                    if (number> 1) {
+                       number--;
+                        document.getElementById('pieces').value=number;}
+
+                  }
+                </script>
+
+            </div>
+
+
+            <div class ="row" >
               <div class="input-field col s12">
                 <i class="material-icons prefix">label</i>
                 <input id="tags" type="text">
@@ -243,6 +277,38 @@
               </div>
 
             </div>
+
+            <div class ="row">
+                  <div class="input-field col s2">
+
+                    <label for="usure">Etat d'usure</label>
+
+                </div>
+                <div class="input-field col s8">
+                                <select id="usure" style="display:flex !important">
+                      <option value="A" selected>A : Tip Top</option>
+                      <option value="B">B : Okay</option>
+                      <option value="C">C : Mouaif</option>
+                      <option value="D">D : Beurk</option>
+                    </select>
+
+                </div>
+
+           </div>
+
+           <div class ="row">
+                 <div class="input-field col s2">
+
+                   <label for="prix">Prix suggéré</label>
+
+               </div>
+               <div class="input-field col s3">
+                  <input type="text" id="prix">
+
+
+               </div>
+
+          </div>
 
             <div class="row">
               <div class="col s4">
@@ -257,11 +323,13 @@
               </div>
             </div>
 
-          </div>
-        </div>
+
+
       </div>
 
 		</div>
+</div>
+
 </div>
     <!-- Alors ci-dessous ça peut paraitre bizarre, mais il s'agit d'une série de boutons (invisibles) que j'utilise pour faire s'afficher le menu déroulant correctement. L'origine de la difficulté est que je combine deux composants Materialize, les Tabs https://materializecss.com/tabs.html et les Dropdown https://materializecss.com/dropdown.html . Il y a sûrement un moyen plus simple de produire le même effet... :p -->
     <div >
