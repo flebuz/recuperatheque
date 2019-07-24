@@ -16,17 +16,22 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-
-
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
+  <!-- <script type="text/javascript" src="js/module_camera.js"></script> -->
 </head>
 
 <body>
-  <div class="header">
-    <a href="#!" class="breadcrumb">Récupérathèque</a>
-    <a href="#!" class="breadcrumb">Encoder un objet</a>
-  </div>
 
-  <div class="container" id="cam_container">
+
+    <div class=header>
+      <a href="#!" class="breadcrumb">Récupérathèque</a>
+      <a href="#!" class="breadcrumb">Encoder un objet</a>
+    </div>
+
+    <div class="cam_container">
+
       <div class="row nomargin">
 
         <!-- boutons prise de vue (pas complètement fonctionnels) -->
@@ -63,9 +68,6 @@
           </div>
       </div>
   </div>
-
-
-
 
 <div class="container" id="formulaire">
     <!-- Les onglets avec les catégories de matériaux-->
