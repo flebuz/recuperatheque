@@ -1,59 +1,15 @@
 
-
-html{
-  font-family: 'Open Sans', Helvetica, arial, sans-serif;
-}
-
 body{
-  margin: 0;
-  background: #E0E0E0;
+
+  padding: 0 0 0 0;
+
+
+  text-shadow: 0 1px 0 rgba(0,0,0,0.05);
+  -webkit-font-smoothing: antialiased;
 }
 
-html, body, p, h1, h2, h3, h4, h5, h6{
-  font-family: 'Open Sans', Helvetica, arial, sans-serif;
-}
-
-.color-theme{
-  background: #202020;
-  color: #FFFFFF;
-}
-
-/* ----- ITEM -----*/
-
-.items_container{
-
-}
-
-.item_container{
-
-}
-
-.item{
-  background: #FFFFFF;
-
-  margin: 10px;
-  padding: 10px;
-
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-}
-
-.item-photo-container{
+.global_container{
   width: 100%;
-}
-
-.item .photo{
-  width: 100%;
-}
-
-.item-info-container{
-  flex-grow: 1;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.item-date-container{
-  color: #909090;
-  text-align: right;
+  max-width: 720px;
+  margin: auto;
 }

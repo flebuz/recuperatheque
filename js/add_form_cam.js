@@ -20,8 +20,10 @@ else {
   M.toast({html: "GetUserMedia pas supporté :()"});
   console.log("getUserMedia() n'est pas supporté par votre navigateur :(");
   take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
-  var video = document.querySelector('video');
-  video.classList.add("invisible");
+  //var video = document.querySelector('video');
+  //video.classList.add("invisible");
+  var video_container = document.getElementById("video_container");
+  video_container.classList.add("invisible");
   var upload_file_default = document.getElementById("upload-file-default");
   upload_file_default.classList.add("pulse");
 
@@ -29,14 +31,12 @@ else {
 
 
 take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
-<<<<<<< HEAD
-input_btn.addEventListener('change', handleFiles); //on active le bouton d'upload de photo
-=======
 file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
 //play_btn.addEventListener("click", PlayVideo); //on active le bouton prise de vue
 //stop_btn.addEventListener("click", StopVideo); //on active le bouton prise de vue
 
 var video = document.querySelector("#video");
+video.addEventListener("click", PrisePhoto);
 
 
 
@@ -84,8 +84,11 @@ function init_getusermedia_simple() {
           video.play();
 
           is_camera_active = true;
-          var upload_file_default = document.getElementById("upload-file-default");
-          upload_file_default.classList.add("invisible");
+          var file_upload_container = document.getElementById("file_upload_container");
+          file_upload_container.classList.add("invisible");
+          var video_container = document.getElementById("video_container");
+          video_container.classList.remove("invisible");
+
           take_photo_btn.classList.remove("invisible");
           take_photo_btn.classList.add("pulse");
           take_photo_btn.classList.remove("grey");
@@ -96,7 +99,9 @@ function init_getusermedia_simple() {
       .catch(function(err) { M.toast({html: err.name + ": " + err.message});
         console.log(err.name + ": " + err.message);
         take_photo_btn.classList.add("invisible");
-        video.classList.add("invisible");
+        
+        var video_container = document.getElementById("video_container");
+        video_container.classList.add("invisible");
         var upload_file_default = document.getElementById("upload-file-default");
         upload_file_default.classList.add("pulse");
       });
@@ -256,4 +261,3 @@ function DessineVignette(image){
   //retourne une image URI (possible de jouer avec la qualité du jpeg avec .toDataURL)
   return hidden_canvas.toDataURL('image/png');
 }
->>>>>>> 6731e992cd67f5ceee102a2d6f294b3a4086ba07
