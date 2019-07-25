@@ -24,6 +24,8 @@
     <h1>[Nom de l'app]</h1>
   </div>
 
+  <!-- Checks des parametres GET -->
+
   <?php
     //check les $_GET de recherche si valide
       //check si l'option de recherche est valide
@@ -42,38 +44,37 @@
 
   ?>
 
-  <form class="w3-bar w3-dark-grey" action="catalogue.php" method="GET">
+  <!-- Bar de recherche - formulaire -->
+  <div class="search-bar-container">
+    <form class="search-bar" action="catalogue.php" method="GET">
 
-        <!-- <div class="w3-bar-item w3-mobile">
-          <i class="w3-bar-item w3-xlarge fa fa-search"></i>
-        </div> -->
+          <div class="search-bar-item">
+            <label class="w3-xlarge fa fa-search search-bar-label"></label>
+            <!-- le php a l'interieur rempli la valeur recherché au chargement de la page en fonction de ce qui a été envoyé en Get -->
+            <input type="text" class="w3-input search-bar-input" name="search" placeholder="Recherche..." value="<?php echo $recherche?>">
+          </div>
 
-        <div class="w3-bar-item w3-mobile">
-          <!-- le php a l'interieur rempli la valeur recherché au chargement de la page en fonction de ce qui a été envoyé en Get -->
-          <input type="text" class="w3-input" name="search" placeholder="Recherche..." value="<?php echo $recherche?>">
-        </div>
+          <div class="search-bar-item">
+            <label class="search-bar-label">Trier par</label>
+            <select class="w3-select" name="order">
+              <!-- le php a l'interieur selectionne le bon choix au chargement de la page en fonction de ce qui a été envoyé en Get -->
+              <option value="date_ajout" <?php if($tri=="date_ajout"){echo 'selected';} ?> >Date de récupération</option>
+              <option value="qualite" <?php if($tri=="qualite"){echo 'selected';} ?> >Qualité</option>
+              <option value="nombre" <?php if($tri=="nombre"){echo 'selected';} ?> >Unités disponibles</option>
+            </select>
+          </div>
 
-        <!-- <div class="w3-bar-item w3-mobile">
-          Trier par
-        </div> -->
-
-        <div class="w3-bar-item w3-mobile">
-          <select class="w3-select" name="order">
-            <!-- le php a l'interieur selectionne le bon choix au chargement de la page en fonction de ce qui a été envoyé en Get -->
-            <option value="date_ajout" <?php if($tri=="date_ajout"){echo 'selected';} ?> >Date de récupération</option>
-            <option value="qualite" <?php if($tri=="qualite"){echo 'selected';} ?> >Qualité</option>
-            <option value="nombre" <?php if($tri=="nombre"){echo 'selected';} ?> >Unités disponibles</option>
-          </select>
-        </div>
-
-        <div class="w3-bar-item w3-mobile">
-          <input  class="w3-btn color-theme" type="submit" value="Go"/>
-        </div>
-
-  </form>
+          <div class="search-bar-item">
+            <input  class="w3-btn color-theme search-bar-input" type="submit" value="Go"/>
+          </div>
 
 
-  <div class="w3-row items_container">
+
+    </form>
+  </div>
+
+
+  <div class="w3-row items-container">
 
     <?php
 
