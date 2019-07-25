@@ -14,6 +14,9 @@
 
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
+
+
+
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
@@ -195,11 +198,11 @@
             <div class="row" id="row_range">
 
               <div class="range-field col s5" id="range_div" >
-                <input type="range" id="mesure" min="1" max="20" value="5" name="mesure" onchange="updateTextInput(this.value);" />
+                <input type="range" id="mesure" min="1" max="20" value="5" name="mesure" oninput="updateTextInput(this.value);" />
               </div>
 
               <div class="input-field col s2" style="margin-top: 0px;">
-                <input type="text" id="indicateur_range" value="5" style="inline; text-align: center; ">
+              <input type="number" id="indicateur_range" value="5" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="inline; text-align: center; ">
               </div>
 
               <!--Script pour mettre à jour l'affichage de la valeur du curseur "mesure"-->
@@ -211,43 +214,46 @@
 
                     <div class="col s2 l2">
                       <label>
-                        <input name="unit" type="radio" checked />
+                        <input name="unit" type="radio" value="kg" checked />
                         <span>kg</span>
                       </label>
                     </div>
 
                     <div class="col s2 l2">
                       <label>
-                        <input name="unit" type="radio"/>
+                        <input name="unit" type="radio" value="m2"/>
                         <span>m²</span>
                       </label>
                     </div>
 
                     <div class="col s2 l2">
                       <label>
-                        <input name="unit" type="radio"/>
+                        <input name="unit" type="radio" value="l"/>
                         <span>l</span>
                       </label>
                     </div>
 
                     <div class="col s2 l2">
                       <label>
-                        <input name="unit" type="radio"/>
+                        <input name="unit" type="radio" value="cm"/>
                         <span>cm</span>
                       </label>
                     </div>
 
         </div>
-            <div class ="row" >
-              <div class="input-field col s2 m2">
-                <label for="pieces">Nb de pièce(s):</label>
-              </div>
-                <div class="input-field col s2">
-                  <input type="number" id="pieces" value="1" min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="text-align: center; ">
-                </div>
-                <div class="input-field col s4">
-                  <div class="btn" style="width:38px;" onclick="IncrementPieces()">+</div><div class="btn" style="width:38px" onclick="DecrementPieces()">-</div>
-                </div>
+        <div class ="row" >
+          <div class="col s3 m2">
+            <label for="pieces">Nb de pièce(s):</label>
+          </div>
+          <div class="col s1">
+            <div class="btn plusminus" onclick="DecrementPieces()">-</div>
+          </div>
+            <div class="col s2" style="min-width:50px">
+              <input type="number" id="pieces" value="1" min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="text-align: center; ">
+            </div>
+            <div class="col s1">
+              <div class="btn plusminus" onclick="IncrementPieces()">+</div>
+            </div>
 
 
                 <!--Script pour mettre à jour l'affichage de la valeur du curseur "mesure"-->
@@ -269,7 +275,7 @@
             </div>
 
 
-            <div class ="row" >
+           <div class ="row" >
               <div class="input-field col s12">
                 <i class="material-icons prefix">label</i>
                 <input id="tags" type="text">
@@ -281,28 +287,103 @@
             <div class ="row">
                   <div class="input-field col s2">
 
-                    <label for="usure">Etat d'usure</label>
+                    <label for="range_usure">Etat d'usure :</label>
 
                 </div>
-                <div class="input-field col s8">
-                                <select id="usure" style="display:flex !important">
-                      <option value="A" selected>A : Tip Top</option>
-                      <option value="B">B : Okay</option>
-                      <option value="C">C : Mouaif</option>
-                      <option value="D">D : Beurk</option>
-                    </select>
+                <div class="input-field col s2">
+                  <div class="center"><input type="text" id="indicateur_texte_usure" style="text-align:center"></div>
+                </div>
+                <div class="input-field col s6">
+
+
+                    <input type="range" id="range_usure" step="1" min="1" max="4" value="1" oninput="update_val_usure(this.value);">
 
                 </div>
+
+
+                <script>
+                  function update_val_usure(val){
+
+                    var texte_usure;
+
+                    switch (val) {
+                      case "1":
+                        texte_usure="Top";
+
+                        document.getElementById('indicateur_texte_usure').value=texte_usure;
+                        break;
+                      case "2":
+                        texte_usure="Okay";
+
+                          document.getElementById('indicateur_texte_usure').value=texte_usure;
+                        break;
+                      case "3":
+                        texte_usure="Mouaif";
+
+                          document.getElementById('indicateur_texte_usure').value=texte_usure;
+                        break;
+                      case "4":
+                        texte_usure="Bof";
+
+                          document.getElementById('indicateur_texte_usure').value=texte_usure;
+                        break;
+
+                        default:
+document.getElementById('indicateur_texte_usure').value="Erreur";
+                        break;
+
+                    }
+
+
+                  }
+                </script>
 
            </div>
 
+          <!-- <div class ="row">
+                 <div class="col s2">
+
+                   <label>Etat d'usure</label>
+
+               </div>
+           <div class="col s3 m2">
+             <label>
+               <input name="zusure" type="radio" value="A" checked />
+               <span>Top</span>
+             </label>
+           </div>
+
+           <div class="col s3 m2">
+             <label>
+               <input name="zusure" type="radio" value="B"/>
+               <span>Okay</span>
+             </label>
+           </div>
+
+           <div class="col s3 m2">
+             <label>
+               <input name="zusure" type="radio" value="C"/>
+               <span>Mouaif</span>
+             </label>
+           </div>
+
+           <div class="col s3 m2">
+             <label>
+               <input name="zusure" type="radio" value="D"/>
+               <span>Beurk</span>
+             </label>
+           </div>
+
+      </div>
+    -->
+
            <div class ="row">
-                 <div class="input-field col s2">
+                 <div class="col s2">
 
                    <label for="prix">Prix suggéré</label>
 
                </div>
-               <div class="input-field col s3">
+               <div class="col s3">
                   <input type="text" id="prix">
 
 
