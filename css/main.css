@@ -1,15 +1,102 @@
 
-body{
-
-  padding: 0 0 0 0;
-
-
-  text-shadow: 0 1px 0 rgba(0,0,0,0.05);
-  -webkit-font-smoothing: antialiased;
+html{
+  font-family: 'Open Sans', Helvetica, arial, sans-serif;
 }
 
-.global_container{
-  width: 100%;
-  max-width: 720px;
+body{
+  margin: 0;
+  background: #E0E0E0;
+}
+
+html, body, p, h1, h2, h3, h4, h5, h6{
+  font-family: 'Open Sans', Helvetica, arial, sans-serif;
+}
+
+.color-theme{
+  background: #202020;
+  color: #FFFFFF;
+}
+
+/* ----- SEARCH BAR -----*/
+
+.search-bar-container{
+  background: #606060;
+  color: #FFFFFF;
+}
+
+.search-bar{
+  max-width: 900px;
   margin: auto;
+
+  padding: 12px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  justify-content: center;
+}
+
+.search-bar-item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;  /*stay in one line*/
+  justify-content: flex-start;
+  align-items: center;
+
+  flex-grow: 1;
+
+  padding: 6px;
+}
+
+.search-bar-label{
+  white-space: nowrap; /*force one line text*/
+
+  padding-right: 12px;
+}
+
+.search-bar-input{
+  min-width: 0;
+  flex-grow: 1; /*grow if spaces*/
+}
+
+/* ----- ITEM -----*/
+
+.items-container{
+  max-width: 900px;
+  margin: auto;
+}
+
+.item-container{
+
+}
+
+.item{
+  background: #FFFFFF;
+
+  margin: 10px;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.item-photo-container{
+  width: 100%;
+}
+
+.item .photo{
+  width: 100%;
+}
+
+.item-info-container{
+  flex-grow: 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.item-date-container{
+  color: #909090;
+  text-align: right;
 }
