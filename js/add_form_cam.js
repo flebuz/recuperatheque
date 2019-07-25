@@ -92,14 +92,14 @@ function init_getusermedia_simple() {
           take_photo_btn.classList.remove("invisible");
           take_photo_btn.classList.add("pulse");
           take_photo_btn.classList.remove("grey");
-          take_photo_btn.classList.add("red");
+          //take_photo_btn.classList.add("red");
           //M.toast({html: "Camera Tip top"});
         };
       })
       .catch(function(err) { M.toast({html: err.name + ": " + err.message});
         console.log(err.name + ": " + err.message);
         take_photo_btn.classList.add("invisible");
-        
+
         var video_container = document.getElementById("video_container");
         video_container.classList.add("invisible");
         var upload_file_default = document.getElementById("upload-file-default");
@@ -196,7 +196,7 @@ function PrisePhoto(e){
 
       SwitchCameraActiveState();
       take_photo_btn.classList.remove("pulse");
-      take_photo_btn.classList.remove("red");
+      //take_photo_btn.classList.remove("red");
       take_photo_btn.classList.add("grey");
 
 
@@ -216,7 +216,7 @@ function UploadFichier(e) {
 
     var upload_file_default = document.getElementById("upload-file-default");
     upload_file_default.classList.remove("pulse");
-    upload_file_default.classList.remove("red");
+    //upload_file_default.classList.remove("red");
     upload_file_default.classList.add("grey");
 
   }
