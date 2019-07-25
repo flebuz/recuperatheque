@@ -58,6 +58,10 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 
+input[type=range] {
+    border: 0px solid white !important;
+}
+
 .btn.plusminus
 {
   width: 30px;
