@@ -17,7 +17,7 @@ if (hasGetUserMedia()) {
 
 
 else {
-  M.toast({html: "GetUserMedia pas supporté :()"});
+
   console.log("getUserMedia() n'est pas supporté par votre navigateur :(");
   take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
   //var video = document.querySelector('video');
@@ -96,7 +96,7 @@ function init_getusermedia_simple() {
           //M.toast({html: "Camera Tip top"});
         };
       })
-      .catch(function(err) { M.toast({html: err.name + ": " + err.message});
+      .catch(function(err) {
         console.log(err.name + ": " + err.message);
         take_photo_btn.classList.add("invisible");
 
@@ -113,7 +113,7 @@ function init_getusermedia_simple() {
 //méthode tarabiscotée pour lancer getusermedia pour améliorer la compatibilité (temporaire pour les tests)
 function init_getusermedia(){
 
-M.toast({html: "init getusermedia"});
+
 
   // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
   var constraints = {  video: { facingMode: { exact: "environment"} }, audio: false };
