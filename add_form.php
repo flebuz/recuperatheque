@@ -18,7 +18,7 @@
 
 
   <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
 
 
 </head>
@@ -86,12 +86,12 @@
           <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
           <!--Les tabs reprenant les différentes catégories de matériaux -->
           <ul class="tabs z-depth-1">
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect' href="#bois" data-target='select-bois'>bois</a></li>
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect ' href="#metal" data-target='select-metal'>métal</a></li>
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect ' href="#papier" data-target='select-papier'>papier</a></li>
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect ' href="#plastique" data-target='select-plastique' >plastique</a></li>
-	          <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect ' href="#verre" data-target='select-verre'>verre</a></li>
-	          <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect ' href="#construction" data-target='select-construction'>construction</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#bois" data-target='select-bois'>bois</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#metal" data-target='select-metal'>métal</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#papier" data-target='select-papier'>papier</a></li>
+            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#plastique" data-target='select-plastique' >plastique</a></li>
+	          <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#verre" data-target='select-verre'>verre</a></li>
+	          <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#construction" data-target='select-construction'>construction</a></li>
 	          <li class="tab col s3 l2"><a href="#test4">textile</a></li> <!-- pas encore fonctionnel -->
 	          <li class="tab col s3 l2"><a href="#test4">quincaillerie</a></li>
 	          <li class="tab col s3 l2"><a href="#test4">mobilier</a></li>
@@ -215,35 +215,35 @@
                     <div class="col s2 l2">
                       <label>
                         <input name="unit" type="radio" value="kg" checked />
-                        <span>kg</span>
+                        <span class="couleur3-text">kg</span>
                       </label>
                     </div>
 
                     <div class="col s2 l2">
                       <label>
                         <input name="unit" type="radio" value="m2"/>
-                        <span>m²</span>
+                        <span class="couleur3-text">m²</span>
                       </label>
                     </div>
 
                     <div class="col s2 l2">
                       <label>
                         <input name="unit" type="radio" value="l"/>
-                        <span>l</span>
+                        <span class="couleur3-text">l</span>
                       </label>
                     </div>
 
                     <div class="col s2 l2">
                       <label>
                         <input name="unit" type="radio" value="cm"/>
-                        <span>cm</span>
+                        <span class="couleur3-text">cm</span>
                       </label>
                     </div>
 
         </div>
         <div class ="row" >
           <div class="col s3 m2">
-            <label for="pieces">Nb de pièce(s):</label>
+            <label for="pieces" class="couleur3-text">Nb de pièce(s):</label>
           </div>
           <div class="col s1">
             <div class="btn plusminus" onclick="DecrementPieces()">-</div>
@@ -287,11 +287,11 @@
             <div class ="row">
                   <div class="input-field col s2">
 
-                    <label for="range_usure">Etat d'usure :</label>
+                    <label for="range_usure" class="couleur3-text">Etat:</label>
 
                 </div>
-                <div class="input-field col s2">
-                  <div class="center"><input type="text" id="indicateur_texte_usure" style="text-align:center"></div>
+                <div class="input-field col s4 m2 l2">
+                  <div class="center"><input type="text" id="indicateur_texte_usure" style="text-align:center" value="Top"></div>
                 </div>
                 <div class="input-field col s6">
 
@@ -378,9 +378,9 @@ document.getElementById('indicateur_texte_usure').value="Erreur";
     -->
 
            <div class ="row">
-                 <div class="col s2">
+                 <div class="col s3">
 
-                   <label for="prix">Prix suggéré</label>
+                   <label for="prix" class="couleur3-text">Prix suggéré:</label>
 
                </div>
                <div class="col s3">
