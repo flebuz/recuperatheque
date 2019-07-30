@@ -7,7 +7,7 @@
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f44336">
+  <meta name="theme-color" content="#00ff4e">
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/add_form.css">
@@ -19,7 +19,7 @@
 
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-
+  <link type="text/css" rel="stylesheet" href="extras\noUiSlider\nouislider.css"  media="screen,projection"/>
 
 </head>
 
@@ -287,104 +287,29 @@
             <div class ="row">
                   <div class="input-field col s2">
 
-                    <label for="range_usure" class="couleur3-text">Etat:</label>
-
-                </div>
-                <div class="input-field col s4 m2 l2">
-                  <div class="center"><input type="text" id="indicateur_texte_usure" style="text-align:center" value="Top"></div>
-                </div>
-                <div class="input-field col s6">
-
-
-                    <input type="range" id="range_usure" step="1" min="1" max="4" value="1" oninput="update_val_usure(this.value);">
+                    <label for="range_etat" class="couleur3-text">Etat:</label>
 
                 </div>
 
+                <div class="input-field col s10 m6">
 
-                <script>
-                  function update_val_usure(val){
-
-                    var texte_usure;
-
-                    switch (val) {
-                      case "1":
-                        texte_usure="Top";
-
-                        document.getElementById('indicateur_texte_usure').value=texte_usure;
-                        break;
-                      case "2":
-                        texte_usure="Okay";
-
-                          document.getElementById('indicateur_texte_usure').value=texte_usure;
-                        break;
-                      case "3":
-                        texte_usure="Mouaif";
-
-                          document.getElementById('indicateur_texte_usure').value=texte_usure;
-                        break;
-                      case "4":
-                        texte_usure="Bof";
-
-                          document.getElementById('indicateur_texte_usure').value=texte_usure;
-                        break;
-
-                        default:
-document.getElementById('indicateur_texte_usure').value="Erreur";
-                        break;
-
-                    }
+<div id="range_etat" class="input-field"></div>
+                </div>
 
 
-                  }
-                </script>
 
            </div>
 
-          <!-- <div class ="row">
-                 <div class="col s2">
 
-                   <label>Etat d'usure</label>
-
-               </div>
-           <div class="col s3 m2">
-             <label>
-               <input name="zusure" type="radio" value="A" checked />
-               <span>Top</span>
-             </label>
-           </div>
-
-           <div class="col s3 m2">
-             <label>
-               <input name="zusure" type="radio" value="B"/>
-               <span>Okay</span>
-             </label>
-           </div>
-
-           <div class="col s3 m2">
-             <label>
-               <input name="zusure" type="radio" value="C"/>
-               <span>Mouaif</span>
-             </label>
-           </div>
-
-           <div class="col s3 m2">
-             <label>
-               <input name="zusure" type="radio" value="D"/>
-               <span>Beurk</span>
-             </label>
-           </div>
-
-      </div>
-    -->
 
            <div class ="row">
-                 <div class="col s3">
+                 <div class="input-field col s3 m2">
 
                    <label for="prix" class="couleur3-text">Prix suggéré:</label>
 
                </div>
-               <div class="col s3">
-                  <input type="text" id="prix">
+               <div class="input-field col s3">
+                  <input type="number" id="prix">
 
 
                </div>
@@ -431,6 +356,51 @@ document.getElementById('indicateur_texte_usure').value="Erreur";
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
 <script type="text/javascript" src="js/add_form_cam.js"></script>
+<script type="text/javascript" src="extras\noUiSlider\nouislider.min.js"></script>
+
+
+
+<script>
+
+  var pipFormats = {'1':'A', '2':'B', '3':'C','4':'D'};
+  var Formats = {'1':'Top', '2':'Okay', '3':'Mouaif','4':'Bof'};
+  var slider = document.getElementById('range_etat');
+  noUiSlider.create(slider, {
+   start: [1],
+   connect: true,
+   step: 1,
+   orientation: 'horizontal', // 'horizontal' or 'vertical'
+   range: {
+     'min': 1,
+     'max': 4
+   },
+   format: {
+   to: function(a){ return Formats[a]; },
+   from:function(value) {return value;}
+   },
+   pips: {
+     mode: 'values',
+       values: [1,2,3,4],
+      density:100,
+      stepped: true,
+      format: {
+      to: function(a){ return pipFormats[a]; },
+      }
+
+    }
+  });
+
+  slider.noUiSlider.on('update', function( values, handle ) {
+     var valeur = slider.noUiSlider.get();
+
+     });
+
+
+        </script>
+
+<!-- https://github.com/tb/ng2-nouislider/issues/107#issuecomment-327940463
+https://github.com/tb/ng2-nouislider/issues/140#issuecomment-352693962 -->
+
 </body>
 
 </html>
