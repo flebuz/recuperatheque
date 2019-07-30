@@ -62,6 +62,10 @@ input[type=range] {
     border: 0px solid white !important;
 }
 
+label
+{font-size: 1rem !important;
+color: $couleur3 !important;}
+
 .btn.plusminus
 {
   width: 30px;
@@ -91,7 +95,9 @@ input[type=range] {
 {
 
   width: 100px;
-height: 100px;;
+height: 100px;
+margin-top: 10px;
+margin-bottom: 10px;
   z-index: 0;
 
 }
