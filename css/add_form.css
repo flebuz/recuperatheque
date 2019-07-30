@@ -59,8 +59,27 @@ input[type=number] {
 }
 
 input[type=range] {
-    border: 0px solid white !important;
+    border: 0px !important;
 }
+
+
+.noUi-horizontal .noUi-handle, .noUi-vertical .noUi-handle {
+	background: #00ff4e !important;
+    z-index: 30;
+}
+.noUi-target.noUi-horizontal .noUi-tooltip {
+	background-color: #00ff4e !important;
+  z-index: 30;
+}
+
+.thumb
+{z-index: 30 !important;}
+
+.prefix /* label inactif devant zone de texte */
+{color:#6f6972 !important}
+
+.prefix.active /* label actif devant zone de texte */
+{color:#00ff4e !important}
 
 label
 {font-size: 1rem !important;
