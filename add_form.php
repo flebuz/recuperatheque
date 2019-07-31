@@ -198,17 +198,47 @@
             <div class="row" id="row_range">
 
               <div class="range-field col s5" id="range_div" >
-                <input type="range" id="mesure" min="1" max="20" value="5" name="mesure" oninput="updateTextInput(this.value);" />
+                <input type="range" id="mesure" min="0.1" max="20" value="5" step="0.1" name="mesure" oninput="updateTextInput(this.value);" />
               </div>
 
               <div class="input-field col s2" style="margin-top: 0px;">
-              <input type="number" id="indicateur_range" value="5" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="inline; text-align: center; ">
+              <input type="number" id="indicateur_range" value="5" onkeypress="return ValidateKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
+              <!--<input type="number" id="indicateur_range" value="5" onkeypress="return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 188))" style="inline; text-align: center; ">-->
               </div>
 
-              <!--Script pour mettre à jour l'affichage de la valeur du curseur "mesure"-->
-              <script>
+
+              <script type="text/javascript">
+
+
+
+                  function ValidateKeyPress(event) {
+                      var regex = new RegExp(/^-?\d*[.,]?\d*$/);
+                      var key = String.fromCharCode(event.charCode ? event.which : event.charCode);
+                      if (!regex.test(key)) {
+                          event.preventDefault();
+                          return false;
+                      }
+                  }
+
+                  function ValidateNumber(textbox)
+                  {
+                    n = textbox.value;
+                    console.log(n);
+
+                    if (isNaN(parseFloat(n.replace(",",".")))) //on contrôle si n est un nombre (en remplaçant la ',' par un '.' sinon isNaN=true)
+                    {
+                  M.toast({html: "Nombre invalide"});
+                  textbox.value= textbox.oldvalue;
+                    }
+
+                    else {
+                      {document.getElementById('mesure').value=n;} // si n est un nombre, on met à jour l'input range "mesure"
+                    }
+
+                  }
+
                 function updateTextInput(val){
-                  document.getElementById('indicateur_range').value=val;
+                  document.getElementById('indicateur_range').value=val; // on met à jour l'input text lié à l'input range "mesure"
                 }
               </script>
 
@@ -245,14 +275,14 @@
           <div class="col s3 m2">
             <label for="pieces" class="couleur3-text">Nb de pièce(s):</label>
           </div>
-          <div class="col s1">
-            <div class="btn plusminus" onclick="DecrementPieces()">-</div>
+          <div class="col s2 m1 nopadding" style="text-align: right;">
+            <div class="btn plusminus waves-effect" onclick="DecrementPieces()">-</div>
           </div>
-            <div class="col s2" style="min-width:50px">
+            <div class="col s2 m1">
               <input type="number" id="pieces" value="1" min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="text-align: center; ">
             </div>
-            <div class="col s1">
-              <div class="btn plusminus" onclick="IncrementPieces()">+</div>
+            <div class="col s1 nopadding">
+              <div class="btn plusminus waves-effect" onclick="IncrementPieces()">+</div>
             </div>
 
 
@@ -325,6 +355,8 @@
                  Encoder
                </a>
         			</div>
+              <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
+
 			        <div class="col s4">
               </div>
             </div>
@@ -350,7 +382,7 @@
 
   </form>
 
-  <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> --> <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
@@ -362,8 +394,8 @@
 
 <script>
 
-  var pipFormats = {'1':'A', '2':'B', '3':'C','4':'D'};
-  var Formats = {'1':'Top', '2':'Okay', '3':'Mouaif','4':'Bof'};
+  var Formats = {'1':'A', '2':'B', '3':'C','4':'D'};
+  var pipFormats = {'1':'Top', '2':'Okay', '3':'Mouaif','4':'Bof'};
   var slider = document.getElementById('range_etat');
   noUiSlider.create(slider, {
    start: [1],
@@ -398,8 +430,6 @@
 
         </script>
 
-<!-- https://github.com/tb/ng2-nouislider/issues/107#issuecomment-327940463
-https://github.com/tb/ng2-nouislider/issues/140#issuecomment-352693962 -->
 
 </body>
 
