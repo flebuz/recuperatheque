@@ -72,6 +72,13 @@ input[type=range] {
   z-index: 30;
 }
 
+.noUi-value.noUi-value-horizontal.noUi-value-large
+{font-size: 15px;
+color:#6f6972; }
+
+.noUi-marker-horizontal.noUi-marker-large
+{height:10px !important;}
+
 .thumb
 {z-index: 30 !important;}
 
@@ -88,7 +95,8 @@ color: $couleur3 !important;}
 .btn.plusminus
 {
   width: 30px;
-  padding: 0 0px;}
+  height: 2.5em;
+  padding: 0px 0px 0px 0px;}
 
 .nomargin{
 	margin: 0px 0px 0px 0px !important;
