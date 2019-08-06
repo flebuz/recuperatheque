@@ -17,7 +17,7 @@ if (hasGetUserMedia()) {
 
 
 else {
-  M.toast({html: "GetUserMedia pas supporté :()"});
+
   console.log("getUserMedia() n'est pas supporté par votre navigateur :(");
   take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
   //var video = document.querySelector('video');
@@ -92,14 +92,14 @@ function init_getusermedia_simple() {
           take_photo_btn.classList.remove("invisible");
           take_photo_btn.classList.add("pulse");
           take_photo_btn.classList.remove("grey");
-          take_photo_btn.classList.add("red");
+          //take_photo_btn.classList.add("red");
           //M.toast({html: "Camera Tip top"});
         };
       })
-      .catch(function(err) { M.toast({html: err.name + ": " + err.message});
+      .catch(function(err) {
         console.log(err.name + ": " + err.message);
         take_photo_btn.classList.add("invisible");
-        
+
         var video_container = document.getElementById("video_container");
         video_container.classList.add("invisible");
         var upload_file_default = document.getElementById("upload-file-default");
@@ -113,7 +113,7 @@ function init_getusermedia_simple() {
 //méthode tarabiscotée pour lancer getusermedia pour améliorer la compatibilité (temporaire pour les tests)
 function init_getusermedia(){
 
-M.toast({html: "init getusermedia"});
+
 
   // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
   var constraints = {  video: { facingMode: { exact: "environment"} }, audio: false };
@@ -196,7 +196,7 @@ function PrisePhoto(e){
 
       SwitchCameraActiveState();
       take_photo_btn.classList.remove("pulse");
-      take_photo_btn.classList.remove("red");
+      //take_photo_btn.classList.remove("red");
       take_photo_btn.classList.add("grey");
 
 
@@ -216,7 +216,7 @@ function UploadFichier(e) {
 
     var upload_file_default = document.getElementById("upload-file-default");
     upload_file_default.classList.remove("pulse");
-    upload_file_default.classList.remove("red");
+    //upload_file_default.classList.remove("red");
     upload_file_default.classList.add("grey");
 
   }
