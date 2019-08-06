@@ -5,7 +5,7 @@
   <div class='item'>
 
     <div class="item-photo-container">
-      <img class='photo' src='photos/<?php echo $item['ID']; ?>.jpg'>
+      <img class='photo' src='photos/<?php echo $item['ID_item']; ?>.jpg'>
     </div>
 
     <div class="item-info-container">
@@ -13,10 +13,10 @@
         <?php echo $item['categorie']; ?> > <?php echo $item['sous_categorie']; ?>
       </div>
       <div class='quantite'>
-        <?php echo $unite; ?>, <?php echo $item['mesure']; ?>
+        <?php echo $item['mesure']; ?> - <?php echo $unite; ?>
       </div>
-      <div class='qualite'>
-        qualité: <?php echo $item['qualite']; ?>/5
+      <div class='état'>
+        état: <?php echo $item['état']; ?>/5
       </div>
 
       <div class='tags'>

@@ -35,7 +35,7 @@
       $recherche = '';
     }
       //check si l'option de tri est parmis les choix valide
-    $tri_option = array('date_ajout', 'qualite', 'nombre');
+    $tri_option = array('date_ajout', 'état', 'nombre');
     if (isset($_GET['order']) && in_array($_GET['order'], $tri_option)){
       $tri = htmlspecialchars($_GET['order']);
     } else{
@@ -59,7 +59,7 @@
             <select class="w3-select" name="order">
               <!-- le php a l'interieur selectionne le bon choix au chargement de la page en fonction de ce qui a été envoyé en Get -->
               <option value="date_ajout" <?php if($tri=="date_ajout"){echo 'selected';} ?> >Date de récupération</option>
-              <option value="qualite" <?php if($tri=="qualite"){echo 'selected';} ?> >Qualité</option>
+              <option value="état" <?php if($tri=="état"){echo 'selected';} ?> >État d'usure</option>
               <option value="nombre" <?php if($tri=="nombre"){echo 'selected';} ?> >Unités disponibles</option>
             </select>
           </div>
@@ -87,9 +87,14 @@
       }
 
       //prep the request
-      $req = $bdd->prepare('  SELECT ID, categorie, sous_categorie, nombre, mesure, qualite, tags, DATE_FORMAT(date_ajout, \'%d/%m/%Y\') AS date_ajout_fr
-                              FROM catalogue
-                              WHERE categorie LIKE :search OR sous_categorie LIKE :search OR mesure LIKE :search OR tags LIKE :search OR description LIKE :search
+      $req = $bdd->prepare('  SELECT
+                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.nombre AS nombre, c.mesure AS mesure, c.état AS état, c.tags AS tags, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                              cat.ID, cat.nom AS categorie,
+                              sscat.ID, sscat.ID_categorie, sscat.nom AS sous_categorie
+                              FROM catalogue c
+                              INNER JOIN categorie cat ON c.ID_categorie=cat.ID
+                              INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+                              WHERE cat.nom LIKE :search OR sscat.nom LIKE :search OR mesure LIKE :search OR tags LIKE :search OR description LIKE :search
                               ORDER BY ' . $tri . ' DESC '
                           );
 
