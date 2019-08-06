@@ -11,8 +11,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- import the css -->
+  <!-- to have w3css class and respponsive design -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- to have icon of the font awesome 5 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <link rel="stylesheet" href="css/main.css">
 
 
