@@ -100,3 +100,52 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   color: #909090;
   text-align: right;
 }
+
+
+/*----- FORMS -----*/
+.tabs
+{
+display: flex
+}
+
+@media (min-width: 0px) {
+  .quasi-fullwidth  {
+    margin: 0 auto 20px;
+    width:100%;
+
+  }
+}
+
+@media (min-width: 992px) {
+  .quasi-fullwidth  {
+  margin: 0 auto 20px;
+    width:85%;
+
+  }
+}
+
+@media (min-width: 1200px) {
+  .quasi-fullwidth  {
+      margin: 0 auto 20px;
+    width:70%;
+
+  }
+}
+
+/* ----- INPUT RANGE ----- */
+/*Emulation de l'apparence des tick marks de nouislider (à toiletter puis supprimer nouislider.css)*/
+           .noUi-pips-horizontal {
+
+    padding-top: 0px !important;
+    height: auto;
+    top: 100%;
+    left: auto !important;
+    width: 96% !important;
+    right: auto;
+}
+
+.noUi-pips {
+
+    position: relative;
+    color: #999;
+    }
