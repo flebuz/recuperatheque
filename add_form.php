@@ -11,22 +11,24 @@
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/add_form.css">
+  <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
+  <link rel="stylesheet" href="nouislider/nouislider.css">
+
 
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
 
-
-
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="extras\noUiSlider\nouislider.css"  media="screen,projection"/>
+
+
 
 </head>
 
-<body>
+<body style="">
   <div class="header">
     <a href="#!" class="breadcrumb">Récupérathèque</a>
-    <a href="#!" class="breadcrumb">Encodage</a>
+    <a href="#!" class="breadcrumb">Catalogue</a>
   </div>
 
   <div class="container" id="cam_container">
@@ -51,22 +53,26 @@
 
           </div>
 
-
+<canvas id="hidden_streaming_canvas" class="invisible"></canvas>
+<canvas id="hidden_snap_canvas" class="invisible"></canvas>
+<canvas id="hidden_rotate_canvas" class="invisible"></canvas>
           <div id="video_container" class="col s8 m5 l5 center invisible" >
-
-                  <video id="video" autoplay class="responsive-video" style="position:relative"></video>
+                  <canvas id="video_streaming"></canvas>
+                  <canvas id="video_final" class=""></canvas>
+                  <video id="video" autoplay class="invisible"></video>
 
           </div>
 
-        <div id="file_upload_container" class="col s8 m5 l5 center" style="position:relative">
+        <div id="file_upload_container" class="col s8 m5 l5 center" style="position:relative; height:200px">
                 <label for="file">
-                <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="btn-floating btn-large cam_btn_default  waves-effect "><i class="material-icons photo-controls">camera_alt</i></div>
+                <canvas id="image_final" class="invisible"></canvas>
+                <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="btn-floating btn-large cam_btn_default  waves-effect"><i class="material-icons photo-controls">camera_alt</i></div>
               </label>
-              <input id="file" type="file" accept="image/*" capture style="display:none;">
+              <input id="file" type="file" accept="image/*" capture class="hidden">
         </div>
 
           <div class="col s1" style="margin-left:-100px"> <!--oui je sais le css inline c'est mal mais j'arrivais pas à décaler le petit thumbnail et de toute façon c'est provisoire :o) -->
-          <canvas id="canvas"></canvas>
+
           </div>
       </div>
   </div>
@@ -74,33 +80,32 @@
 
 
 
-<div class="container" id="formulaire">
-    <!-- Les onglets avec les catégories de matériaux-->
-    <div class="row nopadding" >
-      <!-- Tout est dans le height:41px, c'est pas la marge qui créait un espace entre les deux colonnes !-->
-      <div class="col s12" style="height:41px;">
 
-        <!-- Début du formulaire-->
-        <form name="formulaire_encodage" id="formulaire_encodage" method="post" action="?">
+</div>
 
-          <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
-          <!--Les tabs reprenant les différentes catégories de matériaux -->
-          <ul class="tabs z-depth-1">
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#bois" data-target='select-bois'>bois</a></li>
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#metal" data-target='select-metal'>métal</a></li>
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#papier" data-target='select-papier'>papier</a></li>
-            <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#plastique" data-target='select-plastique' >plastique</a></li>
-	          <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#verre" data-target='select-verre'>verre</a></li>
-	          <li class="tab col s3 l2"><a class='dropdown-trigger btn-flat waves-effect couleur2 white-text' href="#construction" data-target='select-construction'>construction</a></li>
-	          <li class="tab col s3 l2"><a href="#test4">textile</a></li> <!-- pas encore fonctionnel -->
-	          <li class="tab col s3 l2"><a href="#test4">quincaillerie</a></li>
-	          <li class="tab col s3 l2"><a href="#test4">mobilier</a></li>
-	          <li class="tab col s3 l2"><a href="#test4">électronique</a></li>
-	          <li class="tab col s3 l2"><a href="#test4">insolite</a></li>
-          </ul>
+<div class="quasi-fullwidth">
 
-          <!-- Cf. https://codepen.io/anon/pen/XoLqyd un pen qui montre comment accéder aux div (avec un carousel ?) spécifique à chaque catégorie de matériaux (à implémenter si on veut faire joli?)-->
 
+<div style="position:relative"><ul class="tabs z-depth-1" >
+  <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
+  <!--Les tabs reprenant les différentes catégories de matériaux -->
+          <?php
+          $categories= array('bois','metal','papier','plastique','verre','construction','textile','quincaillerie','mobilier','électronique','insolite');
+          $sous_catégories= array(
+
+            'bois' => array('bois médium','bois massif','bois 3 plis','OSB'),
+            'metal' => array('acier','acier galvanisé','fer à beton','aluminium', 'laiton')
+          );
+
+          //shuffle ($categories);
+
+
+          foreach ($categories as $key => $value) {
+            echo '<li class="tab col s3 l2"><a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.$value.'\'data-target=\'select-'.$value.'\'>'.$value.'</a></li>';
+          }
+          ?>
+</ul>
+</div>
       </div>
 
       <!-- Script requis par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
@@ -176,21 +181,35 @@
       	<li class="divider" tabindex="-1"></li>
       	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre mobilier</a></li>
       </ul>
+      <ul id="select-textile" class="dropdown-content">
+      	<li><a href="#!">du tissu</a></li>
+      	<li class="divider" tabindex="-1"></li>
+      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre textile</a></li>
+      </ul>
+      <ul id="select-quincaillerie" class="dropdown-content">
+      	<li><a href="#!">racagnac</a></li>
+      	<li class="divider" tabindex="-1"></li>
+      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre textile</a></li>
+      </ul>
+      <ul id="select-électronique" class="dropdown-content">
+      	<li><a href="#!">transistor</a></li>
+      	<li class="divider" tabindex="-1"></li>
+      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre textile</a></li>
+      </ul>
+      <ul id="select-insolite" class="dropdown-content">
+      	<li><a href="#!">une flûte à 6 schtrompf</a></li>
+      	<li class="divider" tabindex="-1"></li>
+      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre textile</a></li>
+      </ul>
 
-      <!-- Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de index.php)-->
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          var elems = document.querySelectorAll('.dropdown-trigger');
-    	    var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false});
-        });
-        /*
-        // Or with jQuery
-        $('.dropdown-trigger').dropdown();
-        */
-      </script>
 
-</div>
-<div class="container">
+
+      <div class="container" id="formulaire">
+          <!-- Les onglets avec les catégories de matériaux-->
+
+
+              <!-- Début du formulaire-->
+              <form name="formulaire_encodage" id="formulaire_encodage" method="post" action="?">
       <div class="col s12" style="">
 
 
@@ -198,49 +217,15 @@
             <div class="row" id="row_range">
 
               <div class="range-field col s5" id="range_div" >
-                <input type="range" id="mesure" min="0.1" max="20" value="5" step="0.1" name="mesure" oninput="updateTextInput(this.value);" />
+                <input type="range" id="mesure" min="0.1" max="10" value="1.0" step="0.1" name="mesure" oninput="updateTextInput('indicateur_range', this.value);" />
               </div>
 
               <div class="input-field col s2" style="margin-top: 0px;">
-              <input type="number" id="indicateur_range" value="5" onkeypress="return ValidateKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
+              <input type="number" id="indicateur_range" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
               <!--<input type="number" id="indicateur_range" value="5" onkeypress="return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 188))" style="inline; text-align: center; ">-->
               </div>
 
 
-              <script type="text/javascript">
-
-
-
-                  function ValidateKeyPress(event) {
-                      var regex = new RegExp(/^-?\d*[.,]?\d*$/);
-                      var key = String.fromCharCode(event.charCode ? event.which : event.charCode);
-                      if (!regex.test(key)) {
-                          event.preventDefault();
-                          return false;
-                      }
-                  }
-
-                  function ValidateNumber(textbox)
-                  {
-                    n = textbox.value;
-                    console.log(n);
-
-                    if (isNaN(parseFloat(n.replace(",",".")))) //on contrôle si n est un nombre (en remplaçant la ',' par un '.' sinon isNaN=true)
-                    {
-                  M.toast({html: "Nombre invalide"});
-                  textbox.value= textbox.oldvalue;
-                    }
-
-                    else {
-                      {document.getElementById('mesure').value=n;} // si n est un nombre, on met à jour l'input range "mesure"
-                    }
-
-                  }
-
-                function updateTextInput(val){
-                  document.getElementById('indicateur_range').value=val; // on met à jour l'input text lié à l'input range "mesure"
-                }
-              </script>
 
                     <div class="col s2 l2">
                       <label>
@@ -276,31 +261,17 @@
             <label for="pieces" class="couleur3-text">Nb de pièce(s):</label>
           </div>
           <div class="col s2 m1 nopadding" style="text-align: right;">
-            <div class="btn plusminus waves-effect" onclick="DecrementPieces()">-</div>
+            <div class="btn plusminus waves-effect" onclick="Increment('pieces', -1, 1)">-</div>
           </div>
             <div class="col s2 m1">
-              <input type="number" id="pieces" value="1" min="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="text-align: center; ">
+              <input type="number" id="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; ">
             </div>
             <div class="col s1 nopadding">
-              <div class="btn plusminus waves-effect" onclick="IncrementPieces()">+</div>
+              <div class="btn plusminus waves-effect" onclick="Increment('pieces', 1, 1)">+</div>
             </div>
 
 
-                <!--Script pour mettre à jour l'affichage de la valeur du curseur "mesure"-->
-                <script>
-                  function IncrementPieces(){
-                    var number=document.getElementById('pieces').value;
-                    number++;
-                    document.getElementById('pieces').value=number;
-                  }
-                  function DecrementPieces(){
-                    var number=document.getElementById('pieces').value;
-                    if (number> 1) {
-                       number--;
-                        document.getElementById('pieces').value=number;}
 
-                  }
-                </script>
 
             </div>
 
@@ -314,6 +285,7 @@
 
             </div>
 
+
             <div class ="row">
                   <div class="input-field col s2">
 
@@ -321,30 +293,44 @@
 
                 </div>
 
-                <div class="input-field col s10 m6">
 
-<div id="range_etat" class="input-field"></div>
+
+
+
+
+
+
+             <div class="input-field col s10 m6" id="etat">
+
+<input type="range" class="browser-default" id="range_etat" value="1"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
+
+
+	<div class="noUi-pips noUi-pips-horizontal">
+	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 0.00000%"></div>
+	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 0.00000%">Top</div>
+	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 33.33333%"></div>
+	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 33.33333%">Okay</div>
+	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 66.66667%"></div>
+	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 66.66667%">Mouaif</div>
+	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 100.00000%"></div>
+	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 100.00000%">Bof</div>
+	</div>
+
                 </div>
-
-
-
            </div>
 
 
 
-           <div class ="row">
-                 <div class="input-field col s3 m2">
 
-                   <label for="prix" class="couleur3-text">Prix suggéré:</label>
-
-               </div>
-               <div class="input-field col s3">
-                  <input type="number" id="prix">
+<div class="row">
+  <div class="col s12">
 
 
-               </div>
 
-          </div>
+  </div>
+</div>
+
+
 
             <div class="row">
               <div class="col s4">
@@ -371,65 +357,44 @@
 </div>
     <!-- Alors ci-dessous ça peut paraitre bizarre, mais il s'agit d'une série de boutons (invisibles) que j'utilise pour faire s'afficher le menu déroulant correctement. L'origine de la difficulté est que je combine deux composants Materialize, les Tabs https://materializecss.com/tabs.html et les Dropdown https://materializecss.com/dropdown.html . Il y a sûrement un moyen plus simple de produire le même effet... :p -->
     <div >
-  		<a class='dropdown-trigger btn invisible' href='#' data-target='select-bois'>Bois</a>
-      <a class='dropdown-trigger btn invisible' href='#' data-target='select-metal'>Métaux</a>
-      <a class='dropdown-trigger btn invisible' href='#' data-target='select-papier'>Papier</a>
-      <a class='dropdown-trigger btn invisible' href='#' data-target='select-plastique'>Plastique</a>
-      <a class='dropdown-trigger btn invisible' href='#' data-target='select-verre'>verre</a>
-      <a class='dropdown-trigger btn invisible' href='#' data-target='select-construction'>Construction</a>
-      <a class='dropdown-trigger btn invisible' href='#' data-target='select-mobilier'>mobilier</a>
+
+<?php
+
+      foreach ($categories as $key => $value) {
+        echo '<a class=\'dropdown-trigger btn invisible glabu\' href=\'#\' data-target=\'select-'.$value.'\'>'.$value.'</a>';
+      }
+
+      ?>
+
     </div>
+
 
   </form>
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> <!--Import jQuery before materialize.js-->
+  <!--<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>--> <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
+
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
-<script type="text/javascript" src="js/add_form_cam.js"></script>
-<script type="text/javascript" src="extras\noUiSlider\nouislider.min.js"></script>
+<script type="text/javascript" src="js/add_form.js"></script>
+<script type="text/javascript" src="js/forms.js"></script>
 
 
-
+<!-- Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de index.php)-->
 <script>
-
-  var Formats = {'1':'A', '2':'B', '3':'C','4':'D'};
-  var pipFormats = {'1':'Top', '2':'Okay', '3':'Mouaif','4':'Bof'};
-  var slider = document.getElementById('range_etat');
-  noUiSlider.create(slider, {
-   start: [1],
-   connect: true,
-   step: 1,
-   orientation: 'horizontal', // 'horizontal' or 'vertical'
-   range: {
-     'min': 1,
-     'max': 4
-   },
-   format: {
-   to: function(a){ return Formats[a]; },
-   from:function(value) {return value;}
-   },
-   pips: {
-     mode: 'values',
-       values: [1,2,3,4],
-      density:100,
-      stepped: true,
-      format: {
-      to: function(a){ return pipFormats[a]; },
-      }
-
-    }
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false});
   });
+  /*
+  // Or with jQuery
+  $('.dropdown-trigger').dropdown();
+  */
+</script>
 
-  slider.noUiSlider.on('update', function( values, handle ) {
-     var valeur = slider.noUiSlider.get();
 
-     });
-
-
-        </script>
-
+</script>
 
 </body>
 
