@@ -53,23 +53,27 @@
 
           </div>
 
-<canvas id="hidden_streaming_canvas" class="invisible"></canvas>
-<canvas id="hidden_snap_canvas" class="invisible"></canvas>
-<canvas id="hidden_rotate_canvas" class="invisible"></canvas>
-          <div id="video_container" class="col s8 m5 l5 center invisible" >
-                  <canvas id="video_streaming"></canvas>
-                  <canvas id="video_final" class=""></canvas>
+          <canvas id="hidden_streaming_canvas" class="invisible"></canvas>
+          <canvas id="hidden_snap_canvas" class="invisible"></canvas>
+          <canvas id="hidden_rotate_canvas" class="invisible"></canvas>
+<div id="cam_col" class="col s8 m5 l5 center" style="position:relative; height:200px" >
+
+
+                  <canvas id="video_streaming" class="invisible"></canvas>
+                  <canvas id="snap_final" class="invisible"></canvas>
                   <video id="video" autoplay class="invisible"></video>
+
+                  <div id="file_upload_container">
+                          <label for="file">
+                          <canvas id="image_final" class="invisible"></canvas>
+                          <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="btn-floating btn-large cam_btn_default  waves-effect"><i class="material-icons photo-controls">camera_alt</i></div>
+                        </label>
+                        <input id="file" type="file" accept="image/*" capture class="hidden">
+                  </div>
 
           </div>
 
-        <div id="file_upload_container" class="col s8 m5 l5 center" style="position:relative; height:200px">
-                <label for="file">
-                <canvas id="image_final" class="invisible"></canvas>
-                <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="btn-floating btn-large cam_btn_default  waves-effect"><i class="material-icons photo-controls">camera_alt</i></div>
-              </label>
-              <input id="file" type="file" accept="image/*" capture class="hidden">
-        </div>
+
 
           <div class="col s1" style="margin-left:-100px"> <!--oui je sais le css inline c'est mal mais j'arrivais pas à décaler le petit thumbnail et de toute façon c'est provisoire :o) -->
 
@@ -340,6 +344,10 @@
                  <i class="material-icons">thumb_up_alt</i>
                  Encoder
                </a>
+        			 <a class="waves-effect waves-light btn-small " onclick="download_img(this)" >
+                 <i class="material-icons"></i>
+                 Télécharger
+               </a>
         			</div>
               <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
 
@@ -361,7 +369,7 @@
 <?php
 
       foreach ($categories as $key => $value) {
-        echo '<a class=\'dropdown-trigger btn invisible glabu\' href=\'#\' data-target=\'select-'.$value.'\'>'.$value.'</a>';
+        echo '<a class=\'dropdown-trigger btn invisible\' href=\'#\' data-target=\'select-'.$value.'\'>'.$value.'</a>';
       }
 
       ?>
