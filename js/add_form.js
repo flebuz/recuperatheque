@@ -24,9 +24,14 @@ else {
   take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
   //var video = document.querySelector('video');
   //video.classList.add("invisible");
-  var video_container = document.getElementById("video_container");
-  video_container.classList.add("invisible");
+  var canvas_video = document.getElementById("video_streaming");
+  canvas_video.classList.add("invisible");
+  var file_upload_container = document.getElementById("file_upload_container");
+  file_upload_container.classList.remove("invisible");
+var canvas_final = document.getElementById('snap_final');
+  canvas_final.classList.add("invisible");
   upload_file_default_btn.classList.add("pulse");
+  is_camera_active = false;
 
 }
 
@@ -86,12 +91,10 @@ function init_getusermedia_simple() {
           is_camera_active = true;
           var file_upload_container = document.getElementById("file_upload_container");
           file_upload_container.classList.add("invisible");
-          var video_container = document.getElementById("video_container");
-          video_container.classList.remove("invisible");
 
           var canvas_streaming= document.getElementById('video_streaming');
           canvas_streaming.classList.remove("invisible");
-          var canvas_final = document.getElementById('video_final');
+          var canvas_final = document.getElementById('snap_final');
           canvas_final.classList.add("invisible");
 
           take_photo_btn.classList.remove("invisible");
@@ -108,10 +111,14 @@ function init_getusermedia_simple() {
         M.toast({html: err.name + ": " + err.message});
 
         take_photo_btn.classList.add("invisible");
-        var video_container = document.getElementById("video_container");
-        video_container.classList.add("invisible");
-        var upload_file_default_btn = document.getElementById("upload-file-default");
+        var canvas_video = document.getElementById("video_streaming");
+        canvas_video.classList.add("invisible");
+        var file_upload_container = document.getElementById("file_upload_container");
+        file_upload_container.classList.remove("invisible");
+      var canvas_final = document.getElementById('snap_final');
+        canvas_final.classList.add("invisible");
         upload_file_default_btn.classList.add("pulse");
+        is_camera_active = false;
       });
        // always check for errors at the end.
       //M.toast({html: "Utilisez une connexion sécurisée (https)"});
@@ -231,6 +238,8 @@ getOrientation(e.target.files[0],function(orientation) {
     //upload_file_default_btn.classList.remove("pulse");
     //upload_file_default_btn.classList.add("grey");
     upload_file_default_btn.classList.add("invisible");
+    var canvas_final = document.getElementById('snap_final');
+      canvas_final.classList.remove("invisible");
 
   }
 }
@@ -280,15 +289,15 @@ function DessineVignette(type, elem, orientation){
 
     var canvas2 = document.getElementById('hidden_snap_canvas'),
         ctx2 = canvas2.getContext('2d'),
-        canvas3 = document.getElementById('image_final'),
+        canvas3 = document.getElementById('snap_final'),
         ctx3 = canvas3.getContext('2d'),
         vw = elem.width,
         vh = elem.height;
 
-        canvas2.width=200;
-        canvas2.height=200;
-        canvas3.width=200;
-        canvas3.height=200;
+        canvas2.width=300;
+        canvas2.height=300;
+        canvas3.width=300;
+        canvas3.height=300;
 
 //on calcule le plus grand carré au milieu de l'image
     var dimension = Math.min(vw, vh);
@@ -296,7 +305,7 @@ function DessineVignette(type, elem, orientation){
     var sy= (vh - dimension)/2;
 
 //on crop le plus grand carré au milieu de l'image et on redimensionne dans un carré de 200x200
-    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, 200, 200);
+    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, 300, 300);
 
 //on utilise l'orientation EXIF de l'image (le cas échéant) pour réorienter le canevas vers le haut puis on dessine
   if (orientation==6) {
@@ -336,10 +345,10 @@ else    {
     var canvas_streaming= document.getElementById('video_streaming'),
         canvas1 = document.getElementById('hidden_snap_canvas'),
         ctx1 = canvas1.getContext('2d'),
-        canvas2 = document.getElementById('video_final'),
+        canvas2 = document.getElementById('snap_final'),
         ctx2 = canvas2.getContext('2d');
-        canvas2.width=200;
-        canvas2.height=200;
+        canvas2.width=300;
+        canvas2.height=300;
 
         var vw = video.videoWidth,
             vh = video.videoHeight;
@@ -355,7 +364,7 @@ else    {
     //Dessine l'image video dans notre Canvas
       canvas_streaming.classList.add("invisible");
       canvas2.classList.remove("invisible");
-    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 200, 200);
+    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 300, 300);
     return canvas2.toDataURL('image/png');
   }
 
@@ -405,6 +414,12 @@ function DrawVideoOnCanvas(){
     setTimeout(DrawVideoOnCanvas,20);
 }
 
+download_img = function(el) {
+
+  var canvas_final = document.getElementById('snap_final');
+  var image = canvas_final.toDataURL("image/jpeg", 0.9);
+  el.href = image;
+};
 
 
 video.addEventListener('play', function(){
