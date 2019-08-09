@@ -63,16 +63,8 @@ max-height: 200px;
   z-index: 1;
 }
 
-#canvas {
-  position: relative;
-
-  left:0;
-   right:0;
-
-   margin-left: auto;
-   margin-right: auto;
-
-
+#snap_final {
+  height: 200 !important;
 
 /*  max-height: 225px;*/
   z-index: 10;
