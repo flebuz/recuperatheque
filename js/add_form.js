@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 function init_materialize()
 {
   var elems = document.querySelectorAll('.dropdown-trigger');
-  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false});
+  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:0});
 
   var elems2 = document.querySelectorAll('.fixed-action-btn');
    var instances = M.FloatingActionButton.init(elems2);
@@ -419,7 +419,7 @@ function DrawVideoOnCanvas(){
     else
     { div_width = canvas2.offsetWidth;}
 
-    
+
 
 
     // ...then set the internal size to match
