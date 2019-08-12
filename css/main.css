@@ -137,21 +137,3 @@ display: flex
 
   }
 }
-
-/* ----- INPUT RANGE ----- */
-/*Emulation de l'apparence des tick marks de nouislider (à toiletter puis supprimer nouislider.css)*/
-           .noUi-pips-horizontal {
-
-    padding-top: 0px !important;
-    height: auto;
-    top: 100%;
-    left: auto !important;
-    width: 96% !important;
-    right: auto;
-}
-
-.noUi-pips {
-
-    position: relative;
-    color: #999;
-    }
