@@ -1,46 +1,63 @@
 //JS pour la page add_form.php
-console.log(adapter.browserDetails.browser);
+
+window.addEventListener('DOMContentLoaded', (event) => {
+
+    var take_photo_btn = document.querySelector('#take-photo');
+    var upload_file_default_btn = document.querySelector('#upload-file-default');
+    var file_upload = document.getElementById('file');
+    var video = document.querySelector("#video");
+    var is_camera_active = false;
+    const ShutterSound = new Audio("/assets/inspectorj__camera-shutter-fast-a.wav"); //On prépare le son "Camera Shutter, Fast, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
+
+    take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
+    file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
+    video.addEventListener("click", PrisePhoto);
+
+    init_materialize();
+
+    if (hasGetUserMedia()) {
+      //M.toast({html: "Tip top"});
+      init_getusermedia_simple();
+
+    }
 
 
-var take_photo_btn = document.querySelector('#take-photo');
-var upload_file_default_btn = document.querySelector('#upload-file-default');
-var file_upload = document.getElementById('file');
-//var play_btn = document.getElementById('play');
-//var stop_btn = document.getElementById('stop');
-var is_camera_active = false;
-const ShutterSound = new Audio("/assets/inspectorj__camera-shutter-fast-a.wav"); //On prépare le son "Camera Shutter, Fast, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
-var controls_div =  document.getElementById('controls'); // ? Obsolète je pense ?
+    else {
 
-if (hasGetUserMedia()) {
-  //M.toast({html: "Tip top"});
-  init_getusermedia_simple();
+      console.log("getUserMedia() n'est pas supporté par votre navigateur :(");
+
+      take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
+      //var video = document.querySelector('video');
+      //video.classList.add("invisible");
+      var canvas_video = document.getElementById("video_streaming");
+      canvas_video.classList.add("invisible");
+      var file_upload_container = document.getElementById("file_upload_container");
+      file_upload_container.classList.remove("invisible");
+    var canvas_final = document.getElementById('snap_final');
+      canvas_final.classList.add("invisible");
+      var upload_file_default_btn = document.querySelector('#upload-file-default');
+      upload_file_default_btn.classList.add("pulse");
+      is_camera_active = false;
+
+    }
+
+
+});
+
+//console.log(adapter.browserDetails.browser);
+
+
+function init_materialize()
+{
+  var elems = document.querySelectorAll('.dropdown-trigger');
+  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false});
+
+  var elems2 = document.querySelectorAll('.fixed-action-btn');
+   var instances = M.FloatingActionButton.init(elems2);
 
 }
 
 
-else {
-
-  console.log("getUserMedia() n'est pas supporté par votre navigateur :(");
-  take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
-  //var video = document.querySelector('video');
-  //video.classList.add("invisible");
-  var canvas_video = document.getElementById("video_streaming");
-  canvas_video.classList.add("invisible");
-  var file_upload_container = document.getElementById("file_upload_container");
-  file_upload_container.classList.remove("invisible");
-var canvas_final = document.getElementById('snap_final');
-  canvas_final.classList.add("invisible");
-  upload_file_default_btn.classList.add("pulse");
-  is_camera_active = false;
-
-}
-
-
-take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
-file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
-
-var video = document.querySelector("#video");
-video.addEventListener("click", PrisePhoto);
 
 
 
@@ -96,7 +113,7 @@ function init_getusermedia_simple() {
           canvas_streaming.classList.remove("invisible");
           var canvas_final = document.getElementById('snap_final');
           canvas_final.classList.add("invisible");
-
+          var take_photo_btn = document.querySelector('#take-photo');
           take_photo_btn.classList.remove("invisible");
           take_photo_btn.classList.add("pulse");
           take_photo_btn.classList.remove("grey");
@@ -110,6 +127,7 @@ function init_getusermedia_simple() {
         console.log(err.name + ": " + err.message);
         M.toast({html: err.name + ": " + err.message});
 
+        var take_photo_btn = document.querySelector('#take-photo');
         take_photo_btn.classList.add("invisible");
         var canvas_video = document.getElementById("video_streaming");
         canvas_video.classList.add("invisible");
@@ -117,6 +135,7 @@ function init_getusermedia_simple() {
         file_upload_container.classList.remove("invisible");
       var canvas_final = document.getElementById('snap_final');
         canvas_final.classList.add("invisible");
+        var upload_file_default_btn = document.querySelector('#upload-file-default');
         upload_file_default_btn.classList.add("pulse");
         is_camera_active = false;
       });
@@ -352,8 +371,8 @@ else    {
 
         var vw = video.videoWidth,
             vh = video.videoHeight;
-        canvas1.width= vw;
-        canvas1.height= vh;
+        canvas1.width = vw;
+        canvas1.height = vh;
 
         ctx1.drawImage(video, 0, 0, vw, vh, 0, 0, vw, vh);
 
@@ -372,14 +391,6 @@ else    {
 
 }
 
-function drawRotated(degrees, ctx, canvas, image){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.save();
-    ctx.translate(canvas.width/2,canvas.height/2);
-    ctx.rotate(degrees*Math.PI/180);
-    ctx.drawImage(image,-image.width/2,-image.width/2);
-    ctx.restore();
-}
 
 
 function DrawVideoOnCanvas(){
@@ -392,12 +403,28 @@ function DrawVideoOnCanvas(){
 
     var vw = video.videoWidth,
         vh = video.videoHeight;
+
+    var div_width;
     canvas1.width= vw;
     canvas1.height= vh;
 
     ctx1.drawImage(video, 0, 0, vw, vh, 0, 0, vw, vh);
-    canvas2.width= 200;
-    canvas2.height= 200;
+
+    canvas2.style.width ='100%';
+    canvas2.style.height='';
+
+    if (canvas2.offsetWidth > 400)
+    {div_width = 400;
+    canvas2.style.width ='400'}
+    else
+    { div_width = canvas2.offsetWidth;}
+
+    
+
+
+    // ...then set the internal size to match
+    canvas2.width  = div_width;
+    canvas2.height = div_width;
 
     var dimension = Math.min(vw, vh);
 
@@ -408,7 +435,7 @@ function DrawVideoOnCanvas(){
 
 
 
-      ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 200, 200);
+      ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, div_width, div_width);
       };
     //context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, Math.floor(200*ratio), 200);
     setTimeout(DrawVideoOnCanvas,20);
