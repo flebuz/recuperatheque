@@ -1,6 +1,22 @@
 // Fonctions communes à tous les formulaires (add_form.php, edit_form.php, sell_form.php)
 
 
+
+
+function expand(id_to_show, id_to_hide)
+{
+  var elem_to_show= document.getElementById(id_to_show);
+
+  elem_to_show.classList.remove("invisible");
+  elem_to_show.classList.add("visible");
+
+
+  var elem_to_hide = document.getElementById(id_to_hide);
+  elem_to_hide.classList.add("invisible");
+  return false;
+}
+
+
 // Script pour inc/décrementer la valeur d'un élément (utilisé pour "pieces")
 
   function Increment(id, increment, min){
