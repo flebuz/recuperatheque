@@ -27,7 +27,7 @@
 
 </head>
 
-<body style="">
+<body class="disable-dbl-tap-zoom">
   <div class="header">
     <a href="#!" class="breadcrumb">Récupérathèque</a>
     <a href="#!" class="breadcrumb">Catalogue</a>
@@ -286,6 +286,16 @@
 
            </div>
 
+           <div id="row_prix" class ="row" >
+              <div class="input-field col s7 m4">
+                <i class="fas fa-coins prefix"></i>
+                <input id="prix" type="number" style="text-align: center">
+                <label for="prix">Prix suggéré</label>
+              </div>
+
+              <div class="input-field col s5"><p>(par pièce)</p>
+            </div>
+          </div>
 
 
   <div id="plusdedetails" class="row">
