@@ -240,11 +240,11 @@
 
             <div class="input-field col s9" id="range_div" >
               <i class="fas fa-weight-hanging prefix"></i>
-              <input type="range" id="mesure" min="0.1" max="10" value="1.0" step="0.1" name="mesure" oninput="updateTextInput('indicateur_range', this.value);" />
+              <input type="range" id="poids" min="0.1" max="10" value="1.0" step="0.1" name="mesure" oninput="updateTextInput('indicateur_poids', this.value);" />
             </div>
 
             <div class="input-field col s2 m1">
-            <input type="number" id="indicateur_range" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
+            <input type="number" id="indicateur_poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
             </div>
             <div class="input-field col s1">
               <p class="no-select">kg</p>
@@ -269,7 +269,7 @@
 
              <div class="input-field col s7 m6 offset-s1" id="etat">
 
-<input type="range" class="browser-default" id="range_etat" value="1"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
+<input type="range" class="browser-default" id="range_etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
 
 	<div class="noUi-pips noUi-pips-horizontal">
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 0.00000%"></div>
@@ -287,10 +287,10 @@
            </div>
 
            <div id="row_prix" class ="row" >
-              <div class="input-field col s7 m4">
+              <div class="input-field col s4 m2">
                 <i class="fas fa-coins prefix"></i>
                 <input id="prix" type="number" style="text-align: center">
-                <label for="prix">Prix suggéré</label>
+                <label for="prix">Prix</label>
               </div>
 
               <div class="input-field col s5"><p>(par pièce)</p>
