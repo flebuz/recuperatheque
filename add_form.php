@@ -92,7 +92,7 @@
   <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
   <!--Les tabs reprenant les différentes catégories de matériaux -->
           <?php
-          $categories= array('bois','metal','papier','plastique','verre','construction','textile','quincaillerie','mobilier','électronique','insolite');
+          $categories= array('bois','métal','papier','plastique','verre','construction','textile','quincaillerie','mobilier','électronique','insolite');
           $sous_catégories= array(
 
             'bois' => array('bois médium','bois massif','bois 3 plis','OSB'),
@@ -425,9 +425,9 @@
 </body>
 
 <?php
-//fonction pour abréger les noms des champs
+//fonction pour  supprimer tous les caractères spéciaux pour pouvoir utiliser des noms de matériaux stockés dans la bdd comme ids d'éléments html
 function abbrev($string){
-		$result1 = str_replace( array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']'), '', $string);
+		$result1 = str_replace( array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']', ' '), '', $string);
     return str_replace( array('à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ', 'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã','Ä', 'Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ','Ö', 'Ù','Ú','Û','Ü', 'Ý'), array('a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n', 'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A', 'C', 'E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O', 'U','U','U','U', 'Y'), $result1);
 	}
 
