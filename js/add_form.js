@@ -2,6 +2,8 @@
 
 window.addEventListener('DOMContentLoaded', (event) => {
 
+
+
     var take_photo_btn = document.querySelector('#take-photo');
     var upload_file_default_btn = document.querySelector('#upload-file-default');
     var file_upload = document.getElementById('file');
