@@ -412,8 +412,9 @@
 
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
-<script type="text/javascript" src="js/add_form.js"></script>
 <script type="text/javascript" src="js/forms.js"></script>
+<script type="text/javascript" src="js/add_form.js"></script>
+
 
 
 <!-- Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de index.php)-->
