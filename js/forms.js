@@ -1,24 +1,55 @@
 // Fonctions communes à tous les formulaires (add_form.php, edit_form.php, sell_form.php)
 
 
+//pour mettre à jour la valeur d'un champ sur la page
+function set_value(id_to_update, value)
+{
+  document.getElementById(id_to_update).value= value;
+  console.log(value);
+}
 
-
-function expand(id_to_show, id_to_hide)
+//fonction expand affiche le div #id_to_show, cache le div #id_to_hide et applique une animation d'entrée
+// en fonction de la variable direction (slide down, slide right, ou fade in (par défaut))
+function expand(id_to_show, id_to_hide, direction)
 {
   var elem_to_show= document.getElementById(id_to_show);
 
   elem_to_show.classList.remove("invisible");
-  elem_to_show.classList.add("visible");
 
+if (direction=='down')
+{ elem_to_show.classList.add("visible-slide-down");}
+else if (direction=='right')
+{ elem_to_show.classList.add("visible-slide-right");}
+else
+{ elem_to_show.classList.add("visible");}
 
+if (id_to_hide !== null && id_to_hide !== '')
+{
   var elem_to_hide = document.getElementById(id_to_hide);
   elem_to_hide.classList.add("invisible");
+}
   return false;
 }
 
+//cache l'élément dont l'id est fourni
+function hide(id_to_hide)
+{if (id_to_hide !== null && id_to_hide !== '')
+{
+  var elem_to_hide = document.getElementById(id_to_hide);
+  elem_to_hide.classList.add("invisible");
+}}
 
-// Script pour inc/décrementer la valeur d'un élément (utilisé pour "pieces")
+//fonction pour vérifier si il faut faire apparaitre ou disparaitre un div en fonction de si la case est cochée
+function check_expand_hide(elem, id_to_show, id_to_hide, direction)
+{
+  if (elem.checked== true)
+  {expand(id_to_show, '', direction)}
+  else if (elem.checked==false)
+  {hide(id_to_hide)}
+}
 
+
+// fonction pour inc/décrementer la valeur d'un élément (utilisé pour "pieces")
   function Increment(id, increment, min){
 
     var value= parseInt(document.getElementById(id).value);
