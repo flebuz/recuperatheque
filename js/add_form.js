@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var file_upload = document.getElementById('file');
     var video = document.querySelector("#video");
     var is_camera_active = false;
-    const ShutterSound = new Audio("/assets/inspectorj__camera-shutter-fast-a.wav"); //On prépare le son "Camera Shutter, Fast, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
+
 
     take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
     file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
@@ -116,7 +116,7 @@ function init_getusermedia_simple() {
           var take_photo_btn = document.querySelector('#take-photo');
           take_photo_btn.classList.remove("invisible");
           take_photo_btn.classList.add("pulse");
-          take_photo_btn.classList.remove("grey");
+          take_photo_btn.classList.remove("inactive");
 
 
 
@@ -202,7 +202,7 @@ function SwitchCameraActiveState()
 {
   if (is_camera_active)
   {
-
+  const ShutterSound = new Audio("assets/inspectorj__camera-shutter-fast-a.wav"); //On prépare le son "Camera Shutter, Fast, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
    ShutterSound.play(); //jouer le son seulement quand on prend la photo
    StopVideo();
  }
@@ -229,9 +229,9 @@ function PrisePhoto(e){
      DessineVignette('videosnap');
 
       SwitchCameraActiveState();
+      var take_photo_btn = document.querySelector('#take-photo');
       take_photo_btn.classList.remove("pulse");
-      //take_photo_btn.classList.remove("red");
-      take_photo_btn.classList.add("grey");
+      take_photo_btn.classList.add("inactive");
 
 
 
