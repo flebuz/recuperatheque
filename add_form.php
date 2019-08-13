@@ -103,7 +103,7 @@
           // REQUETE MYSQL ICI
           // remplir deux tableaux avec les catégories et les sous-catégories
           // --------------------
-          
+
 
           //shuffle ($categories);
 
@@ -402,7 +402,6 @@
 
   <!-- ligne requise par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
   <script>
-    var instance = M.Tabs.init(el, {swipeable : true});
   </script>
 
   <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -415,20 +414,12 @@
 
 
 
-<!-- Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de index.php)-->
+  <!-- On active le composant Tabs -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-
+    var el;
+    var instance = M.Tabs.init(el, {swipeable : true});
   });
-  /*
-  // Or with jQuery
-  $('.dropdown-trigger').dropdown();
-  */
-
-
-</script>
-
-
 </script>
 
 </body>
