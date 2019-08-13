@@ -51,6 +51,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 function init_materialize()
 {
+
   var elems = document.querySelectorAll('.dropdown-trigger');
   var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:0});
 
