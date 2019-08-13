@@ -12,7 +12,12 @@
         echo "</td>";
         echo "</tr>";
     } ?>
-</table>
+  </table>
+
+  // --------------------
+  // REQUETE MYSQL ICI
+  // Encoder les données dans la bdd
+  // --------------------
 
 </body>
 </html>
