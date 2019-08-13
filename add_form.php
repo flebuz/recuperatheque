@@ -30,7 +30,7 @@
 <body class="disable-dbl-tap-zoom">
   <div class="header">
     <a href="#!" class="breadcrumb">Récupérathèque</a>
-    <a href="#!" class="breadcrumb">Catalogue</a>
+    <a href="#!" class="breadcrumb">Encoder un objet</a>
   </div>
 
   <div class="container" id="cam_container">
@@ -103,7 +103,7 @@
 
 
           foreach ($categories as $key => $value) {
-            echo '<li class="tab col s3 l2"><a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value).'\'><div class=\'border-div\'>'.$value.'</div></a></li>';
+            echo '<li class="tab col s3 l2"><a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value)."' onclick= \"set_value('categorie','".abbrev($value)."')\"".'\'><div class=\'border-div\'>'.$value.'</div></a></li>';
           }
           ?>
 </ul>
@@ -211,8 +211,26 @@
 
 
               <!-- Début du formulaire-->
-              <form name="formulaire_encodage" id="formulaire_encodage" method="post" action="?">
+              <form name="formulaire_encodage" id="formulaire_encodage" action="add.php" method="post" action="?">
 
+
+                <input id="image_url" name="image_url" type="text" value="none" class="invisible">
+
+                <div id="categorisation" class ="row" >
+                   <div class="col s5 m3">
+                     <input id="categorie" name="cat" type="text" disabled>
+
+                   </div>
+
+                   <div class="col s1">
+                      <p>></p>
+                   </div>
+
+                   <div class="col s5 m3">
+                     <input id="souscategorie" name="souscat" type="text" disabled>
+
+                   </div>
+                 </div>
 
         <div id="row_pieces" class ="row" >
 
@@ -224,7 +242,7 @@
             <div class="btn plusminus waves-effect" onclick="Increment('pieces', -1, 1)"><span class="no-select">-</span></div>
           </div>
             <div class="input-field col s2 m1">
-              <input type="number" id="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; ">
+              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; ">
             </div>
             <div class="input-field col s1 nopadding">
               <div class="btn plusminus waves-effect no-select" onclick="Increment('pieces', 1, 1)"><span class="no-select">+</span></div>
@@ -240,11 +258,11 @@
 
             <div class="input-field col s9" id="range_div" >
               <i class="fas fa-weight-hanging prefix"></i>
-              <input type="range" id="poids" min="0.1" max="10" value="1.0" step="0.1" name="mesure" oninput="updateTextInput('indicateur_poids', this.value);" />
+              <input type="range" id="poids" min="0.1" max="10" value="1.0" step="0.1" name="poids" oninput="updateTextInput('indicateur_poids', this.value);" />
             </div>
 
             <div class="input-field col s2 m1">
-            <input type="number" id="indicateur_poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
+            <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
             </div>
             <div class="input-field col s1">
               <p class="no-select">kg</p>
@@ -255,7 +273,7 @@
         <div id="row_tags" class ="row" >
            <div class="input-field col s12">
              <i class="fas fa-tags prefix"></i>
-             <input id="tags" type="text">
+             <input id="tags" name="tags" type="text">
              <label for="tags">Ajouter des tags :</label>
            </div>
 
@@ -269,7 +287,7 @@
 
              <div class="input-field col s7 m6 offset-s1" id="etat">
 
-<input type="range" class="browser-default" id="range_etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
+<input type="range" class="browser-default" id="range_etat" name="etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
 
 	<div class="noUi-pips noUi-pips-horizontal">
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 0.00000%"></div>
@@ -289,7 +307,7 @@
            <div id="row_prix" class ="row" >
               <div class="input-field col s4 m2">
                 <i class="fas fa-coins prefix"></i>
-                <input id="prix" type="number" style="text-align: center">
+                <input id="prix" name="prix" type="number" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
                 <label for="prix">Prix</label>
               </div>
 
@@ -298,27 +316,45 @@
           </div>
 
 
+
   <div id="plusdedetails" class="row">
     <div class="col s12">
-      <div class="" style="margin-top: 1rem;"><a href="" onclick="return expand('champs_facultatifs', 'plusdedetails');" style="color: #6f6972;"><i class="fas fa-plus-circle separator-label prefix"></i>&nbsp;Plus de détails</a></div>
+      <div class="" style="margin-top: 1rem;"><a href="" onclick="return expand('champs_facultatifs', 'plusdedetails', 'down');" style="color: #6f6972;"><i class="fas fa-plus-circle separator-label prefix"></i>&nbsp;Plus de détails</a></div>
 
     </div>
   </div>
 
 
-<div id="champs_facultatifs" class="row invisible">
+<div id="champs_facultatifs" class="invisible">
+  <div class="row">
   <div class="input-field col s12 m6">
     <i class="fas fa-info-circle prefix"></i>
-    <input id="remarques" type="text">
+    <input id="remarques" name="remarques" type="text">
     <label for="remarques">Ajouter des remarques :</label>
   </div>
   <div class="input-field col s12 m6">
     <i class="fas fa-ruler prefix"></i>
-    <input id="dimensions" type="text">
+    <input id="dimensions" name="dimensions" type="text">
     <label for="dimensions">Dimensions précises :</label>
   </div>
 </div>
+    <div class="row">
+      <div class="input-field col s5 m3">
 
+            <label>
+                <input type="checkbox" name="externe" class="filled-in" onchange="check_expand_hide(this, 'champ-localisation', 'champ-localisation', 'right');"/>
+                <span>Hors les murs?</span>
+              </label>
+
+      </div>
+      <div id="champ-localisation" class="input-field col s7 m6 invisible">
+        <i class="fas fa-map-marked-alt prefix"></i>
+        <input id="localisation" name="localisation" type="text">
+        <label for="localisation">Localisation:</label>
+      </div>
+
+    </div>
+</div>
 
 
 
