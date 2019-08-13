@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 06 août 2019 à 10:48
+-- Généré le :  mar. 13 août 2019 à 18:31
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -31,8 +31,8 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `catalogue`;
 CREATE TABLE IF NOT EXISTS `catalogue` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `categorie` int(11) NOT NULL,
-  `sous_categorie` int(11) NOT NULL,
+  `ID_categorie` int(11) NOT NULL,
+  `ID_souscategorie` int(11) NOT NULL,
   `nombre` int(11) NOT NULL,
   `mesure` varchar(255) NOT NULL,
   `état` int(11) NOT NULL,
@@ -40,20 +40,27 @@ CREATE TABLE IF NOT EXISTS `catalogue` (
   `description` text NOT NULL,
   `date_ajout` date NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `catalogue`
 --
 
-INSERT INTO `catalogue` (`ID`, `categorie`, `sous_categorie`, `nombre`, `mesure`, `état`, `tags`, `description`, `date_ajout`) VALUES
-(1, 0, 0, 5, '2.5m', 4, 'tasseau, fin, structure', 'des longs tasseaux pas utilisés de chez brico', '2019-07-09'),
-(2, 0, 0, 12, '40cm x 32cm x 1cm', 3, 'mdf, plaques', 'plein de plaques de mdf récupérés, s’effrite un peu.', '2019-06-11'),
-(3, 0, 0, 1, '2m x 1.6m', 5, 'transparent, blanc, translucide', 'super belle plaque de plexiglas, non-griffé, parfais pour découpe laser.', '2019-05-18'),
-(4, 0, 0, 1, '1.8m x 0.6m', 2, 'cassé, coupant, géométrique', 'un miroir cassé', '2019-04-02'),
-(5, 0, 0, 12, '1m', 3, 'tube, tubular, conduit, électricité', 'des fins tubes en PVC pour fixer des câbles électriques', '2019-07-03'),
-(6, 0, 0, 2, '1.2m', 4, 'néon, tube', 'tubes néons en bonne état', '2019-06-21'),
-(7, 0, 0, 1, '50L', 5, 'turquoise', 'peinture murale turquoise, 3 couches', '2019-05-05');
+INSERT INTO `catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `nombre`, `mesure`, `état`, `tags`, `description`, `date_ajout`) VALUES
+(1, 12, 119, 3200, '4cm x 4cm', 3, 'attache, flexible, flex, joint', 'Lot. Fonction originale: équerre pour carton. A partir de 200 pièces.', '2019-08-06'),
+(2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 5, 'sapin, baguette, tasseau, rabotté', 'Lot à prendre dans son entièretée', '2019-08-06'),
+(3, 18, 125, 1, '10m', 3, 'lance, incendie, tuyau, rouge, eau', 'Lance à incendie sur support raccordée à adaptateur. 10m de longueur.', '2019-08-07'),
+(4, 17, 124, 1, '38cm x 25cm', 2, 'coussin, bureau, chaise, bleu, tissus', 'Ancien dossier de chaise de bureau.', '2019-08-08'),
+(5, 15, 85, 20, '5mm x 250mm', 4, 'cheville, plastique, blanc', '', '2019-02-14'),
+(6, 12, 67, 1, '50.3cm x 19.5xm', 2, 'rayé, transparent, translucide, reconditionnable', '', '2019-04-02'),
+(7, 18, 125, 10, '20cm', 4, 'blanc, rouge, orange, cire, feu', 'Lot de 10 bougies de tailles et couleurs différentes.', '2019-05-23'),
+(8, 1, 1, 3, '181.5cm x 4.5cm x 2.3cm', 3, 'gîte, poutre, traité, vert, sapin', 'Tranches non traitées.', '2019-06-06'),
+(9, 4, 17, 25, '', 3, 'enfant, couleur, coloriage, gallery ', 'Lot de 25.', '2019-06-17'),
+(10, 3, 13, 1, '10.5cm x 14cm', 4, 'aurora, carnet, copie', 'Carnet autocopiant de 50 pages détachables.', '2019-06-17'),
+(11, 18, 125, 1, '35cm x 35cm', 3, 'feu, gaz, plat, chauffe, alimentation', 'Chauffe plat au gaz.', '2019-07-30'),
+(12, 16, 94, 7, '1m', 4, 'electrique, alimentation, plastique', '', '2019-03-22'),
+(13, 15, 86, 2, '15cm x 8cm x 8cm', 3, 'grand, oversized, attache, metal', '', '2019-03-20'),
+(14, 8, 115, 12, '50cm x 50cm', 2, 'carpette, épais, carré, bleu, paillaisson, tapis', 'Carrés de carpettes de 2 coloris différents.', '2019-06-20');
 
 -- --------------------------------------------------------
 
@@ -95,23 +102,23 @@ INSERT INTO `categorie` (`ID`, `nom`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `sous-categorie`
+-- Structure de la table `souscategorie`
 --
 
-DROP TABLE IF EXISTS `sous-categorie`;
-CREATE TABLE IF NOT EXISTS `sous-categorie` (
+DROP TABLE IF EXISTS `souscategorie`;
+CREATE TABLE IF NOT EXISTS `souscategorie` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
   `unite` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=95 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=126 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `sous-categorie`
+-- Déchargement des données de la table `souscategorie`
 --
 
-INSERT INTO `sous-categorie` (`ID`, `nom`, `ID_categorie`, `unite`) VALUES
+INSERT INTO `souscategorie` (`ID`, `nom`, `ID_categorie`, `unite`) VALUES
 (1, 'Massif', 1, 'kg'),
 (2, 'Contreplaqué/Multiplex', 1, 'kg'),
 (3, 'Aggloméré', 1, 'kg'),
@@ -200,7 +207,25 @@ INSERT INTO `sous-categorie` (`ID`, `nom`, `ID_categorie`, `unite`) VALUES
 (91, 'Vidéo', 16, 'pc'),
 (92, 'Audio', 16, 'pc'),
 (93, 'Micro controleur/Micro ordinateur', 16, 'pc'),
-(94, 'Cable', 16, 'pc');
+(94, 'Cable', 16, 'pc'),
+(108, 'Autre', 1, 'no'),
+(109, 'Autre', 2, 'no'),
+(110, 'Autre', 3, 'no'),
+(111, 'Autre', 4, 'no'),
+(112, 'Autre', 5, 'no'),
+(113, 'Autre', 6, 'no'),
+(114, 'Autre', 7, 'no'),
+(115, 'Autre', 8, 'no'),
+(116, 'Autre', 9, 'no'),
+(117, 'Autre', 10, 'no'),
+(118, 'Autre', 11, 'no'),
+(119, 'Autre', 12, 'no'),
+(120, 'Autre', 13, 'no'),
+(121, 'Autre', 14, 'no'),
+(122, 'Autre', 15, 'no'),
+(123, 'Autre', 16, 'no'),
+(124, 'Autre', 17, 'no'),
+(125, 'Autre', 18, 'no');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
