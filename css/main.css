@@ -109,3 +109,38 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   color: #909090;
   padding-right: 6px;
 }
+
+
+/*----- FORMS -----*/
+.tabs
+{
+display: flex
+}
+
+@media (min-width: 0px) {
+  .quasi-fullwidth  {
+    margin: 0 auto 20px;
+    width:100%;
+
+  }
+}
+
+@media (min-width: 992px) {
+  .quasi-fullwidth  {
+  margin: 0 auto 20px;
+    width:85%;
+
+  }
+}
+
+@media (min-width: 1200px) {
+  .quasi-fullwidth  {
+      margin: 0 auto 20px;
+    width:70%;
+
+  }
+}
+
+.disable-dbl-tap-zoom {
+  touch-action: manipulation;
+}

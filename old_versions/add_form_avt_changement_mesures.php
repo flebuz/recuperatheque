@@ -18,8 +18,6 @@
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-
-  <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
 
@@ -27,10 +25,10 @@
 
 </head>
 
-<body class="disable-dbl-tap-zoom">
+<body style="">
   <div class="header">
     <a href="#!" class="breadcrumb">Récupérathèque</a>
-    <a href="#!" class="breadcrumb">Encoder un objet</a>
+    <a href="#!" class="breadcrumb">Catalogue</a>
   </div>
 
   <div class="container" id="cam_container">
@@ -84,39 +82,43 @@
 
 </div>
 
-
-<div class="quasi-fullwidth" style="background-color:white">
+<div class="quasi-fullwidth">
 
 
 <div style="position:relative"><ul class="tabs" >
   <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
   <!--Les tabs reprenant les différentes catégories de matériaux -->
           <?php
-          $categories= array('bois','métal','papier','plastique','verre','construction','textile','quincaillerie','mobilier','électronique','insolite');
+          $categories= array('bois','metal','papier','plastique','verre','construction','textile','quincaillerie','mobilier','électronique','insolite');
           $sous_catégories= array(
 
             'bois' => array('bois médium','bois massif','bois 3 plis','OSB'),
             'metal' => array('acier','acier galvanisé','fer à beton','aluminium', 'laiton')
           );
 
-          // --------------------
-          // REQUETE MYSQL ICI
-          // remplir deux tableaux avec les catégories et les sous-catégories
-          // --------------------
-
-
           //shuffle ($categories);
 
 
           foreach ($categories as $key => $value) {
-            echo '<li class="tab col s3 l2"><a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value)."' onclick= \"set_value('categorie','".abbrev($value)."')\"".'\'><div class=\'border-div\'>'.$value.'</div></a></li>';
+            echo '<li class="tab col s3 l2"><a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value).'\'><div class=\'border-div\'>'.$value.'</div></a></li>';
           }
           ?>
 </ul>
 </div>
+      </div>
 
+      <!-- Script requis par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
+      <script>
+        var instance = M.Tabs.init(el, {swipeable : true});
 
+        /*
+        // Or with jQuery
+        $(document).ready(function(){
+          $('.tabs').tabs();
+        });
+        */
 
+      </script>
 
       <!-- Ici les sous-catégories de matériaux qui s'affichent des les menus déroulants-->
       <ul id="select-bois" class="dropdown-content">
@@ -206,156 +208,127 @@
 
 
               <!-- Début du formulaire-->
-              <form name="formulaire_encodage" id="formulaire_encodage" action="add.php" method="post" action="?">
+              <form name="formulaire_encodage" id="formulaire_encodage" method="post" action="?">
+      <div class="col s12" style="">
 
 
-                <input id="image_url" name="image_url" type="text" value="none" class="invisible">
 
-                <div id="categorisation" class ="row" >
-                   <div class="col s5 m3">
-                     <input id="categorie" name="cat" type="text" disabled>
+            <div class="row" id="row_range">
 
-                   </div>
+              <div class="range-field col s5" id="range_div" >
+                <input type="range" id="mesure" min="0.1" max="10" value="1.0" step="0.1" name="mesure" oninput="updateTextInput('indicateur_range', this.value);" />
+              </div>
 
-                   <div class="col s1">
-                      <p>></p>
-                   </div>
+              <div class="input-field col s2" style="margin-top: 0px;">
+              <input type="number" id="indicateur_range" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
+              <p>kg</p>
+              </div>
 
-                   <div class="col s5 m3">
-                     <input id="souscategorie" name="souscat" type="text" disabled>
+                    <div class="col s2 l2">
+                      <label>
+                        <input name="unit" type="radio" value="kg" checked />
+                        <span class="couleur3-text">kg</span>
+                      </label>
+                    </div>
 
-                   </div>
-                 </div>
+                    <div class="col s2 l2">
+                      <label>
+                        <input name="unit" type="radio" value="m2"/>
+                        <span class="couleur3-text">m²</span>
+                      </label>
+                    </div>
 
-        <div id="row_pieces" class ="row" >
+                    <div class="col s2 l2">
+                      <label>
+                        <input name="unit" type="radio" value="l"/>
+                        <span class="couleur3-text">l</span>
+                      </label>
+                    </div>
 
-          <div class="input-field col s2 m1 ">
-            <i class="fas fa-cube prefix"></i>
-          </div>
-          <div class="input-field col s2 m1 nopadding" style="text-align: right;">
-
-            <div class="btn plusminus waves-effect" onclick="Increment('pieces', -1, 1)"><span class="no-select">-</span></div>
-          </div>
-            <div class="input-field col s2 m1">
-              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; ">
-            </div>
-            <div class="input-field col s1 nopadding">
-              <div class="btn plusminus waves-effect no-select" onclick="Increment('pieces', 1, 1)"><span class="no-select">+</span></div>
-            </div>
-
-            <div class="input-field col s3 m2">
-              <label for="pieces" class="couleur3-text no-select">pièce(s)</label>
-            </div>
-
-        </div>
-
-        <div id="row_range" class="row">
-
-            <div class="input-field col s9" id="range_div" >
-              <i class="fas fa-weight-hanging prefix"></i>
-              <input type="range" id="poids" min="0.1" max="10" value="1.0" step="0.1" name="poids" oninput="updateTextInput('indicateur_poids', this.value);" />
-            </div>
-
-            <div class="input-field col s2 m1">
-            <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
-            </div>
-            <div class="input-field col s1">
-              <p class="no-select">kg</p>
-            </div>
+                    <div class="col s2 l2">
+                      <label>
+                        <input name="unit" type="radio" value="cm"/>
+                        <span class="couleur3-text">cm</span>
+                      </label>
+                    </div>
 
         </div>
+        <div class ="row" >
+          <div class="col s3 m2">
+            <label for="pieces" class="couleur3-text">Nb de pièce(s):</label>
+          </div>
+          <div class="col s2 m1 nopadding" style="text-align: right;">
+            <div class="btn plusminus waves-effect" onclick="Increment('pieces', -1, 1)">-</div>
+          </div>
+            <div class="col s2 m1">
+              <input type="number" id="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; ">
+            </div>
+            <div class="col s1 nopadding">
+              <div class="btn plusminus waves-effect" onclick="Increment('pieces', 1, 1)">+</div>
+            </div>
 
-        <div id="row_tags" class ="row" >
-           <div class="input-field col s12">
-             <i class="fas fa-tags prefix"></i>
-             <input id="tags" name="tags" type="text">
-             <label for="tags">Ajouter des tags :</label>
-           </div>
+            </div>
 
-         </div>
-
-            <div id="row_etat" class ="row" style="margin-bottom:3rem">
-                  <div class="input-field col s3">
-                    <i class="fas fa-heart-broken prefix"></i>
+            <div class ="row">
+                  <div class="input-field col s2">
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
-             <div class="input-field col s7 m6 offset-s1" id="etat">
+             <div class="input-field col s9 m6" id="etat">
 
-<input type="range" class="browser-default" id="range_etat" name="etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
+<input type="range" class="browser-default" id="range_etat" value="1"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
 
 	<div class="noUi-pips noUi-pips-horizontal">
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 0.00000%"></div>
-	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 0.00000%">1/4</div>
+	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 0.00000%">Top</div>
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 33.33333%"></div>
-	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 33.33333%">2/4</div>
+	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 33.33333%">Okay</div>
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 66.66667%"></div>
-	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 66.66667%">3/4</div>
+	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 66.66667%">Mouaif</div>
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 100.00000%"></div>
-	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 100.00000%">4/4</div>
+	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 100.00000%">Bof</div>
 	</div>
 
             </div>
 
            </div>
 
-           <div id="row_prix" class ="row" >
-              <div class="input-field col s4 m2">
-                <i class="fas fa-coins prefix"></i>
-                <input id="prix" name="prix" type="number" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
-                <label for="prix">Prix</label>
+           <div class ="row" >
+              <div class="input-field col s12">
+                <i class="fas fa-tags prefix"></i>
+                <input id="tags" type="text">
+                <label for="tags">Ajouter des tags :</label>
               </div>
 
-              <div class="input-field col s5"><p>(par pièce)</p>
             </div>
-          </div>
-
-
 
   <div id="plusdedetails" class="row">
-    <div class="col s12">
-      <div class="" style="margin-top: 1rem;"><a href="" onclick="return expand('champs_facultatifs', 'plusdedetails', 'down');" style="color: #6f6972;"><i class="fas fa-plus-circle separator-label prefix"></i>&nbsp;Plus de détails</a></div>
+    <div class="col s12 center-align">
+      <div class="separator" style="margin-top: 1rem;"><a href="" onclick="return expand('champs_facultatifs', 'plusdedetails');" style="color: #6f6972;"><i class="fas fa-plus-circle separator-label prefix"></i>&nbsp;Plus de détails</a></div>
 
     </div>
   </div>
 
 
-<div id="champs_facultatifs" class="invisible">
-  <div class="row">
+<div id="champs_facultatifs" class="row invisible">
   <div class="input-field col s12 m6">
     <i class="fas fa-info-circle prefix"></i>
-    <input id="remarques" name="remarques" type="text">
+    <input id="remarques" type="text">
     <label for="remarques">Ajouter des remarques :</label>
   </div>
   <div class="input-field col s12 m6">
     <i class="fas fa-ruler prefix"></i>
-    <input id="dimensions" name="dimensions" type="text">
+    <input id="dimensions" type="text">
     <label for="dimensions">Dimensions précises :</label>
   </div>
 </div>
-    <div class="row">
-      <div class="input-field col s5 m3">
 
-            <label>
-                <input type="checkbox" name="externe" class="filled-in" onchange="check_expand_hide(this, 'champ-localisation', 'champ-localisation', 'right');"/>
-                <span>Hors les murs?</span>
-              </label>
-
-      </div>
-      <div id="champ-localisation" class="input-field col s7 m6 invisible">
-        <i class="fas fa-map-marked-alt prefix"></i>
-        <input id="localisation" name="localisation" type="text">
-        <label for="localisation">Localisation:</label>
-      </div>
-
-    </div>
-</div>
 
 
 
             <div class="row hide-on-small-only">
-        			<div class="col s12">
-        			 <a class="waves-effect waves-light btn-small green accent-3 right" value="submit" onclick="document.getElementById('formulaire_encodage').submit(); document.getElementById('client').reset(); " >
+        			<div class="col s10 offset-s1">
+        			 <a class="waves-effect waves-light btn-small green accent-3" value="submit" onclick="document.getElementById('formulaire_encodage').submit(); document.getElementById('client').reset(); " >
                  <i class="material-icons">thumb_up_alt</i>
                  Encoder
                </a>
@@ -368,11 +341,9 @@
 
             </div>
 
-            <div class="row"></div>
 
 
-
-
+      </div>
 
 		</div>
 </div>
@@ -400,39 +371,43 @@
   </form>
 
 
-  <!-- ligne requise par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
-  <script>
-  </script>
 
+  <!--<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>--> <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
-<script type="text/javascript" src="js/forms.js"></script>
 <script type="text/javascript" src="js/add_form.js"></script>
+<script type="text/javascript" src="js/forms.js"></script>
 
 
-
-  <!-- On active le composant Tabs -->
+<!-- Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de index.php)-->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var el;
-    var instance = M.Tabs.init(el, {swipeable : true});
+
   });
+  /*
+  // Or with jQuery
+  $('.dropdown-trigger').dropdown();
+  */
+
+
+</script>
+
+
 </script>
 
 </body>
 
 <?php
-//fonction pour  supprimer tous les caractères spéciaux pour pouvoir utiliser des noms de matériaux stockés dans la bdd comme ids d'éléments html
 function abbrev($string){
-		$result1 = str_replace( array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']', ' '), '', $string);
+		$result1 = str_replace( array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']'), '', $string);
     return str_replace( array('à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ', 'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã','Ä', 'Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ','Ö', 'Ù','Ú','Û','Ü', 'Ý'), array('a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n', 'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A', 'C', 'E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O', 'U','U','U','U', 'Y'), $result1);
 	}
 
 
-//DEV fonction pour logger les erreurs PHP dans la console
+
   function console_log($output, $with_script_tags = true) {
     $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
 ');';
