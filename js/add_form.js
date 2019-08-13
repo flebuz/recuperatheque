@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 function init_materialize()
 {
-
+  /* Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de index.php)*/
   var elems = document.querySelectorAll('.dropdown-trigger');
   var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:0});
 
