@@ -99,6 +99,12 @@
             'metal' => array('acier','acier galvanisé','fer à beton','aluminium', 'laiton')
           );
 
+          // --------------------
+          // REQUETE MYSQL ICI
+          // remplir deux tableaux avec les catégories et les sous-catégories
+          // --------------------
+          
+
           //shuffle ($categories);
 
 
@@ -110,18 +116,7 @@
 </div>
 
 
-      <!-- Script requis par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
-      <script>
-        var instance = M.Tabs.init(el, {swipeable : true});
 
-        /*
-        // Or with jQuery
-        $(document).ready(function(){
-          $('.tabs').tabs();
-        });
-        */
-
-      </script>
 
       <!-- Ici les sous-catégories de matériaux qui s'affichent des les menus déroulants-->
       <ul id="select-bois" class="dropdown-content">
@@ -405,8 +400,11 @@
   </form>
 
 
+  <!-- ligne requise par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
+  <script>
+    var instance = M.Tabs.init(el, {swipeable : true});
+  </script>
 
-  <!--<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>--> <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
@@ -436,13 +434,14 @@
 </body>
 
 <?php
+//fonction pour abréger les noms des champs
 function abbrev($string){
 		$result1 = str_replace( array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']'), '', $string);
     return str_replace( array('à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ', 'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã','Ä', 'Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ','Ö', 'Ù','Ú','Û','Ü', 'Ý'), array('a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n', 'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A', 'C', 'E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O', 'U','U','U','U', 'Y'), $result1);
 	}
 
 
-
+//DEV fonction pour logger les erreurs PHP dans la console
   function console_log($output, $with_script_tags = true) {
     $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
 ');';
