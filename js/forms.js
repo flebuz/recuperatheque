@@ -5,7 +5,6 @@
 function set_value(id_to_update, value)
 {
   document.getElementById(id_to_update).value= value;
-  console.log(value);
 }
 
 //fonction expand affiche le div #id_to_show, cache le div #id_to_hide et applique une animation d'entrée
