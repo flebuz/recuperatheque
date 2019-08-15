@@ -120,7 +120,7 @@ input[type="range"]::-ms-thumb {
     height: auto !important;
     top: 100%;
     left: auto !important;
-    /*width: 96% !important;*/
+    width: 100% !important;
 
     padding: 0 0rem !important;
     right: auto;
@@ -157,7 +157,7 @@ color:#6f6972; }
 {color:#6f6972 !important}
 
 .prefix.active /* label actif devant zone de texte */
-{color:#00ff4e !important}
+{color:#00e676 !important}
 
 label
 {font-size: 1rem !important;
@@ -235,22 +235,27 @@ font-size: 3.5rem;
 }
 
 
-ul{
+ul.tabs{
   background-color: #E0E0E0 !important;
   margin-left: 1px !important;
   margin-right:1px !important;
 }
 
-li.tab
-{
-  /*margin-right:1px !important;
-  margin-left: 1px !important;*/
-}
-li.tab a{
 
-/*padding-top: 5px !important;*/
+/*couleur ne reste pas car perd le focus à l'ouverture du menu*/
+/*checker ici pour solution plus viable https://css-tricks.com/snippets/javascript/loop-queryselectorall-matches/ */
+/*
+li.tab a:active {
+        background-color: #00e676 !important;
+}*/
+
+
+
+
+li.tab a{
 padding: 12px 0px 0px !important;
 }
+
 .border-div
 {
 /*  margin: 5px 5px 5px 5px; */
