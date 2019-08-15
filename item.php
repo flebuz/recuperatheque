@@ -5,11 +5,20 @@
   <div class='item'>
 
     <div class="item-photo-container">
-      <img class='photo' src='photos/<?php echo $item['ID_item']; ?>.jpg'>
+
+
+        <!-- $src='photos/' . $item['ID_item'] . '.jpg';
+        $dest='photos/' . $item['ID_item'] . '_thumb.jpg';
+        make_thumb($src, $dest); -->
+        <?php
+        echo '<img class="photo" src="photos/' . $item['ID_item'] . '.jpg" />'
+        ?>
+
+
     </div>
 
     <div class='item-categorie-container'>
-      <?php echo $item['categorie']; ?> > <?php echo $item['sous_categorie']; ?>
+      <?php echo $item['categorie']; ?> <span style='color:#909090'>▸</span> <?php echo $item['sous_categorie']; ?>
     </div>
 
     <div class="item-info-container">
@@ -18,14 +27,15 @@
         <i class='fas fa-cubes item-icon'></i> <?php echo $unite; ?>
       </div>
       <div class='état'>
+        <i class='fas fa-heart-broken item-icon'></i> état - <?php echo $item['état']; ?>/5
         <?php
-          for($n = 0; $n < 5; $n++){
-            if($item['état'] > $n){
-              echo '<i class="w3-small fas fa-star item-icon"></i>' ;
-            } else{
-              echo '<i class="w3-small far fa-star item-icon"></i>' ;
-            }
-          }
+          // for($n = 0; $n < 5; $n++){
+          //   if($item['état'] > $n){
+          //     echo '<i class="w3-small fas fa-star item-icon"></i>' ;
+          //   } else{
+          //     echo '<i class="w3-small far fa-star item-icon"></i>' ;
+          //   }
+          // }
         ?>
       </div>
     </div>

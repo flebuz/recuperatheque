@@ -5,7 +5,7 @@ html{
 
 body{
   margin: 0;
-  background: #E0E0E0;
+  background: #F0F0F0;
 }
 
 html, body, p, h1, h2, h3, h4, h5, h6{
@@ -13,15 +13,15 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 .color-theme{
-  background: #202020;
+  background: #606060;
   color: #FFFFFF;
 }
 
 /* ----- SEARCH BAR -----*/
 
 .search-bar-container{
-  background: #606060;
-  color: #FFFFFF;
+  background: #D0D0D0;
+  color: #606060;
 }
 
 .search-bar{
@@ -81,20 +81,23 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 .item-photo-container{
   width: 100%;
-  padding-bottom: 6px;
+  padding-bottom: 12px;
 }
 
 .item .photo{
   width: 100%;
 }
 
-.item-categorie-container, .item-info-container, .item-tags-container, .item-date-container{
-  padding-top: 6px;
-  padding-bottom: 6px;
+.item-categorie-container, .item-info-container, .item-tags-container{
+  /* padding-top: 6px; */
+  padding-bottom: 8px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .item-categorie-container{
   font-weight: bold;
+  font-size: 1.2em;
 }
 
 .item-date-container{
