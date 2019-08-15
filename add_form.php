@@ -1,6 +1,8 @@
 <html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
+
+<?php $thisPage="add_form"; ?>
 <head>
   <title>Webapp Recupérathèque - Encoder un objet</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -21,17 +23,16 @@
 
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
 
 
 
 </head>
 
 <body class="disable-dbl-tap-zoom">
-  <div class="header">
-    <a href="#!" class="breadcrumb">Récupérathèque</a>
-    <a href="#!" class="breadcrumb">Encoder un objet</a>
-  </div>
+
+<?php include 'header.php'; ?>
+
+<main>
 
   <div class="container" id="cam_container">
     <div class="row nomargin">
@@ -93,7 +94,7 @@
   <!--Les tabs reprenant les différentes catégories de matériaux -->
           <?php
           $categories= array('bois','métal','papier','plastique','verre','construction','textile','quincaillerie','mobilier','électronique','insolite');
-          $sous_catégories= array(
+          $sous_categories= array(
 
             'bois' => array('bois médium','bois massif','bois 3 plis','OSB'),
             'metal' => array('acier','acier galvanisé','fer à beton','aluminium', 'laiton')
@@ -217,7 +218,7 @@
 
                    </div>
 
-                   <div class="col s1">
+                   <div class="col s1 center-align">
                       <p>></p>
                    </div>
 
@@ -226,6 +227,10 @@
 
                    </div>
                  </div>
+
+
+
+
 
         <div id="row_pieces" class ="row" >
 
@@ -280,7 +285,7 @@
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
-             <div class="input-field col s7 m6 offset-s1" id="etat">
+             <div class="input-field col s7 m6 offset-s1 nopadding" id="etat">
 
 <input type="range" class="browser-default" id="range_etat" name="etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
 
@@ -393,18 +398,15 @@
     </div>
 
     <div class="fixed-action-btn hide-on-med-and-up">
-      <a class="btn-floating btn-large green accent-3" alue="submit" onclick="document.getElementById('formulaire_encodage').submit(); document.getElementById('client').reset(); ">
+      <a class="btn-floating btn-large green accent-3" value="submit" onclick="document.getElementById('formulaire_encodage').submit(); document.getElementById('client').reset(); ">
         <i class="material-icons">thumb_up_alt</i>
       </a>
 
   </form>
 
+</main>
 
-  <!-- ligne requise par Materialize pour activer le composant Tabs (et faire qu'il puisse être swipeable sur mobile)-->
-  <script>
-  </script>
-
-  <script type="text/javascript" src="js/materialize.min.js"></script>
+<?php include 'footer.php'; ?>
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
 
