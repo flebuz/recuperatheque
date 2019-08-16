@@ -89,7 +89,7 @@
 <div class="quasi-fullwidth" style="background-color:white">
 
 
-<div style="position:relative"><ul class="tabs" >
+<div style="position:relative" class="scrolling-wrapper">
   <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
   <!--Les tabs reprenant les différentes catégories de matériaux -->
           <?php
@@ -110,10 +110,10 @@
 
 
           foreach ($categories as $key => $value) {
-            echo '<li class="tab col s3 l2"><a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value)."' onclick= \"set_value('categorie','".abbrev($value)."')\"".'\'><div class=\'border-div\'>'.$value.'</div></a></li>';
+            echo '<a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value)."' onclick= \"set_value('categorie','".abbrev($value)."')\"".'\'>'.$value.'</a>';
           }
           ?>
-</ul>
+
 </div>
 
 
@@ -213,16 +213,16 @@
                 <input id="image_url" name="image_url" type="text" value="none" class="invisible">
 
                 <div id="categorisation" class ="row" >
-                   <div class="col s5 m3">
+                   <div class="col s5 m3 input-field">
                      <input id="categorie" name="cat" type="text" disabled>
 
                    </div>
 
-                   <div class="col s1 center-align">
+                   <div class="col s1 input-field center-align">
                       <p>></p>
                    </div>
 
-                   <div class="col s5 m3">
+                   <div class="col s5 m3 input-field">
                      <input id="souscategorie" name="souscat" type="text" disabled>
 
                    </div>
@@ -279,13 +279,13 @@
 
          </div>
 
-            <div id="row_etat" class ="row" style="margin-bottom:3rem">
+            <div id="row_etat" class ="row">
                   <div class="input-field col s3">
                     <i class="fas fa-heart-broken prefix"></i>
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
-             <div class="input-field col s7 m6 offset-s1 nopadding" id="etat">
+             <div class="input-field col s7 m6 offset-s1 nopadding" id="etat" style="max-height:53px;">
 
 <input type="range" class="browser-default" id="range_etat" name="etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
 
