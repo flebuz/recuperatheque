@@ -119,13 +119,18 @@ input[type="range"]::-ms-thumb {
 
 
 /*Emulation de l'apparence des tick marks de nouislider (à toiletter puis supprimer nouislider.css)*/
+
+.pips-container {
+  padding: 0px 7px 0px 7px !important; /*padding de 7 pixels parce que le thumb-slider Materialize fait 14px de largeur*/
+  margin-top: -35px;
+}
            .noUi-pips-horizontal {
     position:relative !important;
     padding-top: 0px !important;
     height: auto !important;
     top: 100%;
 
-    width: 94% !important;
+    width: 100% !important;
     margin-top:-7px;
 
     padding: 0 0rem !important;
