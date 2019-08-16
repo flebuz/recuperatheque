@@ -103,6 +103,11 @@ input[type=range] {
 }
 */
 
+input[type=range] {
+  /* fix for FF unable to apply focus style bug  */
+  border: 1px solid transparent !important;
+  /*required for proper track sizing in FF*/ }
+
 input[type='range']::-webkit-slider-thumb
 
 {  height:20px; width:20px; border-radius: 20px;
@@ -115,15 +120,19 @@ input[type="range"]::-ms-thumb {
 
 /*Emulation de l'apparence des tick marks de nouislider (à toiletter puis supprimer nouislider.css)*/
            .noUi-pips-horizontal {
-
+    position:relative !important;
     padding-top: 0px !important;
     height: auto !important;
     top: 100%;
-    left: auto !important;
-    width: 100% !important;
+
+    width: 94% !important;
+    margin-top:-7px;
 
     padding: 0 0rem !important;
-    right: auto;
+
+
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
@@ -219,9 +228,9 @@ font-size: 3.5rem;
 
 .btn-flat {
 
-  border-radius: 0px !important;
-  border-right: 1px solid #bdbdbd;
-  background-color: #ffff;
+  border-right: 1px solid white !important;
+line-height: 2.5rem !important;
+height:2.5rem !important;
 }
 
 .btn-large.inactive
@@ -239,6 +248,17 @@ ul.tabs{
   background-color: #E0E0E0 !important;
   margin-left: 1px !important;
   margin-right:1px !important;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.scrollingwrapper btn-flat {
+  display: inline-block;
+
 }
 
 
