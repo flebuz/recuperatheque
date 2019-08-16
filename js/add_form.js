@@ -57,7 +57,7 @@ function init_materialize()
 
   /* Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de add_form.php)*/
   var elems = document.querySelectorAll('.dropdown-trigger');
-  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:0});
+  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:0, inDuration:0});
 
   var elems2 = document.querySelectorAll('.fixed-action-btn');
    var instances = M.FloatingActionButton.init(elems2);
