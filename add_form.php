@@ -8,7 +8,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile -->
   <meta name="theme-color" content="">
 
   <link rel="stylesheet" href="css/main.css">
@@ -73,9 +73,6 @@
 
 
 
-          <div class="col s1" style="margin-left:-100px"> <!--oui je sais le css inline c'est mal mais j'arrivais pas à décaler le petit thumbnail et de toute façon c'est provisoire :o) -->
-
-          </div>
       </div>
   </div>
 
@@ -202,7 +199,7 @@
 
 
 
-      <div class="container" id="formulaire">
+      <div class="container" id="formulaire" style="background-color:white">
           <!-- Les onglets avec les catégories de matériaux-->
 
 
@@ -256,12 +253,12 @@
 
         <div id="row_range" class="row">
 
-            <div class="input-field col s9" id="range_div" >
+            <div class="input-field col s9 l8" id="range_div" >
               <i class="fas fa-weight-hanging prefix"></i>
               <input type="range" id="poids" min="0.1" max="10" value="1.0" step="0.1" name="poids" oninput="updateTextInput('indicateur_poids', this.value);" />
             </div>
 
-            <div class="input-field col s2 m1">
+            <div class="input-field col s2 l3 m1">
             <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
             </div>
             <div class="input-field col s1">
@@ -289,7 +286,8 @@
 
 <input type="range" class="browser-default" id="range_etat" name="etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
 
-	<div class="noUi-pips noUi-pips-horizontal">
+<div class="pips-container">
+  <div class="noUi-pips noUi-pips-horizontal">
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 0.00000%"></div>
 	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 0.00000%">1/4</div>
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 33.33333%"></div>
@@ -299,6 +297,7 @@
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 100.00000%"></div>
 	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 100.00000%">4/4</div>
 	</div>
+</div>
 
             </div>
 
@@ -339,7 +338,7 @@
   </div>
 </div>
     <div class="row">
-      <div class="input-field col s5 m3">
+      <div class="input-field col s6 m3">
 
             <label>
                 <input type="checkbox" name="externe" class="filled-in" onchange="check_expand_hide(this, 'champ-localisation', 'champ-localisation', 'right');"/>
@@ -347,7 +346,7 @@
               </label>
 
       </div>
-      <div id="champ-localisation" class="input-field col s7 m6 invisible">
+      <div id="champ-localisation" class="input-field col s6 m6 invisible">
         <i class="fas fa-map-marked-alt prefix"></i>
         <input id="localisation" name="localisation" type="text">
         <label for="localisation">Localisation:</label>
@@ -355,7 +354,7 @@
 
     </div>
 </div>
-
+<div class="row"></div>
 
 
             <div class="row hide-on-small-only">
@@ -374,7 +373,7 @@
             </div>
 
             <div class="row"></div>
-
+            <div class="row"></div>
 
 
 
