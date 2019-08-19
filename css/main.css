@@ -63,10 +63,18 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 /* ----- Category Menu -----*/
 
 .categorie_menu{
+  background: white;
+  padding: 16px;
+}
+
+.categorie_selector{
+  background: #606060;
+  color: white;
   text-align: left;
 }
 
 .categorie{
+  background: #F0F0F0;
   text-align: left;
 }
 

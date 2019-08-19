@@ -23,7 +23,7 @@
 <body>
 
   <div class="w3-container color-theme">
-    <h1>[Nom de l'app]</h1>
+    <h1>Mycélium</h1>
   </div>
 
   <!-- Checks des parametres GET -->
@@ -106,65 +106,67 @@
           </div>
 
     </form>
+
+
   </div>
 
+  <div class="categorie_menu w3-quarter">
+    <button onclick="myFunction('cat')" class="w3-btn w3-block categorie_selector">
+        Categorie
+    </button>
+    <div id="cat" class="w3-hide">
+    <?php
+      //prep the request
+      //every line is a souscategorie
+      $req = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
+                              sscat.ID, sscat.ID_categorie, sscat.nom AS nom
+                              FROM souscategorie sscat
+                              INNER JOIN categorie cat ON sscat.ID_categorie=cat.ID
+                              ORDER BY cat.ID
+                          ');
+      //execute the request
+      $req->execute();
 
-  <button onclick="myFunction('cat')" class="w3-btn w3-block categorie_menu">
-      Categorie
-  </button>
-  <div id="cat" class="w3-hide">
-  <?php
-    //prep the request
-    //every line is a souscategorie
-    $req = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
-                            sscat.ID, sscat.ID_categorie, sscat.nom AS nom
-                            FROM souscategorie sscat
-                            INNER JOIN categorie cat ON sscat.ID_categorie=cat.ID
-                            ORDER BY cat.ID
-                        ');
-    //execute the request
-    $req->execute();
+      if ($req->rowCount() > 0) {
+        $current_cat = '';
 
-    if ($req->rowCount() > 0) {
-      $current_cat = '';
+        while($sscat = $req->fetch()){
 
-      while($sscat = $req->fetch()){
+          //peut etre mieux d'en faire un objet PHP avec liste et sous liste et de le reparcourir apres????
 
-        //peut etre mieux d'en faire un objet PHP avec liste et sous liste et de le reparcourir apres????
+          //si la categorie de de sscat a changé on crée un nouveau accordeon
+          if($current_cat != $sscat['cat_ID']){
 
-        //si la categorie de de sscat a changé on crée un nouveau accordeon
-        if($current_cat != $sscat['cat_ID']){
+            //si on a deja ouvert un accordeon, on doit le refermer avant d'en faire  autre
+            if($current_cat != ''){
+              echo '</div>';
+            }
 
-          $current_cat = $sscat['cat_ID'];
+            $current_cat = $sscat['cat_ID'];
 
-          //si on a deja ouvert un accordeon, on doit le refermer avant d'en faire  autre
-          if($current_cat != ''){
-            echo '</div>';
+            ?>
+
+            <!-- declare l'accordeon d'une categorie -->
+            <button onclick="myFunction('<?php echo $sscat['cat_ID']; ?>')" class="w3-btn w3-block categorie">
+              <?php echo $sscat['cat_nom']; ?> <span class='item-icon'>▾</span>
+            </button>
+            <!-- ouvre l'accordeon des sscat associées -->
+            <div id="<?php echo $sscat['cat_ID']; ?>" class="w3-hide">
+
+            <?php
           }
           ?>
 
-
-          </div>
-          <!-- declare l'accordeon d'une categorie -->
-          <button onclick="myFunction('<?php echo $sscat['cat_ID']; ?>')" class="w3-btn w3-block categorie">
-            <?php echo $sscat['cat_nom']; ?> <span class='item-icon'>▾</span>
-          </button>
-          <!-- ouvre l'accordeon des sscat associées -->
-          <div id="<?php echo $sscat['cat_ID']; ?>" class="w3-hide">
+          <!-- ajoute une souscategorie comme bouton -->
+          <button class="w3-btn w3-block souscategorie"> <?php echo $sscat['nom']; ?> </button>
 
           <?php
         }
-        ?>
-
-        <!-- ajoute une souscategorie comme bouton -->
-        <button class="w3-btn w3-block souscategorie"> <?php echo $sscat['nom']; ?> </button>
-
-        <?php
+        // ferme le dernier accordeon des sscat associées
+        echo '</div>';
       }
-      // ferme le dernier accordeon des sscat associées
-      echo '</div>';
-    }
-  ?>
+    ?>
+    </div>
   </div>
 
   <script>
@@ -179,7 +181,7 @@
   </script>
 
 
-  <div class="w3-row items-container">
+  <div class="w3-row w3-threequarter items-container">
 
     <?php
       //prep the request
