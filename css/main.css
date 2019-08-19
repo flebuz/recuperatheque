@@ -169,3 +169,57 @@ display: flex
 .disable-dbl-tap-zoom {
   touch-action: manipulation;
 }
+
+
+/* ----- SIDENAV -----*/
+
+.button-menu {
+  position:absolute;
+  right:auto;
+  bottom:auto;
+  left:12px;
+  top:12px;
+
+}
+
+ul.sidenav {
+  background-color: black;
+}
+ul.sidenav a.pagelink {
+ font-variant: small-caps;
+ color:white;
+ font-size: 1.05rem;
+}
+
+.user-view a
+{
+  color:#E0E0E0;
+}
+
+header, main, footer {
+     padding-left: 300px;
+   }
+
+   @media only screen and (max-width : 992px) {
+     header, main, footer {
+       padding-left: 0;
+     }
+   }
+
+.sidenav li > a.nav-titre
+{
+  font-size:1.6rem;
+  line-height: 72px;
+}
+.sidenav .user-view {
+
+    padding: 22px 32px 0 !important;
+
+  }
+
+/* ----- TOP NAV (header)-----*/
+
+   nav .brand-logo.right {
+
+    padding-right: 15px !important;
+}

@@ -103,6 +103,11 @@ input[type=range] {
 }
 */
 
+input[type=range] {
+  /* fix for FF unable to apply focus style bug  */
+  border: 1px solid transparent !important;
+  /*required for proper track sizing in FF*/ }
+
 input[type='range']::-webkit-slider-thumb
 
 {  height:20px; width:20px; border-radius: 20px;
@@ -114,16 +119,25 @@ input[type="range"]::-ms-thumb {
 
 
 /*Emulation de l'apparence des tick marks de nouislider (à toiletter puis supprimer nouislider.css)*/
-           .noUi-pips-horizontal {
 
+.pips-container {
+  padding: 0px 7px 0px 7px !important; /*padding de 7 pixels parce que le thumb-slider Materialize fait 14px de largeur*/
+  margin-top: -35px;
+}
+           .noUi-pips-horizontal {
+    position:relative !important;
     padding-top: 0px !important;
     height: auto !important;
     top: 100%;
-    left: auto !important;
-    /*width: 96% !important;*/
+
+    width: 100% !important;
+    margin-top:-7px;
 
     padding: 0 0rem !important;
-    right: auto;
+
+
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
@@ -157,7 +171,7 @@ color:#6f6972; }
 {color:#6f6972 !important}
 
 .prefix.active /* label actif devant zone de texte */
-{color:#00ff4e !important}
+{color:#00e676 !important}
 
 label
 {font-size: 1rem !important;
@@ -219,9 +233,9 @@ font-size: 3.5rem;
 
 .btn-flat {
 
-  border-radius: 0px !important;
-  border-right: 1px solid #bdbdbd;
-  background-color: #ffff;
+  border-right: 1px solid white !important;
+line-height: 2.5rem !important;
+height:2.5rem !important;
 }
 
 .btn-large.inactive
@@ -235,22 +249,38 @@ font-size: 3.5rem;
 }
 
 
-ul{
+ul.tabs{
   background-color: #E0E0E0 !important;
   margin-left: 1px !important;
   margin-right:1px !important;
 }
 
-li.tab
-{
-  /*margin-right:1px !important;
-  margin-left: 1px !important;*/
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
-li.tab a{
 
-/*padding-top: 5px !important;*/
+.scrollingwrapper btn-flat {
+  display: inline-block;
+
+}
+
+
+/*couleur ne reste pas car perd le focus à l'ouverture du menu*/
+/*checker ici pour solution plus viable https://css-tricks.com/snippets/javascript/loop-queryselectorall-matches/ */
+/*
+li.tab a:active {
+        background-color: #00e676 !important;
+}*/
+
+
+
+
+li.tab a{
 padding: 12px 0px 0px !important;
 }
+
 .border-div
 {
 /*  margin: 5px 5px 5px 5px; */

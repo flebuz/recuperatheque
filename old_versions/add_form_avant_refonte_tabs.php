@@ -8,7 +8,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="">
 
   <link rel="stylesheet" href="css/main.css">
@@ -73,6 +73,9 @@
 
 
 
+          <div class="col s1" style="margin-left:-100px"> <!--oui je sais le css inline c'est mal mais j'arrivais pas à décaler le petit thumbnail et de toute façon c'est provisoire :o) -->
+
+          </div>
       </div>
   </div>
 
@@ -86,7 +89,7 @@
 <div class="quasi-fullwidth" style="background-color:white">
 
 
-<div style="position:relative" class="scrolling-wrapper">
+<div style="position:relative"><ul class="tabs" >
   <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
   <!--Les tabs reprenant les différentes catégories de matériaux -->
           <?php
@@ -107,10 +110,10 @@
 
 
           foreach ($categories as $key => $value) {
-            echo '<a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value)."' onclick= \"set_value('categorie','".abbrev($value)."')\"".'\'>'.$value.'</a>';
+            echo '<li class="tab col s3 l2"><a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value)."' onclick= \"set_value('categorie','".abbrev($value)."')\"".'\'><div class=\'border-div\'>'.$value.'</div></a></li>';
           }
           ?>
-
+</ul>
 </div>
 
 
@@ -199,7 +202,7 @@
 
 
 
-      <div class="container" id="formulaire" style="background-color:white">
+      <div class="container" id="formulaire">
           <!-- Les onglets avec les catégories de matériaux-->
 
 
@@ -210,16 +213,16 @@
                 <input id="image_url" name="image_url" type="text" value="none" class="invisible">
 
                 <div id="categorisation" class ="row" >
-                   <div class="col s5 m3 input-field">
+                   <div class="col s5 m3">
                      <input id="categorie" name="cat" type="text" disabled>
 
                    </div>
 
-                   <div class="col s1 input-field center-align">
+                   <div class="col s1 center-align">
                       <p>></p>
                    </div>
 
-                   <div class="col s5 m3 input-field">
+                   <div class="col s5 m3">
                      <input id="souscategorie" name="souscat" type="text" disabled>
 
                    </div>
@@ -253,12 +256,12 @@
 
         <div id="row_range" class="row">
 
-            <div class="input-field col s9 l8" id="range_div" >
+            <div class="input-field col s9" id="range_div" >
               <i class="fas fa-weight-hanging prefix"></i>
               <input type="range" id="poids" min="0.1" max="10" value="1.0" step="0.1" name="poids" oninput="updateTextInput('indicateur_poids', this.value);" />
             </div>
 
-            <div class="input-field col s2 l3 m1">
+            <div class="input-field col s2 m1">
             <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
             </div>
             <div class="input-field col s1">
@@ -276,18 +279,17 @@
 
          </div>
 
-            <div id="row_etat" class ="row">
+            <div id="row_etat" class ="row" style="margin-bottom:3rem">
                   <div class="input-field col s3">
                     <i class="fas fa-heart-broken prefix"></i>
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
-             <div class="input-field col s7 m6 offset-s1 nopadding" id="etat" style="max-height:53px;">
+             <div class="input-field col s7 m6 offset-s1 nopadding" id="etat">
 
 <input type="range" class="browser-default" id="range_etat" name="etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
 
-<div class="pips-container">
-  <div class="noUi-pips noUi-pips-horizontal">
+	<div class="noUi-pips noUi-pips-horizontal">
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 0.00000%"></div>
 	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 0.00000%">1/4</div>
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 33.33333%"></div>
@@ -297,7 +299,6 @@
 	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 100.00000%"></div>
 	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 100.00000%">4/4</div>
 	</div>
-</div>
 
             </div>
 
@@ -338,7 +339,7 @@
   </div>
 </div>
     <div class="row">
-      <div class="input-field col s6 m3">
+      <div class="input-field col s5 m3">
 
             <label>
                 <input type="checkbox" name="externe" class="filled-in" onchange="check_expand_hide(this, 'champ-localisation', 'champ-localisation', 'right');"/>
@@ -346,7 +347,7 @@
               </label>
 
       </div>
-      <div id="champ-localisation" class="input-field col s6 m6 invisible">
+      <div id="champ-localisation" class="input-field col s7 m6 invisible">
         <i class="fas fa-map-marked-alt prefix"></i>
         <input id="localisation" name="localisation" type="text">
         <label for="localisation">Localisation:</label>
@@ -354,7 +355,7 @@
 
     </div>
 </div>
-<div class="row"></div>
+
 
 
             <div class="row hide-on-small-only">
@@ -373,7 +374,7 @@
             </div>
 
             <div class="row"></div>
-            <div class="row"></div>
+
 
 
 

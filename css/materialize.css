@@ -3809,7 +3809,7 @@ small {
   transition: background-color .2s ease-out;
   cursor: pointer; }
   .btn:hover, .btn-large:hover, .btn-small:hover {
-    background-color: #1aff60; }
+    background-color: #00e676; }
 
 .btn-floating {
   display: inline-block;
@@ -5514,7 +5514,7 @@ input[type=range]::-ms-thumb {
     .sidenav li > a.btn-flat {
       color: #343434; }
     .sidenav li > a.btn:hover, .sidenav li > a.btn-large:hover, .sidenav li > a.btn-small:hover, .sidenav li > a.btn-large:hover {
-      background-color: #1aff60; }
+      background-color: #00e676; }
     .sidenav li > a.btn-floating:hover {
       background-color: #606060; }
     .sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
