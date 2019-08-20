@@ -60,6 +60,31 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   flex-grow: 1; /*grow if spaces*/
 }
 
+/* ----- Category Menu -----*/
+
+.categorie_menu{
+  background: white;
+  padding: 16px;
+}
+
+.categorie_selector{
+  background: #606060;
+  color: white;
+  text-align: left;
+}
+
+.categorie{
+  background: #F0F0F0;
+  text-align: left;
+}
+
+.souscategorie{
+  padding-left: 32px;
+  border-bottom: 1px solid #E0E0E0;
+  background: white;
+  text-align: left;
+}
+
 /* ----- ITEM -----*/
 
 .items-container{
