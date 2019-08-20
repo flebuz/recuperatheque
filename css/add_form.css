@@ -121,7 +121,7 @@ input[type="range"]::-ms-thumb {
 /*Emulation de l'apparence des tick marks de nouislider (à toiletter puis supprimer nouislider.css)*/
 
 .pips-container {
-  padding: 0px 7px 0px 7px !important; /*padding de 7 pixels parce que le thumb-slider Materialize fait 14px de largeur*/
+  padding: 0px 3px 0px 3px !important; /*padding de 7 pixels parce que le thumb-slider Materialize fait 14px de largeur*/
   margin-top: -35px;
 }
            .noUi-pips-horizontal {
@@ -185,9 +185,13 @@ color: $couleur3 !important;}
 
 .btn.plusminus
 {
-  width: 30px;
+  background-color:#F0F0F0;
+  width: 35px;
   height: 2.5em;
   padding: 0px 0px 0px 0px;}
+
+.btn.plusminus span
+{color:black;}
 
 .nomargin{
 	margin: 0px 0px 0px 0px !important;
@@ -376,4 +380,11 @@ z-index:0;
 @-moz-keyframes slide-right {
   0% { -moz-transform: translateX(-50%); opacity: 0; }
 100% {  -moz-transform: translateX(0); opacity: 1; }
+}
+
+/* W3CSS */
+
+.w3-sidebar i.prefix {
+
+margin-right: 1.5rem;
 }
