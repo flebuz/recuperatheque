@@ -8,7 +8,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile -->
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile (aussi : , target-densitydpi=device-dpi)-->
   <meta name="theme-color" content="">
 
   <link rel="stylesheet" href="css/main.css">
@@ -46,9 +46,11 @@
 <div id="cam_col" class="col s10 m10 l10 center-align">
 
 
-                  <canvas id="video_streaming" class="invisible"></canvas>
+                <div class="overlay" id="video_streaming_overlay">
+                  <canvas id="video_streaming" autoplay class="invisible"></canvas></div>
                   <canvas id="snap_final" class="invisible"></canvas>
                   <video id="video" autoplay class="invisible"></video>
+
 
                   <div id="file_upload_container">
                           <label for="file">
@@ -64,10 +66,10 @@
     <div class="row"></div>
     <div class="row"></div>
     <div class="row"></div>
-    <div class="row"></div>
 
-    <div class="row">
-      <div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large waves-effect invisible"><i class="material-icons photo-controls">camera_alt</i></div>
+    <div class="invisible center" id="video_streaming_controls">
+      <div class="row center"><div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large waves-effect"><i class="fas fa-camera"></i></div></div>
+      <div class="row center invisible" id="camera_settings_row"><div  id="camera_settings" title="Paramètre camera" class="btn-floating camera_settings waves-effect" onclick="return expand('champs_getusermedia', 'camera_settings_row', 'down');"><i class="fas fa-cog"></i></div></div>
     </div>
 </div>
 
@@ -223,10 +225,13 @@
                      <input id="souscategorie" name="souscat" type="text" disabled>
 
                    </div>
+
                  </div>
 
-
-
+<div class='row' id="champs_getusermedia"><div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
+PlayVideo();"></select>
+</div>
+<div class="col s6 m6 input-field"><input type="text" id="rearcameraID" disabled></div></div>
 
 
         <div id="row_pieces" class ="row" >
@@ -234,19 +239,19 @@
           <div class="input-field col s2 m1 ">
             <i class="fas fa-cube prefix"></i>
           </div>
-          <div class="input-field col s2 m1 nopadding" style="text-align: right;">
+          <div class="input-field col s3 m2 nopadding" style="text-align: right;" onclick="Increment('pieces', -1, 1);">
 
-            <div class="btn plusminus waves-effect" onclick="Increment('pieces', -1, 1)"><span class="no-select">-</span></div>
+            <div id="minus_btn" class="btn plusminus waves-effect"><span class="no-select">-</span></div>
           </div>
             <div class="input-field col s2 m1">
               <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; ">
             </div>
-            <div class="input-field col s1 nopadding">
-              <div class="btn plusminus waves-effect no-select" onclick="Increment('pieces', 1, 1)"><span class="no-select">+</span></div>
+            <div class="input-field col s2 nopadding" onclick="Increment('pieces', 1, 1);">
+              <div id="plus_btn" class="btn plusminus waves-effect no-select"><span class="no-select">+</span></div>
             </div>
 
             <div class="input-field col s3 m2">
-              <label for="pieces" class="couleur3-text no-select">pièce(s)</label>
+              <p class="couleur3-text no-select">pièce(s)</p>
             </div>
 
         </div>
