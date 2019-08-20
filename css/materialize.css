@@ -5324,6 +5324,7 @@ body.keyboard-focused .select-dropdown.dropdown-content li:focus {
 .range-field {
   position: relative; }
 
+/*
 input[type=range],
 input[type=range] + .thumb {
   cursor: pointer; }
@@ -5390,9 +5391,9 @@ input[type=range]::-webkit-slider-thumb {
   box-shadow: 0 0 0 10px rgba(0, 255, 78, 0.26); }
 
 input[type=range] {
-  /* fix for FF unable to apply focus style bug  */
+  // fix for FF unable to apply focus style bug
   border: 1px solid white;
-  /*required for proper track sizing in FF*/ }
+// required for proper track sizing in FF }
 
 input[type=range]::-moz-range-track {
   height: 3px;
@@ -5423,7 +5424,7 @@ input[type=range]::-ms-track {
   background: transparent;
   border-color: transparent;
   border-width: 6px 0;
-  /*remove default tick marks*/
+  //remove default tick marks
   color: transparent; }
 
 input[type=range]::-ms-fill-lower {
@@ -5442,6 +5443,7 @@ input[type=range]::-ms-thumb {
 
 .keyboard-focused input[type=range]:focus:not(.active)::-ms-thumb {
   box-shadow: 0 0 0 10px rgba(0, 255, 78, 0.26); }
+*/
 
 /***************
     Nav List
