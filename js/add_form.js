@@ -1,8 +1,38 @@
 //JS pour la page add_form.php
 
+
+/*
+if (!navigator.getUserMedia) {
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia || navigator.msGetUserMedia;
+}
+
+if (navigator.getUserMedia)
+{M.toast({html:"fonctionne : " + "navigator.getUserMedia"});
+}
+
+if (navigator.webkitGetUserMedia)
+{M.toast({html:"fonctionne : " + "navigator.webkitGetUserMedia"});
+}
+
+if (navigator.mozGetUserMedia)
+{M.toast({html:"fonctionne : " + "navigator.mozGetUserMedia"});
+}
+if (navigator.msGetUserMedia)
+{M.toast({html:"fonctionne : " + "navigator.msGetUserMedia"});
+}
+
+*/
+
+  var constraints ;
+
+//document.querySelector('#rearcameraID').value='';
+
+//M.toast({html:"getusermedia polyfill : " + navigator.getUserMedia});
+
 window.addEventListener('DOMContentLoaded', (event) => {
 
-
+document.querySelector('#rearcameraID').value='';
 
     var take_photo_btn = document.querySelector('#take-photo');
     var upload_file_default_btn = document.querySelector('#upload-file-default');
@@ -17,37 +47,160 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     init_materialize();
 
-    if (hasGetUserMedia()) {
-      //M.toast({html: "Tip top"});
-      init_getusermedia_simple();
 
+//M.toast({html:"navigator.mediaDevices : " + navigator.mediaDevices});
+//M.toast({html:"navigator.mediaDevices.getUserMedia : "+navigator.mediaDevices.getUserMedia});
+
+  //  if (hasGetUserMedia()) {
+
+
+  //let constraintList = document.getElementById("constraintList");
+/*  let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
+
+  for (let constraint in supportedConstraints) {
+    if (supportedConstraints.hasOwnProperty(constraint)) {
+      let elem = document.createElement("li");
+
+      elem.innerHTML = "<code>" + constraint + "</code>";
+      constraintList.appendChild(elem);
     }
+  }
+  */
+
+  //var settings = MediaStreamTrack.getSettings();
+  //console.log(settings);
+
+setConstraints();
+init_getusermedia();
 
 
-    else {
 
-      console.log("getUserMedia() n'est pas supporté par votre navigateur :(");
 
-      take_photo_btn.classList.add("invisible"); //on cache le bouton prise de vue (puisqu'inutile sans getusermedia)
-      //var video = document.querySelector('video');
-      //video.classList.add("invisible");
-      var canvas_video = document.getElementById("video_streaming");
-      canvas_video.classList.add("invisible");
-      var file_upload_container = document.getElementById("file_upload_container");
-      file_upload_container.classList.remove("invisible");
-    var canvas_final = document.getElementById('snap_final');
-      canvas_final.classList.add("invisible");
-      var upload_file_default_btn = document.querySelector('#upload-file-default');
-      upload_file_default_btn.classList.add("pulse");
-      is_camera_active = false;
-
-    }
 
 
 });
 
+function getPreciseConstraints()
+{
+
+
+   var DEVICES = [];
+var final = null;
+navigator.mediaDevices.enumerateDevices()
+    .then(function(devices) {
+        var arrayLength = devices.length;
+        for (var i = 0; i < arrayLength; i++)
+        {
+
+            var tempDevice = devices[i];
+
+            //FOR EACH DEVICE, PUSH TO DEVICES LIST THOSE OF KIND VIDEOINPUT (cameras)
+            //AND IF THE CAMERA HAS THE RIGHT FACEMODE ASSING IT TO "final"
+            if (tempDevice.kind == "videoinput")
+            {
+                DEVICES.push(tempDevice);
+
+                if(tempDevice.facingMode == "environment" ||tempDevice.label.indexOf("facing back")>=0 ||tempDevice.label.indexOf("rear")>=0 ||tempDevice.label.indexOf("Rear")>=0||tempDevice.label.indexOf("Back")>=0 ||tempDevice.label.indexOf("back")>=0)
+                    {final = tempDevice;}
+            }
+        }
+  M.toast({html:"caméra arrière trouvée : "+ final.label});
+
+        var totalCameras = DEVICES.length;
+        //If couldnt find a suitable camera, pick the last one... you can change to what works for you
+        if(final == null)
+        {
+            console.log("La caméra ne respecte pas les contraintes, on passe à la solution de rechange !");
+            //final = DEVICES[totalCameras-1];
+        }
+        else{
+            rearcameraID.value = final.deviceId; //on sauve l'ID dans notre boîte de texte
+
+          //Set the constraints and call getUserMedia
+           constraints = {
+          audio: false,
+          video: {
+              deviceId: {exact: final.deviceId}
+              }
+          };
+
+          console.log(constraints);
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then(function(stream) {
+              console.log("2e call à getusermedia avec les bonnes contraintes");
+              var video = document.querySelector('video');
+              // Older browsers may not have srcObject
+              if ("srcObject" in video) {
+                video.srcObject = stream;
+                //console.log("video srcobject");
+              } else {
+                // Avoid using this in new browsers, as it is going away.
+                video.src = window.URL.createObjectURL(stream);
+                //console.log("pas de video srcobject");
+              }
+          })
+          .catch(function(err) {
+            M.toast({html: "erreur 2e call gUm: " + err.name + ": " + err.message});
+
+
+            })
+    .catch(function(err) {
+          M.toast({html: "erreur enumerateDevices: "+err.name + ": " + err.message});
+});
+
+}
+});
+}
+
+
+
+function populate_camera_list()
+{  navigator.mediaDevices.enumerateDevices()
+   //.then(gotDevices)
+   .then(
+
+result => { gotDevices(result);
+          }
+     )
+     .then(
+ result => { setConstraints();}
+       )
+    /*   .then(
+   result => { init_getusermedia();}
+ )*/
+   .catch(function(err) {
+     console.log(err.name + ": " + err.message);
+     rearcameraID.value='inconnu';
+     setConstraints();
+    // init_getusermedia();
+   });}
+
 //console.log(adapter.browserDetails.browser);
 
+function setConstraints()
+{
+
+  if (rearcameraID.value !=='') {
+var rear_deviceID = rearcameraID.value;
+    //console.log("cam arrière identifiée et prête: " + rearcameraID.value);
+  constraints = {  audio: false, video: { deviceId: {
+              exact: rear_deviceID} }};
+
+            }
+
+  else if (rearcameraID.value=='inconnu')
+  {  // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
+    constraints = {  video: { facingMode: { exact: 'environment'}
+  }, audio: false };
+    //constraints = {audio: false, video: {mandatory: {facingMode: 'environment'}}};
+  }
+  else {
+    // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
+    constraints = {  video: { facingMode: { exact: 'environment'}
+    }, audio: false };
+  }
+  console.log(constraints);
+}
 
 function init_materialize()
 {
@@ -71,20 +224,26 @@ function init_materialize()
 
 function PlayVideo()
 {
-  init_getusermedia_simple();
+  /*setConstraints();*/
+  newcall_getusermedia();
   is_camera_active = true;
-  console.log("Caméra activée");
+
 }
 
 function StopVideo()
 {
   var stream = video.srcObject;
-  var tracks = stream.getTracks();
+  if (stream.getTracks())
+{var tracks = stream.getTracks();}
+if (stream.getVideoTracks())
+{var tracks = stream.getVideoTracks();}
+
+
 
   tracks.forEach(function(track) {
     track.stop();
     is_camera_active = false;
-    console.log("Camera désactivée");
+
   });
 
   video.srcObject = null;
@@ -97,67 +256,10 @@ function hasGetUserMedia() {
 }
 
 
-
-function init_getusermedia_simple() {
-  // solution issue de https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-      // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
-      var constraints = {  video: { facingMode: { exact: "environment"} }, audio: false };
-
-      navigator.mediaDevices.getUserMedia(constraints)
-      .then(function(mediaStream) {
-        var video = document.querySelector('video');
-
-          video.srcObject = mediaStream;
-        video.onloadedmetadata = function(e) {
-          video.play();
-
-
-          is_camera_active = true;
-          var file_upload_container = document.getElementById("file_upload_container");
-          file_upload_container.classList.add("invisible");
-
-          var canvas_streaming= document.getElementById('video_streaming');
-          canvas_streaming.classList.remove("invisible");
-          var canvas_final = document.getElementById('snap_final');
-          canvas_final.classList.add("invisible");
-          var take_photo_btn = document.querySelector('#take-photo');
-          take_photo_btn.classList.remove("invisible");
-          take_photo_btn.classList.add("pulse");
-          take_photo_btn.classList.remove("inactive");
-
-
-
-
-        };
-      })
-      .catch(function(err) {
-        console.log(err.name + ": " + err.message);
-        M.toast({html: "Support camera html5 :" + err.name + ": " + err.message});
-
-        var take_photo_btn = document.querySelector('#take-photo');
-        take_photo_btn.classList.add("invisible");
-        var canvas_video = document.getElementById("video_streaming");
-        canvas_video.classList.add("invisible");
-        var file_upload_container = document.getElementById("file_upload_container");
-        file_upload_container.classList.remove("invisible");
-      var canvas_final = document.getElementById('snap_final');
-        canvas_final.classList.add("invisible");
-        var upload_file_default_btn = document.querySelector('#upload-file-default');
-        upload_file_default_btn.classList.add("pulse");
-        is_camera_active = false;
-      });
-       // always check for errors at the end.
-      //M.toast({html: "Utilisez une connexion sécurisée (https)"});
-
-}
-
-//méthode tarabiscotée pour lancer getusermedia pour améliorer la compatibilité (temporaire pour les tests)
+//méthode tarabiscotée pour lancer getusermedia pour améliorer la compatibilité
 function init_getusermedia(){
 
 
-
-  // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
-  var constraints = {  video: { facingMode: { exact: "environment"} }, audio: false };
 
   // Older browsers might not implement mediaDevices at all, so we set an empty object first
 if (navigator.mediaDevices === undefined) {
@@ -186,24 +288,138 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
   }
 }
 
-navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-.then(function(stream) {
-  var video = document.querySelector('video');
-  // Older browsers may not have srcObject
-  if ("srcObject" in video) {
-    video.srcObject = stream;
-  } else {
-    // Avoid using this in new browsers, as it is going away.
-    video.src = window.URL.createObjectURL(stream);
-  }
+
+console.log(constraints);
+navigator.mediaDevices.getUserMedia(constraints)
+.then(function(stream)
+
+{
+  console.log("1er call à getusermedia pour accéder aux labels des cameras");
+
+        if (rearcameraID.value =='') {
+        populate_camera_list();
+        getPreciseConstraints();}
+
+        var video = document.querySelector('video');
+        // Older browsers may not have srcObject
+        if ("srcObject" in video) {
+          video.srcObject = stream;
+          //console.log("video srcobject");
+        } else {
+          // Avoid using this in new browsers, as it is going away.
+          video.src = window.URL.createObjectURL(stream);
+          //console.log("pas de video srcobject");
+        }
+
+
+
   video.onloadedmetadata = function(e) {
+
+
     video.play();
+
+
+
+    is_camera_active = true;
+    var file_upload_container = document.getElementById("file_upload_container");
+    file_upload_container.classList.add("invisible");
+
+    var canvas_streaming= document.getElementById('video_streaming');
+    canvas_streaming.classList.remove("invisible");
+    var canvas_final = document.getElementById('snap_final');
+    canvas_final.classList.add("invisible");
+    var take_photo_btn = document.querySelector('#take-photo');
+    take_photo_btn.classList.remove("invisible");
+    //take_photo_btn.classList.add("pulse");
+    take_photo_btn.classList.remove("inactive");
+    var video_streaming_controls = document.getElementById('video_streaming_controls');
+    video_streaming_controls.classList.remove("invisible");
+
+
   };
 })
 .catch(function(err) {
   console.log(err.name + ": " + err.message);
+
+  M.toast({html: "erreur 1er call gUm: " + err.name + ": " + err.message});
+
+  var take_photo_btn = document.querySelector('#take-photo');
+  take_photo_btn.classList.add("invisible");
+  var video_streaming_controls = document.getElementById('video_streaming_controls');
+  video_streaming_controls.classList.add("invisible");
+  var canvas_video = document.getElementById("video_streaming");
+  canvas_video.classList.add("invisible");
+  var file_upload_container = document.getElementById("file_upload_container");
+  file_upload_container.classList.remove("invisible");
+var canvas_final = document.getElementById('snap_final');
+  canvas_final.classList.add("invisible");
+  var upload_file_default_btn = document.querySelector('#upload-file-default');
+  //upload_file_default_btn.classList.add("pulse");
+  is_camera_active = false;
 });
+
 }
+
+
+
+function newcall_getusermedia()
+{
+
+  navigator.mediaDevices.getUserMedia(constraints)
+  .then(function(stream)
+  {
+    console.log("nouveau call à getusermedia");
+
+          var video = document.querySelector('video');
+          // Older browsers may not have srcObject
+          if ("srcObject" in video) {
+            video.srcObject = stream;
+            //console.log("video srcobject");
+          } else {
+            // Avoid using this in new browsers, as it is going away.
+            video.src = window.URL.createObjectURL(stream);
+            //console.log("pas de video srcobject");
+          }
+
+    })
+    .catch(function(err) {
+      console.log(err.name + ": " + err.message);
+    });
+}
+
+
+function gotDevices(deviceInfos) {
+
+  for (var i = 0; i !== deviceInfos.length; ++i) {
+    var deviceInfo = deviceInfos[i];
+    var option = document.createElement('option');
+    option.value = deviceInfo.deviceId;
+    if (deviceInfo.kind === 'videoinput') {
+      option.text = deviceInfo.label || 'Camera ' +
+        (videoSelect.length + 1);
+      videoSelect.appendChild(option);
+    }
+}
+
+
+var found = false;
+    for(i=0; i<videoSelect.options.length;i++){
+
+        if ((videoSelect.options[i].text.indexOf('Rear') !== -1) || (videoSelect.options[i].text.indexOf('rear') !== -1) || (videoSelect.options[i].text.indexOf('Back') !== -1) || (videoSelect.options[i].text.indexOf('back') !== -1))//true
+        {
+
+        videoSelect.value= videoSelect.options[i].value;
+        rearcameraID.value = videoSelect.options[i].value;
+        found=true;
+        }
+    }
+    if (found == 'false')
+    { rearcameraID.value = "inconnu"; }
+}
+
+
+
+
 
 function SwitchCameraActiveState()
 {
@@ -217,7 +433,7 @@ function SwitchCameraActiveState()
     {PlayVideo();}
 }
 
-
+/* Obsolète : plus rapide, mais utilise trop de batterie (ne met pas la caméra sur pause, seulement la vidéo)*/
 function SwitchCameraPausedState()
 {
   if (video.paused)
@@ -237,7 +453,7 @@ function PrisePhoto(e){
 
       SwitchCameraActiveState();
       var take_photo_btn = document.querySelector('#take-photo');
-      take_photo_btn.classList.remove("pulse");
+    //  take_photo_btn.classList.remove("pulse");
       take_photo_btn.classList.add("inactive");
 
 
@@ -387,9 +603,10 @@ else    {
         var sx = (vw - dimension)/2;
         var sy= (vh - dimension)/2;
 
-    //Dessine l'image video dans notre Canvas
+        //On cache le canvas avec le streaming
       canvas_streaming.classList.add("invisible");
       canvas2.classList.remove("invisible");
+      //Dessine l'image video dans notre Canvas
     ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 300, 300);
     return canvas2.toDataURL('image/png');
   }
