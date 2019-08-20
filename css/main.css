@@ -158,7 +158,7 @@ display: flex
 }
 
 ul.sidenav {
-  background-color: black;
+  background-color: white;
 }
 ul.sidenav a.pagelink {
  font-variant: small-caps;
@@ -166,18 +166,25 @@ ul.sidenav a.pagelink {
  font-size: 1.05rem;
 }
 
-.user-view a
+
+
+.user-view
 {
-  color:#E0E0E0;
+  margin-bottom: 1.5rem;
 }
 
-header, main, footer {
-     padding-left: 300px;
+.user-view a
+{
+  color:#606060 ;
+}
+
+main, footer, .barretitre {
+     margin-left:250px;
    }
 
    @media only screen and (max-width : 992px) {
-     header, main, footer {
-       padding-left: 0;
+     main, footer, .barretitre  {
+       margin-left:0;
      }
    }
 
@@ -191,6 +198,12 @@ header, main, footer {
     padding: 22px 32px 0 !important;
 
   }
+
+.w3-sidebar
+{z-index:99 !important;}
+
+.sidebarhover
+{background-color: #ccc !important;}
 
 /* ----- TOP NAV (header)-----*/
 
