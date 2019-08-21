@@ -237,9 +237,11 @@ font-size: 3.5rem;
 
 .btn-flat {
 
-  border-right: 1px solid white !important;
+  border: none;
+  border-radius: 5px !important;
 line-height: 2.5rem !important;
 height:2.5rem !important;
+margin-right: 1px;
 }
 
 .btn-large.inactive
@@ -263,6 +265,7 @@ ul.tabs{
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  background-color: #F0F0F0;
 }
 
 .scrollingwrapper btn-flat {
