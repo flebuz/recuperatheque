@@ -88,116 +88,73 @@
 <div class="quasi-fullwidth" style="background-color:white">
 
 
-<div style="position:relative" class="scrolling-wrapper">
+<div style="" class="scrolling-wrapper">
   <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
   <!--Les tabs reprenant les différentes catégories de matériaux -->
-          <?php
-          $categories= array('bois','métal','papier','plastique','verre','construction','textile','quincaillerie','mobilier','électronique','insolite');
-          $sous_categories= array(
 
-            'bois' => array('bois médium','bois massif','bois 3 plis','OSB'),
-            'metal' => array('acier','acier galvanisé','fer à beton','aluminium', 'laiton')
-          );
-
-          // --------------------
-          // REQUETE MYSQL ICI
-          // remplir deux tableaux avec les catégories et les sous-catégories
-          // --------------------
+  <?php
+  //connection database
+  try{
+    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+  }
+  catch(Exception $e){
+      die('Erreur : '.$e->getMessage());
+  }
 
 
-          //shuffle ($categories);
+    //prep the request
+    //every line is a souscategorie
+    $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `categorie` ORDER BY `categorie`.`ID`
+                        ');
+    //execute the request
+    $req->execute();
 
 
-          foreach ($categories as $key => $value) {
-            echo '<a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.abbrev($value).'\'data-target=\'select-'.abbrev($value)."' onclick= \"set_value('categorie','".abbrev($value)."')\"".'\'>'.$value.'</a>';
-          }
-          ?>
+      while($cat = $req->fetch()){
+
+        echo '<a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');unhide('categorisation')\"".'\'>'.$cat['nom'].'</a>';
+  }
+
+
+        ?>
+        <?php
+              // Ici les sous-catégories de matériaux qui s'affichent des les menus déroulants-->
+
+              $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
+                                  ');
+              //execute the request
+              $req->execute();
+
+              $souscategories = $req->fetchAll();
+
+
+        $current_cat=1;
+        echo "<ul id='select-".$souscategories[0]['ID_categorie']."' class='dropdown-content'>";
+
+        for ($row = 0; $row < sizeof($souscategories); $row++) {
+        if ($souscategories[$row]['ID_categorie'] == $current_cat)
+            {
+          echo "<li><a href='#".$souscategories[$row]['ID']."' onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
+
+              }
+              else {
+                      echo '</ul>';
+                      echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
+
+
+                    $current_cat++;
+              }
+
+        }
+
+        //  echo '</ul>';
+               ?>
+             </ul>
 
 </div>
 
 
 
-
-      <!-- Ici les sous-catégories de matériaux qui s'affichent des les menus déroulants-->
-      <ul id="select-bois" class="dropdown-content">
-    	  <li><a href="#!">bois médium</a></li>
-    	  <li><a href="#!">bois massif</a></li>
-    	  <li><a href="#!">bois 3 plis</a></li>
-    	  <li><a href="#!">OSB</a></li>
-    	  <li class="divider" tabindex="-1"></li>
-    	  <li><a href="#!"><i class="material-icons">more_horiz</i>Autres bois</a></li>
-      </ul>
-      <ul id="select-metal" class="dropdown-content">
-    	  <li><a href="#!">acier</a></li>
-    	  <li><a href="#!">acier galvanisé</a></li>
-    	  <li><a href="#!">fer à beton</a></li>
-    	  <li><a href="#!">aluminium</a></li>
-    	  <li><a href="#!">laiton</a></li>
-    	  <li class="divider" tabindex="-1"></li>
-    	  <li><a href="#!"><i class="material-icons">more_horiz</i>Autres métal</a></li>
-      </ul>
-      <ul id="select-papier" class="dropdown-content">
-    	  <li><a href="#!">papier</a></li>
-      	<li><a href="#!">carton</a></li>
-      	<li><a href="#!">fil de reliure</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autres papetterie</a></li>
-      </ul>
-      <ul id="select-plastique" class="dropdown-content">
-      	<li><a href="#!">plexiglas</a></li>
-      	<li><a href="#!">dibon</a></li>
-      	<li><a href="#!">mousse</a></li>
-      	<li><a href="#!">PVC</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autres plastique</a></li>
-      </ul>
-      <ul id="select-verre" class="dropdown-content">
-      	<li><a href="#!">plaque de verre</a></li>
-      	<li><a href="#!">miroir</a></li>
-      	<li><a href="#!">verre martelé</a></li>
-      	<li><a href="#!">récipient</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autres verre</a></li>
-      </ul>
-      <ul id="select-construction" class="dropdown-content">
-      	<li><a href="#!">béton</a></li>
-      	<li><a href="#!">béton cellulaire</a></li>
-      	<li><a href="#!">plâtre</a></li>
-      	<li><a href="#!">carrelage</a></li>
-      	<li><a href="#!">pierre</a></li>
-      	<li><a href="#!">terre</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autres construction</a></li>
-      </ul>
-      <ul id="select-mobilier" class="dropdown-content">
-      	<li><a href="#!">table</a></li>
-      	<li><a href="#!">table a dessin</a></li>
-      	<li><a href="#!">table à couture</a></li>
-      	<li><a href="#!">vitrine</a></li>
-      	<li><a href="#!">chevalet</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre mobilier</a></li>
-      </ul>
-      <ul id="select-textile" class="dropdown-content">
-      	<li><a href="#!">du tissu</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre textile</a></li>
-      </ul>
-      <ul id="select-quincaillerie" class="dropdown-content">
-      	<li><a href="#!">racagnac</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre textile</a></li>
-      </ul>
-      <ul id="select-electronique" class="dropdown-content">
-      	<li><a href="#!">transistor</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre textile</a></li>
-      </ul>
-      <ul id="select-insolite" class="dropdown-content">
-      	<li><a href="#!">une flûte à 6 schtrompf</a></li>
-      	<li class="divider" tabindex="-1"></li>
-      	<li><a href="#!"><i class="material-icons">more_horiz</i>Autre textile</a></li>
-      </ul>
 
 
 
@@ -211,9 +168,10 @@
 
                 <input id="image_url" name="image_url" type="text" value="none" class="invisible">
 
-                <div id="categorisation" class ="row" >
-                   <div class="col s5 m3 input-field">
-                     <input id="categorie" name="cat" type="text" disabled>
+                <div id="categorisation" class ="row hidden" >
+                   <div class="col s5 m5 input-field">
+                     <input id="nom_categorie" name="cat" type="text" disabled>
+                     <input id="id_categorie" name="cat" type="text" disabled hidden>
 
                    </div>
 
@@ -221,9 +179,9 @@
                       <p>></p>
                    </div>
 
-                   <div class="col s5 m3 input-field">
-                     <input id="souscategorie" name="souscat" type="text" disabled>
-
+                   <div class="col s5 m6 input-field">
+                     <input id="nom_souscategorie" name="souscat" type="text" disabled>
+                    <input id="id_souscategorie" name="souscat" type="text" disabled hidden>
                    </div>
 
                  </div>
@@ -391,13 +349,8 @@ PlayVideo();"></select>
 
     <!-- Alors ci-dessous ça peut paraitre bizarre, mais il s'agit d'une série de boutons (invisibles) que j'utilise pour faire s'afficher le menu déroulant correctement. L'origine de la difficulté est que je combine deux composants Materialize, les Tabs https://materializecss.com/tabs.html et les Dropdown https://materializecss.com/dropdown.html . Il y a sûrement un moyen plus simple de produire le même effet... :p -->
     <div >
-<?php
 
-      foreach ($categories as $key => $value) {
-        echo '<a class=\'dropdown-trigger btn invisible\' href=\'#'.abbrev($value).'\' data-target=\'select-'.abbrev($value).'\'>'.$value.'</a>';
-      }
 
-      ?>
 
     </div>
 
@@ -407,6 +360,8 @@ PlayVideo();"></select>
       </a>
 
   </form>
+
+
 
 </main>
 
