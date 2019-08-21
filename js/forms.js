@@ -7,6 +7,12 @@ function set_value(id_to_update, value)
   document.getElementById(id_to_update).value= value;
 }
 
+//fonction qui enlève la classe "hidden" d'un élément du DOM
+function unhide(id_to_show)
+{var elem_to_show= document.getElementById(id_to_show);
+
+elem_to_show.classList.remove("hidden");}
+
 //fonction expand affiche le div #id_to_show, cache le div #id_to_hide et applique une animation d'entrée
 // en fonction de la variable direction (slide down, slide right, ou fade in (par défaut))
 function expand(id_to_show, id_to_hide, direction)
