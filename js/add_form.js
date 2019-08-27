@@ -1,34 +1,17 @@
 //JS pour la page add_form.php
 
-
-/*
-if (!navigator.getUserMedia) {
-  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-  navigator.mozGetUserMedia || navigator.msGetUserMedia;
+//implémentation de $_GET pour javascript (https://www.onlineaspect.com/2009/06/10/reading-get-variables-with-javascript/)
+function $_GET(q,s) {
+    s = s ? s : window.location.search;
+    var re = new RegExp('&'+q+'(?:=([^&]*))?(?=&|$)','i');
+    return (s=s.replace(/^\?/,'&').match(re)) ? (typeof s[1] == 'undefined' ? '' : decodeURIComponent(s[1])) : undefined;
 }
 
-if (navigator.getUserMedia)
-{M.toast({html:"fonctionne : " + "navigator.getUserMedia"});
-}
-
-if (navigator.webkitGetUserMedia)
-{M.toast({html:"fonctionne : " + "navigator.webkitGetUserMedia"});
-}
-
-if (navigator.mozGetUserMedia)
-{M.toast({html:"fonctionne : " + "navigator.mozGetUserMedia"});
-}
-if (navigator.msGetUserMedia)
-{M.toast({html:"fonctionne : " + "navigator.msGetUserMedia"});
-}
-
-*/
 
   var constraints ;
 
-//document.querySelector('#rearcameraID').value='';
+  var verbose = $_GET('verbose');
 
-//M.toast({html:"getusermedia polyfill : " + navigator.getUserMedia});
 
 window.addEventListener('DOMContentLoaded', (event) => {
 
@@ -39,39 +22,16 @@ document.querySelector('#rearcameraID').value='';
     var file_upload = document.getElementById('file');
     var video = document.querySelector("#video");
     var is_camera_active = false;
-
+    var snap_final = document.getElementById('snap_final');
 
     take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
     file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
-    video.addEventListener("click", PrisePhoto);
+  //  snap_final.addEventListener("click", UploadFichier); //on active  l'upload de photo en cas de clic sur le snap final
 
     init_materialize();
 
-
-//M.toast({html:"navigator.mediaDevices : " + navigator.mediaDevices});
-//M.toast({html:"navigator.mediaDevices.getUserMedia : "+navigator.mediaDevices.getUserMedia});
-
-  //  if (hasGetUserMedia()) {
-
-
-  //let constraintList = document.getElementById("constraintList");
-/*  let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
-
-  for (let constraint in supportedConstraints) {
-    if (supportedConstraints.hasOwnProperty(constraint)) {
-      let elem = document.createElement("li");
-
-      elem.innerHTML = "<code>" + constraint + "</code>";
-      constraintList.appendChild(elem);
-    }
-  }
-  */
-
-  //var settings = MediaStreamTrack.getSettings();
-  //console.log(settings);
-
-setConstraints();
-init_getusermedia();
+    setConstraints();
+    init_getusermedia();
 
 
 
@@ -104,14 +64,21 @@ navigator.mediaDevices.enumerateDevices()
                     {final = tempDevice;}
             }
         }
+        console.log("caméra arrière trouvée : "+ final.label);
+        if (typeof verbose !== 'undefined')
+      {
   M.toast({html:"caméra arrière trouvée : "+ final.label});
-
+      }
         var totalCameras = DEVICES.length;
         //If couldnt find a suitable camera, pick the last one... you can change to what works for you
         if(final == null)
         {
             console.log("La caméra ne respecte pas les contraintes, on passe à la solution de rechange !");
             //final = DEVICES[totalCameras-1];
+            if (typeof verbose !== 'undefined')
+          {
+      M.toast({html:"La caméra ne respecte pas les contraintes, on passe à la solution de rechange !"});
+          }
         }
         else{
             rearcameraID.value = final.deviceId; //on sauve l'ID dans notre boîte de texte
@@ -140,12 +107,18 @@ navigator.mediaDevices.enumerateDevices()
               }
           })
           .catch(function(err) {
+            if (typeof verbose !== 'undefined')
+            {
             M.toast({html: "erreur 2e call gUm: " + err.name + ": " + err.message});
+            }
 
 
             })
     .catch(function(err) {
+      if (typeof verbose !== 'undefined')
+      {
           M.toast({html: "erreur enumerateDevices: "+err.name + ": " + err.message});
+      }
 });
 
 }
@@ -210,7 +183,7 @@ function init_materialize()
 
   /* Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de add_form.php)*/
   var elems = document.querySelectorAll('.dropdown-trigger');
-  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:0, inDuration:0});
+  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:250, inDuration:0});
 
   var elems2 = document.querySelectorAll('.fixed-action-btn');
    var instances = M.FloatingActionButton.init(elems2);
@@ -339,9 +312,13 @@ navigator.mediaDevices.getUserMedia(constraints)
   };
 })
 .catch(function(err) {
-  console.log(err.name + ": " + err.message);
 
+  console.log("erreur 1er call gUm: " + err.name + ": " + err.message);
+
+  if (typeof verbose !== 'undefined')
+{
   M.toast({html: "erreur 1er call gUm: " + err.name + ": " + err.message});
+}
 
   var take_photo_btn = document.querySelector('#take-photo');
   take_photo_btn.classList.add("invisible");
@@ -425,8 +402,7 @@ function SwitchCameraActiveState()
 {
   if (is_camera_active)
   {
-  const ShutterSound = new Audio("assets/inspectorj__camera-shutter-fast-a.wav"); //On prépare le son "Camera Shutter, Fast, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
-   ShutterSound.play(); //jouer le son seulement quand on prend la photo
+
    StopVideo();
  }
   else
@@ -574,9 +550,12 @@ else    {
 
         }
 
+//on cache le svg avec les bords discontinus
+    var bords_file_upload = document.getElementById("bords_file_upload");
+    bords_file_upload.classList.add("invisible");
+
 // on affiche le canevas final
     canvas3.classList.remove("invisible");
-
     return canvas3.toDataURL('image/png');
   }
 
@@ -671,6 +650,7 @@ download_img = function(el) {
   var image = canvas_final.toDataURL("image/jpeg", 0.9);
   el.href = image;
 };
+
 
 
 video.addEventListener('play', function(){
