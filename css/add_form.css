@@ -78,6 +78,25 @@ width:100%;
 }
 
 
+.streaming_container
+{
+
+}
+
+.video_streaming
+{
+
+}
+
+#overlayimage
+{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+    width:100%;
+    /*max-width:400px;
+    max-height:400px;*/
+	}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -106,7 +125,10 @@ input[type=range] {
 input[type=range] {
   /* fix for FF unable to apply focus style bug  */
   border: 1px solid transparent !important;
-  /*required for proper track sizing in FF*/ }
+  /*required for proper track sizing in FF*/
+
+  margin-top:1.3rem !important;
+}
 
 input[type='range']::-webkit-slider-thumb
 
@@ -115,6 +137,7 @@ margin: -7px; /* alignment fix for Chrome */ }
 
 input[type="range"]::-ms-thumb {
   margin: 0; /* Reset margin in Edge since it supports -webkit-slider-thumb as well */
+
 }
 
 
@@ -181,6 +204,14 @@ color: $couleur3 !important;}
 
     font-size: 1.5rem !important;
   }
+
+div.col.input-field
+  {
+        height: 3rem !important;
+
+  }
+
+
 
 
 .btn.plusminus
@@ -284,9 +315,26 @@ li.tab a:active {
 
 
 
-li.tab a{
-padding: 12px 0px 0px !important;
+
+
+.dropdown-content li {
+/*padding: 12px 0px 0px !important;*/
+
 }
+
+/*shim pour protéger les clics sur le menu des éléments en arrière-fond sur mobile */
+/*
+ul.dropdown-content:after{
+	content:"";
+	position:absolute;
+	z-index:-1;
+	top:-50px;
+	right:-50px;
+	bottom:-50px;
+	left:-50px;
+	background:rgba(0,0,0,.3);
+}
+*/
 
 .border-div
 {
