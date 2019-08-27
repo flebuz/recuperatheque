@@ -46,16 +46,26 @@
 <div id="cam_col" class="col s10 m10 l10 center-align">
 
 
-                <div class="overlay" id="video_streaming_overlay">
-                  <canvas id="video_streaming" autoplay class="invisible"></canvas></div>
-                  <canvas id="snap_final" class="invisible"></canvas>
+                  <div class="streaming_container">
+                  <canvas id="video_streaming" autoplay class="video_streaming invisible"></canvas>
+                  </div>
+
                   <video id="video" autoplay class="invisible"></video>
 
+                          <label for="file" style>
+            <canvas id="snap_final" class="invisible"></canvas>
 
-                  <div id="file_upload_container">
-                          <label for="file">
-                          <canvas id="image_final" class="invisible"></canvas>
-                          <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="btn-floating btn-large cam_btn_default  waves-effect"><i class="material-icons photo-controls">camera_alt</i></div>
+                  <div id="file_upload_container" style="display:inline-block; margin:20px 0 20px 0;">
+
+
+                          <div id="bords_file_upload" style="position:absolute; cursor: pointer;"><svg viewBox="0 0 100 100" width="100px" style="width:100px;">
+                            <path d="M25,2 L2,2 L2,25" fill="none" stroke="#9e9e9e" stroke-width="3" />
+                            <path d="M2,75 L2,98 L25,98" fill="none" stroke="#9e9e9e" stroke-width="3" />
+                            <path d="M75,98 L98,98 L98,75" fill="none" stroke="#9e9e9e" stroke-width="3" />
+                            <path d="M98,25 L98,2 L75,2" fill="none" stroke="#9e9e9e" stroke-width="3" />
+                          </svg></div>
+
+                          <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="cam_btn_default" style="width:100px; height:100px; cursor:pointer"><i class="material-icons photo-controls" style="font-size: 64px !important; line-height: 100px !important;">camera_alt</i>   </div>
                         </label>
                         <input id="file" type="file" accept="image/*" capture class="invisible">
                   </div>
@@ -112,7 +122,7 @@
 
       while($cat = $req->fetch()){
 
-        echo '<a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');unhide('categorisation')\"".'\'>'.$cat['nom'].'</a>';
+        echo '<a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
   }
 
 
@@ -134,15 +144,15 @@
         for ($row = 0; $row < sizeof($souscategories); $row++) {
         if ($souscategories[$row]['ID_categorie'] == $current_cat)
             {
-          echo "<li><a href='#".$souscategories[$row]['ID']."' onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
+          echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
 
               }
               else {
                       echo '</ul>';
                       echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-
-
+                      echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
                     $current_cat++;
+
               }
 
         }
@@ -152,6 +162,8 @@
              </ul>
 
 </div>
+
+
 
 
 
@@ -168,10 +180,10 @@
 
                 <input id="image_url" name="image_url" type="text" value="none" class="invisible">
 
-                <div id="categorisation" class ="row hidden" >
+                <div id="categorisation" class ="row invisible" >
                    <div class="col s5 m5 input-field">
-                     <input id="nom_categorie" name="cat" type="text" disabled>
-                     <input id="id_categorie" name="cat" type="text" disabled hidden>
+                     <input id="nom_categorie" name="cat" type="text" required readonly>
+                     <input id="id_categorie" name="cat" type="text" readonly hidden>
 
                    </div>
 
@@ -180,26 +192,31 @@
                    </div>
 
                    <div class="col s5 m6 input-field">
-                     <input id="nom_souscategorie" name="souscat" type="text" disabled>
-                    <input id="id_souscategorie" name="souscat" type="text" disabled hidden>
+                     <input id="nom_souscategorie" name="souscat" type="text" required readonly>
+                    <input id="id_souscategorie" name="souscat" type="text" readonly hidden>
                    </div>
 
                  </div>
 
-<div class='row' id="champs_getusermedia"><div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
+    <?php if (isset($_GET["camdetails"]))
+      { echo "<div class='row input-field' id='champs_getusermedia'>";      }
+        else
+        { echo "<div class='row input-field invisible' id='champs_getusermedia'>";      }
+        ?>
+<div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
 PlayVideo();"></select>
 </div>
 <div class="col s6 m6 input-field"><input type="text" id="rearcameraID" disabled></div></div>
 
 
-        <div id="row_pieces" class ="row" >
+        <div id="row_pieces" class ="row input-field" >
 
           <div class="input-field col s2 m1 ">
             <i class="fas fa-cube prefix"></i>
           </div>
           <div class="input-field col s3 m2 nopadding" style="text-align: right;" onclick="Increment('pieces', -1, 1);">
 
-            <div id="minus_btn" class="btn plusminus waves-effect"><span class="no-select">-</span></div>
+            <div id="minus_btn" class="btn plusminus waves-effect z-depth-0"><span class="no-select">-</span></div>
           </div>
             <div class="input-field col s2 m1">
               <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; ">
@@ -214,7 +231,7 @@ PlayVideo();"></select>
 
         </div>
 
-        <div id="row_range" class="row">
+        <div id="row_range" class="row input-field">
 
             <div class="input-field col s9 l8" id="range_div" >
               <i class="fas fa-weight-hanging prefix"></i>
@@ -230,7 +247,7 @@ PlayVideo();"></select>
 
         </div>
 
-        <div id="row_tags" class ="row" >
+        <div id="row_tags" class ="row input-field" >
            <div class="input-field col s12">
              <i class="fas fa-tags prefix"></i>
              <input id="tags" name="tags" type="text">
@@ -239,7 +256,7 @@ PlayVideo();"></select>
 
          </div>
 
-            <div id="row_etat" class ="row">
+            <div id="row_etat" class ="row input-field">
                   <div class="input-field col s3">
                     <i class="fas fa-heart-broken prefix"></i>
                     <label for="range_etat" class="couleur3-text">Etat:</label>
@@ -266,8 +283,8 @@ PlayVideo();"></select>
 
            </div>
 
-           <div id="row_prix" class ="row" >
-              <div class="input-field col s4 m2">
+           <div id="row_prix" class ="row input-field" >
+              <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
                 <input id="prix" name="prix" type="number" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
                 <label for="prix">Prix</label>
@@ -301,7 +318,7 @@ PlayVideo();"></select>
   </div>
 </div>
     <div class="row">
-      <div class="input-field col s6 m3">
+      <div class="input-field col s5 m3">
 
             <label>
                 <input type="checkbox" name="externe" class="filled-in" onchange="check_expand_hide(this, 'champ-localisation', 'champ-localisation', 'right');"/>
@@ -309,7 +326,7 @@ PlayVideo();"></select>
               </label>
 
       </div>
-      <div id="champ-localisation" class="input-field col s6 m6 invisible">
+      <div id="champ-localisation" class="input-field col s7 m9 invisible">
         <i class="fas fa-map-marked-alt prefix"></i>
         <input id="localisation" name="localisation" type="text">
         <label for="localisation">Localisation:</label>
