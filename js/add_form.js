@@ -425,7 +425,7 @@ function PrisePhoto(e){
 
 
      //var vignette = DrawOnCanvas('videopreview');
-     DessineVignette('videosnap');
+     document.getElementById('image_final').value = DessineVignette('videosnap');
 
       SwitchCameraActiveState();
       var take_photo_btn = document.querySelector('#take-photo');
@@ -446,7 +446,7 @@ console.log("UploadFichier");
  img.onload = function() {
 getOrientation(e.target.files[0],function(orientation) {
 
-    var vignette = DessineVignette('imagesnap', img, orientation);
+    document.getElementById('image_final').value = DessineVignette('imagesnap', img, orientation);
   });
 
     //context.drawImage(img, 0,0);
@@ -556,7 +556,7 @@ else    {
 
 // on affiche le canevas final
     canvas3.classList.remove("invisible");
-    return canvas3.toDataURL('image/png');
+    return canvas3.toDataURL("image/jpeg", 0.9);
   }
 
   else if ((type=='videosnap') && ( video.readyState === 4 )){
@@ -587,7 +587,7 @@ else    {
       canvas2.classList.remove("invisible");
       //Dessine l'image video dans notre Canvas
     ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 300, 300);
-    return canvas2.toDataURL('image/png');
+    return canvas2.toDataURL("image/jpeg", 0.9);
   }
 
   //retourne une image URI (possible de jouer avec la qualité du jpeg avec .toDataURL)
@@ -651,7 +651,12 @@ download_img = function(el) {
   el.href = image;
 };
 
+function Soumettre()
+{
 
+  document.forms['formulaire_encodage'].submit();
+  document.getElementById('client').reset();
+}
 
 video.addEventListener('play', function(){
         DrawVideoOnCanvas('videostream');
