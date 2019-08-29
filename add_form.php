@@ -52,9 +52,9 @@
 
                   <video id="video" autoplay class="invisible"></video>
 
-                          <label for="file" style>
-            <canvas id="snap_final" class="invisible"></canvas>
 
+            <canvas id="snap_final" class="invisible"></canvas>
+<label for="file" style>
                   <div id="file_upload_container" style="display:inline-block; margin:20px 0 20px 0;">
 
 
@@ -72,7 +72,7 @@
 
 </div>
 
-<div class="col s1 pull-s1 " id="cam_controls" style:"height:400">
+<div class="col s1 pull-s1 " id="cam_controls">
     <div class="row"></div>
     <div class="row"></div>
     <div class="row"></div>
@@ -170,7 +170,7 @@
 
 
 
-      <div class="container" id="formulaire" style="background-color:white">
+      <div class="container no-select" id="formulaire" style="background-color:white">
           <!-- Les onglets avec les catégories de matériaux-->
 
 
@@ -198,6 +198,15 @@
 
                  </div>
 
+                 <div id="row_tags" class ="row input-field" >
+                    <div class="input-field col s12">
+                      <i class="fas fa-tags prefix"></i>
+                      <input class="" id="tags" name="tags" type="text">
+                      <label for="tags">Ajouter des tags :</label>
+                    </div>
+
+                  </div>
+
     <?php if (isset($_GET["camdetails"]))
       { echo "<div class='row input-field' id='champs_getusermedia'>";      }
         else
@@ -211,24 +220,22 @@ PlayVideo();"></select>
 
         <div id="row_pieces" class ="row input-field" >
 
-          <div class="input-field col s2 m1 ">
+          <div class="input-field col s2" style="width:55px !important; ">
             <i class="fas fa-cube prefix"></i>
           </div>
-          <div class="input-field col s3 m2 nopadding" style="text-align: right;" onclick="Increment('pieces', -1, 1);">
+          <div class="input-field col s8 nopadding" >
 
-            <div id="minus_btn" class="btn plusminus waves-effect z-depth-0"><span class="no-select">-</span></div>
-          </div>
-            <div class="input-field col s2 m1">
-              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; ">
-            </div>
-            <div class="input-field col s2 nopadding" onclick="Increment('pieces', 1, 1);">
-              <div id="plus_btn" class="btn plusminus waves-effect no-select"><span class="no-select">+</span></div>
-            </div>
+            <div class="inline-group">
+            <div id="minus_btn" class="btn plusminus waves-effect eztouch-left" onclick="Increment('pieces', -1, 1);"><span class="no-select">-</span></div>
 
-            <div class="input-field col s3 m2">
+              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; width:45px; ">
+
+              <div id="plus_btn" class="btn plusminus waves-effect eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
+
+
               <p class="couleur3-text no-select">pièce(s)</p>
-            </div>
-
+              </div>
+          </div>
         </div>
 
         <div id="row_range" class="row input-field">
@@ -238,7 +245,7 @@ PlayVideo();"></select>
               <input type="range" id="poids" min="0.1" max="10" value="1.0" step="0.1" name="poids" oninput="updateTextInput('indicateur_poids', this.value);" />
             </div>
 
-            <div class="input-field col s2 l3 m1">
+            <div class="input-field col s2">
             <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
             </div>
             <div class="input-field col s1">
@@ -247,37 +254,21 @@ PlayVideo();"></select>
 
         </div>
 
-        <div id="row_tags" class ="row input-field" >
-           <div class="input-field col s12">
-             <i class="fas fa-tags prefix"></i>
-             <input id="tags" name="tags" type="text">
-             <label for="tags">Ajouter des tags :</label>
-           </div>
 
-         </div>
 
             <div id="row_etat" class ="row input-field">
-                  <div class="input-field col s3">
+                  <div class="input-field col s3 m2">
                     <i class="fas fa-heart-broken prefix"></i>
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
-             <div class="input-field col s7 m6 offset-s1 nopadding" id="etat" style="max-height:53px;">
+             <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
 
-<input type="range" class="browser-default" id="range_etat" name="etat" value="4"  style="z-index:30;width: 100% !important;  margin-bottom: 5px;" min="1" max="4" onupdate="ModifierBulle(etat)">
-
-<div class="pips-container">
-  <div class="noUi-pips noUi-pips-horizontal">
-	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 0.00000%"></div>
-	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 0.00000%">1/4</div>
-	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 33.33333%"></div>
-	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 33.33333%">2/4</div>
-	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 66.66667%"></div>
-	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 66.66667%">3/4</div>
-	<div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 100.00000%"></div>
-	<div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 100.00000%">4/4</div>
-	</div>
+              <div class="rating" style="display:inline-block;">
+<span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" ontouchstart="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" ontouchstart="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" ontouchstart="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" ontouchstart="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
 </div>
+<input type="number" name="etat" id="etat" value="1" hidden>
+
 
             </div>
 
@@ -290,8 +281,6 @@ PlayVideo();"></select>
                 <label for="prix">Prix</label>
               </div>
 
-              <div class="input-field col s5"><p>(par pièce)</p>
-            </div>
           </div>
 
 
@@ -339,7 +328,7 @@ PlayVideo();"></select>
 
             <div class="row hide-on-small-only">
         			<div class="col s12">
-        			 <a class="waves-effect waves-light btn-small green accent-3 right" value="submit" onclick="document.getElementById('formulaire_encodage').submit(); document.getElementById('client').reset(); " >
+        			 <a class="waves-effect waves-light btn-small green accent-3 right" value="submit" onclick="Soumettre();" >
                  <i class="material-icons">thumb_up_alt</i>
                  Encoder
                </a>
@@ -352,7 +341,7 @@ PlayVideo();"></select>
 
             </div>
 
-            <div class="row"></div>
+            <div class="row"><input id="image_final" name="image_final" type="text"></div>
             <div class="row"></div>
 
 
