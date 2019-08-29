@@ -53,6 +53,30 @@ function check_expand_hide(elem, id_to_show, id_to_hide, direction)
   {hide(id_to_hide)}
 }
 
+function checkhearts(value)
+{
+
+  if (value >= 1)
+  {document.getElementById('heart1').classList.add("checked");}
+  else
+  {document.getElementById('heart1').classList.remove("checked");}
+
+  if (value >= 2)
+  {document.getElementById('heart2').classList.add("checked");}
+  else
+  {document.getElementById('heart2').classList.remove("checked");}
+
+  if (value >= 3)
+  {document.getElementById('heart3').classList.add("checked");}
+  else
+  {document.getElementById('heart3').classList.remove("checked");}
+
+  if (value >= 4)
+  {document.getElementById('heart4').classList.add("checked");}
+  else
+  {document.getElementById('heart4').classList.remove("checked");}
+
+}
 
 // fonction pour inc/décrementer la valeur d'un élément (utilisé pour "pieces")
   function Increment(id, increment, min){
