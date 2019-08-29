@@ -1,0 +1,414 @@
+/*!
+ * Appli Récupérathèque
+ * Fédération des Récupérathèques
+ * Mozilla Public License 2.0 (https://opensource.org/licenses/MPL-2.0)
+*/
+
+/*Renner est devenue Jost (et liée en header dans add_form.php)*/
+/*
+@font-face {
+  font-family: 'RennerMedium';
+  src: url('/fonts/Renner_500Medium.otf') format('otf'), url('/fonts/Renner_500Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RennerLight';
+  src: url('/fonts/Renner_300Light.otf') format('otf'), url('/fonts/Renner_300Light.ttf') format('truetype');
+}
+*/
+
+h1, h2, h3, h4, h5, h6, li, .breadcrumb{
+  font-family: 'Jost' !important;
+  font-weight:600;
+}
+
+body, p, blockquote, span {
+    font-family: 'Jost' !important;
+    font-weight:400;
+}
+
+
+.no-select {
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer */
+   -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
+
+/*
+|========|
+| header |
+|========|
+*/
+
+.header{
+  background: #202020;
+ 	padding: 10px;
+ 	color:#FFFFFF;
+ 	text-align: center
+}
+
+/*
+|=========|
+|  video  |
+|=========|
+*/
+
+.cam_container{
+  position: relative;
+}
+
+#video {
+position:absolute;
+left:0;
+ right:0;
+
+ margin-left: auto;
+ margin-right: auto;
+/*max-height: 400px; */
+width:100%;
+  z-index: 1;
+}
+
+#snap_final {
+  height: 200 !important;
+
+/*  max-height: 225px;*/
+  z-index: 10;
+}
+
+.streaming_container
+{display:inline-block;
+  position: relative;
+  		top: 0;
+  		left: 0;}
+
+.video_streaming
+{
+position: relative;
+		top: 0;
+		left: 0;
+}
+
+#overlayimage
+{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+    width:100%;
+    /*max-width:400px;
+    max-height:400px;*/
+	}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+
+
+
+/* ----- INPUT RANGE ----- */
+
+/*
+input[type='range']
+
+{ -webkit-appearance: none;  height:30px;  } */
+/*
+input[type=range] {
+    border: 0px !important;
+}
+*/
+
+input[type=range] {
+  /* fix for FF unable to apply focus style bug  */
+  border: 1px solid transparent !important;
+  /*required for proper track sizing in FF*/ }
+
+input[type='range']::-webkit-slider-thumb
+
+{  height:20px; width:20px; border-radius: 20px;
+margin: -7px; /* alignment fix for Chrome */ }
+
+input[type="range"]::-ms-thumb {
+  margin: 0; /* Reset margin in Edge since it supports -webkit-slider-thumb as well */
+}
+
+
+/*Emulation de l'apparence des tick marks de nouislider (à toiletter puis supprimer nouislider.css)*/
+
+.pips-container {
+  padding: 0px 3px 0px 3px !important; /*padding de 7 pixels parce que le thumb-slider Materialize fait 14px de largeur*/
+  margin-top: -35px;
+}
+           .noUi-pips-horizontal {
+    position:relative !important;
+    padding-top: 0px !important;
+    height: auto !important;
+    top: 100%;
+
+    width: 100% !important;
+    margin-top:-7px;
+
+    padding: 0 0rem !important;
+
+
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.noUi-pips {
+
+    position: relative;
+    color: #999;
+    margin-bottom:2rem;
+    }
+
+.noUi-horizontal .noUi-handle, .noUi-vertical .noUi-handle {
+	background: #00ff4e !important;
+    z-index: 30;
+}
+.noUi-target.noUi-horizontal .noUi-tooltip {
+	background-color: #00ff4e !important;
+  z-index: 30;
+}
+
+.noUi-value.noUi-value-horizontal.noUi-value-large
+{font-size: 15px;
+color:#6f6972; }
+
+.noUi-marker-horizontal.noUi-marker-large
+{height:10px !important;}
+
+.thumb
+{z-index: 30 !important;}
+
+.prefix /* label inactif devant zone de texte */
+{color:#6f6972 !important}
+
+.prefix.active /* label actif devant zone de texte */
+{color:#00e676 !important}
+
+label
+{font-size: 1rem !important;
+color: $couleur3 !important;}
+
+.input-field .prefix {
+
+    font-size: 1.5rem !important;
+  }
+
+
+.btn.plusminus
+{
+  background-color:#F0F0F0;
+  width: 35px;
+  height: 2.5em;
+  padding: 0px 0px 0px 0px;}
+
+.btn.plusminus span
+{color:black;}
+
+.nomargin{
+	margin: 0px 0px 0px 0px !important;
+}
+.nopadding{
+	padding: 0px 0px 0px 0px !important;
+}
+
+.invisible{
+  display:none !important;
+}
+
+.hidden{
+  visibility: hidden !important;
+}
+
+.centered{
+  top: -150px !important;
+  left: 200px !important;
+}
+
+.btn-floating.btn-large.cam_btn_default
+{
+
+  width: 100px;
+height: 100px;
+margin-top: 10px;
+margin-bottom: 10px;
+  z-index: 0;
+
+}
+
+#take-photo
+{z-index:3;}
+
+
+
+.btn-floating.btn-large.cam_btn_default i
+{
+line-height: 100px;
+font-size: 3.5rem;
+}
+
+.btn-flat {
+
+  border: none;
+  border-radius: 5px !important;
+line-height: 2.5rem !important;
+height:2.5rem !important;
+margin-right: 1px;
+}
+
+.btn-large.inactive
+{
+  background-color: white;
+}
+
+.btn-large.inactive i
+{
+  color: #E0E0E0;
+}
+
+
+ul.tabs{
+  background-color: #E0E0E0 !important;
+  margin-left: 1px !important;
+  margin-right:1px !important;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  background-color: #F0F0F0;
+}
+
+.scrollingwrapper btn-flat {
+  display: inline-block;
+
+}
+
+
+/*couleur ne reste pas car perd le focus à l'ouverture du menu*/
+/*checker ici pour solution plus viable https://css-tricks.com/snippets/javascript/loop-queryselectorall-matches/ */
+/*
+li.tab a:active {
+        background-color: #00e676 !important;
+}*/
+
+
+
+
+li.tab a{
+padding: 12px 0px 0px !important;
+}
+
+.border-div
+{
+/*  margin: 5px 5px 5px 5px; */
+padding: 0px 24px 0px 24px;
+  border-right : 1px solid white;
+  line-height: 24px !important;
+}
+
+
+.separator {
+           display: flex;
+           flex-direction: row;
+       }
+
+       .separator:before,
+       .separator:after {
+           content: "";
+           flex: 1 1;
+           border-bottom: 0px solid #606060;
+           margin: auto 10px;
+       }
+
+       .separator-label.prefix {
+
+           font-size: 1.5rem !important;
+         width: 2rem !important;
+         }
+
+
+.champs_facultatifs
+{
+  opacity: 0;
+  transition: opacity .15s ease-in-out;
+  -moz-transition: opacity .15s ease-in-out;
+  -webkit-transition: opacity .15s ease-in-out;
+}
+
+.champ-localisation
+{
+  opacity: 0;
+  transition: opacity .15s ease-in-out;
+  -moz-transition: opacity .15s ease-in-out;
+  -webkit-transition: opacity .15s ease-in-out;
+}
+
+.visible {
+
+  -webkit-animation: fade-in .3s ease-out;
+  -moz-animation: fade-in .3s ease-out;
+  }
+
+.visible-slide-down {
+
+  -webkit-animation: slide-down .3s ease-out;
+  -moz-animation: slide-down .3s ease-out;
+  }
+
+  .visible-slide-right {
+
+    -webkit-animation: slide-right .3s ease-out;
+    -moz-animation: slide-right .3s ease-out;
+    }
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+z-index:0;
+}
+
+@-webkit-keyframes fade-in {
+  0% { opacity: 0;  }
+100% { opacity: 1; }
+}
+@-moz-keyframes fade-in {
+  0% { opacity: 0;}
+100% { opacity: 1; }
+}
+
+@-webkit-keyframes slide-down {
+  0% { -webkit-transform: translateY(-100%); opacity: 0; }
+100% { -webkit-transform: translateY(0); opacity: 1; }
+}
+@-moz-keyframes slide-down {
+  0% { -moz-transform: translateY(-100%); opacity: 0; }
+100% { -moz-transform: translateY(0); opacity: 1; }
+}
+
+@-webkit-keyframes slide-right {
+  0% {  -webkit-transform: translateX(-100%); opacity: 0; }
+100% {  -webkit-transform: translateX(0); opacity: 1; }
+}
+@-moz-keyframes slide-right {
+  0% { -moz-transform: translateX(-50%); opacity: 0; }
+100% {  -moz-transform: translateX(0); opacity: 1; }
+}
+
+/* W3CSS */
+
+.w3-sidebar i.prefix {
+
+margin-right: 1.5rem;
+}
