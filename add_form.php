@@ -178,8 +178,6 @@
               <form name="formulaire_encodage" id="formulaire_encodage" action="add.php" method="post" action="?">
 
 
-                <input id="image_url" name="image_url" type="text" value="none" class="invisible">
-
                 <div id="categorisation" class ="row invisible" >
                    <div class="col s5 m5 input-field">
                      <input id="nom_categorie" name="cat" type="text" required readonly>
@@ -267,7 +265,7 @@ PlayVideo();"></select>
               <div class="rating" style="display:inline-block;">
 <span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" ontouchstart="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" ontouchstart="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" ontouchstart="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" ontouchstart="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
 </div>
-<input type="number" name="etat" id="etat" value="1" hidden>
+<input type="number" name="etat" id="etat" value="1" class="invisible">
 
 
             </div>
