@@ -111,7 +111,6 @@
   </div>
 
   <div class="w3-row">
-
     <div class="w3-col s12 m3 l3">
     <div class="categorie_menu">
       <!-- <button onclick="myFunction('cat')" class="w3-btn w3-block categorie_selector">
