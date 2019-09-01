@@ -23,19 +23,20 @@
 
     <div class="item-info-container">
       <div class='quantite'>
-        <i class='fas fa-ruler item-icon'></i> <?php echo $item['mesure']; ?> <br/>
+        <i class='fas fa-ruler item-icon'></i> <?php echo $item['dimensions']; ?> <br/>
         <i class='fas fa-cubes item-icon'></i> <?php echo $unite; ?>
       </div>
       <div class='état'>
-        <i class='fas fa-heart-broken item-icon'></i> état - <?php echo $item['état']; ?>/5
+        <i class='fas fa-heart-broken item-icon'></i> État -
         <?php
-          // for($n = 0; $n < 5; $n++){
-          //   if($item['état'] > $n){
-          //     echo '<i class="w3-small fas fa-star item-icon"></i>' ;
-          //   } else{
-          //     echo '<i class="w3-small far fa-star item-icon"></i>' ;
-          //   }
-          // }
+          //echo $item['etat'];
+          for($n = 0; $n < 4; $n++){
+            if($item['etat'] > $n){
+              echo '<i class="w3-small fas fa-heart item-icon"></i>' ;
+            } else{
+              echo '<i class="w3-small far fa-heart item-icon"></i>' ;
+            }
+          }
         ?>
       </div>
     </div>

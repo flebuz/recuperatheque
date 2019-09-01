@@ -37,7 +37,7 @@
       $recherche = '';
     }
       //check si l'option de tri est parmis les choix valide
-    $tri_option = array('date_ajout', 'état', 'nombre');
+    $tri_option = array('date_ajout', 'etat', 'pieces');
     if (isset($_GET['order']) && in_array($_GET['order'], $tri_option)){
       $tri = htmlspecialchars($_GET['order']);
     } else{
@@ -96,8 +96,8 @@
             <select class="w3-select" name="order">
               <!-- le php a l'interieur selectionne le bon choix au chargement de la page en fonction de ce qui a été envoyé en Get -->
               <option value="date_ajout" <?php if($tri=="date_ajout"){echo 'selected';} ?> >Date de récupération</option>
-              <option value="état" <?php if($tri=="état"){echo 'selected';} ?> >État d'usure</option>
-              <option value="nombre" <?php if($tri=="nombre"){echo 'selected';} ?> >Unités disponibles</option>
+              <option value="etat" <?php if($tri=="etat"){echo 'selected';} ?> >État d'usure</option>
+              <option value="pieces" <?php if($tri=="pieces"){echo 'selected';} ?> >Unités disponibles</option>
             </select>
           </div>
 
@@ -187,13 +187,13 @@
       //prep the request
       //every lines is an item with joined categorie and subcategorie
       $req = $bdd->prepare('  SELECT
-                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.nombre AS nombre, c.mesure AS mesure, c.état AS état, c.tags AS tags, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                               cat.ID, cat.nom AS categorie,
                               sscat.ID, sscat.ID_categorie, sscat.nom AS sous_categorie
                               FROM catalogue c
                               INNER JOIN categorie cat ON c.ID_categorie=cat.ID
                               INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
-                              WHERE cat.nom LIKE :search OR sscat.nom LIKE :search OR mesure LIKE :search OR tags LIKE :search OR description LIKE :search
+                              WHERE cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search
                               ORDER BY ' . $tri . ' DESC
                           ');
 
@@ -208,8 +208,8 @@
 
           //pluriel ou non sur le nombre d'unités
           $unite = "1 unité";
-          if ($item['nombre']>1){
-            $unite = $item['nombre'] . " unités";
+          if ($item['pieces']>1){
+            $unite = $item['pieces'] . " unités";
           }
 
           //divise les tags en list php
