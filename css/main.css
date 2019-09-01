@@ -6,6 +6,7 @@ html{
 body{
   margin: 0;
   background: #F0F0F0;
+  background: white;
 }
 
 html, body, p, h1, h2, h3, h4, h5, h6{
@@ -119,6 +120,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   background: #FFFFFF;
   margin: 12px;
   padding: 12px;
+  border-bottom: 1px solid #E0E0E0;
 }
 
 .item-photo-container{
