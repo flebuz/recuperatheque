@@ -102,7 +102,7 @@
           </div>
 
           <div class="search-bar-item">
-            <input  class="w3-btn color-theme search-bar-input" type="submit" value="Go"/>
+            <input class="w3-btn color-theme search-bar-input" type="submit" value="Go"/>
           </div>
 
     </form>
@@ -110,121 +110,133 @@
 
   </div>
 
-  <div class="categorie_menu w3-quarter">
-    <button onclick="myFunction('cat')" class="w3-btn w3-block categorie_selector">
-        Categorie
-    </button>
-    <div id="cat" class="w3-hide">
-    <?php
-      //prep the request
-      //every line is a souscategorie
-      $req = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
-                              sscat.ID, sscat.ID_categorie, sscat.nom AS nom
-                              FROM souscategorie sscat
-                              INNER JOIN categorie cat ON sscat.ID_categorie=cat.ID
-                              ORDER BY cat.ID
-                          ');
-      //execute the request
-      $req->execute();
+  <div class="w3-row">
 
-      if ($req->rowCount() > 0) {
-        $current_cat = '';
+    <div class="w3-col s12 m3 l3">
+    <div class="categorie_menu">
+      <!-- <button onclick="myFunction('cat')" class="w3-btn w3-block categorie_selector">
+          Categorie
+      </button> -->
+      <!-- <div id="cat" class="w3-hide"> -->
+      <div class="categorie_title">Categories</div>
+      <?php
+        //prep the request
+        //every line is a souscategorie
+        $req = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
+                                sscat.ID, sscat.ID_categorie, sscat.nom AS nom
+                                FROM souscategorie sscat
+                                INNER JOIN categorie cat ON sscat.ID_categorie=cat.ID
+                                ORDER BY cat.ID
+                            ');
+        //execute the request
+        $req->execute();
 
-        while($sscat = $req->fetch()){
+        if ($req->rowCount() > 0) {
+          $current_cat = '';
 
-          //peut etre mieux d'en faire un objet PHP avec liste et sous liste et de le reparcourir apres????
+          while($sscat = $req->fetch()){
 
-          //si la categorie de de sscat a changé on crée un nouveau accordeon
-          if($current_cat != $sscat['cat_ID']){
+            //peut etre mieux d'en faire un objet PHP avec liste et sous liste et de le reparcourir apres????
 
-            //si on a deja ouvert un accordeon, on doit le refermer avant d'en faire  autre
-            if($current_cat != ''){
-              echo '</div>';
+            //si la categorie de de sscat a changé on crée un nouveau accordeon
+            if($current_cat != $sscat['cat_ID']){
+
+              //si on a deja ouvert un accordeon, on doit le refermer avant d'en faire  autre
+              if($current_cat != ''){
+                echo '</div>';
+                echo '</div>';
+              }
+
+              $current_cat = $sscat['cat_ID'];
+
+              ?>
+
+              <!-- declare l'accordeon d'une categorie -->
+              <a onclick="myFunction('<?php echo $sscat['cat_ID']; ?>')" class="w3-block categorie">
+                <?php echo $sscat['cat_nom']; ?> <span class='item-icon'>▾</span>
+              </a>
+              <!-- ouvre l'accordeon des sscat associées -->
+              <div id="<?php echo $sscat['cat_ID'];?>" class="w3-hide">
+              <div class="accordeon">
+
+              <?php
             }
-
-            $current_cat = $sscat['cat_ID'];
-
             ?>
 
-            <!-- declare l'accordeon d'une categorie -->
-            <button onclick="myFunction('<?php echo $sscat['cat_ID']; ?>')" class="w3-btn w3-block categorie">
-              <?php echo $sscat['cat_nom']; ?> <span class='item-icon'>▾</span>
-            </button>
-            <!-- ouvre l'accordeon des sscat associées -->
-            <div id="<?php echo $sscat['cat_ID']; ?>" class="w3-hide">
+            <!-- ajoute une souscategorie comme bouton -->
+            <a href="#" class="w3-block souscategorie"> <?php echo $sscat['nom']; ?> </a>
 
             <?php
           }
-          ?>
-
-          <!-- ajoute une souscategorie comme bouton -->
-          <button class="w3-btn w3-block souscategorie"> <?php echo $sscat['nom']; ?> </button>
-
-          <?php
+          // ferme le dernier accordeon des sscat associées
+          echo '</div>';
+          echo '</div>';
         }
-        // ferme le dernier accordeon des sscat associées
-        echo '</div>';
-      }
-    ?>
-    </div>
-  </div>
-
-  <script>
-    function myFunction(id) {
-      var x = document.getElementById(id);
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-      } else {
-        x.className = x.className.replace(" w3-show", "");
-      }
-    }
-  </script>
-
-
-  <div class="w3-row w3-threequarter items-container">
-
-    <?php
-      //prep the request
-      //every lines is an item with joined categorie and subcategorie
-      $req = $bdd->prepare('  SELECT
-                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
-                              cat.ID, cat.nom AS categorie,
-                              sscat.ID, sscat.ID_categorie, sscat.nom AS sous_categorie
-                              FROM catalogue c
-                              INNER JOIN categorie cat ON c.ID_categorie=cat.ID
-                              INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
-                              WHERE cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search
-                              ORDER BY ' . $tri . ' DESC
-                          ');
-
-      //complete parametric values (note: column names are not values, and thus must be hardcoded into the query)
-      $req->bindValue(':search', '%' . $recherche . '%', PDO::PARAM_STR);
-
-      //execute the request
-      $req->execute();
-
-      if ($req->rowCount() > 0) {
-        while($item = $req->fetch()){
-
-          //pluriel ou non sur le nombre d'unités
-          $unite = "1 unité";
-          if ($item['pieces']>1){
-            $unite = $item['pieces'] . " unités";
-          }
-
-          //divise les tags en list php
-          $tags = explode(",",$item['tags']);
-
-          //affichage de l'item
-          include('item.php');
-        }
-      }
-      else {
-        echo '<h3 class="w3-container">Aucun résultat ne correspond à la recherche</h3>';
-      }
       ?>
 
+      <script>
+      function myFunction(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else {
+          x.className = x.className.replace(" w3-show", "");
+        }
+      }
+      </script>
+
     </div>
+    </div>
+
+
+    <div class="w3-col s12 m9 l9">
+    <div class="w3-row items-container">
+
+      <?php
+        //prep the request
+        //every lines is an item with joined categorie and subcategorie
+        $req = $bdd->prepare('  SELECT
+                                c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                                cat.ID, cat.nom AS categorie,
+                                sscat.ID, sscat.ID_categorie, sscat.nom AS sous_categorie
+                                FROM catalogue c
+                                INNER JOIN categorie cat ON c.ID_categorie=cat.ID
+                                INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+                                WHERE cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search
+                                ORDER BY ' . $tri . ' DESC
+                            ');
+
+        //complete parametric values (note: column names are not values, and thus must be hardcoded into the query)
+        $req->bindValue(':search', '%' . $recherche . '%', PDO::PARAM_STR);
+
+        //execute the request
+        $req->execute();
+
+        if ($req->rowCount() > 0) {
+          while($item = $req->fetch()){
+
+            //pluriel ou non sur le nombre d'unités
+            $unite = "1 unité";
+            if ($item['pieces']>1){
+              $unite = $item['pieces'] . " unités";
+            }
+
+            //divise les tags en list php
+            $tags = explode(",",$item['tags']);
+
+            //affichage de l'item
+            include('item.php');
+          }
+        }
+        else {
+          echo '<h3 class="w3-container">Aucun résultat ne correspond à la recherche</h3>';
+        }
+        ?>
+
+      </div>
+    </div>
+
+  </div>
 
 </body>
 

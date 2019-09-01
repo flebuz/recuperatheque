@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 01 sep. 2019 à 19:19
+-- Généré le :  Dim 01 sep. 2019 à 20:53
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -50,17 +50,17 @@ CREATE TABLE IF NOT EXISTS `catalogue` (
 
 INSERT INTO `catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`) VALUES
 (1, 12, 119, 3200, '4cm x 4cm', 3, 'attache, flexible, flex, joint', 'Lot. Fonction originale: équerre pour carton. A partir de 200 pièces.', '2019-08-06', 0, 0),
-(2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 5, 'sapin, baguette, tasseau, rabotté', 'Lot à prendre dans son entièretée', '2019-08-06', 0, 0),
+(2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 4, 'sapin, baguette, tasseau, rabotté', 'Lot à prendre dans son entièretée', '2019-08-06', 0, 0),
 (3, 18, 125, 1, '10m', 3, 'lance, incendie, tuyau, rouge, eau', 'Lance à incendie sur support raccordée à adaptateur. 10m de longueur.', '2019-08-07', 0, 0),
 (4, 17, 124, 1, '38cm x 25cm', 2, 'coussin, bureau, chaise, bleu, tissus', 'Ancien dossier de chaise de bureau.', '2019-08-08', 0, 0),
-(5, 15, 85, 20, '5mm x 250mm', 4, 'cheville, plastique, blanc', '', '2019-02-14', 0, 0),
+(5, 15, 85, 20, '5mm x 250mm', 3, 'cheville, plastique, blanc', '', '2019-02-14', 0, 0),
 (6, 12, 67, 1, '50.3cm x 19.5xm', 2, 'rayé, transparent, translucide, reconditionnable', '', '2019-04-02', 0, 0),
-(7, 18, 125, 10, '20cm', 4, 'blanc, rouge, orange, cire, feu', 'Lot de 10 bougies de tailles et couleurs différentes.', '2019-05-23', 0, 0),
+(7, 18, 125, 10, '20cm', 3, 'blanc, rouge, orange, cire, feu', 'Lot de 10 bougies de tailles et couleurs différentes.', '2019-05-23', 0, 0),
 (8, 1, 1, 3, '181.5cm x 4.5cm x 2.3cm', 3, 'gîte, poutre, traité, vert, sapin', 'Tranches non traitées.', '2019-06-06', 0, 0),
 (9, 4, 17, 25, '', 3, 'enfant, couleur, coloriage, gallery ', 'Lot de 25.', '2019-06-17', 0, 0),
-(10, 3, 13, 1, '10.5cm x 14cm', 4, 'aurora, carnet, copie', 'Carnet autocopiant de 50 pages détachables.', '2019-06-17', 0, 0),
+(10, 3, 13, 1, '10.5cm x 14cm', 3, 'aurora, carnet, copie', 'Carnet autocopiant de 50 pages détachables.', '2019-06-17', 0, 0),
 (11, 18, 125, 1, '35cm x 35cm', 3, 'feu, gaz, plat, chauffe, alimentation', 'Chauffe plat au gaz.', '2019-07-30', 0, 0),
-(12, 16, 94, 7, '1m', 4, 'electrique, alimentation, plastique', '', '2019-03-22', 0, 0),
+(12, 16, 94, 7, '1m', 3, 'electrique, alimentation, plastique', '', '2019-03-22', 0, 0),
 (13, 15, 86, 2, '15cm x 8cm x 8cm', 3, 'grand, oversized, attache, metal', '', '2019-03-20', 0, 0),
 (14, 8, 115, 12, '50cm x 50cm', 2, 'carpette, épais, carré, bleu, paillaisson, tapis', 'Carrés de carpettes de 2 coloris différents.', '2019-06-20', 0, 0);
 

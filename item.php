@@ -1,6 +1,6 @@
 
 
-<div class='w3-col s12 m6 l4 item-container'>
+<div class='w3-col s12 m6 l4'>
 
   <div class='item'>
 
@@ -22,23 +22,24 @@
     </div>
 
     <div class="item-info-container">
-      <div class='quantite'>
-        <i class='fas fa-ruler item-icon'></i> <?php echo $item['dimensions']; ?> <br/>
-        <i class='fas fa-cubes item-icon'></i> <?php echo $unite; ?>
-      </div>
-      <div class='état'>
-        <i class='fas fa-heart-broken item-icon'></i> État -
+        <i class='fas fa-euro-sign item-icon'></i> <?php echo $item['prix']; ?> <br/>
+
+        <i class='fas fa-heart-broken item-icon'></i> État:
         <?php
-          //echo $item['etat'];
-          for($n = 0; $n < 4; $n++){
-            if($item['etat'] > $n){
-              echo '<i class="w3-small fas fa-heart item-icon"></i>' ;
-            } else{
-              echo '<i class="w3-small far fa-heart item-icon"></i>' ;
-            }
+        //echo $item['etat'];
+        for($n = 0; $n < 4; $n++){
+          if($item['etat'] > $n){
+            echo '<i class="w3-small fas fa-heart etat-icon"></i> ' ;
+          } else{
+            echo '<i class="w3-small far fa-heart etat-icon"></i> ' ;
           }
-        ?>
-      </div>
+        }
+        ?> <br/>
+
+        <i class='fas fa-cubes item-icon'></i> <?php echo $unite; ?> <br/>
+        <i class='fas fa-ruler item-icon'></i> <?php echo $item['dimensions']; ?> <br/>
+
+
     </div>
 
     <div class='item-tags-container'>
