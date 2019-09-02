@@ -44,6 +44,17 @@
       $tri = 'prix';
     }
 
+    if(isset($_GET['sscatsearch']) and $_GET['sscatsearch']!=0){
+      $sscatsearch = htmlspecialchars($_GET['sscatsearch']);
+    } else{
+      $sscatsearch = null;
+    }
+
+    if(isset($_GET['catsearch']) and $_GET['catsearch']!=0){
+      $catsearch = htmlspecialchars($_GET['catsearch']);
+    } else{
+      $catsearch = null;
+    }
   ?>
 
   <?php
@@ -94,6 +105,7 @@
       </button> -->
       <!-- <div id="cat" class="w3-hide"> -->
       <div class="categorie_title">Categories</div>
+      <a href="?catsearch=0&sscatsearch=0" class="w3-block categorie tout">Afficher toutes les catégories</a>
       <?php
         //prep the request
         //every line is a souscategorie
@@ -110,36 +122,41 @@
           $current_cat = '';
 
           while($sscat = $req->fetch()){
-
             //peut etre mieux d'en faire un objet PHP avec liste et sous liste et de le reparcourir apres????
 
             //si la categorie de de sscat a changé on crée un nouveau accordeon
             if($current_cat != $sscat['cat_ID']){
-
-              //si on a deja ouvert un accordeon, on doit le refermer avant d'en faire  autre
+              //si on a deja ouvert un accordeon, on doit le refermer avant d'en faire un autre
               if($current_cat != ''){
                 echo '</div>';
                 echo '</div>';
               }
-
               $current_cat = $sscat['cat_ID'];
-
               ?>
-
               <!-- declare l'accordeon d'une categorie -->
-              <a onclick="myFunction('<?php echo $sscat['cat_ID']; ?>')" class="w3-block categorie">
-                <?php echo $sscat['cat_nom']; ?> <span class='item-icon'>▾</span>
+              <a onclick="myFunction('<?php echo $sscat['cat_ID']; ?>')"
+                class="w3-block categorie <?php if($catsearch==$sscat['cat_ID']){echo 'selected open'; }?>">
+                <?php echo $sscat['cat_nom']; ?>
               </a>
               <!-- ouvre l'accordeon des sscat associées -->
-              <div id="<?php echo $sscat['cat_ID'];?>" class="w3-hide">
+              <div id="<?php echo $sscat['cat_ID'];?>"
+                class="w3-hide <?php if($catsearch==$sscat['cat_ID']){echo 'w3-show'; }?>">
               <div class="accordeon">
+              <!-- on ajoute la sscat de toute les sscat -->
+              <a href="?catsearch=<?php echo $sscat['cat_ID']; ?>&sscatsearch=0"
+                class="w3-block souscategorie tout <?php if($catsearch==$sscat['cat_ID'] and $sscatsearch==0){echo 'selected'; }?>">
+                Tout afficher
+              </a>
 
               <?php
             }
             ?>
 
-            <!-- ajoute une souscategorie comme bouton -->
-            <a href="#" class="w3-block souscategorie"> <?php echo $sscat['nom']; ?> </a>
+            <!-- ajoute une souscategorie comme lien -->
+            <a href="?catsearch=<?php echo $sscat['cat_ID'];?>&sscatsearch=<?php echo $sscat['ID'];?>"
+              class="w3-block souscategorie <?php if($sscatsearch==$sscat['ID']){echo 'selected'; }?>">
+              <?php echo $sscat['nom']; ?>
+            </a>
 
             <?php
           }
@@ -154,8 +171,10 @@
         var x = document.getElementById(id);
         if (x.className.indexOf("w3-show") == -1) {
           x.className += " w3-show";
+          x.previousElementSibling.className += " open";
         } else {
           x.className = x.className.replace(" w3-show", "");
+          x.previousElementSibling.className = x.previousElementSibling.className.replace(" open", "");
         }
       }
       </script>
@@ -173,16 +192,20 @@
         $req = $bdd->prepare('  SELECT
                                 c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                                 cat.ID, cat.nom AS categorie,
-                                sscat.ID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
+                                sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
                                 FROM catalogue c
                                 INNER JOIN categorie cat ON c.ID_categorie=cat.ID
                                 INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
-                                WHERE cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search
+                                -- WHERE cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search
+                                WHERE (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
+                                AND (c.ID_categorie = :catsearch OR :catsearch is null)
                                 ORDER BY ' . $tri . ' DESC
                             ');
 
         //complete parametric values (note: column names are not values, and thus must be hardcoded into the query)
-        $req->bindValue(':search', '%' . $recherche . '%', PDO::PARAM_STR);
+        // $req->bindValue(':search', '%' . $recherche . '%', PDO::PARAM_STR);
+        $req->bindValue(':sscatsearch', $sscatsearch, PDO::PARAM_INT);
+        $req->bindValue(':catsearch', $catsearch, PDO::PARAM_INT);
 
         //execute the request
         $req->execute();
