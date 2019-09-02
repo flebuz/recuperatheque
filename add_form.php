@@ -13,8 +13,8 @@
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/add_form.css">
-  <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
-  <link rel="stylesheet" href="nouislider/nouislider.css">
+
+
 
 
   <!--Import Google Icon Font-->
@@ -175,7 +175,7 @@
 
 
               <!-- Début du formulaire-->
-              <form name="formulaire_encodage" id="formulaire_encodage" action="add.php" method="post" action="?">
+              <form name="formulaire_encodage" id="formulaire_encodage" action="add.php" method="post" action="?" novalidate>
 
 
                 <div id="categorisation" class ="row invisible" >
@@ -196,11 +196,17 @@
 
                  </div>
 
-                 <div id="row_tags" class ="row input-field" >
-                    <div class="input-field col s12">
+
+
+                 <div id="row_tags" class ="row flex-input-field" >
+
+                    <div class="col s12 flex-input-field">
+                      <div id="label_bricole" class="row nomargin nopadding" style="margin-left: 3rem !important;">
+                      <label for="tags">Ajouter des tags (séparés par ',' ou '.')</label>
+                    </div>
                       <i class="fas fa-tags prefix"></i>
-                      <input class="" id="tags" name="tags" type="text">
-                      <label for="tags">Ajouter des tags :</label>
+                      <input class="invisible" id="input-tags" name="tags" type="text">
+
                     </div>
 
                   </div>
@@ -339,7 +345,7 @@ PlayVideo();"></select>
 
             </div>
 
-            <div class="row"><input id="image_final" name="image_final" type="text"></div>
+            <div class="row invisible"><input id="image_final" name="image_final" type="text"></div>
             <div class="row"></div>
 
 
