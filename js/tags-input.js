@@ -179,11 +179,20 @@
 
                   //  var char = str.substring(str.length - 1, str.length);
 
+                /*  var firstletter = str.substring(0, 1);
+                  if (firstletter == ' ')
+                  {str=str.substring(1, str.length);}*/
+
+                /*  if ( !!(~[' '].indexOf( str[0] ))  )
+                  {tags.input.value = null;} */
+
+var charend = str.substring(str.length - 1, str.length);
+
                   var caretposition = getCaretPos(tags.input);
                     var char = str.substring(caretposition - 1, caretposition);
                     var kc = char.charCodeAt(0);
 
-            if( !!(~[',' , ';' , '.'].indexOf( char ))  )
+            if (( !!(~[',' , ';' , '.'].indexOf( char ))  ) || ( !!(~[',' , ';' , '.'].indexOf( charend ))  ))
             {
 
             str=escapeRegExp(str);
@@ -215,7 +224,7 @@
                     tags.addTag(str);
                   }
 
-                  if ((tags.original_input.value !== undefined) && (tags.original_input.value !== ''))
+                  if ((tags.original_input.value !== undefined) && (tags.original_input.value !== '') && (tags.original_input.value !== null))
                   {
                     tags.input.classList.add("invisible");}
 
