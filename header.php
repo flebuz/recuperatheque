@@ -81,3 +81,4 @@
 
 
 <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+<link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
