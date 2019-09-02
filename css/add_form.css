@@ -199,12 +199,12 @@ input[type=range] {
     border: 0px !important;
 }
 */
-
+/*
 input[type=range] {
   /* fix for FF unable to apply focus style bug  */
-  border: 1px solid transparent !important;
+/*  border: 1px solid transparent !important;*/
   /*required for proper track sizing in FF*/
-
+/*
   margin-top:1.3rem !important;
 }
 
@@ -213,10 +213,15 @@ input[type='range']::-webkit-slider-thumb
 {  height:20px; width:20px; border-radius: 20px;
 margin: -7px; /* alignment fix for Chrome */ }
 
-input[type="range"]::-ms-thumb {
+  /*input[type="range"]::-ms-thumb {
   margin: 0; /* Reset margin in Edge since it supports -webkit-slider-thumb as well */
+  /*
+}*/
 
-}
+input[type=range]::-moz-range-track {
+  height: 3px !important;
+  background: #606060 !important;
+  border: none; }
 
 .prefix /* label inactif devant zone de texte */
 {color:#6f6972 !important}
@@ -228,8 +233,8 @@ label
 {font-size: 1rem !important;
 color: $couleur3 !important;}
 
-.input-field .prefix {
-
+.input-field .prefix, .flex-input-field .prefix  {
+position: absolute;
     font-size: 1.5rem !important;
     line-height: 1.5rem !important;
   }
@@ -239,7 +244,13 @@ div.col.input-field
         height: 3rem !important;
 
   }
+  div.row.flex-input-field
+    {
 
+margin-top: 1rem;
+
+margin-bottom: 1rem;
+}
 
 
 
