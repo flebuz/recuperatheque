@@ -22,7 +22,19 @@
     </div>
 
     <div class="item-info-container">
-        <i class='fas fa-euro-sign item-icon'></i> <?php echo $item['prix']; ?> <br/>
+
+        <?php
+        // calcul du prix
+        if ($item['unitesscat']=='kg'){
+          $prix = $item['prixsscat'] * $item['poids'] / $item['pieces'];
+        }
+        else{
+          $prix = $item['prixsscat'];
+        }
+        $prix = $prix * ($item['etat']/4);
+        ?>
+
+        <i class='fas fa-euro-sign item-icon'></i> <?php echo $prix; ?> par unité<br/>
 
         <i class='fas fa-heart-broken item-icon'></i> État:
         <span class='etat-icon-container'>

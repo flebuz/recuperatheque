@@ -171,9 +171,9 @@
         //prep the request
         //every lines is an item with joined categorie and subcategorie
         $req = $bdd->prepare('  SELECT
-                                c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                                c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                                 cat.ID, cat.nom AS categorie,
-                                sscat.ID, sscat.ID_categorie, sscat.nom AS sous_categorie
+                                sscat.ID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
                                 FROM catalogue c
                                 INNER JOIN categorie cat ON c.ID_categorie=cat.ID
                                 INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
