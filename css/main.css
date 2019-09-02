@@ -138,9 +138,16 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   white-space: nowrap;
 }
 
-.item-categorie-container{
+.item-souscategorie{
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.4em;
+}
+
+.item-categorie{
+  color: #606060;
+}
+
+.item-categorie-container{
   padding-bottom: 8px;
 }
 

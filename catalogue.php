@@ -190,15 +190,6 @@
         if ($req->rowCount() > 0) {
           while($item = $req->fetch()){
 
-            //pluriel ou non sur le nombre d'unités
-            $unite = "1 unité";
-            if ($item['pieces']>1){
-              $unite = $item['pieces'] . " unités";
-            }
-
-            //divise les tags en list php
-            $tags = explode(", ",$item['tags']);
-
             //affichage de l'item
             include('item.php');
           }

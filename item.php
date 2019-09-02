@@ -6,19 +6,28 @@
 
     <div class="item-photo-container">
 
-
-        <!-- $src='photos/' . $item['ID_item'] . '.jpg';
-        $dest='photos/' . $item['ID_item'] . '_thumb.jpg';
-        make_thumb($src, $dest); -->
         <?php
         echo '<img class="photo" src="photos/' . $item['ID_item'] . '.jpg" />'
         ?>
 
-
     </div>
 
     <div class='item-categorie-container'>
-      <?php echo $item['categorie']; ?> <span style='color:#909090'>▸</span> <?php echo $item['sous_categorie']; ?>
+      <!-- deux choix d'affichage si la sscat est Autre ou pas -->
+      <?php
+      if ($item['sous_categorie']!='Autre'){
+        ?>
+        <span class="item-souscategorie"> <?php echo $item['sous_categorie']; ?> </span>
+        <span class="item-categorie"> (<?php echo $item['categorie']; ?>) </span>
+      <?php
+      }
+      else{
+        ?>
+        <span class="item-souscategorie"> <?php echo $item['categorie']; ?> </span>
+      <?php
+      }
+      ?>
+
     </div>
 
     <div class="item-info-container">
@@ -32,6 +41,23 @@
           $prix = $item['prixsscat'];
         }
         $prix = $prix * ($item['etat']/4);
+
+        //pluriel ou non sur le nombre d'unités
+        $unite = "1 unité";
+        if ($item['pieces']>1){
+          $unite = $item['pieces'] . " unités";
+        }
+
+        //divise les tags en list php
+        $tags = explode(", ",$item['tags']);
+
+        //dimensions dispo ou non
+        if ($item['dimensions']==''){
+          $dimensions='non-disponibles';
+        }
+        else{
+          $dimensions=$item['dimensions'];
+        }
         ?>
 
         <i class='fas fa-euro-sign item-icon'></i> <?php echo $prix; ?> par unité<br/>
@@ -48,10 +74,10 @@
           }
         }
         ?>
-      </span><br/>
+        </span><br/>
 
         <i class='fas fa-cubes item-icon'></i> <?php echo $unite; ?> <br/>
-        <i class='fas fa-ruler item-icon'></i> <?php echo $item['dimensions']; ?> <br/>
+        <i class='fas fa-ruler item-icon'></i> <?php echo $dimensions; ?> <br/>
 
 
     </div>
