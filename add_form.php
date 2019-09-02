@@ -105,7 +105,7 @@
   <?php
   //connection database
   try{
-    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
   }
   catch(Exception $e){
       die('Erreur : '.$e->getMessage());
@@ -202,7 +202,7 @@
 
                     <div class="col s12 flex-input-field">
                       <div id="label_bricole" class="row nomargin nopadding" style="margin-left: 3rem !important;">
-                      <label for="tags">Ajouter des tags (séparés par ',' ou '.')</label>
+                      <label for="tags">Tags: (séparateur: , ou .)</label>
                     </div>
                       <i class="fas fa-tags prefix"></i>
                       <input class="invisible" id="input-tags" name="tags" type="text">
