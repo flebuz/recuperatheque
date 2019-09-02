@@ -28,6 +28,11 @@ document.querySelector('#rearcameraID').value='';
     file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
   //  snap_final.addEventListener("click", UploadFichier); //on active  l'upload de photo en cas de clic sur le snap final
 
+
+  var tagInput1 = new TagsInput({
+      selector: 'input-tags',
+  });
+
     init_materialize();
 
     setConstraints();
