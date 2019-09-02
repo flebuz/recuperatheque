@@ -37,37 +37,12 @@
       $recherche = '';
     }
       //check si l'option de tri est parmis les choix valide
-    $tri_option = array('date_ajout', 'etat', 'pieces');
+    $tri_option = array('prix', 'date_ajout', 'etat', 'pieces');
     if (isset($_GET['order']) && in_array($_GET['order'], $tri_option)){
       $tri = htmlspecialchars($_GET['order']);
     } else{
-      $tri = 'date_ajout';
+      $tri = 'prix';
     }
-
-  ?>
-
-  <?php
-
-  function make_thumb($src, $dest) {
-
-  	/* read the source image */
-  	$source_image = imagecreatefromjpeg($src);
-  	$width = imagesx($source_image);
-  	$height = imagesy($source_image);
-
-  	$desired_width = 400;
-  	$desired_height = 400;
-
-  	/* create a new, "virtual" image */
-  	$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
-
-  	/* copy source image at a resized size */
-  	// imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
-
-    $virtual_image = imagecrop ( $source_image , ['x' => 0, 'y' => 0, 'width' => 400, 'height' => 400] );
-  	/* create the physical thumbnail image to its destination */
-  	imagejpeg($virtual_image, $dest);
-  }
 
   ?>
 
@@ -95,6 +70,7 @@
             <label class="search-bar-label">Trier par</label>
             <select class="w3-select" name="order">
               <!-- le php a l'interieur selectionne le bon choix au chargement de la page en fonction de ce qui a été envoyé en Get -->
+              <option value="prix" <?php if($tri=="prix"){echo 'selected';} ?> >Prix par unité</option>
               <option value="date_ajout" <?php if($tri=="date_ajout"){echo 'selected';} ?> >Date de récupération</option>
               <option value="etat" <?php if($tri=="etat"){echo 'selected';} ?> >État d'usure</option>
               <option value="pieces" <?php if($tri=="pieces"){echo 'selected';} ?> >Unités disponibles</option>
@@ -221,7 +197,7 @@
             }
 
             //divise les tags en list php
-            $tags = explode(",",$item['tags']);
+            $tags = explode(", ",$item['tags']);
 
             //affichage de l'item
             include('item.php');

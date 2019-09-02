@@ -5,7 +5,7 @@ html{
 
 body{
   margin: 0;
-  background: #F0F0F0;
+  /* background: #F0F0F0; */
   background: white;
 }
 
@@ -75,6 +75,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   font-weight: bold;
   font-size: 1.2em;
   padding-bottom: 8px;
+  border-bottom: 1px solid #E0E0E0;
 }
 
 .categorie_selector{
@@ -162,6 +163,10 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 .item-icon, .etat-icon{
   color: #909090;
+}
+
+.etat-icon-container{
+  padding-left: 6px;
 }
 
 .item-info-container .item-icon, .item-tags-container .item-icon{

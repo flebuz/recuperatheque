@@ -25,16 +25,18 @@
         <i class='fas fa-euro-sign item-icon'></i> <?php echo $item['prix']; ?> <br/>
 
         <i class='fas fa-heart-broken item-icon'></i> État:
+        <span class='etat-icon-container'>
         <?php
         //echo $item['etat'];
         for($n = 0; $n < 4; $n++){
           if($item['etat'] > $n){
-            echo '<i class="w3-small fas fa-heart etat-icon"></i> ' ;
+            echo '<i class="fas fa-heart etat-icon"></i> ' ;
           } else{
-            echo '<i class="w3-small far fa-heart etat-icon"></i> ' ;
+            echo '<i class="far fa-heart etat-icon"></i> ' ;
           }
         }
-        ?> <br/>
+        ?>
+      </span><br/>
 
         <i class='fas fa-cubes item-icon'></i> <?php echo $unite; ?> <br/>
         <i class='fas fa-ruler item-icon'></i> <?php echo $item['dimensions']; ?> <br/>
