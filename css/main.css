@@ -63,65 +63,72 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* ----- Category Menu -----*/
 
-.categorie_menu{
+.categorie-menu{
   background: white;
-  /* margin: 12px; */
-  padding: 12px;
-  padding-left: 36px;
+  padding: 36px;
   text-align: left;
 }
 
-.categorie_title{
+.categorie-menu-title{
   font-weight: bold;
   font-size: 1.4em;
+  padding-top: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid #E0E0E0;
-  margin-top: 6px;
-  margin-bottom: 6px;
 }
 
-.categorie_menu .categorie{
+.categorie-title{
   text-align: left;
+  padding-left: 12px;
   padding-top: 6px;
   padding-bottom: 6px;
   border-bottom: 1px solid #E0E0E0;
 }
 
-.categorie_menu .accordeon{
-  /* border-bottom: 1px solid #E0E0E0; */
-  padding-top: 6px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #E0E0E0;
-}
-
-.categorie_menu .souscategorie{
-  padding-left: 36px;
-  text-align: left;
-}
-
-.categorie_menu .tout{
+.categorie-count{
+  font-size: 0.8em;
+  padding-left: 6px;
   color: #606060;
 }
 
-.souscategorie.selected, .categorie.selected{
+.categorie-menu .accordeon{
+  /* border-bottom: 1px solid #E0E0E0; */
+  /* padding-top: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #E0E0E0; */
+}
+
+.souscategorie-title{
+  text-align: left;
+  padding-left: 36px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.souscategorie-title.selected, .categorie-title.selected{
   font-weight: bold;
   color: #000000;
 }
 
-.categorie:not(.tout)::before{
-  content: "▸ "; /*▼▾*/
-  color: #D0D0D0;
+.categorie-title:not(.tout)::after{
+  content: "+";
+  padding-right: 12px;
+  float: right;
+  font-weight: bold;
 }
 
-.open:not(.tout)::before{
-  content: "▾ "; /*▼▾*/
-  color: #D0D0D0;
+.open:not(.tout)::after{
+  content: "-";
+  padding-right: 12px;
+  float: right;
+  font-weight: bold;
 }
 
-.categorie_menu a{
+.categorie-menu a{
   text-decoration: none;
 }
-.categorie_menu a:hover{
+.categorie-menu a:hover{
   color: #D0D0D0;
 }
 

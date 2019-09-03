@@ -99,66 +99,103 @@
 
   <div class="w3-row">
     <div class="w3-col s12 m3 l3">
-    <div class="categorie_menu">
-      <!-- <button onclick="myFunction('cat')" class="w3-btn w3-block categorie_selector">
-          Categorie
-      </button> -->
-      <!-- <div id="cat" class="w3-hide"> -->
-      <div class="categorie_title">Categories</div>
-      <a href="?catsearch=0&sscatsearch=0" class="w3-block categorie tout">Afficher toutes les catégories</a>
+    <div class="categorie-menu">
+
+      <div class="categorie-menu-title">Categories</div>
+      <a href="?catsearch=0&sscatsearch=0" class="w3-block categorie-title tout">Afficher toutes les catégories</a>
       <?php
+
+        //prep the request
+        //every line is an item
+        //on va faire une liste avec des clés des cat et sscat contenue par le catalogue
+        //les clés sont les ID des cat, la value le nb d'objet dedans
+        $reqItem = $bdd->prepare('  SELECT * FROM catalogue');
+        $reqItem->execute();
+        $categorieArray = array();
+        $sousCategorieArray = array();
+        while($item = $reqItem->fetch()){
+          if(array_key_exists($item['ID_categorie'],$categorieArray)){
+            $categorieArray[$item['ID_categorie']] += 1;
+          }
+          else{
+            $categorieArray[$item['ID_categorie']] = 1;
+          }
+          if(array_key_exists($item['ID_souscategorie'],$sousCategorieArray)){
+            $sousCategorieArray[$item['ID_souscategorie']] += 1;
+          }
+          else{
+            $sousCategorieArray[$item['ID_souscategorie']] = 1;
+          }
+        }
+
         //prep the request
         //every line is a souscategorie
-        $req = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
-                                sscat.ID, sscat.ID_categorie, sscat.nom AS nom
+        $reqCat = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
+                                sscat.ID AS ID, sscat.ID_categorie, sscat.nom AS nom
                                 FROM souscategorie sscat
                                 INNER JOIN categorie cat ON sscat.ID_categorie=cat.ID
-                                ORDER BY cat.ID
-                            ');
+                                ORDER BY cat.ID, sscat.ID
+                                ');
         //execute the request
-        $req->execute();
+        $reqCat->execute();
 
-        if ($req->rowCount() > 0) {
+        if ($reqCat->rowCount() > 0) {
           $current_cat = '';
 
-          while($sscat = $req->fetch()){
+          while($sscat = $reqCat->fetch()){
             //peut etre mieux d'en faire un objet PHP avec liste et sous liste et de le reparcourir apres????
 
             //si la categorie de de sscat a changé on crée un nouveau accordeon
             if($current_cat != $sscat['cat_ID']){
-              //si on a deja ouvert un accordeon, on doit le refermer avant d'en faire un autre
-              if($current_cat != ''){
-                echo '</div>';
-                echo '</div>';
-              }
-              $current_cat = $sscat['cat_ID'];
-              ?>
-              <!-- declare l'accordeon d'une categorie -->
-              <a onclick="myFunction('<?php echo $sscat['cat_ID']; ?>')"
-                class="w3-block categorie <?php if($catsearch==$sscat['cat_ID']){echo 'selected open'; }?>">
-                <?php echo $sscat['cat_nom']; ?>
-              </a>
-              <!-- ouvre l'accordeon des sscat associées -->
-              <div id="<?php echo $sscat['cat_ID'];?>"
-                class="w3-hide <?php if($catsearch==$sscat['cat_ID']){echo 'w3-show'; }?>">
-              <div class="accordeon">
-              <!-- on ajoute la sscat de toute les sscat -->
-              <a href="?catsearch=<?php echo $sscat['cat_ID']; ?>&sscatsearch=0"
-                class="w3-block souscategorie tout <?php if($catsearch==$sscat['cat_ID'] and $sscatsearch==0){echo 'selected'; }?>">
-                Tout afficher
-              </a>
+              //et si la categorie existe dans les items
+              if(array_key_exists($sscat['cat_ID'],$categorieArray)){
+                //si on a deja ouvert un accordeon, on doit le refermer avant d'en faire un autre
+                if($current_cat != ''){
+                  echo '</div>';
+                  echo '</div>';
+                }
+                $current_cat = $sscat['cat_ID'];
+                ?>
+
+                <!-- declare l'accordeon d'une categorie -->
+                <a onclick="myFunction('<?php echo $sscat['cat_ID']; ?>')"
+                  class="w3-block categorie-title <?php if($catsearch==$sscat['cat_ID']){echo 'selected open'; }?>">
+                  <?php
+                    echo $sscat['cat_nom'];
+                    echo '<span class="categorie-count">(' . $categorieArray[$sscat['cat_ID']] . ')</span>';
+                  ?>
+                </a>
+
+                <!-- ouvre l'accordeon des sscat associées -->
+                <div id="<?php echo $sscat['cat_ID'];?>"
+                  class="w3-hide <?php if($catsearch==$sscat['cat_ID']){echo 'w3-show'; }?>">
+                <div class="accordeon">
+
+                <!-- on ajoute la sscat de toute les sscat -->
+                <a href="?catsearch=<?php echo $sscat['cat_ID']; ?>&sscatsearch=0"
+                  class="w3-block souscategorie-title tout <?php if($catsearch==$sscat['cat_ID'] and $sscatsearch==0){echo 'selected'; }?>">
+                  Tout dans <?php echo $sscat['cat_nom']; ?>
+                </a>
 
               <?php
+              }
             }
             ?>
 
-            <!-- ajoute une souscategorie comme lien -->
-            <a href="?catsearch=<?php echo $sscat['cat_ID'];?>&sscatsearch=<?php echo $sscat['ID'];?>"
-              class="w3-block souscategorie <?php if($sscatsearch==$sscat['ID']){echo 'selected'; }?>">
-              <?php echo $sscat['nom']; ?>
-            </a>
+            <?php
+            if(array_key_exists($sscat['ID'],$sousCategorieArray)){
+            ?>
+              <!-- ajoute une souscategorie comme lien -->
+              <a href="?catsearch=<?php echo $sscat['cat_ID'];?>&sscatsearch=<?php echo $sscat['ID'];?>"
+                class="w3-block souscategorie-title <?php if($sscatsearch==$sscat['ID']){echo 'selected'; }?>">
+                <?php
+                  echo $sscat['nom'];
+                  echo '<span class="categorie-count">(' . $sousCategorieArray[$sscat['ID']] . ')</span>';
+                ?>
+              </a>
 
             <?php
+            }
           }
           // ferme le dernier accordeon des sscat associées
           echo '</div>';
