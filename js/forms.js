@@ -7,6 +7,16 @@ function set_value(id_to_update, value)
   document.getElementById(id_to_update).value= value;
 }
 
+function set_active(selector, element_to_activate)
+{
+  console.log(element_to_activate);
+  element_to_activate.classList.add("active");
+  document.querySelectorAll(selector).forEach(function(node)
+  {node.classList.remove("active");});
+}
+
+
+
 //fonction qui enlève la classe "hidden" d'un élément du DOM
 function unhide(id_to_show)
 {var elem_to_show= document.getElementById(id_to_show);
