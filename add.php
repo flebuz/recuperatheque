@@ -1,10 +1,5 @@
 <html>
 <body>
-  <?php
-
-
-/*phpinfo();*/
-?>
 
 <?php
 /*
@@ -23,25 +18,6 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
 <table>
 <?php
 
-/*
- foreach ($_POST as $key => $value) {
-        echo "<tr>";
-        echo "<td>";
-        echo $key;
-        echo "</td>";
-        echo "<td>";
-        if ($key=="image_final")
-        {    $extrait = substr($value, 0, 30);
-             echo $extrait.'...';
-        }
-          else
-        {
-          echo $value;
-        }
-        echo "</td>";
-        echo "</tr>";
-    }
-*/
 
     //connection database
     try{
