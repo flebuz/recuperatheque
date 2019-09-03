@@ -517,18 +517,18 @@ function DessineVignette(type, elem, orientation){
         vw = elem.width,
         vh = elem.height;
 
-        canvas2.width=300;
-        canvas2.height=300;
-        canvas3.width=300;
-        canvas3.height=300;
+        canvas2.width=400;
+        canvas2.height=400;
+        canvas3.width=400;
+        canvas3.height=400;
 
 //on calcule le plus grand carré au milieu de l'image
     var dimension = Math.min(vw, vh);
     var sx = (vw - dimension)/2;
     var sy= (vh - dimension)/2;
 
-//on crop le plus grand carré au milieu de l'image et on redimensionne dans un carré de 200x200
-    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, 300, 300);
+//on crop le plus grand carré au milieu de l'image et on la redimensionne dans un carré de 400x400
+    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, 400, 400);
 
 //on utilise l'orientation EXIF de l'image (le cas échéant) pour réorienter le canevas vers le haut puis on dessine
   if (orientation==6) {
@@ -564,17 +564,16 @@ else    {
     return canvas3.toDataURL("image/jpeg", 0.9);
   }
 
+
   else if ((type=='videosnap') && ( video.readyState === 4 )){
-
-
 
     var canvas_streaming= document.getElementById('video_streaming'),
         canvas1 = document.getElementById('hidden_snap_canvas'),
         ctx1 = canvas1.getContext('2d'),
         canvas2 = document.getElementById('snap_final'),
         ctx2 = canvas2.getContext('2d');
-        canvas2.width=300;
-        canvas2.height=300;
+        canvas2.width=400;
+        canvas2.height=400;
 
         var vw = video.videoWidth,
             vh = video.videoHeight;
@@ -591,7 +590,7 @@ else    {
       canvas_streaming.classList.add("invisible");
       canvas2.classList.remove("invisible");
       //Dessine l'image video dans notre Canvas
-    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 300, 300);
+    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 400, 400);
     return canvas2.toDataURL("image/jpeg", 0.9);
   }
 
@@ -652,7 +651,7 @@ function DrawVideoOnCanvas(){
 download_img = function(el) {
 
   var canvas_final = document.getElementById('snap_final');
-  var image = canvas_final.toDataURL("image/jpeg", 0.9);
+  var image = canvas_final.toDataURL("image/jpeg", 0.95);
   el.href = image;
 };
 
