@@ -1,17 +1,34 @@
 //JS pour la page add_form.php
 
-//implémentation de $_GET pour javascript (https://www.onlineaspect.com/2009/06/10/reading-get-variables-with-javascript/)
-function $_GET(q,s) {
-    s = s ? s : window.location.search;
-    var re = new RegExp('&'+q+'(?:=([^&]*))?(?=&|$)','i');
-    return (s=s.replace(/^\?/,'&').match(re)) ? (typeof s[1] == 'undefined' ? '' : decodeURIComponent(s[1])) : undefined;
+
+/*
+if (!navigator.getUserMedia) {
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia || navigator.msGetUserMedia;
 }
 
+if (navigator.getUserMedia)
+{M.toast({html:"fonctionne : " + "navigator.getUserMedia"});
+}
+
+if (navigator.webkitGetUserMedia)
+{M.toast({html:"fonctionne : " + "navigator.webkitGetUserMedia"});
+}
+
+if (navigator.mozGetUserMedia)
+{M.toast({html:"fonctionne : " + "navigator.mozGetUserMedia"});
+}
+if (navigator.msGetUserMedia)
+{M.toast({html:"fonctionne : " + "navigator.msGetUserMedia"});
+}
+
+*/
 
   var constraints ;
 
-  var verbose = $_GET('verbose');
+//document.querySelector('#rearcameraID').value='';
 
+//M.toast({html:"getusermedia polyfill : " + navigator.getUserMedia});
 
 window.addEventListener('DOMContentLoaded', (event) => {
 
@@ -22,162 +39,78 @@ document.querySelector('#rearcameraID').value='';
     var file_upload = document.getElementById('file');
     var video = document.querySelector("#video");
     var is_camera_active = false;
-    var snap_final = document.getElementById('snap_final');
+
 
     take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
     file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
-  //  snap_final.addEventListener("click", UploadFichier); //on active  l'upload de photo en cas de clic sur le snap final
-
-
-  var tagInput1 = new TagsInput({
-      selector: 'input-tags',
-  });
+    video.addEventListener("click", PrisePhoto);
 
     init_materialize();
 
-    setConstraints();
-    init_getusermedia();
+
+//M.toast({html:"navigator.mediaDevices : " + navigator.mediaDevices});
+//M.toast({html:"navigator.mediaDevices.getUserMedia : "+navigator.mediaDevices.getUserMedia});
+
+  //  if (hasGetUserMedia()) {
 
 
+  let constraintList = document.getElementById("constraintList");
+  let supportedConstraints = navigator.mediaDevices.getSupportedConstraints();
 
+  for (let constraint in supportedConstraints) {
+    if (supportedConstraints.hasOwnProperty(constraint)) {
+      let elem = document.createElement("li");
 
+      elem.innerHTML = "<code>" + constraint + "</code>";
+      constraintList.appendChild(elem);
+    }
+  }
 
-
-});
-
-function getPreciseConstraints()
-{
-
-
-   var DEVICES = [];
-var final = null;
-navigator.mediaDevices.enumerateDevices()
-    .then(function(devices) {
-        var arrayLength = devices.length;
-        for (var i = 0; i < arrayLength; i++)
-        {
-
-            var tempDevice = devices[i];
-
-            //FOR EACH DEVICE, PUSH TO DEVICES LIST THOSE OF KIND VIDEOINPUT (cameras)
-            //AND IF THE CAMERA HAS THE RIGHT FACEMODE ASSING IT TO "final"
-            if (tempDevice.kind == "videoinput")
-            {
-                DEVICES.push(tempDevice);
-
-                if(tempDevice.facingMode == "environment" ||tempDevice.label.indexOf("facing back")>=0 ||tempDevice.label.indexOf("rear")>=0 ||tempDevice.label.indexOf("Rear")>=0||tempDevice.label.indexOf("Back")>=0 ||tempDevice.label.indexOf("back")>=0)
-                    {final = tempDevice;}
-            }
-        }
-        console.log("caméra arrière trouvée : "+ final.label);
-        if (typeof verbose !== 'undefined')
-      {
-  M.toast({html:"caméra arrière trouvée : "+ final.label});
-      }
-        var totalCameras = DEVICES.length;
-        //If couldnt find a suitable camera, pick the last one... you can change to what works for you
-        if(final == null)
-        {
-            console.log("La caméra ne respecte pas les contraintes, on passe à la solution de rechange !");
-            //final = DEVICES[totalCameras-1];
-            if (typeof verbose !== 'undefined')
-          {
-      M.toast({html:"La caméra ne respecte pas les contraintes, on passe à la solution de rechange !"});
-          }
-        }
-        else{
-            rearcameraID.value = final.deviceId; //on sauve l'ID dans notre boîte de texte
-
-          //Set the constraints and call getUserMedia
-           constraints = {
-          audio: false,
-          video: {
-              deviceId: {exact: final.deviceId}
-              }
-          };
-
-          console.log(constraints);
-            navigator.mediaDevices.getUserMedia(constraints)
-            .then(function(stream) {
-              console.log("2e call à getusermedia avec les bonnes contraintes");
-              var video = document.querySelector('video');
-              // Older browsers may not have srcObject
-              if ("srcObject" in video) {
-                video.srcObject = stream;
-                //console.log("video srcobject");
-              } else {
-                // Avoid using this in new browsers, as it is going away.
-                video.src = window.URL.createObjectURL(stream);
-                //console.log("pas de video srcobject");
-              }
-          })
-          .catch(function(err) {
-            if (typeof verbose !== 'undefined')
-            {
-            M.toast({html: "erreur 2e call gUm: " + err.name + ": " + err.message});
-            }
-
-
-            })
-    .catch(function(err) {
-      if (typeof verbose !== 'undefined')
-      {
-          M.toast({html: "erreur enumerateDevices: "+err.name + ": " + err.message});
-      }
-});
-
-}
-});
-}
-
-
-
-function populate_camera_list()
-{  navigator.mediaDevices.enumerateDevices()
+  navigator.mediaDevices.enumerateDevices()
    //.then(gotDevices)
    .then(
 
-result => { gotDevices(result);
+result => { gotDevices(result); /*console.log("on a trouvé");*/
           }
      )
      .then(
- result => { setConstraints();}
+ result => { getConstraints();}
        )
-    /*   .then(
+       .then(
    result => { init_getusermedia();}
- )*/
+         )
    .catch(function(err) {
      console.log(err.name + ": " + err.message);
-     rearcameraID.value='inconnu';
-     setConstraints();
-    // init_getusermedia();
-   });}
+     rearcameraID.value=='inconnu';
+     getConstraints();
+     init_getusermedia();
+   });
+
+
+});
 
 //console.log(adapter.browserDetails.browser);
 
-function setConstraints()
+function getConstraints()
 {
+  if (rearcameraID.value !='') {
 
-  if (rearcameraID.value !=='') {
-var rear_deviceID = rearcameraID.value;
     //console.log("cam arrière identifiée et prête: " + rearcameraID.value);
-  constraints = {  audio: false, video: { deviceId: {
-              exact: rear_deviceID} }};
+  constraints = {  video: { deviceId: {
+              exact: rearcameraID.value}, audio: false }};
 
             }
 
   else if (rearcameraID.value=='inconnu')
   {  // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
-    constraints = {  video: { facingMode: { exact: 'environment'}
-  }, audio: false };
-    //constraints = {audio: false, video: {mandatory: {facingMode: 'environment'}}};
+    constraints = {  video: { facingMode: { exact: "environment"}
+      }, audio: false };
   }
   else {
     // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
-    constraints = {  video: { facingMode: { exact: 'environment'}
-    }, audio: false };
+    constraints = {  video: { facingMode: { exact: "environment"}
+      }, audio: false };
   }
-  console.log(constraints);
 }
 
 function init_materialize()
@@ -188,7 +121,7 @@ function init_materialize()
 
   /* Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de add_form.php)*/
   var elems = document.querySelectorAll('.dropdown-trigger');
-  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:250, inDuration:0});
+  var instance = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false, outDuration:0, inDuration:0});
 
   var elems2 = document.querySelectorAll('.fixed-action-btn');
    var instances = M.FloatingActionButton.init(elems2);
@@ -202,8 +135,8 @@ function init_materialize()
 
 function PlayVideo()
 {
-  /*setConstraints();*/
-  newcall_getusermedia();
+  getConstraints();
+  init_getusermedia();
   is_camera_active = true;
 
 }
@@ -234,8 +167,64 @@ function hasGetUserMedia() {
 }
 
 
-//méthode tarabiscotée pour lancer getusermedia pour améliorer la compatibilité
+
+function init_getusermedia_simple() {
+  // solution issue de https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+      // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
+      var constraints = {  video: { facingMode: { exact: "environment"} }, audio: false };
+
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then(function(mediaStream) {
+        var video = document.querySelector('video');
+
+          video.srcObject = mediaStream;
+        video.onloadedmetadata = function(e) {
+          video.play();
+
+
+          is_camera_active = true;
+          var file_upload_container = document.getElementById("file_upload_container");
+          file_upload_container.classList.add("invisible");
+
+          var canvas_streaming= document.getElementById('video_streaming');
+          canvas_streaming.classList.remove("invisible");
+          var canvas_final = document.getElementById('snap_final');
+          canvas_final.classList.add("invisible");
+          var take_photo_btn = document.querySelector('#take-photo');
+          take_photo_btn.classList.remove("invisible");
+          take_photo_btn.classList.add("pulse");
+          take_photo_btn.classList.remove("inactive");
+
+
+
+
+        };
+      })
+      .catch(function(err) {
+        console.log(err.name + ": " + err.message);
+        M.toast({html: "Support camera html5 :" + err.name + ": " + err.message});
+
+        var take_photo_btn = document.querySelector('#take-photo');
+        take_photo_btn.classList.add("invisible");
+        var canvas_video = document.getElementById("video_streaming");
+        canvas_video.classList.add("invisible");
+        var file_upload_container = document.getElementById("file_upload_container");
+        file_upload_container.classList.remove("invisible");
+      var canvas_final = document.getElementById('snap_final');
+        canvas_final.classList.add("invisible");
+        var upload_file_default_btn = document.querySelector('#upload-file-default');
+        upload_file_default_btn.classList.add("pulse");
+        is_camera_active = false;
+      });
+       // always check for errors at the end.
+      //M.toast({html: "Utilisez une connexion sécurisée (https)"});
+
+}
+
+//méthode tarabiscotée pour lancer getusermedia pour améliorer la compatibilité (temporaire pour les tests)
 function init_getusermedia(){
+
+
 
 
 
@@ -267,33 +256,19 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
 }
 
 
-console.log(constraints);
 navigator.mediaDevices.getUserMedia(constraints)
-.then(function(stream)
-
-{
-  console.log("1er call à getusermedia pour accéder aux labels des cameras");
-
-        if (rearcameraID.value =='') {
-        populate_camera_list();
-        getPreciseConstraints();}
-
-        var video = document.querySelector('video');
-        // Older browsers may not have srcObject
-        if ("srcObject" in video) {
-          video.srcObject = stream;
-          //console.log("video srcobject");
-        } else {
-          // Avoid using this in new browsers, as it is going away.
-          video.src = window.URL.createObjectURL(stream);
-          //console.log("pas de video srcobject");
-        }
-
-
-
+.then(function(stream) {
+  var video = document.querySelector('video');
+  // Older browsers may not have srcObject
+  if ("srcObject" in video) {
+    video.srcObject = stream;
+    //console.log("video srcobject");
+  } else {
+    // Avoid using this in new browsers, as it is going away.
+    video.src = window.URL.createObjectURL(stream);
+    //console.log("pas de video srcobject");
+  }
   video.onloadedmetadata = function(e) {
-
-
     video.play();
 
 
@@ -308,66 +283,20 @@ navigator.mediaDevices.getUserMedia(constraints)
     canvas_final.classList.add("invisible");
     var take_photo_btn = document.querySelector('#take-photo');
     take_photo_btn.classList.remove("invisible");
-    //take_photo_btn.classList.add("pulse");
+    take_photo_btn.classList.add("pulse");
     take_photo_btn.classList.remove("inactive");
-    var video_streaming_controls = document.getElementById('video_streaming_controls');
-    video_streaming_controls.classList.remove("invisible");
 
 
   };
 })
 .catch(function(err) {
-
-  console.log("erreur 1er call gUm: " + err.name + ": " + err.message);
-
-  if (typeof verbose !== 'undefined')
-{
-  M.toast({html: "erreur 1er call gUm: " + err.name + ": " + err.message});
-}
-
-  var take_photo_btn = document.querySelector('#take-photo');
-  take_photo_btn.classList.add("invisible");
-  var video_streaming_controls = document.getElementById('video_streaming_controls');
-  video_streaming_controls.classList.add("invisible");
-  var canvas_video = document.getElementById("video_streaming");
-  canvas_video.classList.add("invisible");
-  var file_upload_container = document.getElementById("file_upload_container");
-  file_upload_container.classList.remove("invisible");
-var canvas_final = document.getElementById('snap_final');
-  canvas_final.classList.add("invisible");
-  var upload_file_default_btn = document.querySelector('#upload-file-default');
-  //upload_file_default_btn.classList.add("pulse");
-  is_camera_active = false;
+  console.log(err.name + ": " + err.message);
 });
-
 }
 
 
 
-function newcall_getusermedia()
-{
 
-  navigator.mediaDevices.getUserMedia(constraints)
-  .then(function(stream)
-  {
-    console.log("nouveau call à getusermedia");
-
-          var video = document.querySelector('video');
-          // Older browsers may not have srcObject
-          if ("srcObject" in video) {
-            video.srcObject = stream;
-            //console.log("video srcobject");
-          } else {
-            // Avoid using this in new browsers, as it is going away.
-            video.src = window.URL.createObjectURL(stream);
-            //console.log("pas de video srcobject");
-          }
-
-    })
-    .catch(function(err) {
-      console.log(err.name + ": " + err.message);
-    });
-}
 
 
 function gotDevices(deviceInfos) {
@@ -407,7 +336,8 @@ function SwitchCameraActiveState()
 {
   if (is_camera_active)
   {
-
+  const ShutterSound = new Audio("assets/inspectorj__camera-shutter-fast-a.wav"); //On prépare le son "Camera Shutter, Fast, A.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
+   ShutterSound.play(); //jouer le son seulement quand on prend la photo
    StopVideo();
  }
   else
@@ -430,11 +360,11 @@ function PrisePhoto(e){
 
 
      //var vignette = DrawOnCanvas('videopreview');
-     document.getElementById('image_final').value = DessineVignette('videosnap');
+     DessineVignette('videosnap');
 
       SwitchCameraActiveState();
       var take_photo_btn = document.querySelector('#take-photo');
-    //  take_photo_btn.classList.remove("pulse");
+      take_photo_btn.classList.remove("pulse");
       take_photo_btn.classList.add("inactive");
 
 
@@ -451,7 +381,7 @@ console.log("UploadFichier");
  img.onload = function() {
 getOrientation(e.target.files[0],function(orientation) {
 
-    document.getElementById('image_final').value = DessineVignette('imagesnap', img, orientation);
+    var vignette = DessineVignette('imagesnap', img, orientation);
   });
 
     //context.drawImage(img, 0,0);
@@ -517,18 +447,18 @@ function DessineVignette(type, elem, orientation){
         vw = elem.width,
         vh = elem.height;
 
-        canvas2.width=400;
-        canvas2.height=400;
-        canvas3.width=400;
-        canvas3.height=400;
+        canvas2.width=300;
+        canvas2.height=300;
+        canvas3.width=300;
+        canvas3.height=300;
 
 //on calcule le plus grand carré au milieu de l'image
     var dimension = Math.min(vw, vh);
     var sx = (vw - dimension)/2;
     var sy= (vh - dimension)/2;
 
-//on crop le plus grand carré au milieu de l'image et on la redimensionne dans un carré de 400x400
-    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, 400, 400);
+//on crop le plus grand carré au milieu de l'image et on redimensionne dans un carré de 200x200
+    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, 300, 300);
 
 //on utilise l'orientation EXIF de l'image (le cas échéant) pour réorienter le canevas vers le haut puis on dessine
   if (orientation==6) {
@@ -555,25 +485,23 @@ else    {
 
         }
 
-//on cache le svg avec les bords discontinus
-    var bords_file_upload = document.getElementById("bords_file_upload");
-    bords_file_upload.classList.add("invisible");
-
 // on affiche le canevas final
     canvas3.classList.remove("invisible");
-    return canvas3.toDataURL("image/jpeg", 0.9);
+
+    return canvas3.toDataURL('image/png');
   }
 
-
   else if ((type=='videosnap') && ( video.readyState === 4 )){
+
+
 
     var canvas_streaming= document.getElementById('video_streaming'),
         canvas1 = document.getElementById('hidden_snap_canvas'),
         ctx1 = canvas1.getContext('2d'),
         canvas2 = document.getElementById('snap_final'),
         ctx2 = canvas2.getContext('2d');
-        canvas2.width=400;
-        canvas2.height=400;
+        canvas2.width=300;
+        canvas2.height=300;
 
         var vw = video.videoWidth,
             vh = video.videoHeight;
@@ -586,12 +514,11 @@ else    {
         var sx = (vw - dimension)/2;
         var sy= (vh - dimension)/2;
 
-        //On cache le canvas avec le streaming
+    //Dessine l'image video dans notre Canvas
       canvas_streaming.classList.add("invisible");
       canvas2.classList.remove("invisible");
-      //Dessine l'image video dans notre Canvas
-    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 400, 400);
-    return canvas2.toDataURL("image/jpeg", 0.9);
+    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 300, 300);
+    return canvas2.toDataURL('image/png');
   }
 
   //retourne une image URI (possible de jouer avec la qualité du jpeg avec .toDataURL)
@@ -651,16 +578,10 @@ function DrawVideoOnCanvas(){
 download_img = function(el) {
 
   var canvas_final = document.getElementById('snap_final');
-  var image = canvas_final.toDataURL("image/jpeg", 0.95);
+  var image = canvas_final.toDataURL("image/jpeg", 0.9);
   el.href = image;
 };
 
-function Soumettre()
-{
-
-  document.forms['formulaire_encodage'].submit();
-  document.getElementById('client').reset();
-}
 
 video.addEventListener('play', function(){
         DrawVideoOnCanvas('videostream');
