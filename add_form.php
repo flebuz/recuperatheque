@@ -106,6 +106,7 @@
   //connection database
   try{
     $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+  //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
   }
   catch(Exception $e){
       die('Erreur : '.$e->getMessage());
@@ -122,7 +123,7 @@
 
       while($cat = $req->fetch()){
 
-        echo '<a class=\'dropdown-trigger btn-flat waves-effect couleur2 white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
+        echo '<a class=\'dropdown-trigger btn-flat waves-effect white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
   }
 
 
@@ -202,7 +203,7 @@
 
                     <div class="col s12 flex-input-field">
                       <div id="label_bricole" class="row nomargin nopadding" style="margin-left: 3rem !important;">
-                      <label for="tags">Tags: (séparateur: , ou .)</label>
+                      <label for="tags">Tags: (séparés par ' , ' ou ' . ')</label>
                     </div>
                       <i class="fas fa-tags prefix"></i>
                       <input class="invisible" id="input-tags" name="tags" type="text">
@@ -230,11 +231,11 @@ PlayVideo();"></select>
           <div class="input-field col s8 nopadding" >
 
             <div class="inline-group">
-            <div id="minus_btn" class="btn plusminus waves-effect eztouch-left" onclick="Increment('pieces', -1, 1);"><span class="no-select">-</span></div>
+            <div id="minus_btn" class="btn plusminus eztouch-left" onclick="Increment('pieces', -1, 1);"><span class="no-select">-</span></div>
 
               <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; width:45px; ">
 
-              <div id="plus_btn" class="btn plusminus waves-effect eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
+              <div id="plus_btn" class="btn plusminus eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
 
 
               <p class="couleur3-text no-select">pièce(s)</p>
