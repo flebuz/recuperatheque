@@ -348,12 +348,21 @@ margin-right: 1px;
 }
 
 /*pour aller avec la flèche ▾*/
-/*
-.dropdown-trigger {
 
-    padding-right: 10px !important;
+a.dropdown-trigger  {
 
-}*/
+    background-color: #606060 ;
+
+}
+
+a.dropdown-trigger.active {
+
+    background-color:#00E676 !important;
+
+}
+
+a.btn-flat:focus
+{background-color:#606060 ;}
 
 ul.tabs{
   background-color: #E0E0E0 !important;
