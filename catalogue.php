@@ -31,10 +31,10 @@
   <?php
     //check les $_GET de recherche si valide
       //check si l'option de recherche est valide
-    if (isset($_GET['search'])){
-      $recherche = htmlspecialchars($_GET['search']);
+    if (isset($_GET['q'])){
+      $query = htmlspecialchars($_GET['q']);
     } else{
-      $recherche = '';
+      $query = '';
     }
       //check si l'option de tri est parmis les choix valide
     $tri_option = array('prix', 'date_ajout', 'etat', 'pieces');
@@ -55,6 +55,7 @@
     } else{
       $catsearch = null;
     }
+
   ?>
 
   <?php
@@ -74,7 +75,7 @@
           <div class="search-bar-item">
             <label class="w3-xlarge fa fa-search search-bar-label"></label>
             <!-- le php a l'interieur rempli la valeur recherché au chargement de la page en fonction de ce qui a été envoyé en Get -->
-            <input type="text" class="w3-input search-bar-input" name="search" placeholder="Recherche..." value="<?php echo $recherche?>">
+            <input type="text" class="w3-input search-bar-input" name="q" placeholder="Recherche..." value="<?php echo $query?>">
           </div>
 
           <div class="search-bar-item">
@@ -88,13 +89,21 @@
             </select>
           </div>
 
+          <?php
+          // on ajoute cat et sscat si jamais c'est déjà préciser
+          if($catsearch){
+            echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
+          }
+          if($sscatsearch){
+            echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
+          }
+          ?>
+
           <div class="search-bar-item">
             <input class="w3-btn color-theme search-bar-input" type="submit" value="Go"/>
           </div>
 
     </form>
-
-
   </div>
 
   <div class="w3-row">
@@ -172,7 +181,11 @@
                 <div class="accordeon">
 
                 <!-- on ajoute la sscat de toute les sscat -->
-                <a href="?catsearch=<?php echo $sscat['cat_ID']; ?>&sscatsearch=0"
+                <?php
+                  // on construit le lien en fonction des autres param GET déjà présent
+                  $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>$sscat['cat_ID'], 'sscatsearch'=>0)));
+                ?>
+                <a href="<?php echo $getURL;?>"
                   class="w3-block souscategorie-title tout <?php if($catsearch==$sscat['cat_ID'] and $sscatsearch==0){echo 'selected'; }?>">
                   Tout dans <?php echo $sscat['cat_nom']; ?>
                 </a>
@@ -186,7 +199,11 @@
             if(array_key_exists($sscat['ID'],$sousCategorieArray)){
             ?>
               <!-- ajoute une souscategorie comme lien -->
-              <a href="?catsearch=<?php echo $sscat['cat_ID'];?>&sscatsearch=<?php echo $sscat['ID'];?>"
+              <?php
+                // on construit le lien en fonction des autres param GET déjà présent
+                $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>$sscat['cat_ID'], 'sscatsearch'=>$sscat['ID'])));
+              ?>
+              <a href="<?php echo $getURL;?>"
                 class="w3-block souscategorie-title <?php if($sscatsearch==$sscat['ID']){echo 'selected'; }?>">
                 <?php
                   echo $sscat['nom'];
@@ -233,14 +250,14 @@
                                 FROM catalogue c
                                 INNER JOIN categorie cat ON c.ID_categorie=cat.ID
                                 INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
-                                -- WHERE cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search
-                                WHERE (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
+                                WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
+                                AND (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
                                 AND (c.ID_categorie = :catsearch OR :catsearch is null)
                                 ORDER BY ' . $tri . ' DESC
                             ');
 
         //complete parametric values (note: column names are not values, and thus must be hardcoded into the query)
-        // $req->bindValue(':search', '%' . $recherche . '%', PDO::PARAM_STR);
+        $req->bindValue(':search', '%' . $query . '%', PDO::PARAM_STR);
         $req->bindValue(':sscatsearch', $sscatsearch, PDO::PARAM_INT);
         $req->bindValue(':catsearch', $catsearch, PDO::PARAM_INT);
 
