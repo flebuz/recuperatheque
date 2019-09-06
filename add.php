@@ -75,16 +75,20 @@ try {
     /*$req = "INSERT INTO catalogue (ID, ID_categorie ,	ID_souscategorie, nombre, mesure, état, tags, description, date_ajout  )
     VALUES ($object_id, $categorie, $souscategorie, '$pieces', '$poids', '$etat', '$tags', 'pas de description', '$today')";*/
 
-    $req = $bdd ->prepare("INSERT INTO catalogue (ID, ID_categorie ,	ID_souscategorie, nombre, mesure, état, tags, description, date_ajout) VALUES (:ID, :ID_categorie ,	:ID_souscategorie, :nombre, :mesure, :etat, :tags, :description, :date_ajout)");
+    $req = $bdd ->prepare("INSERT INTO catalogue (ID, ID_categorie ,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, date_ajout, poids, prix, localisation) VALUES (:ID, :ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :date_ajout, :poids, :prix, :localisation)");
 $req->bindParam(':ID', $object_id);
 $req->bindParam(':ID_categorie', $categorie);
 $req->bindParam(':ID_souscategorie', $souscategorie);
-$req->bindParam(':nombre', $pieces);
-$req->bindParam(':mesure', $poids);
+$req->bindParam(':pieces', $pieces);
+$req->bindParam(':dimensions', $dimensions);
 $req->bindParam(':etat', $etat);
 $req->bindParam(':tags', $tags);
-$req->bindParam(':description', $description);
+$req->bindParam(':remarques', $remarques);
 $req->bindParam(':date_ajout', $today);
+$req->bindParam(':poids', $poids);
+$req->bindParam(':prix', $prix);
+$req->bindParam(':localisation', $localisation);
+
 
 
 $req->execute();
