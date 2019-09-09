@@ -100,7 +100,7 @@
           ?>
 
           <div class="search-bar-item">
-            <input class="w3-btn color-theme search-bar-input" type="submit" value="Go"/>
+            <input class="w3-button color-theme search-bar-input" type="submit" value="Go"/>
           </div>
 
     </form>
