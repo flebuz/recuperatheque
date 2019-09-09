@@ -47,8 +47,6 @@ document.querySelector('#rearcameraID').value='';
 
 function getPreciseConstraints()
 {
-
-
    var DEVICES = [];
 var final = null;
 navigator.mediaDevices.enumerateDevices()
@@ -428,6 +426,7 @@ function SwitchCameraPausedState()
 function PrisePhoto(e){
      e.preventDefault();
 
+    
 
      //var vignette = DrawOnCanvas('videopreview');
      document.getElementById('image_final').value = DessineVignette('videosnap');
@@ -575,6 +574,7 @@ else    {
         canvas2.width=400;
         canvas2.height=400;
 
+
         var vw = video.videoWidth,
             vh = video.videoHeight;
         canvas1.width = vw;
@@ -591,7 +591,11 @@ else    {
       canvas2.classList.remove("invisible");
       //Dessine l'image video dans notre Canvas
     ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 400, 400);
-    return canvas2.toDataURL("image/jpeg", 0.9);
+
+    canvas2.classList.add('flash');
+    setTimeout(function(){ canvas2.classList.remove('flash'); }, 500);
+
+    //return canvas2.toDataURL("image/jpeg", 0.9);
   }
 
   //retourne une image URI (possible de jouer avec la qualité du jpeg avec .toDataURL)

@@ -106,7 +106,7 @@
   //connection database
   try{
     $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-  //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
   }
   catch(Exception $e){
       die('Erreur : '.$e->getMessage());
@@ -282,7 +282,7 @@ PlayVideo();"></select>
            <div id="row_prix" class ="row input-field" >
               <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
-                <input id="prix" name="prix" type="number" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
+                <input id="prix" name="prix" type="number" value="0" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
                 <label for="prix">Prix</label>
               </div>
 

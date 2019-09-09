@@ -59,7 +59,7 @@
         }
         ?>
 
-        <i class='fas fa-euro-sign item-icon'></i> <?php echo $prix; ?> par unité<br/>
+        <i class='fas fa-coins item-icon'></i> <?php echo $prix; ?> par unité<br/>
 
         <i class='fas fa-heart-broken item-icon'></i> État:
         <span class='etat-icon-container'>
