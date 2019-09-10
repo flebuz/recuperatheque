@@ -24,7 +24,12 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
 
-
+<!-- Ajout du formulaire précédent à la base de donnée si $_POST['cat'] est défini-->
+<?php
+if (isset($_POST['cat'])) {
+    include 'add.php';
+    console_log("include de add.php");
+} ?>
 
 </head>
 
@@ -33,6 +38,16 @@
 <?php include 'header.php'; ?>
 
 <main>
+  <div id="loading_overlay" class="overlay invisible">
+
+
+    <!-- Overlay content -->
+    <div class="overlay-content">
+    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+
+  </div>
+
 
   <div class="container" id="cam_container">
     <div class="row nomargin">
@@ -104,11 +119,10 @@
 
   <?php
   //connection database
-  try{
-    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-  }
-  catch(Exception $e){
+  try {
+      $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+      //$bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+  } catch (Exception $e) {
       die('Erreur : '.$e->getMessage());
   }
 
@@ -121,10 +135,9 @@
     $req->execute();
 
 
-      while($cat = $req->fetch()){
-
-        echo '<a class=\'dropdown-trigger btn-flat waves-effect white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
-  }
+      while ($cat = $req->fetch()) {
+          echo '<a class=\'dropdown-trigger btn-flat waves-effect white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
+      }
 
 
         ?>
@@ -143,19 +156,14 @@
         echo "<ul id='select-".$souscategories[0]['ID_categorie']."' class='dropdown-content'>";
 
         for ($row = 0; $row < sizeof($souscategories); $row++) {
-        if ($souscategories[$row]['ID_categorie'] == $current_cat)
-            {
-          echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
-
-              }
-              else {
-                      echo '</ul>';
-                      echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-                      echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
-                    $current_cat++;
-
-              }
-
+            if ($souscategories[$row]['ID_categorie'] == $current_cat) {
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
+            } else {
+                echo '</ul>';
+                echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
+                $current_cat++;
+            }
         }
 
         //  echo '</ul>';
@@ -176,7 +184,7 @@
 
 
               <!-- Début du formulaire-->
-              <form name="formulaire_encodage" id="formulaire_encodage" action="add.php" method="post" action="?" novalidate>
+              <form name="formulaire_encodage" id="formulaire_encodage" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="post" novalidate>
 
 
                 <div id="categorisation" class ="row invisible" >
@@ -212,10 +220,11 @@
 
                   </div>
 
-    <?php if (isset($_GET["camdetails"]))
-      { echo "<div class='row input-field' id='champs_getusermedia'>";      }
-        else
-        { echo "<div class='row input-field invisible' id='champs_getusermedia'>";      }
+    <?php if (isset($_GET["camdetails"])) {
+                   echo "<div class='row input-field' id='champs_getusermedia'>";
+               } else {
+                   echo "<div class='row input-field invisible' id='champs_getusermedia'>";
+               }
         ?>
 <div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
 PlayVideo();"></select>
@@ -243,7 +252,7 @@ PlayVideo();"></select>
           </div>
         </div>
 
-        <div id="row_range" class="row input-field">
+        <div id="row_poids" class="row input-field">
 
             <div class="input-field col s9 l8" id="range_div" >
               <i class="fas fa-weight-hanging prefix"></i>
@@ -333,7 +342,7 @@ PlayVideo();"></select>
 
             <div class="row hide-on-small-only">
         			<div class="col s12">
-        			 <a class="waves-effect waves-light btn-small green accent-3 right" value="submit" onclick="Soumettre();" >
+        			 <a class="waves-effect waves-light btn-small green accent-3 right" value="submit" onclick="expand('loading_overlay'); Soumettre('formulaire_encodage');" >
                  <i class="material-icons">thumb_up_alt</i>
                  Encoder
                </a>
@@ -366,7 +375,7 @@ PlayVideo();"></select>
     </div>
 
     <div class="fixed-action-btn hide-on-med-and-up">
-      <a class="btn-floating btn-large green accent-3" value="submit" onclick="document.getElementById('formulaire_encodage').submit(); document.getElementById('client').reset(); ">
+      <a class="btn-floating btn-large green accent-3" name="submit" value="submit" onclick="expand('loading_overlay'); Soumettre('formulaire_encodage'); ">
         <i class="material-icons">thumb_up_alt</i>
       </a>
 
@@ -376,7 +385,17 @@ PlayVideo();"></select>
 
 </main>
 
-<?php include 'footer.php'; ?>
+<?php include 'footer.php';
+
+/*Message de succès ou d'échec du formulaire, si $_POST['cat'] est défini*/
+if (isset($_POST['cat'])) {
+    if ($add_result == 'success') {
+        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été ajouté à la base de données\"})</script>";
+    } else {
+        echo $add_result;
+    }
+}
+?>
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
 
@@ -397,22 +416,26 @@ PlayVideo();"></select>
 </body>
 
 <?php
+
+
 //fonction pour  supprimer tous les caractères spéciaux pour pouvoir utiliser des noms de matériaux stockés dans la bdd comme ids d'éléments html
-function abbrev($string){
-		$result1 = str_replace( array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']', ' '), '', $string);
-    return str_replace( array('à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ', 'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã','Ä', 'Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ','Ö', 'Ù','Ú','Û','Ü', 'Ý'), array('a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n', 'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A', 'C', 'E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O', 'U','U','U','U', 'Y'), $result1);
-	}
+function abbrev($string)
+{
+    $result1 = str_replace(array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']', ' '), '', $string);
+    return str_replace(array('à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ', 'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã','Ä', 'Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ','Ö', 'Ù','Ú','Û','Ü', 'Ý'), array('a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n', 'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A', 'C', 'E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O', 'U','U','U','U', 'Y'), $result1);
+}
 
 
 //DEV fonction pour logger les erreurs PHP dans la console
-  function console_log($output, $with_script_tags = true) {
-    $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
+  function console_log($output, $with_script_tags = true)
+  {
+      $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
 ');';
-    if ($with_script_tags) {
-        $js_code = '<script>' . $js_code . '</script>';
-    }
-    echo $js_code;
-}
+      if ($with_script_tags) {
+          $js_code = '<script>' . $js_code . '</script>';
+      }
+      echo $js_code;
+  }
 ?>
 
 </html>
