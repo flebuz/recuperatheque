@@ -1,5 +1,4 @@
 
-
 <div class='w3-col s12 m6 l4'>
 
   <div class='item'>
