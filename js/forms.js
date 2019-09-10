@@ -15,8 +15,27 @@ function set_active(selector, element_to_activate)
   {node.classList.remove("active");});
 }
 
+function Soumettre(formid)
+{
+
+  document.forms[formid].submit();
+  document.getElementById('client').reset();
+}
 
 
+function check_unite(unite)
+{
+  if (unite !== undefined)
+  {
+if (unite=='kg')
+{alert("kg");
+expand('row_poids', '', 'down')}
+else if (unite=='pc')
+{alert("pc");
+  expand('', 'row_poids', '')}
+
+  }
+}
 //fonction qui enlève la classe "hidden" d'un élément du DOM
 function unhide(id_to_show)
 {var elem_to_show= document.getElementById(id_to_show);
@@ -31,6 +50,8 @@ function expand(id_to_show, id_to_hide, direction)
 
   elem_to_show.classList.remove("invisible");
 
+  console.log(elem_to_show);
+
 if (direction=='down')
 { elem_to_show.classList.add("visible-slide-down");}
 else if (direction=='right')
@@ -38,7 +59,7 @@ else if (direction=='right')
 else
 { elem_to_show.classList.add("visible");}
 
-if (id_to_hide !== null && id_to_hide !== '')
+ if ( id_to_hide !== undefined)
 {
   var elem_to_hide = document.getElementById(id_to_hide);
   elem_to_hide.classList.add("invisible");
