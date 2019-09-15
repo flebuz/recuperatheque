@@ -43,10 +43,10 @@
         //ou
         $prix = $item['prix'];
 
-        //pluriel ou non sur le nombre d'unités
-        $unite = "1 unité";
+        //pluriel ou non sur le nombre de pièces
+        $piece = "1 pièce";
         if ($item['pieces']>1){
-          $unite = $item['pieces'] . " unités";
+          $piece = $item['pieces'] . " pièces";
         }
 
         //divise les tags en list php
@@ -61,7 +61,7 @@
         }
         ?>
 
-        <i class='fas fa-coins item-icon'></i> <?php echo $prix; ?> par unité<br/>
+        <i class='fas fa-coins item-icon'></i> <?php echo $prix; ?> par pièce<br/>
 
         <i class='fas fa-heart-broken item-icon'></i> État:
         <span class='etat-icon-container'>
@@ -77,7 +77,7 @@
         ?>
         </span><br/>
 
-        <i class='fas fa-cubes item-icon'></i> <?php echo $unite; ?> <br/>
+        <i class='fas fa-cubes item-icon'></i> <?php echo $piece; ?> <br/>
         <!-- <i class='fas fa-ruler item-icon'></i> <?php echo $dimensions; ?> <br/> -->
 
 
