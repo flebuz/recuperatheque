@@ -7,12 +7,36 @@ function set_value(id_to_update, value)
   document.getElementById(id_to_update).value= value;
 }
 
-function set_active(selector, element_to_activate)
+
+
+function set_range_value (id_to_update, value)
 {
-  console.log(element_to_activate);
-  element_to_activate.classList.add("active");
+  if (value > 1) {
+        value = (value - 1) * 10 + 1;
+        value=  Math.round(value * 10) / 10;
+      }
+  document.getElementById(id_to_update).value= value;
+}
+
+function update_slider(slider_id,value,elem)
+{
+document.getElementById(slider_id).noUiSlider.set(value);
+elem.value = value; // to avoid values bigger than slider range being overriden by noUiSlider.set
+}
+
+function set_active(selector, id_to_activate)
+{
+  document.getElementById(id_to_activate).classList.add("active");
+  if ((selector !== undefined) && (selector !== ''))
+  {
   document.querySelectorAll(selector).forEach(function(node)
   {node.classList.remove("active");});
+  }
+}
+
+function set_inactive(id_to_deactivate)
+{
+  document.getElementById(id_to_deactivate).classList.remove("active");
 }
 
 function Soumettre(formid)
@@ -59,7 +83,7 @@ else if (direction=='right')
 else
 { elem_to_show.classList.add("visible");}
 
- if ( id_to_hide !== undefined)
+ if (( id_to_hide !== undefined) && (id_to_hide !== ''))
 {
   var elem_to_hide = document.getElementById(id_to_hide);
   elem_to_hide.classList.add("invisible");
@@ -150,7 +174,7 @@ function checkhearts(value)
   function ValidateNumber(textbox)
   {
     n = textbox.value;
-    console.log(n);
+
 
     if (isNaN(parseFloat(n.replace(",",".")))) //on contrôle si n est un nombre (en remplaçant la ',' par un '.' sinon isNaN=true)
     {
@@ -163,7 +187,3 @@ function checkhearts(value)
     }
 
   }
-
-function updateTextInput(id, val){
-  document.getElementById(id).value=val; // on met à jour l'input text lié à l'input range "mesure"
-}
