@@ -52,7 +52,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 .search-bar-label{
   white-space: nowrap; /*force one line text*/
-
   padding-right: 12px;
 }
 
@@ -61,27 +60,31 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   flex-grow: 1; /*grow if spaces*/
 }
 
+.search-resume{
+  text-align: center;
+  font-weight: bold;
+}
+
 /* ----- Category Menu -----*/
 
 .categorie-menu{
   background: white;
-  padding: 36px;
+  padding: 0px;
   text-align: left;
 }
 
 .categorie-menu-title{
   font-weight: bold;
   font-size: 1.4em;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding: 12px;
   border-bottom: 1px solid #E0E0E0;
 }
 
 .categorie-title{
   text-align: left;
   padding-left: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   border-bottom: 1px solid #E0E0E0;
 }
 
@@ -101,8 +104,8 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 .souscategorie-title{
   text-align: left;
   padding-left: 36px;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   border-bottom: 1px solid #E0E0E0;
 }
 

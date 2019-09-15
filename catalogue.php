@@ -23,13 +23,24 @@
 <body>
 
   <div class="w3-container color-theme">
-    <h1>Mycélium</h1>
+    <h2>Mycélium</h2>
   </div>
 
-  <!-- Checks des parametres GET -->
+  <?php
+  //connection database
+  try{
+    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+  }
+  catch(Exception $e){
+    die('Erreur : '.$e->getMessage());
+  }
+  ?>
 
   <?php
     //check les $_GET de recherche si valide
+
       //check si l'option de recherche est valide
     if (isset($_GET['q'])){
       $query = htmlspecialchars($_GET['q']);
@@ -37,8 +48,12 @@
       $query = '';
     }
       //check si l'option de tri est parmis les choix valide
-    $tri_option = array('date_ajout', 'prix', 'etat', 'pieces');
-    if (isset($_GET['order']) && in_array($_GET['order'], $tri_option)){
+    $tri_option = array('date_ajout' => 'Date de récupération',
+                        'prix' => 'Prix par pièce',
+                        'etat' => 'État d\'usure',
+                        'pieces' => 'Pièces disponibles');
+
+    if (isset($_GET['order']) && array_key_exists($_GET['order'], $tri_option)){
       $tri = htmlspecialchars($_GET['order']);
     } else{
       $tri = 'date_ajout';
@@ -55,19 +70,11 @@
     } else{
       $catsearch = null;
     }
-
   ?>
 
   <?php
-  //connection database
-  try{
-    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-  }
-  catch(Exception $e){
-      die('Erreur : '.$e->getMessage());
-  }
+    //construction de l'objet $system qui résume la structure de catégorie actuelle
+    include('categories_system.php');
   ?>
 
   <!-- Bar de recherche - formulaire -->
@@ -108,13 +115,33 @@
     </form>
   </div>
 
+  <!-- recherche actuelle -->
+  <div class="w3-container search-resume">
+    <?php
+      //si une des deux condition est respacter on affiche le resumer
+      if($query != '' || $catsearch != 0){
+        if($query != ''){
+          echo '"' . $query . '"';
+        }
+        if($catsearch != 0){
+          if($query != ''){ echo ' dans '; }
+          //convertit l'ID en nom
+          echo $system[$catsearch]['nom'];
+        }
+        if($sscatsearch != 0){
+          //convertit l'ID en nom
+          echo ' ' . $system[$catsearch]['sscats'][$sscatsearch];
+        }
 
+        echo '<br/>trier par '. $tri_option[$tri];
+      }
+
+    ?>
+  </div>
 
   <div class="w3-row">
     <div class="w3-col s12 m3 l3">
-
         <?php include('categories_menu.php'); ?>
-
     </div>
 
 
