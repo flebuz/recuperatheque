@@ -32,7 +32,6 @@ if (!$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) {
 echo "Erreur, pas d'objet sélectionné";
 }
 else {
-echo $id;
       try {
         //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
           $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -205,35 +204,20 @@ echo $id;
 
         <div id="row_pieces" class ="row input-field" >
 
-          <div class="input-field col s2" style="width:55px !important; ">
-            <i id='prefix_pieces' class="fas fa-cube prefix"></i>
-          </div>
-          <div class="input-field col s8 nopadding" >
+          <div class="input-field col s6 nopadding" >
 
-            <div class="inline-group" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-            <div id="minus_btn" class="btn plusminus eztouch-left" onclick="Increment('pieces', -1, 1);"><span class="no-select">-</span></div>
-
-              <input type="number" id="pieces" name="pieces" value="<?php echo $item['pieces'];?>" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
-
-              <div id="plus_btn" class="btn plusminus eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
-
-
-              <p class="couleur3-text no-select">pièce(s)</p>
+            <div class="inline-group" >
+                <i id='prefix_pieces' class="fas fa-cube prefix"></i>
+                <input type="number" id="pieces" name="pieces" value="<?php echo $item['pieces'];?>" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
+              <span class="couleur3-text no-select postfix">pièce(s)</span>
               </div>
           </div>
-        </div>
 
-        <div id="row_poids" class="row input-field">
-
-            <div class="input-field col s4 m3">
+            <div class="input-field col s4">
               <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
               <label for="indicateur_poids" class="couleur3-text">Poids:</label>
             <input type="number" id="indicateur_poids" name="poids" value="<?php echo $item['poids'];?>" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align: center; ">
             <span id="" class="postfix">kg</span>
-            </div>
-            <div class="input-field col s8 m9" id="range_div" >
-
-              <div id="slider_poids" class="input-field" overflow-scroll="false" onfocus="set_active('', 'prefix_poids')" onblur="set_inactive('prefix_poids')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
             </div>
 
         </div>
