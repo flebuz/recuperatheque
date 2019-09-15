@@ -1,4 +1,5 @@
 
+<a class="item-link" href="item_page.php?id=<?php echo $item['ID_item']?>">
 <div class='w3-col s12 m6 l4'>
 
   <div class='item'>
@@ -100,3 +101,4 @@
   </div>
 
 </div>
+</a>
