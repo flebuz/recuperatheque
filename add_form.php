@@ -20,6 +20,8 @@
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
+  <link rel="stylesheet" href="nouislider/nouislider.css">
 
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
@@ -114,14 +116,14 @@ if (isset($_POST['cat'])) {
 
 
 <div style="" class="scrolling-wrapper">
-  <!--Attention, petite complexité : le menu déroulant combine deux types de composants Materialize (activés par javascript): un composant Tabs, et un composant Dropdown. Du coup j'ai du ruser avec des boutons invisibles tout en bas de index.php (oui c'est un peu du bricolage... :p)-->
-  <!--Les tabs reprenant les différentes catégories de matériaux -->
+
+
 
   <?php
   //connection database
   try {
-      $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-      //$bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+      $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
   } catch (Exception $e) {
       die('Erreur : '.$e->getMessage());
   }
@@ -134,9 +136,9 @@ if (isset($_POST['cat'])) {
     //execute the request
     $req->execute();
 
-
+     // displaying buttons with the categories of materials
       while ($cat = $req->fetch()) {
-          echo '<a class=\'dropdown-trigger btn-flat waves-effect white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
+          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
       }
 
 
@@ -165,8 +167,6 @@ if (isset($_POST['cat'])) {
                 $current_cat++;
             }
         }
-
-        //  echo '</ul>';
                ?>
              </ul>
 
@@ -189,8 +189,8 @@ if (isset($_POST['cat'])) {
 
                 <div id="categorisation" class ="row invisible" >
                    <div class="col s5 m5 input-field">
-                     <input id="nom_categorie" name="cat" type="text" required readonly>
-                     <input id="id_categorie" name="cat" type="text" readonly hidden>
+                     <input id="nom_categorie" class="input_categ" name="cat" type="text" required readonly>
+                     <input id="id_categorie"  name="cat" type="text" readonly hidden>
 
                    </div>
 
@@ -199,7 +199,7 @@ if (isset($_POST['cat'])) {
                    </div>
 
                    <div class="col s5 m6 input-field">
-                     <input id="nom_souscategorie" name="souscat" type="text" required readonly>
+                     <input id="nom_souscategorie" class="input_categ" name="souscat" type="text" required readonly>
                     <input id="id_souscategorie" name="souscat" type="text" readonly hidden>
                    </div>
 
@@ -213,8 +213,8 @@ if (isset($_POST['cat'])) {
                       <div id="label_bricole" class="row nomargin nopadding" style="margin-left: 3rem !important;">
                       <label for="tags">Tags: (séparés par ' , ' ou ' . ')</label>
                     </div>
-                      <i class="fas fa-tags prefix"></i>
-                      <input class="invisible" id="input-tags" name="tags" type="text">
+                      <i id="prefix_tags" class="fas fa-tag prefix"></i>
+                      <div onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><input class="invisible" id="input-tags" name="tags" type="text"  onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');"></div>
 
                     </div>
 
@@ -235,14 +235,14 @@ PlayVideo();"></select>
         <div id="row_pieces" class ="row input-field" >
 
           <div class="input-field col s2" style="width:55px !important; ">
-            <i class="fas fa-cube prefix"></i>
+            <i id='prefix_pieces' class="fas fa-cube prefix"></i>
           </div>
           <div class="input-field col s8 nopadding" >
 
-            <div class="inline-group">
+            <div class="inline-group" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             <div id="minus_btn" class="btn plusminus eztouch-left" onclick="Increment('pieces', -1, 1);"><span class="no-select">-</span></div>
 
-              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" style="text-align: center; width:45px; ">
+              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
 
               <div id="plus_btn" class="btn plusminus eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
 
@@ -254,16 +254,16 @@ PlayVideo();"></select>
 
         <div id="row_poids" class="row input-field">
 
-            <div class="input-field col s9 l8" id="range_div" >
-              <i class="fas fa-weight-hanging prefix"></i>
-              <input type="range" id="poids" min="0.1" max="10" value="1.0" step="0.1" name="poids" oninput="updateTextInput('indicateur_poids', this.value);" />
-            </div>
+            <div class="input-field col s4 m3">
+              <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
+              <label for="indicateur_poids" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
 
-            <div class="input-field col s2">
-            <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value;" style="inline; text-align: center; ">
+                        <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align:center;">
+                  <span id="" class="postfix">kg</span>
             </div>
-            <div class="input-field col s1">
-              <p class="no-select">kg</p>
+            <div class="input-field col s8 m9" id="range_div" >
+
+              <div id="slider_poids" class="input-field" overflow-scroll="false" onfocus="set_active('', 'prefix_poids')" onblur="set_inactive('prefix_poids')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
             </div>
 
         </div>
@@ -272,13 +272,13 @@ PlayVideo();"></select>
 
             <div id="row_etat" class ="row input-field">
                   <div class="input-field col s3 m2">
-                    <i class="fas fa-heart-broken prefix"></i>
+                    <i id="prefix_rating" class="fas fa-heart-broken prefix"></i>
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
              <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
 
-              <div class="rating" style="display:inline-block;">
+              <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
 <span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" ontouchstart="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" ontouchstart="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" ontouchstart="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" ontouchstart="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
 </div>
 <input type="number" name="etat" id="etat" value="1" class="invisible">
@@ -292,10 +292,12 @@ PlayVideo();"></select>
               <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
                 <input id="prix" name="prix" type="number" value="0" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
-                <label for="prix">Prix</label>
+                <label for="prix">Prix&nbsp;/&nbsp;pc</label>
               </div>
 
           </div>
+
+
 
 
 
@@ -367,12 +369,6 @@ PlayVideo();"></select>
 </div>
 
 
-    <!-- Alors ci-dessous ça peut paraitre bizarre, mais il s'agit d'une série de boutons (invisibles) que j'utilise pour faire s'afficher le menu déroulant correctement. L'origine de la difficulté est que je combine deux composants Materialize, les Tabs https://materializecss.com/tabs.html et les Dropdown https://materializecss.com/dropdown.html . Il y a sûrement un moyen plus simple de produire le même effet... :p -->
-    <div >
-
-
-
-    </div>
 
     <div class="fixed-action-btn hide-on-med-and-up">
       <a class="btn-floating btn-large green accent-3" name="submit" value="submit" onclick="expand('loading_overlay'); Soumettre('formulaire_encodage'); ">
@@ -402,7 +398,7 @@ if (isset($_POST['cat'])) {
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
 <script type="text/javascript" src="js/forms.js"></script>
 <script type="text/javascript" src="js/add_form.js"></script>
-
+<script type="text/javascript" src="nouislider/nouislider.js"></script>
 
 
   <!-- On active le composant Tabs -->
@@ -412,6 +408,50 @@ if (isset($_POST['cat'])) {
     var instance = M.Tabs.init(el, {swipeable : true});
   });
 </script>
+
+<script>
+
+    var slider_poids = document.getElementById('slider_poids');
+
+
+            noUiSlider.create(slider_poids, {
+                start: [1],
+                range: {
+                    'min': [0.1, 0.1],
+                    '30%': [1,1],
+                    'max': [10]
+                },
+                pips: {
+                        mode: 'steps',
+                        density: 3.5,
+                        stepped:true
+                      }
+            });
+
+
+
+
+    slider_poids.noUiSlider.on('update', function( values, handle ) {
+       var valeur = slider_poids.noUiSlider.get();
+
+             valeur=  Math.round(valeur * 10) / 10;
+
+       document.getElementById('indicateur_poids').value= valeur;
+
+       });
+    slider_poids.noUiSlider.on('start', function( values, handle ) {
+      set_active('','prefix_poids');
+       });
+    slider_poids.noUiSlider.on('end', function( values, handle ) {
+       slider_poids.focus(); //to keep prefix active until blur
+       });
+
+
+
+
+  </script>
+
+
 
 </body>
 
