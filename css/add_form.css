@@ -122,6 +122,28 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 
+#categorisation
+{
+  height:4rem !important;
+  color: #6f6972 !important;
+}
+
+input.input_categ
+{
+  display: inline-block;
+  text-align: center;
+  line-height: 2.5rem !important;
+  height: 2.5rem !important;
+  color: #6f6972 !important;
+  font-size: 15px !important;
+  border-radius: 40px !important;
+  padding: 0px 3px 0px 7px !important;
+  margin-right: 5px !important;
+  margin-bottom: 2px !important;
+  border: 1px solid #6f6972 !important;
+  width: 92% !important;
+  text-transform: uppercase;
+}
 
 /*----- touch areas  -----*/
 
@@ -238,11 +260,76 @@ input[type=range]::-moz-range-track {
   background: #606060 !important;
   border: none; }
 
+  .noUi-value-sub {
+      visibility: hidden !important;
+  }
+
+.noUi-pips.noUi-pips-horizontal
+{padding: 7px 0 !important;
+height: 0px !important;}
+
+  .noUi-marker-horizontal.noUi-marker-sub {
+    height: 7px !important;
+    background: #CCC;
+}
+
+.noUi-marker-horizontal.noUi-marker-large {
+  height: 10px !important;
+}
+
+.noUi-value.noUi-value-horizontal.noUi-value-large{
+  padding-top: 5px;
+font-size: 10px;
+}
+
+.noUi-marker.noUi-marker-horizontal.noUi-marker-normal{
+    background: #e6e6e6;
+}
+
+.noUi-handle:focus
+{
+background-color: #00E676;
+}
+
+.noUi-handle
+{
+box-shadow:none !important;
+}
+
+div.input-field.noUi-target.noUi-ltr.noUi-horizontal
+{/*margin-left: 3rem !important;*/}
+
 .prefix /* label inactif devant zone de texte */
 {color:#6f6972 !important}
 
 .prefix.active /* label actif devant zone de texte */
 {color:#00e676 !important}
+
+#indicateur_poids
+{
+  width:calc(100% - 3.5rem)!important;
+
+}
+
+span.postfix ~ input {
+  width:calc(100% - 5rem)!important;
+  margin-left:0px;
+  margin-right: 3rem!important;
+}
+.input-field .postfix {
+    position: absolute;
+    width: 1rem;
+    right: 0;
+    font-size: 1rem;
+    line-height: 3.2rem !important;
+    -webkit-transition: color .2s;
+    transition: color .2s;
+    text-align:right;
+}
+
+
+div:focus, div.rating:focus, div.input-field:focus
+{outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
 
 label
 {font-size: 1rem !important;
@@ -254,11 +341,19 @@ position: absolute;
     line-height: 1.5rem !important;
   }
 
-div.col.input-field
+div.row.input-field
   {
-        height: 3rem !important;
+        height: 6rem !important;
 
   }
+div.col.input-field
+  {
+    margin-top: 1.4rem !important;
+margin-bottom: 1.4rem !important;
+
+  }
+
+
   div.row.flex-input-field
     {
 
