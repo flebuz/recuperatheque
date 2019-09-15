@@ -40,11 +40,13 @@
           $prix = $item['prixsscat'];
         }
         $prix = $prix * ($item['etat']/4);
+        //ou
+        $prix = $item['prix'];
 
-        //pluriel ou non sur le nombre d'unités
-        $unite = "1 unité";
+        //pluriel ou non sur le nombre de pièces
+        $piece = "1 pièce";
         if ($item['pieces']>1){
-          $unite = $item['pieces'] . " unités";
+          $piece = $item['pieces'] . " pièces";
         }
 
         //divise les tags en list php
@@ -75,8 +77,8 @@
         ?>
         </span><br/>
 
-        <i class='fas fa-cubes item-icon'></i> <?php echo $unite; ?> <br/>
-        <i class='fas fa-ruler item-icon'></i> <?php echo $dimensions; ?> <br/>
+        <i class='fas fa-cubes item-icon'></i> <?php echo $piece; ?> <br/>
+        <!-- <i class='fas fa-ruler item-icon'></i> <?php echo $dimensions; ?> <br/> -->
 
 
     </div>

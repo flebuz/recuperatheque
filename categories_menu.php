@@ -1,4 +1,5 @@
 
+
 <div class="categorie-menu">
 
 
@@ -28,7 +29,12 @@
 
 
   <?php
-    //----- faire une liste de liste (arbre) qui contient les categorie et souscategorie
+    //----- faire une liste de liste qui contient les categorie et souscategorie
+
+    // une categorie est:
+    // ID => array( nom => nom, sscats => array())
+    // une sscat est:
+    // ID => nom
 
     //requete les sous-categories en joignant les infos de leur categorie associé
     $reqCat = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
@@ -38,9 +44,6 @@
                                ORDER BY cat.ID, sscat.ID
                                ');
     $reqCat->execute();
-
-    // ID cat => array( nom => nom, souscats => array())
-    // liste souscat sont des: ID sscat => nom
 
     $system = array();
     $current_cat = '';
