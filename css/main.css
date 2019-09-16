@@ -21,15 +21,14 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 /* ----- SEARCH BAR -----*/
 
 .search-bar-container{
-  background: #D0D0D0;
-  color: #606060;
+  background: #E0E0E0;
 }
 
 .search-bar{
   max-width: 900px;
   margin: auto;
 
-  padding: 12px;
+  padding: 6px;
 
   display: flex;
   flex-direction: row;
@@ -47,12 +46,12 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
   flex-grow: 1;
 
-  padding: 6px;
+  padding: 12px;
 }
 
 .search-bar-label{
   white-space: nowrap; /*force one line text*/
-  padding-right: 12px;
+  padding-left: 12px;
 }
 
 .search-bar-input{
@@ -70,19 +69,26 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* ----- Category Menu -----*/
 
-.categorie-menu{
+.menu{
   background: white;
   padding: 0px;
   text-align: left;
+  border-top: 1px solid #E0E0E0;
 }
 
-.categorie-menu-title{
-  width: 50%;
+.menu-title{
+  text-align: center;
   font-weight: bold;
-  font-size: 1.4em;
+  font-size: 1.2em;
   padding: 12px;
-  border-right: 1px solid #E0E0E0;
-  border-bottom: 1px solid #E0E0E0;
+
+  background: #D7D7D7;
+  border-collapse: collapse;
+  border: 1px solid #D0D0D0;
+}
+
+.menu-open{
+  background: white;
 }
 
 .categorie-title{
@@ -116,13 +122,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 .categorie-title:not(.tout)::after{
-  content: "+";
-  padding-right: 12px;
-  float: right;
-  font-weight: bold;
-}
-
-.categorie-menu-title::after{
   content: "+";
   padding-right: 12px;
   float: right;

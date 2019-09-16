@@ -1,12 +1,6 @@
 
-<!-- menu categorie -->
-<a onclick="myFunction(0)"
-  class="w3-block categorie-menu-title">
-  Catégories
-</a>
-
 <!-- ouvre le menu -->
-<div id="0" class="w3-hide categorie-menu">
+<div id="categories" class="menu" style="display:none">
 
   <?php
     //----- construire le menu en parcourant l'arbre
