@@ -63,6 +63,9 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 .search-resume{
   text-align: center;
   font-weight: bold;
+  color: #606060;
+  padding: 16px;
+  border-bottom: 1px solid #E0E0E0;
 }
 
 /* ----- Category Menu -----*/
@@ -74,9 +77,11 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 .categorie-menu-title{
+  width: 50%;
   font-weight: bold;
   font-size: 1.4em;
   padding: 12px;
+  border-right: 1px solid #E0E0E0;
   border-bottom: 1px solid #E0E0E0;
 }
 
@@ -95,10 +100,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 .categorie-menu .accordeon{
-  /* border-bottom: 1px solid #E0E0E0; */
-  /* padding-top: 6px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #E0E0E0; */
 }
 
 .souscategorie-title{
@@ -115,6 +116,13 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 .categorie-title:not(.tout)::after{
+  content: "+";
+  padding-right: 12px;
+  float: right;
+  font-weight: bold;
+}
+
+.categorie-menu-title::after{
   content: "+";
   padding-right: 12px;
   float: right;

@@ -115,30 +115,6 @@
     </form>
   </div>
 
-  <!-- recherche actuelle -->
-  <div class="w3-container search-resume">
-    <?php
-      //si une des deux condition est respacter on affiche le resumer
-      if($query != '' || $catsearch != 0){
-        if($query != ''){
-          echo '"' . $query . '"';
-        }
-        if($catsearch != 0){
-          if($query != ''){ echo ' dans '; }
-          //convertit l'ID en nom
-          echo $system[$catsearch]['nom'];
-        }
-        if($sscatsearch != 0){
-          //convertit l'ID en nom
-          echo ' ' . $system[$catsearch]['sscats'][$sscatsearch];
-        }
-
-        echo '<br/>trier par '. $tri_option[$tri];
-      }
-
-    ?>
-  </div>
-
   <div class="w3-row">
     <div class="w3-col s12 m3 l3">
         <?php include('categories_menu.php'); ?>
@@ -146,6 +122,35 @@
 
 
     <div class="w3-col s12 m9 l9">
+
+      <?php
+      // recherche actuelle
+      if($query != '' || $catsearch != 0){
+        //si une des deux condition est respacter on affiche le resumer
+        echo '<div class="search-resume">';
+
+        if($query != ''){
+          echo '"' . $query . '"';
+        }
+        if($sscatsearch != 0){
+          if($query != ''){ echo ' dans '; }
+          //convertit l'ID en nom
+          echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ') ';
+        }
+        elseif($catsearch != 0){
+          if($query != ''){ echo ' dans '; }
+          //convertit l'ID en nom
+          echo $system[$catsearch]['nom'];
+        }
+
+        echo '<br/>trier par '. mb_strtolower($tri_option[$tri]);
+        echo '<br/><a class="fas fa-times" href=catalogue.php></a>';
+        echo '</div>';
+      }
+
+      ?>
+
+
       <div class="w3-row items-container">
 
         <?php

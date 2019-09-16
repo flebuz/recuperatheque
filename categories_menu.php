@@ -1,6 +1,12 @@
 
+<!-- menu categorie -->
+<a onclick="myFunction(0)"
+  class="w3-block categorie-menu-title">
+  Catégories
+</a>
 
-<div class="categorie-menu">
+<!-- ouvre le menu -->
+<div id="0" class="w3-hide categorie-menu">
 
   <?php
     //----- construire le menu en parcourant l'arbre
@@ -8,8 +14,6 @@
     //on construit l'url get en fonction des param déjà présent
     $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>0, 'sscatsearch'=>0)));
   ?>
-
-  <div class="categorie-menu-title">Categories</div>
 
   <a href="<?php echo $getURL;?>"
     class="w3-block categorie-title tout">
