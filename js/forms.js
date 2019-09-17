@@ -7,16 +7,59 @@ function set_value(id_to_update, value)
   document.getElementById(id_to_update).value= value;
 }
 
-function set_active(selector, element_to_activate)
+
+
+function set_range_value (id_to_update, value)
 {
-  console.log(element_to_activate);
-  element_to_activate.classList.add("active");
+  if (value > 1) {
+        value = (value - 1) * 10 + 1;
+        value=  Math.round(value * 10) / 10;
+      }
+  document.getElementById(id_to_update).value= value;
+}
+
+function update_slider(slider_id,value,elem)
+{
+document.getElementById(slider_id).noUiSlider.set(value);
+elem.value = value; // to avoid values bigger than slider range being overriden by noUiSlider.set
+}
+
+function set_active(selector, id_to_activate)
+{
+  document.getElementById(id_to_activate).classList.add("active");
+  if ((selector !== undefined) && (selector !== ''))
+  {
   document.querySelectorAll(selector).forEach(function(node)
   {node.classList.remove("active");});
+  }
+}
+
+function set_inactive(id_to_deactivate)
+{
+  document.getElementById(id_to_deactivate).classList.remove("active");
+}
+
+function Soumettre(formid)
+{
+
+  document.forms[formid].submit();
+  document.getElementById('client').reset();
 }
 
 
+function check_unite(unite)
+{
+  if (unite !== undefined)
+  {
+if (unite=='kg')
+{alert("kg");
+expand('row_poids', '', 'down')}
+else if (unite=='pc')
+{alert("pc");
+  expand('', 'row_poids', '')}
 
+  }
+}
 //fonction qui enlève la classe "hidden" d'un élément du DOM
 function unhide(id_to_show)
 {var elem_to_show= document.getElementById(id_to_show);
@@ -31,6 +74,8 @@ function expand(id_to_show, id_to_hide, direction)
 
   elem_to_show.classList.remove("invisible");
 
+  console.log(elem_to_show);
+
 if (direction=='down')
 { elem_to_show.classList.add("visible-slide-down");}
 else if (direction=='right')
@@ -38,7 +83,7 @@ else if (direction=='right')
 else
 { elem_to_show.classList.add("visible");}
 
-if (id_to_hide !== null && id_to_hide !== '')
+ if (( id_to_hide !== undefined) && (id_to_hide !== ''))
 {
   var elem_to_hide = document.getElementById(id_to_hide);
   elem_to_hide.classList.add("invisible");
@@ -129,7 +174,7 @@ function checkhearts(value)
   function ValidateNumber(textbox)
   {
     n = textbox.value;
-    console.log(n);
+
 
     if (isNaN(parseFloat(n.replace(",",".")))) //on contrôle si n est un nombre (en remplaçant la ',' par un '.' sinon isNaN=true)
     {
@@ -142,7 +187,3 @@ function checkhearts(value)
     }
 
   }
-
-function updateTextInput(id, val){
-  document.getElementById(id).value=val; // on met à jour l'input text lié à l'input range "mesure"
-}

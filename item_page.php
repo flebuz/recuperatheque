@@ -26,17 +26,40 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
 
-<<<<<<< HEAD
-  <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-  <link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
-=======
 <!-- Ajout du formulaire précédent à la base de donnée si $_POST['cat'] est défini-->
 <?php
-if (isset($_POST['cat'])) {
-    include 'add.php';
-    console_log("include de add.php");
-} ?>
->>>>>>> 30c6bab9a43c120d8f281674aa3119c5664eb6e2
+if (!$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) {
+echo "Erreur, pas d'objet sélectionné";
+}
+else {
+      try {
+        //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+          $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+      } catch (Exception $e) {
+          die('Erreur : '.$e->getMessage());
+      }
+
+      //prep the request
+      //every line is a souscategorie
+      $req = $bdd->prepare('  SELECT
+                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                              cat.ID, cat.nom AS categorie,
+                              sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
+                              FROM catalogue c
+                              INNER JOIN categorie cat ON c.ID_categorie=cat.ID
+                              INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+                              WHERE c.id=:id');
+
+      $req->bindValue(':id', $id, PDO::PARAM_INT);
+      //execute the request
+      $req->execute();
+
+      $item = $req->fetch();
+
+
+}
+
+?>
 
 </head>
 
@@ -59,50 +82,12 @@ if (isset($_POST['cat'])) {
   <div class="container" id="cam_container">
     <div class="row nomargin">
 
-<div class="col s1"></div>
+<div id="cam_col" class="col s12 center-align">
 
+<img class="thumbnail" src="/photos/<?php echo $id ?>.jpg" style="max-width:400px;"></img>
 
-          <canvas id="hidden_streaming_canvas" class="invisible"></canvas>
-          <canvas id="hidden_snap_canvas" class="invisible"></canvas>
-          <canvas id="hidden_rotate_canvas" class="invisible"></canvas>
-<div id="cam_col" class="col s10 m10 l10 center-align">
+<!-- IMAGE ICI -->
 
-
-                  <div class="streaming_container">
-                  <canvas id="video_streaming" autoplay class="video_streaming invisible"></canvas>
-                  </div>
-
-                  <video id="video" autoplay class="invisible"></video>
-
-
-            <canvas id="snap_final" class="invisible"></canvas>
-<label for="file" style>
-                  <div id="file_upload_container" style="display:inline-block; margin:20px 0 20px 0;">
-
-
-                          <div id="bords_file_upload" style="position:absolute; cursor: pointer;"><svg viewBox="0 0 100 100" width="100px" style="width:100px;">
-                            <path d="M25,2 L2,2 L2,25" fill="none" stroke="#9e9e9e" stroke-width="3" />
-                            <path d="M2,75 L2,98 L25,98" fill="none" stroke="#9e9e9e" stroke-width="3" />
-                            <path d="M75,98 L98,98 L98,75" fill="none" stroke="#9e9e9e" stroke-width="3" />
-                            <path d="M98,25 L98,2 L75,2" fill="none" stroke="#9e9e9e" stroke-width="3" />
-                          </svg></div>
-
-                          <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="cam_btn_default" style="width:100px; height:100px; cursor:pointer"><i class="material-icons photo-controls" style="font-size: 64px !important; line-height: 100px !important;">camera_alt</i>   </div>
-                        </label>
-                        <input id="file" type="file" accept="image/*" capture class="invisible">
-                  </div>
-
-</div>
-
-<div class="col s1 pull-s1 " id="cam_controls">
-    <div class="row"></div>
-    <div class="row"></div>
-    <div class="row"></div>
-
-    <div class="invisible center" id="video_streaming_controls">
-      <div class="row center"><div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large waves-effect"><i class="fas fa-camera"></i></div></div>
-      <div class="row center invisible" id="camera_settings_row"><div  id="camera_settings" title="Paramètre camera" class="btn-floating camera_settings waves-effect" onclick="return expand('champs_getusermedia', 'camera_settings_row', 'down');"><i class="fas fa-cog"></i></div></div>
-    </div>
 </div>
 
 
@@ -112,15 +97,10 @@ if (isset($_POST['cat'])) {
 
 
 
-
-
-</div>
-
-
 <div class="quasi-fullwidth" style="background-color:white">
 
 
-<div style="" class="scrolling-wrapper">
+<div style="" class="scrolling-wrapper invisible">
 
 
 
@@ -192,10 +172,10 @@ if (isset($_POST['cat'])) {
               <form name="formulaire_encodage" id="formulaire_encodage" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="post" novalidate>
 
 
-                <div id="categorisation" class ="row invisible" >
+                <div id="categorisation" class ="row " >
                    <div class="col s5 m5 input-field">
-                     <input id="nom_categorie" class="input_categ" name="cat" type="text" required readonly>
-                     <input id="id_categorie"  name="cat" type="text" readonly hidden>
+                     <input id="nom_categorie" class="input_categ" name="cat" type="text" value="<?php echo $item['categorie'];?>" required readonly>
+                     <input id="id_categorie"  name="cat" type="text"  value="<?php echo $item['ID_categorie'];?>" readonly hidden>
 
                    </div>
 
@@ -204,71 +184,40 @@ if (isset($_POST['cat'])) {
                    </div>
 
                    <div class="col s5 m6 input-field">
-                     <input id="nom_souscategorie" class="input_categ" name="souscat" type="text" required readonly>
-                    <input id="id_souscategorie" name="souscat" type="text" readonly hidden>
+                     <input id="nom_souscategorie" class="input_categ" name="souscat" type="text" value="<?php echo $item['sous_categorie'];?>" required readonly>
+                    <input id="id_souscategorie" name="souscat" type="text" value="<?php echo $item['ID_souscategorie'];?>"  readonly hidden>
                    </div>
 
                  </div>
 
 
 
-                 <div id="row_tags" class ="row flex-input-field" >
-
-                    <div class="col s12 flex-input-field">
-                      <div id="label_bricole" class="row nomargin nopadding" style="margin-left: 3rem !important;">
-                      <label for="tags">Tags: (séparés par ' , ' ou ' . ')</label>
-                    </div>
-                      <i id="prefix_tags" class="fas fa-tag prefix"></i>
-                      <div onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><input class="invisible" id="input-tags" name="tags" type="text"  onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');"></div>
-
-                    </div>
+                  <div id="row_tags" class ="row input-field" >
+                     <div class="input-field col s12">
+                       <i class="fas fa-tag prefix"></i>
+                       <input id="tags" name="tags" type="text" value="<?php echo $item['tags'];?>">
+                       <label for="tags">Tags</label>
+                     </div>
 
                   </div>
-
-    <?php if (isset($_GET["camdetails"])) {
-                   echo "<div class='row input-field' id='champs_getusermedia'>";
-               } else {
-                   echo "<div class='row input-field invisible' id='champs_getusermedia'>";
-               }
-        ?>
-<div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
-PlayVideo();"></select>
-</div>
-<div class="col s6 m6 input-field"><input type="text" id="rearcameraID" disabled></div></div>
 
 
         <div id="row_pieces" class ="row input-field" >
 
-          <div class="input-field col s2" style="width:55px !important; ">
-            <i id='prefix_pieces' class="fas fa-cube prefix"></i>
-          </div>
-          <div class="input-field col s8 nopadding" >
+          <div class="input-field col s6 nopadding" >
 
-            <div class="inline-group" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-            <div id="minus_btn" class="btn plusminus eztouch-left" onclick="Increment('pieces', -1, 1);"><span class="no-select">-</span></div>
-
-              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
-
-              <div id="plus_btn" class="btn plusminus eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
-
-
-              <p class="couleur3-text no-select">pièce(s)</p>
+            <div class="inline-group" >
+                <i id='prefix_pieces' class="fas fa-cube prefix"></i>
+                <input type="number" id="pieces" name="pieces" value="<?php echo $item['pieces'];?>" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
+              <span class="couleur3-text no-select postfix">pièce(s)</span>
               </div>
           </div>
-        </div>
 
-        <div id="row_poids" class="row input-field">
-
-            <div class="input-field col s4 m3">
+            <div class="input-field col s4">
               <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
-              <label for="indicateur_poids" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
-
-                        <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align:center;">
-                  <span id="" class="postfix">kg</span>
-            </div>
-            <div class="input-field col s8 m9" id="range_div" >
-
-              <div id="slider_poids" class="input-field" overflow-scroll="false" onfocus="set_active('', 'prefix_poids')" onblur="set_inactive('prefix_poids')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
+              <label for="indicateur_poids" class="couleur3-text">Poids:</label>
+            <input type="number" id="indicateur_poids" name="poids" value="<?php echo $item['poids'];?>" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align: center; ">
+            <span id="" class="postfix">kg</span>
             </div>
 
         </div>
@@ -296,8 +245,8 @@ PlayVideo();"></select>
            <div id="row_prix" class ="row input-field" >
               <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
-                <input id="prix" name="prix" type="number" value="0" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
-                <label for="prix">Prix&nbsp;/&nbsp;pc</label>
+                <input id="prix" name="prix" type="number" value="<?php echo $item['prix'];?>"onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
+                <label for="prix">Prix</label>
               </div>
 
           </div>
@@ -306,37 +255,23 @@ PlayVideo();"></select>
 
 
 
-  <div id="plusdedetails" class="row">
-    <div class="col s12">
-      <div class="" style="margin-top: 1rem;"><a href="" onclick="return expand('champs_facultatifs', 'plusdedetails', 'down');" style="color: #6f6972;"><i class="fas fa-plus-circle separator-label prefix"></i>&nbsp;Plus de détails</a></div>
-
-    </div>
-  </div>
 
 
-<div id="champs_facultatifs" class="invisible">
+<div id="champs_facultatifs" class="">
   <div class="row">
-  <div class="input-field col s12 m6">
+  <div class="input-field col s12">
     <i class="fas fa-info-circle prefix"></i>
-    <input id="remarques" name="remarques" type="text">
-    <label for="remarques">Ajouter des remarques :</label>
+    <input id="remarques" name="remarques" value="<?php if (isset($item['remarques'])) {echo $item['remarques'];} else {echo "Pas de remarques";}?>" type="text">
+    <label for="remarques">Remarques :</label>
   </div>
-  <div class="input-field col s12 m6">
+  <div class="input-field col s12">
     <i class="fas fa-ruler prefix"></i>
-    <input id="dimensions" name="dimensions" type="text">
+    <input id="dimensions" name="dimensions" type="text" value="<?php if (isset($item['dimensions'])) {echo $item['dimensions'];} else {echo "Pas dispo";}?>">
     <label for="dimensions">Dimensions précises :</label>
   </div>
 </div>
     <div class="row">
-      <div class="input-field col s5 m3">
-
-            <label>
-                <input type="checkbox" name="externe" class="filled-in" onchange="check_expand_hide(this, 'champ-localisation', 'champ-localisation', 'right');"/>
-                <span>Hors les murs?</span>
-              </label>
-
-      </div>
-      <div id="champ-localisation" class="input-field col s7 m9 invisible">
+      <div id="champ-localisation" class="input-field col s7 m9">
         <i class="fas fa-map-marked-alt prefix"></i>
         <input id="localisation" name="localisation" type="text">
         <label for="localisation">Localisation:</label>

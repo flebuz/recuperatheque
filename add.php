@@ -23,6 +23,7 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
     try{
 
       $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
     }
     catch(Exception $e){
@@ -56,24 +57,9 @@ $today = date('Y-m-d');
 $description="champ obsolète"; //à supprimer de la bdd et des requêtes
 ?>
 
-</table>
-
-
-
-<br /><br />
 <?php
-/*
-  // --------------------
-  // REQUETE MYSQL ICI
-  // Encoder les données dans la bdd
-  // --------------------
-*/
 
 try {
-
-
-    /*$req = "INSERT INTO catalogue (ID, ID_categorie ,	ID_souscategorie, nombre, mesure, état, tags, description, date_ajout  )
-    VALUES ($object_id, $categorie, $souscategorie, '$pieces', '$poids', '$etat', '$tags', 'pas de description', '$today')";*/
 
     $req = $bdd ->prepare("INSERT INTO catalogue (ID, ID_categorie ,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, date_ajout, poids, prix, localisation) VALUES (:ID, :ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :date_ajout, :poids, :prix, :localisation)");
 $req->bindParam(':ID', $object_id);
@@ -92,11 +78,13 @@ $req->bindParam(':localisation', $localisation);
 
 
 $req->execute();
-echo "L'objet $object_id a bién été ajouté à la base de données<br />";
+$add_result="success";
+
+
 }
 catch(PDOException $e)
     {
-    echo  $e->getMessage();
+    $add_result=  $e->getMessage();
     }
 
 
@@ -120,7 +108,7 @@ catch(PDOException $e)
     $port = 22;
     $username = '1685312';
     $password = 'datarecoulechemindejerusalem';
-    $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/gaga.jpg';
+    $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
     $remoteFilePath = getcwd().'/photos/'.$object_id.'.jpg';
     $ch = curl_init("sftp://$username:$password@$host$remotePath");
 
@@ -151,6 +139,8 @@ curl_setopt($ch, CURLOPT_SSH_PRIVATE_KEYFILE, $_SERVER["DOCUMENT_ROOT"]."/home/.
 
 
     file_put_contents($remoteFilePath, $local_file);
+
+
 
 
   ?>
