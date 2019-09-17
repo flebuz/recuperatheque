@@ -103,12 +103,12 @@
   <div class="w3-row">
     <div class="w3-col s12 m3 l3">
 
-      <div class="w3-row">
+      <div class="w3-row menu-bar">
         <div class="w3-col s6 menu-title" onclick="openMenu(event,'categories')">Catégories
-          <!-- <span class='fas fa-plus'></span> -->
+          <span class='w3-medium fas fa-plus menu-icon'></span>
         </div>
         <div class="w3-col s6 menu-title" onclick="openMenu(event,'tri')">Tri
-          <!-- <span class='fas fa-sort'></span> -->
+          <span class='w3-medium fas fa-sort menu-icon'></span>
         </div>
       </div>
 
