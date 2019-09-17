@@ -20,6 +20,19 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* ----- SEARCH BAR -----*/
 
+button {
+  background-color: #D0D0D0;
+  color: black;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button:hover{
+  /* background:#00E676; */
+}
+
 .search-bar-container{
   background: #E0E0E0;
 }
@@ -28,35 +41,25 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   max-width: 900px;
   margin: auto;
 
-  padding: 6px;
+  padding: 12px;
 
+  /* l'interieur de la barre de recherche strech le bouton vers le haut
+  et reste en une ligne */
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-
+  flex-wrap: nowrap;
   justify-content: center;
 }
 
-.search-bar-item{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;  /*stay in one line*/
-  justify-content: flex-start;
-  align-items: center;
-
-  flex-grow: 1;
-
-  padding: 12px;
-}
-
-.search-bar-label{
-  white-space: nowrap; /*force one line text*/
-  padding-left: 12px;
-}
-
+/*la barre de recherche grow en longueur if spaces*/
 .search-bar-input{
   min-width: 0;
-  flex-grow: 1; /*grow if spaces*/
+  flex-grow: 1;
+}
+
+.search-bar-button{
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .search-resume{
@@ -67,23 +70,24 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   border-bottom: 1px solid #E0E0E0;
 }
 
-/* ----- Category Menu -----*/
-
 .menu{
   background: white;
   margin-bottom: 12px;
   text-align: left;
-  border-bottom: 48px solid #E0E0E0;
+  border-bottom: 12px solid #E0E0E0;
 }
 
 .menu-title{
-  text-align: center;
   font-weight: bold;
   font-size: 1.2em;
   padding: 12px;
 
-  background: #D7D7D7;
-  /* border: 1px solid #D0D0D0; */
+  /* border-top: 1px solid #909090;
+  border-bottom: 1px solid #909090; */
+}
+
+#cat-button{
+  border-right: 1px solid #909090;
 }
 
 .menu-icon{
@@ -93,15 +97,22 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 .menu-open{
   background: white;
-  border: 1px solid white;
+  /* border-bottom: 1px solid white; */
 }
 
-.categorie-title{
+.categorie-title, .souscategorie-title{
   text-align: left;
-  padding-left: 12px;
   padding-top: 12px;
   padding-bottom: 12px;
   border-bottom: 1px solid #E0E0E0;
+}
+
+.categorie-title{
+  padding-left: 24px;
+}
+
+.souscategorie-title{
+  padding-left: 48px;
 }
 
 .categorie-count{
@@ -110,42 +121,32 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   color: #606060;
 }
 
-.categorie-menu .accordeon{
-}
-
-.souscategorie-title{
-  text-align: left;
-  padding-left: 36px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #E0E0E0;
-}
-
-.souscategorie-title.selected, .categorie-title.selected{
+/* bold when selected */
+.categorie-title.selected, .souscategorie-title.selected{
   font-weight: bold;
-  color: #000000;
 }
 
-.categorie-title:not(.tout)::after{
+/* on rajoute un plus ou moins pour les titre de categorie dans le menu categorie (et pas dans le menu tris) */
+#categories .categorie-title:not(.tout)::after{
   content: "+";
   padding-right: 12px;
   float: right;
   font-weight: bold;
 }
 
-.open:not(.tout)::after{
+#categories .categorie-title.open:not(.tout)::after{
   content: "-";
   padding-right: 12px;
   float: right;
   font-weight: bold;
 }
 
-.categorie-menu a{
+.menu a{
   text-decoration: none;
 }
-.categorie-menu a:hover{
+/* .menu a:hover{
   color: #D0D0D0;
-}
+} */
 
 
 /* ----- ITEM -----*/

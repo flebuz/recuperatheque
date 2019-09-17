@@ -8,7 +8,7 @@
     ?>
 
       <a href="<?php echo $getURL;?>"
-         class="w3-block souscategorie-title <?php if($tri==$param){echo 'selected'; }?>">
+         class="w3-block categorie-title <?php if($tri==$param){echo 'selected'; }?>">
          <?php echo $nom; ?>
       </a>
 

@@ -82,20 +82,18 @@
   <div class="search-bar-container">
     <form class="search-bar" action="catalogue.php" method="GET">
 
-          <div class="search-bar-item">
-            <input type="text" class="w3-input search-bar-input" name="q" placeholder="Recherche..." value="<?php echo $query?>">
-            <label class="w3-xlarge fa fa-search search-bar-label"></label>
-          </div>
+      <input type="text" class="w3-input search-bar-input" name="q" placeholder="Ajouter un mot clé à la recherche" value="<?php echo $query?>">
+      <button class="w3-xlarge fa fa-search search-bar-button" type="submit"></button>
 
-          <?php
-            // on ajoute cat et sscat si jamais c'est déjà préciser
-            if($catsearch){
-              echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
-            }
-            if($sscatsearch){
-              echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
-            }
-          ?>
+      <?php
+        // on ajoute cat et sscat si jamais c'est déjà préciser
+        if($catsearch){
+          echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
+        }
+        if($sscatsearch){
+          echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
+        }
+      ?>
 
     </form>
   </div>
@@ -104,12 +102,12 @@
     <div class="w3-col s12 m3 l3">
 
       <div class="w3-row menu-bar">
-        <div class="w3-col s6 menu-title" onclick="openMenu(event,'categories')">Catégories
+        <button id="cat-button" class="w3-col s6 menu-title" onclick="openMenu(event,'categories')">Catégories
           <span class='w3-medium fas fa-plus menu-icon'></span>
-        </div>
-        <div class="w3-col s6 menu-title" onclick="openMenu(event,'tri')">Tri
+        </button>
+        <button id="tri-button" class="w3-col s6 menu-title" onclick="openMenu(event,'tri')">Tri
           <span class='w3-medium fas fa-sort menu-icon'></span>
-        </div>
+        </button>
       </div>
 
       <?php include('categories_menu.php'); ?>
