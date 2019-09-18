@@ -26,12 +26,17 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
 
+<<<<<<< HEAD
+  <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
+=======
 <!-- Ajout du formulaire précédent à la base de donnée si $_POST['cat'] est défini-->
 <?php
 if (isset($_POST['cat'])) {
     include 'add.php';
     console_log("include de add.php");
 } ?>
+>>>>>>> 30c6bab9a43c120d8f281674aa3119c5664eb6e2
 
 </head>
 

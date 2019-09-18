@@ -23,22 +23,38 @@
 <body>
 
   <div class="w3-container color-theme">
-    <h1>Mycélium</h1>
+    <h2>Mycélium</h2>
   </div>
 
-  <!-- Checks des parametres GET -->
+  <?php
+  //connection database
+  try{
+    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+  }
+  catch(Exception $e){
+    die('Erreur : '.$e->getMessage());
+  }
+  ?>
 
   <?php
     //check les $_GET de recherche si valide
+
       //check si l'option de recherche est valide
     if (isset($_GET['q'])){
       $query = htmlspecialchars($_GET['q']);
     } else{
       $query = '';
     }
+
+    $tri_option = array('date_ajout' => 'Date de récupération',
+                        'prix' => 'Prix par pièce',
+                        'etat' => 'État d\'usure',
+                        'pieces' => 'Pièces disponibles');
+
       //check si l'option de tri est parmis les choix valide
-    $tri_option = array('date_ajout', 'prix', 'etat', 'pieces');
-    if (isset($_GET['order']) && in_array($_GET['order'], $tri_option)){
+    if (isset($_GET['order']) && array_key_exists($_GET['order'], $tri_option)){
       $tri = htmlspecialchars($_GET['order']);
     } else{
       $tri = 'date_ajout';
@@ -55,71 +71,110 @@
     } else{
       $catsearch = null;
     }
-
   ?>
 
   <?php
-  //connection database
-  try{
-
-    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-  }
-  catch(Exception $e){
-      die('Erreur : '.$e->getMessage());
-  }
+    //construction de l'objet $system qui résume la structure de catégorie actuelle
+    include('categories_system.php');
   ?>
 
   <!-- Bar de recherche - formulaire -->
   <div class="search-bar-container">
     <form class="search-bar" action="catalogue.php" method="GET">
 
-          <div class="search-bar-item">
-            <label class="w3-xlarge fa fa-search search-bar-label"></label>
-            <!-- le php a l'interieur rempli la valeur recherché au chargement de la page en fonction de ce qui a été envoyé en Get -->
-            <input type="text" class="w3-input search-bar-input" name="q" placeholder="Recherche..." value="<?php echo $query?>">
-          </div>
+      <input type="text" class="w3-input search-bar-input" name="q" placeholder="Ajouter un mot clé à la recherche" value="<?php echo $query?>">
+      <button class="w3-xlarge fa fa-search search-bar-button" type="submit"></button>
 
-          <div class="search-bar-item">
-            <label class="search-bar-label">Trier par</label>
-            <select class="w3-select" name="order">
-              <!-- le php a l'interieur selectionne le bon choix au chargement de la page en fonction de ce qui a été envoyé en Get -->
-              <option value="date_ajout" <?php if($tri=="date_ajout"){echo 'selected';} ?> >Date de récupération</option>
-              <option value="prix" <?php if($tri=="prix"){echo 'selected';} ?> >Prix par pièce</option>
-              <option value="etat" <?php if($tri=="etat"){echo 'selected';} ?> >État d'usure</option>
-              <option value="pieces" <?php if($tri=="pieces"){echo 'selected';} ?> >Pièces disponibles</option>
-            </select>
-          </div>
-
-          <?php
-          // on ajoute cat et sscat si jamais c'est déjà préciser
-          if($catsearch){
-            echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
-          }
-          if($sscatsearch){
-            echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
-          }
-          ?>
-
-          <div class="search-bar-item">
-            <input class="w3-button color-theme search-bar-input" type="submit" value="Go"/>
-          </div>
+      <?php
+        // on ajoute cat et sscat si jamais c'est déjà préciser
+        if($catsearch){
+          echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
+        }
+        if($sscatsearch){
+          echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
+        }
+      ?>
 
     </form>
   </div>
 
-
-
   <div class="w3-row">
     <div class="w3-col s12 m3 l3">
 
-        <?php include('categories_menu.php'); ?>
+      <div class="w3-row menu-bar">
+        <button id="cat-button" class="w3-col s6 menu-title" onclick="openMenu(event,'categories')">Catégories
+          <span class='w3-medium fas fa-plus menu-icon'></span>
+        </button>
+        <button id="tri-button" class="w3-col s6 menu-title" onclick="openMenu(event,'tri')">Tri
+          <span class='w3-medium fas fa-sort menu-icon'></span>
+        </button>
+      </div>
+
+      <?php include('categories_menu.php'); ?>
+      <?php include('tri_menu.php'); ?>
+
+      <script>
+        function openMenu(evt,menuName) {
+
+          var menu = document.getElementById(menuName);
+
+          // si il est déjà ouvert on le close
+          if (menu.style.display == "block"){
+            menu.style.display = "none";
+            evt.currentTarget.className = evt.currentTarget.className.replace(" menu-open", "");
+          }
+          else{
+            // on ferme tt les autres
+            var menus = document.getElementsByClassName("menu");
+            for (var i = 0; i < menus.length; i++) {
+              menus[i].style.display = "none";
+            }
+            // on reset la couleur des titles
+            var titles = document.getElementsByClassName("menu-title");
+            for (var i = 0; i < titles.length; i++) {
+              titles[i].className = titles[i].className.replace(" menu-open", "");
+            }
+            //on ouvre le selectionner
+            menu.style.display = "block";
+            evt.currentTarget.className += " menu-open";
+          }
+        }
+      </script>
+
 
     </div>
 
 
     <div class="w3-col s12 m9 l9">
+
+      <?php
+      // recherche actuelle
+      if($query != '' || $catsearch != 0){
+        //si une des deux condition est respacter on affiche le resumer
+        echo '<div class="search-resume">';
+
+        if($query != ''){
+          echo '"' . $query . '"';
+        }
+        if($sscatsearch != 0){
+          if($query != ''){ echo ' dans '; }
+          //convertit l'ID en nom
+          echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ') ';
+        }
+        elseif($catsearch != 0){
+          if($query != ''){ echo ' dans '; }
+          //convertit l'ID en nom
+          echo $system[$catsearch]['nom'];
+        }
+
+        echo '<br/>trier par '. mb_strtolower($tri_option[$tri]);
+        echo '<br/><a class="fas fa-times" href=catalogue.php></a>';
+        echo '</div>';
+      }
+
+      ?>
+
+
       <div class="w3-row items-container">
 
         <?php

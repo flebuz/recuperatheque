@@ -1,8 +1,6 @@
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 
 <header>
-
-
 
   <div class="w3-sidebar w3-bar-block w3-collapse w3-card" style="width:250px;" id="mySidebar">
    <button class="w3-bar-item w3-button w3-hide-large"
@@ -44,6 +42,6 @@
 </header>
 
 
-
-<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
+<!-- j'ai du désactivé les lien ici car ils changeait la mise en page de plein de chose dans le catalogue -->
+<!-- <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/> -->
+<!-- <link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/> -->

@@ -1,64 +1,6 @@
 
-
-<div class="categorie-menu">
-
-
-  <?php
-    //----- faire deux listes dont les clés sont les ID et les values le nb d'items
-
-    //afin de savoir ce qu'il y a dans le catalogue
-    $reqItem = $bdd->prepare('  SELECT * FROM catalogue');
-    $reqItem->execute();
-    $cat_counter = array();
-    $sscat_counter = array();
-    while($item = $reqItem->fetch()){
-      if(array_key_exists($item['ID_categorie'],$cat_counter)){
-        $cat_counter[$item['ID_categorie']] += 1;
-      }
-      else{
-        $cat_counter[$item['ID_categorie']] = 1;
-      }
-      if(array_key_exists($item['ID_souscategorie'],$sscat_counter)){
-        $sscat_counter[$item['ID_souscategorie']] += 1;
-      }
-      else{
-        $sscat_counter[$item['ID_souscategorie']] = 1;
-      }
-    }
-  ?>
-
-
-  <?php
-    //----- faire une liste de liste qui contient les categorie et souscategorie
-
-    // une categorie est:
-    // ID => array( nom => nom, sscats => array())
-    // une sscat est:
-    // ID => nom
-
-    //requete les sous-categories en joignant les infos de leur categorie associé
-    $reqCat = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
-                               sscat.ID AS ID, sscat.ID_categorie, sscat.nom AS nom
-                               FROM souscategorie sscat
-                               INNER JOIN categorie cat ON sscat.ID_categorie=cat.ID
-                               ORDER BY cat.ID, sscat.ID
-                               ');
-    $reqCat->execute();
-
-    $system = array();
-    $current_cat = '';
-    //on parcour les souscategories
-    while($sscat = $reqCat->fetch()){
-      //si on a changé de categorie on crée une nouvelle
-      if($current_cat != $sscat['cat_ID']){
-        $system[$sscat['cat_ID']] = array('nom' => $sscat['cat_nom'], 'sscats' => array());
-        $current_cat = $sscat['cat_ID'];
-      }
-      array_push($system[$sscat['cat_ID']]['sscats'], array('nom' => $sscat['nom'], 'ID' => $sscat['ID']));
-    }
-    //print_r($system);
-  ?>
-
+<!-- ouvre le menu -->
+<div id="categories" class="menu" style="display:none">
 
   <?php
     //----- construire le menu en parcourant l'arbre
@@ -66,8 +8,6 @@
     //on construit l'url get en fonction des param déjà présent
     $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>0, 'sscatsearch'=>0)));
   ?>
-
-  <div class="categorie-menu-title">Categories</div>
 
   <a href="<?php echo $getURL;?>"
     class="w3-block categorie-title tout">
@@ -108,20 +48,20 @@
         <?php
 
         //pour toute les souscat de la cat actuelle
-        foreach ($catData['sscats'] as $sscat) {
+        foreach ($catData['sscats'] as $sscatID => $sscatNom) {
 
           //si la souscategorie est presente dans le compteur
-          if(array_key_exists($sscat['ID'],$sscat_counter)){
+          if(array_key_exists($sscatID,$sscat_counter)){
 
             //declare une sscategorie
             //on construit l'url get en fonction des param déjà présent
-            $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>$catID, 'sscatsearch'=>$sscat['ID'])));
+            $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>$catID, 'sscatsearch'=>$sscatID)));
             ?>
             <a href="<?php echo $getURL;?>"
-              class="w3-block souscategorie-title <?php if($sscatsearch==$sscat['ID']){echo 'selected'; }?>">
+              class="w3-block souscategorie-title <?php if($sscatsearch==$sscatID){echo 'selected'; }?>">
               <?php
-                echo $sscat['nom'];
-                echo '<span class="categorie-count">(' . $sscat_counter[$sscat['ID']] . ')</span>';
+                echo $sscatNom;
+                echo '<span class="categorie-count">(' . $sscat_counter[$sscatID] . ')</span>';
               ?>
             </a>
             <?php
