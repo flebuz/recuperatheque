@@ -41,7 +41,7 @@
 
 </header>
 
-
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <!-- j'ai du désactivé les lien ici car ils changeait la mise en page de plein de chose dans le catalogue -->
 <!-- <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/> -->
 <!-- <link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/> -->

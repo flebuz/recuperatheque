@@ -42,7 +42,7 @@ else {
       //prep the request
       //every line is a souscategorie
       $req = $bdd->prepare('  SELECT
-                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                               cat.ID, cat.nom AS categorie,
                               sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
                               FROM catalogue c
@@ -66,6 +66,9 @@ else {
 <body class="disable-dbl-tap-zoom">
 
 <?php include 'header.php'; ?>
+
+<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+
 
 <main>
   <div id="loading_overlay" class="overlay invisible">
@@ -100,79 +103,15 @@ else {
 <div class="quasi-fullwidth" style="background-color:white">
 
 
-<div style="" class="scrolling-wrapper invisible">
-
-
-
-  <?php
-  //connection database
-  try {
-    //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-      $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-  } catch (Exception $e) {
-      die('Erreur : '.$e->getMessage());
-  }
-
-
-    //prep the request
-    //every line is a souscategorie
-    $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `categorie` ORDER BY `categorie`.`ID`
-                        ');
-    //execute the request
-    $req->execute();
-
-     // displaying buttons with the categories of materials
-      while ($cat = $req->fetch()) {
-          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
-      }
-
-
-        ?>
-        <?php
-              // Ici les sous-catégories de matériaux qui s'affichent des les menus déroulants-->
-
-              $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
-                                  ');
-              //execute the request
-              $req->execute();
-
-              $souscategories = $req->fetchAll();
-
-
-        $current_cat=1;
-        echo "<ul id='select-".$souscategories[0]['ID_categorie']."' class='dropdown-content'>";
-
-        for ($row = 0; $row < sizeof($souscategories); $row++) {
-            if ($souscategories[$row]['ID_categorie'] == $current_cat) {
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
-            } else {
-                echo '</ul>';
-                echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
-                $current_cat++;
-            }
-        }
-               ?>
-             </ul>
-
-</div>
-
-
-
-
-
-
-
 
       <div class="container no-select" id="formulaire" style="background-color:white">
-          <!-- Les onglets avec les catégories de matériaux-->
 
 
-              <!-- Début du formulaire-->
-              <form name="formulaire_encodage" id="formulaire_encodage" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="post" novalidate>
+          <!-- Début du formulaire-->
+          <form name="formulaire_encodage" id="formulaire_encodage" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="post" novalidate>
 
 
-                <div id="categorisation" class ="row " >
+                <div id="row_categorisation" class ="row " >
                    <div class="col s5 m5 input-field">
                      <input id="nom_categorie" class="input_categ" name="cat" type="text" value="<?php echo $item['categorie'];?>" required readonly>
                      <input id="id_categorie"  name="cat" type="text"  value="<?php echo $item['ID_categorie'];?>" readonly hidden>
@@ -195,98 +134,102 @@ else {
                   <div id="row_tags" class ="row input-field" >
                      <div class="input-field col s12">
                        <i class="fas fa-tag prefix"></i>
-                       <input id="tags" name="tags" type="text" value="<?php echo $item['tags'];?>">
+                       <input id="tags" name="tags" type="text" value="<?php echo $item['tags'];?>" readonly>
                        <label for="tags">Tags</label>
                      </div>
 
                   </div>
 
 
-        <div id="row_pieces" class ="row input-field" >
+                  <div id="row_pieces" class ="row input-field" >
 
-          <div class="input-field col s6 nopadding" >
+                    <div class="input-field col s6" >
 
-            <div class="inline-group" >
-                <i id='prefix_pieces' class="fas fa-cube prefix"></i>
-                <input type="number" id="pieces" name="pieces" value="<?php echo $item['pieces'];?>" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
-              <span class="couleur3-text no-select postfix">pièce(s)</span>
-              </div>
-          </div>
+                      <div class="inline-group" >
+                          <i id='prefix_pieces' class="fas fa-cube prefix"></i>
+                          <input type="number" id="pieces" name="pieces" value="<?php echo $item['pieces'];?>" readonly style="text-align: center; width:45px; ">
+                        <span class="couleur3-text no-select postfix">pièce(s)</span>
+                        </div>
+                    </div>
 
-            <div class="input-field col s4">
-              <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
-              <label for="indicateur_poids" class="couleur3-text">Poids:</label>
-            <input type="number" id="indicateur_poids" name="poids" value="<?php echo $item['poids'];?>" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align: center; ">
-            <span id="" class="postfix">kg</span>
-            </div>
+                      <div class="input-field col s4">
+                        <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
+                        <label for="indicateur_poids" class="couleur3-text">Poids:</label>
+                      <input type="number" id="indicateur_poids" name="poids" value="<?php echo $item['poids'];?>" readonly style="inline; text-align: center; ">
+                      <span id="" class="postfix">kg</span>
+                      </div>
 
-        </div>
+                  </div>
 
 
 
-            <div id="row_etat" class ="row input-field">
-                  <div class="input-field col s3 m2">
-                    <i id="prefix_rating" class="fas fa-heart-broken prefix"></i>
-                    <label for="range_etat" class="couleur3-text">Etat:</label>
+                  <div id="row_etat" class ="row input-field">
+                        <div class="input-field col s3 m2">
+                          <i id="prefix_rating" class="fas fa-heart-broken prefix"></i>
+                          <label for="range_etat" class="couleur3-text">Etat:</label>
+                      </div>
+
+                      <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
+
+                      <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                          <span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" ontouchstart="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" ontouchstart="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" ontouchstart="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" ontouchstart="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
+                          </div>
+                          <input type="number" name="etat" id="etat" value="1" class="invisible">
+
+
+                      </div>
+
+                 </div>
+
+                 <div id="row_prix" class ="row input-field" >
+                    <div class="input-field col s4 m3">
+                      <i class="fas fa-coins prefix"></i>
+                      <input id="prix" name="prix" type="number" value="<?php echo $item['prix'];?>" readonly style="text-align: center">
+                      <label for="prix">Prix</label>
+                    </div>
+
                 </div>
 
-             <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
-
-              <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-<span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" ontouchstart="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" ontouchstart="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" ontouchstart="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" ontouchstart="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
-</div>
-<input type="number" name="etat" id="etat" value="1" class="invisible">
 
 
-            </div>
-
-           </div>
-
-           <div id="row_prix" class ="row input-field" >
-              <div class="input-field col s4 m3">
-                <i class="fas fa-coins prefix"></i>
-                <input id="prix" name="prix" type="number" value="<?php echo $item['prix'];?>"onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
-                <label for="prix">Prix</label>
+              <div id="champs_facultatifs" class="">
+                <div class="row">
+                <div class="input-field col s12">
+                  <i class="fas fa-info-circle prefix"></i>
+                  <textarea id="remarques" name="remarques" value="<?php if ($item['remarques'] !== '') {echo $item['remarques'];} else {echo "Pas de remarques";}?>" type="text" onchange="console.log('ajustement du textarea');this.style.height = (this.scrollHeight)+'px';" readonly><?php if (isset($item['remarques'])) {echo $item['remarques'];} else {echo "Pas de remarques";}?></textarea>
+                  <label for="remarques">Remarques :</label>
+                </div>
+                <div class="input-field col s12">
+                  <i class="fas fa-ruler prefix"></i>
+                  <input id="dimensions" name="dimensions" type="text" value="<?php if ($item['dimensions']!=='') {echo $item['dimensions'];} else {echo "Pas dispo";}?>" readonly>
+                  <label for="dimensions">Dimensions précises :</label>
+                </div>
               </div>
+                  <div class="row">
+                    <div id="champ-localisation" class="input-field col s7 m9">
+                      <i class="fas fa-map-marked-alt prefix"></i>
+                      <input id="localisation" name="localisation" type="text" value="<?php if ($item['localisation']!=='') {echo $item['localisation'];} else {echo "Récupérathèque";}?>" readonly>
+                      <label for="localisation">Localisation:</label>
+                    </div>
 
-          </div>
-
-
-
-
-
-
-
-<div id="champs_facultatifs" class="">
-  <div class="row">
-  <div class="input-field col s12">
-    <i class="fas fa-info-circle prefix"></i>
-    <input id="remarques" name="remarques" value="<?php if (isset($item['remarques'])) {echo $item['remarques'];} else {echo "Pas de remarques";}?>" type="text">
-    <label for="remarques">Remarques :</label>
-  </div>
-  <div class="input-field col s12">
-    <i class="fas fa-ruler prefix"></i>
-    <input id="dimensions" name="dimensions" type="text" value="<?php if (isset($item['dimensions'])) {echo $item['dimensions'];} else {echo "Pas dispo";}?>">
-    <label for="dimensions">Dimensions précises :</label>
-  </div>
-</div>
-    <div class="row">
-      <div id="champ-localisation" class="input-field col s7 m9">
-        <i class="fas fa-map-marked-alt prefix"></i>
-        <input id="localisation" name="localisation" type="text">
-        <label for="localisation">Localisation:</label>
-      </div>
-
-    </div>
-</div>
-<div class="row"></div>
+                  </div>
+              </div>
+              <div class="row"></div>
 
 
             <div class="row hide-on-small-only">
-        			<div class="col s12">
-        			 <a class="waves-effect waves-light btn-small green accent-3 right" value="submit" onclick="expand('loading_overlay'); Soumettre('formulaire_encodage');" >
-                 <i class="material-icons">thumb_up_alt</i>
-                 Encoder
+              <div class='col s6'></div>
+
+        			<div class="col s3">
+        			 <a class="waves-effect waves-light btn-small green accent-3 " value="submit" onclick="expand('loading_overlay'); " >
+                 <i class="fas fa-exchange-alt"></i>
+                 Vendre
+               </a>
+             </div>
+        			<div class="col s3">
+        			 <a class="waves-effect waves-light btn-small grey accent-3" value="edit" onclick="expand('loading_overlay'); " >
+                 <i class="fas fa-edit"></i>
+                 Modifier
                </a>
         			<!-- <a class="waves-effect waves-light btn-small " onclick="download_img(this)" >
                  <i class="material-icons"></i>
@@ -311,8 +254,12 @@ else {
 
 
     <div class="fixed-action-btn hide-on-med-and-up">
-      <a class="btn-floating btn-large green accent-3" name="submit" value="submit" onclick="expand('loading_overlay'); Soumettre('formulaire_encodage'); ">
-        <i class="material-icons">thumb_up_alt</i>
+      <a class="btn-floating btn-large green accent-3" name="submit" value="submit" onclick="expand('loading_overlay'); ">
+        <i class="fas fa-exchange-alt"></i>
+      </a>
+    <div class="fixed-action-btn hide-on-med-and-up">
+      <a class="btn-floating btn-large green accent-3" name="edit" value="edit" onclick="expand('loading_overlay'); ">
+        <i class="fas fa-edit"></i>
       </a>
 
   </form>
@@ -321,75 +268,24 @@ else {
 
 </main>
 
-<?php include 'footer.php';
+<?php include 'footer.php'; ?>
 
-/*Message de succès ou d'échec du formulaire, si $_POST['cat'] est défini*/
-if (isset($_POST['cat'])) {
-    if ($add_result == 'success') {
-        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été ajouté à la base de données\"})</script>";
-    } else {
-        echo $add_result;
-    }
-}
-?>
-  <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
-
-
-<!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
 <script type="text/javascript" src="js/forms.js"></script>
-<script type="text/javascript" src="js/add_form.js"></script>
-<script type="text/javascript" src="nouislider/nouislider.js"></script>
+<!--
+<script type="text/javascript" src="js/add_form.js"></script>  -->
+
 
 
   <!-- On active le composant Tabs -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var el;
-    var instance = M.Tabs.init(el, {swipeable : true});
+
+    var remarques = document.getElementById("remarques"),
+    remarques_height = remarques.scrollHeight +0;
+    remarques.style.height = (remarques_height)+'px';
+    console.log('ajustement du textarea : '+ remarques_height);
   });
 </script>
-
-<script>
-
-    var slider_poids = document.getElementById('slider_poids');
-
-
-            noUiSlider.create(slider_poids, {
-                start: [1],
-                range: {
-                    'min': [0.1, 0.1],
-                    '30%': [1,1],
-                    'max': [10]
-                },
-                pips: {
-                        mode: 'steps',
-                        density: 3.5,
-                        stepped:true
-                      }
-            });
-
-
-
-
-    slider_poids.noUiSlider.on('update', function( values, handle ) {
-       var valeur = slider_poids.noUiSlider.get();
-
-             valeur=  Math.round(valeur * 10) / 10;
-
-       document.getElementById('indicateur_poids').value= valeur;
-
-       });
-    slider_poids.noUiSlider.on('start', function( values, handle ) {
-      set_active('','prefix_poids');
-       });
-    slider_poids.noUiSlider.on('end', function( values, handle ) {
-       slider_poids.focus(); //to keep prefix active until blur
-       });
-
-
-
-
-  </script>
 
 
 
@@ -398,15 +294,9 @@ if (isset($_POST['cat'])) {
 <?php
 
 
-//fonction pour  supprimer tous les caractères spéciaux pour pouvoir utiliser des noms de matériaux stockés dans la bdd comme ids d'éléments html
-function abbrev($string)
-{
-    $result1 = str_replace(array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']', ' '), '', $string);
-    return str_replace(array('à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ', 'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã','Ä', 'Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ','Ö', 'Ù','Ú','Û','Ü', 'Ý'), array('a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n', 'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A', 'C', 'E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O', 'U','U','U','U', 'Y'), $result1);
-}
 
 
-//DEV fonction pour logger les erreurs PHP dans la console
+//TEMPORAIRE fonction pour logger des messages PHP dans la console via console.log() en JS
   function console_log($output, $with_script_tags = true)
   {
       $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .

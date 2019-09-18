@@ -26,23 +26,24 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
 
-<<<<<<< HEAD
+
   <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
-=======
+
 <!-- Ajout du formulaire précédent à la base de donnée si $_POST['cat'] est défini-->
 <?php
 if (isset($_POST['cat'])) {
     include 'add.php';
     console_log("include de add.php");
 } ?>
->>>>>>> 30c6bab9a43c120d8f281674aa3119c5664eb6e2
+
 
 </head>
 
 <body class="disable-dbl-tap-zoom">
 
 <?php include 'header.php'; ?>
+
 
 <main>
   <div id="loading_overlay" class="overlay invisible">
@@ -463,15 +464,7 @@ if (isset($_POST['cat'])) {
 <?php
 
 
-//fonction pour  supprimer tous les caractères spéciaux pour pouvoir utiliser des noms de matériaux stockés dans la bdd comme ids d'éléments html
-function abbrev($string)
-{
-    $result1 = str_replace(array( '\'', '"', ',' , ';', '<', '>','-','_','(',')','[',']', ' '), '', $string);
-    return str_replace(array('à','á','â','ã','ä', 'ç', 'è','é','ê','ë', 'ì','í','î','ï', 'ñ', 'ò','ó','ô','õ','ö', 'ù','ú','û','ü', 'ý','ÿ', 'À','Á','Â','Ã','Ä', 'Ç', 'È','É','Ê','Ë', 'Ì','Í','Î','Ï', 'Ñ', 'Ò','Ó','Ô','Õ','Ö', 'Ù','Ú','Û','Ü', 'Ý'), array('a','a','a','a','a', 'c', 'e','e','e','e', 'i','i','i','i', 'n', 'o','o','o','o','o', 'u','u','u','u', 'y','y', 'A','A','A','A','A', 'C', 'E','E','E','E', 'I','I','I','I', 'N', 'O','O','O','O','O', 'U','U','U','U', 'Y'), $result1);
-}
-
-
-//DEV fonction pour logger les erreurs PHP dans la console
+//TEMPORAIRE fonction pour logger des messages PHP dans la console via console.log() en JS
   function console_log($output, $with_script_tags = true)
   {
       $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
