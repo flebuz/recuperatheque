@@ -42,7 +42,7 @@ else {
       //prep the request
       //every line is a souscategorie
       $req = $bdd->prepare('  SELECT
-                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                              c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                               cat.ID, cat.nom AS categorie,
                               sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
                               FROM catalogue c
@@ -192,27 +192,23 @@ else {
 
 
 
-
-
-
-
               <div id="champs_facultatifs" class="">
                 <div class="row">
                 <div class="input-field col s12">
                   <i class="fas fa-info-circle prefix"></i>
-                  <textarea id="remarques" name="remarques" value="<?php if (isset($item['remarques'])) {echo $item['remarques'];} else {echo "Pas de remarques";}?>" type="text" onchange="console.log('ajustement du textarea');this.style.height = (this.scrollHeight)+'px';" readonly><?php if (isset($item['remarques'])) {echo $item['remarques'];} else {echo "Pas de remarques";}?></textarea>
+                  <textarea id="remarques" name="remarques" value="<?php if ($item['remarques'] !== '') {echo $item['remarques'];} else {echo "Pas de remarques";}?>" type="text" onchange="console.log('ajustement du textarea');this.style.height = (this.scrollHeight)+'px';" readonly><?php if (isset($item['remarques'])) {echo $item['remarques'];} else {echo "Pas de remarques";}?></textarea>
                   <label for="remarques">Remarques :</label>
                 </div>
                 <div class="input-field col s12">
                   <i class="fas fa-ruler prefix"></i>
-                  <input id="dimensions" name="dimensions" type="text" value="<?php if (isset($item['dimensions'])) {echo $item['dimensions'];} else {echo "Pas dispo";}?>" readonly>
+                  <input id="dimensions" name="dimensions" type="text" value="<?php if ($item['dimensions']!=='') {echo $item['dimensions'];} else {echo "Pas dispo";}?>" readonly>
                   <label for="dimensions">Dimensions précises :</label>
                 </div>
               </div>
                   <div class="row">
                     <div id="champ-localisation" class="input-field col s7 m9">
                       <i class="fas fa-map-marked-alt prefix"></i>
-                      <input id="localisation" name="localisation" type="text" readonly>
+                      <input id="localisation" name="localisation" type="text" value="<?php if ($item['localisation']!=='') {echo $item['localisation'];} else {echo "Récupérathèque";}?>" readonly>
                       <label for="localisation">Localisation:</label>
                     </div>
 
