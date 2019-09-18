@@ -102,7 +102,7 @@
     <div class="w3-col s12 m3 l3">
 
       <div class="w3-row menu-bar">
-        <button id="cat-button" class="w3-col s6 menu-title" onclick="openMenu(event,'categories')">Catégories
+        <button id="cat-button" class="w3-col s6 menu-title separation" onclick="openMenu(event,'categories')">Catégories
           <span class='w3-medium fas fa-plus menu-icon'></span>
         </button>
         <button id="tri-button" class="w3-col s6 menu-title" onclick="openMenu(event,'tri')">Tri
@@ -122,6 +122,7 @@
           if (menu.style.display == "block"){
             menu.style.display = "none";
             evt.currentTarget.className = evt.currentTarget.className.replace(" menu-open", "");
+            document.getElementById("cat-button").className += " separation";
           }
           else{
             // on ferme tt les autres
@@ -133,7 +134,10 @@
             var titles = document.getElementsByClassName("menu-title");
             for (var i = 0; i < titles.length; i++) {
               titles[i].className = titles[i].className.replace(" menu-open", "");
+              titles[i].className = titles[i].className.replace(" separation", "");
             }
+            //on enlève la séparation
+            // document.getElementById("cat-button").className.replace(" separation", "");
             //on ouvre le selectionner
             menu.style.display = "block";
             evt.currentTarget.className += " menu-open";
