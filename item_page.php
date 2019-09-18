@@ -67,6 +67,9 @@ else {
 
 <?php include 'header.php'; ?>
 
+<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+
+
 <main>
   <div id="loading_overlay" class="overlay invisible">
 
