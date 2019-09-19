@@ -29,8 +29,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   flex-wrap: nowrap;
 
   justify-content: flex-start;
-  /* align-items: stretch; */
-  /* align-content: center; */
+  align-items: stretch;
 
 }
 
@@ -48,6 +47,10 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   padding-bottom: 6px;
   padding-left: 8px;
   padding-right: 8px;
+}
+
+.header a i{
+  vertical-align: bottom;
 }
 
 /* ----- SEARCH BAR -----*/
