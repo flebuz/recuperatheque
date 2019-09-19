@@ -9,18 +9,45 @@ body{
   background: white;
 }
 
-@font-face {
-  font-family: Avara-Bold;
-  src: url("Avara-Bold.otf") format("opentype");
-}
-
 html, body, p, h1, h2, h3, h4, h5, h6{
-  font-family: 'Avara-Bold', 'Open Sans', Helvetica, arial, sans-serif;
+  font-family:, 'Open Sans', Helvetica, arial, sans-serif;
 }
 
 .color-theme{
   background: #606060;
   color: #FFFFFF;
+}
+
+/* ----- HEADER -----*/
+
+.header{
+  background: #606060;
+  color: white;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  justify-content: flex-start;
+  /* align-items: stretch; */
+  /* align-content: center; */
+
+}
+
+.header .title{
+  flex-grow: 1;
+  font-size: 1.4rem;
+  padding-left: 24px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+}
+
+.header a{
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 /* ----- SEARCH BAR -----*/

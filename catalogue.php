@@ -22,9 +22,9 @@
 
 <body>
 
-  <div class="w3-container color-theme">
-    <h2>Mycélium</h2>
-  </div>
+  <?php
+    include('header2.php');
+  ?>
 
   <?php
   //connection database
@@ -36,6 +36,11 @@
   catch(Exception $e){
     die('Erreur : '.$e->getMessage());
   }
+  ?>
+
+  <?php
+  //construction de l'objet $system qui résume la structure de catégorie actuelle
+  include('categories_system.php');
   ?>
 
   <?php
@@ -73,11 +78,6 @@
     }
   ?>
 
-  <?php
-    //construction de l'objet $system qui résume la structure de catégorie actuelle
-    include('categories_system.php');
-  ?>
-
   <!-- Bar de recherche - formulaire -->
   <div class="search-bar-container">
     <form class="search-bar" action="catalogue.php" method="GET">
@@ -99,8 +99,10 @@
   </div>
 
   <div class="w3-row">
+
     <div class="w3-col s12 m3 l3">
 
+      <!-- menu categorie et tri -->
       <div class="w3-row menu-bar">
         <button id="cat-button" class="w3-col s6 menu-title separation" onclick="openMenu(event,'categories')">Catégories
           <span class='w3-medium fas fa-plus menu-icon'></span>
@@ -145,14 +147,12 @@
         }
       </script>
 
-
     </div>
-
 
     <div class="w3-col s12 m9 l9">
 
+      <!-- search resume -->
       <?php
-      // recherche actuelle
       if($query != '' || $catsearch != 0){
         //si une des deux condition est respacter on affiche le resumer
         echo '<div class="search-resume">';
