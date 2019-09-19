@@ -64,18 +64,21 @@
     } else{
       $tri = 'date_ajout';
     }
+      //check si l'option categorie et sscat est valide (les cat existe et la sscat correspond a la cat)
+    if(isset($_GET['catsearch']) and $_GET['catsearch']!=0
+    and array_key_exists($_GET['catsearch'], $system)){
+      $catsearch = htmlspecialchars($_GET['catsearch']);
+    } else{
+      $catsearch = null;
+    }
 
-    if(isset($_GET['sscatsearch']) and $_GET['sscatsearch']!=0){
+    if(isset($_GET['sscatsearch']) and $_GET['sscatsearch']!=0
+      and array_key_exists($_GET['sscatsearch'], $system[$catsearch]['sscats'])){
       $sscatsearch = htmlspecialchars($_GET['sscatsearch']);
     } else{
       $sscatsearch = null;
     }
 
-    if(isset($_GET['catsearch']) and $_GET['catsearch']!=0){
-      $catsearch = htmlspecialchars($_GET['catsearch']);
-    } else{
-      $catsearch = null;
-    }
   ?>
 
   <!-- Bar de recherche - formulaire -->
