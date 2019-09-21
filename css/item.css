@@ -17,6 +17,8 @@
 .item-single-container{
   /* quand on est sur la page ou ya 1 seul item */
   display: inline-block;
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .item-link{
@@ -65,8 +67,8 @@ celle de l'item en lui meme en ajoutant les marges */
   padding-bottom: 12px;
 }
 
-.item-date-container{
-  padding-top: 12px;
+.item-tags-container .item-info-line{
+  padding-bottom: 12px;
 }
 
 .item-single-container .item-info-container:after,
