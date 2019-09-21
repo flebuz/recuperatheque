@@ -72,6 +72,10 @@ celle de l'item en lui meme en ajoutant les marges */
   padding-bottom: 12px;
 }
 
+.items-container .item-info-plus-container{
+  display: none;
+}
+
 .item-single-container .item-info-container:after,
 .item-single-container .item-info-plus-container::after,
 .item-single-container .item-tags-container::after{

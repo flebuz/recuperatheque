@@ -187,7 +187,7 @@
           //prep the request
           //every lines is an item with joined categorie and subcategorie
           $req = $bdd->prepare('  SELECT
-                                  c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                                  c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                                   cat.ID, cat.nom AS categorie,
                                   sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
                                   FROM catalogue c
@@ -211,7 +211,15 @@
             while($item = $req->fetch()){
 
               //affichage de l'item
-              include('item.php');
+              ?>
+
+              <a class="item-link" href="item_page2.php?id=<?php echo $item['ID_item']?>">
+                <div class='w3-col s12 m6 l4'>
+                  <?php include('item.php');?>
+                </div>
+              </a>
+
+              <?php
             }
           }
           else {

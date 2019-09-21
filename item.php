@@ -1,7 +1,4 @@
 
-<a class="item-link" href="item_page2.php?id=<?php echo $item['ID_item']?>">
-
-<div class='w3-col s12 m6 l4'>
 
   <?php
     // calcul du prix
@@ -30,6 +27,14 @@
     }
     else{
       $dimensions=$item['dimensions'];
+    }
+
+    //remarques ou pas
+    if ($item['remarques']==''){
+      $remarques='pas de remarques';
+    }
+    else{
+      $remarques=$item['remarques'];
     }
   ?>
 
@@ -93,6 +98,32 @@
 
       </div>
 
+      <div class="item-info-plus-container">
+        <!-- les info qui apparaissent dans la page single -->
+
+        <?php
+          //poids seulement si c'est dans la sscat
+          if ($item['unitesscat']=='kg'){ ?>
+            <div class="item-info-line">
+              <i class='fas fa-weight-hanging item-icon'></i>
+              <div class="item-info"> <?php echo $item['poids']; ?> </div>
+            </div>
+          <?php
+          }
+        ?>
+
+        <div class="item-info-line">
+          <i class='fas fa-ruler item-icon'></i>
+          <div class="item-info"> <?php echo $dimensions; ?> </div>
+        </div>
+
+        <div class="item-info-line">
+          <i class='fas fa-info-circle item-icon'></i>
+          <div class="item-info"> <?php echo $remarques; ?> </div>
+        </div>
+
+      </div>
+
       <div class='item-tags-container'>
 
         <div class="item-info-line">
@@ -121,7 +152,3 @@
     </div>
 
   </div>
-
-</div>
-
-</a>
