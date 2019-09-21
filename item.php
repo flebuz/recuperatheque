@@ -1,105 +1,127 @@
 
 <a class="item-link" href="item_page2.php?id=<?php echo $item['ID_item']?>">
-  
+
 <div class='w3-col s12 m6 l4'>
+
+  <?php
+    // calcul du prix
+    if ($item['unitesscat']=='kg'){
+      $prix = $item['prixsscat'] * $item['poids'] / $item['pieces'];
+    }
+    else{
+      $prix = $item['prixsscat'];
+    }
+    $prix = $prix * ($item['etat']/4);
+    //ou
+    $prix = $item['prix'];
+
+    //pluriel ou non sur le nombre de pièces
+    $piece = "1 pièce";
+    if ($item['pieces']>1){
+      $piece = $item['pieces'] . " pièces";
+    }
+
+    //divise les tags en list php
+    $tags = explode(", ",$item['tags']);
+
+    //dimensions dispo ou non
+    if ($item['dimensions']==''){
+      $dimensions='non-disponibles';
+    }
+    else{
+      $dimensions=$item['dimensions'];
+    }
+  ?>
 
   <div class='item'>
 
     <div class="item-photo-container">
-
         <?php
-        echo '<img class="photo" src="photos/' . $item['ID_item'] . '.jpg" />'
+        echo '<img class="item-photo" src="photos/' . $item['ID_item'] . '.jpg" />'
         ?>
-
     </div>
 
-    <div class='item-categorie-container'>
-      <!-- deux choix d'affichage si la sscat est Autre ou pas -->
-      <?php
-      if ($item['sous_categorie']!='Autre'){
-        ?>
-        <span class="item-souscategorie"> <?php echo $item['sous_categorie']; ?> </span>
-        <span class="item-categorie"> (<?php echo $item['categorie']; ?>) </span>
-      <?php
-      }
-      else{
-        ?>
-        <span class="item-souscategorie"> <?php echo $item['categorie']; ?> </span>
-      <?php
-      }
-      ?>
+    <div class="item-text-container">
 
-    </div>
-
-    <div class="item-info-container">
-
+      <div class='item-categorie-container'>
+        <!-- deux choix d'affichage si la sscat est Autre ou pas -->
         <?php
-        // calcul du prix
-        if ($item['unitesscat']=='kg'){
-          $prix = $item['prixsscat'] * $item['poids'] / $item['pieces'];
+        if ($item['sous_categorie']!='Autre'){
+          ?>
+          <span class="item-souscategorie"> <?php echo $item['sous_categorie']; ?> </span>
+          <span class="item-categorie"> (<?php echo $item['categorie']; ?>) </span>
+        <?php
         }
         else{
-          $prix = $item['prixsscat'];
-        }
-        $prix = $prix * ($item['etat']/4);
-        //ou
-        $prix = $item['prix'];
-
-        //pluriel ou non sur le nombre de pièces
-        $piece = "1 pièce";
-        if ($item['pieces']>1){
-          $piece = $item['pieces'] . " pièces";
-        }
-
-        //divise les tags en list php
-        $tags = explode(", ",$item['tags']);
-
-        //dimensions dispo ou non
-        if ($item['dimensions']==''){
-          $dimensions='non-disponibles';
-        }
-        else{
-          $dimensions=$item['dimensions'];
-        }
-        ?>
-
-        <i class='fas fa-coins item-icon'></i> <?php echo $prix; ?> par pièce<br/>
-
-        <i class='fas fa-heart-broken item-icon'></i> État:
-        <span class='etat-icon-container'>
+          ?>
+          <span class="item-souscategorie"> <?php echo $item['categorie']; ?> </span>
         <?php
-        //echo $item['etat'];
-        for($n = 0; $n < 4; $n++){
-          if($item['etat'] > $n){
-            echo '<i class="fas fa-heart etat-icon"></i> ' ;
-          } else{
-            echo '<i class="far fa-heart etat-icon"></i> ' ;
-          }
         }
         ?>
-        </span><br/>
 
-        <i class='fas fa-cubes item-icon'></i> <?php echo $piece; ?> <br/>
-        <!-- <i class='fas fa-ruler item-icon'></i> <?php echo $dimensions; ?> <br/> -->
+      </div>
 
+      <div class="item-info-container">
 
-    </div>
+        <div class="item-info-line">
+          <i class='fas fa-coins item-icon'></i>
+          <div class="item-info"><?php echo $prix; ?> par pièce </div>
+        </div>
 
-    <div class='item-tags-container'>
-        <i class='fas fa-tag item-icon'></i>
-        <?php
-          for($n = 0; $n < count($tags); $n++){
-            echo '<a class="tag" href=#>#' . $tags[$n] . '</a>';
-            if($n!=count($tags)-1){ echo ', '; }
-          }
-        ?>
-    </div>
+        <div class="item-info-line">
+          <i class='fas fa-heart-broken item-icon'></i>
+          <div class="item-info"> État:
+            <span class='etat-icon-container'>
+            <?php
+            //echo $item['etat'];
+            for($n = 0; $n < 4; $n++){
+              if($item['etat'] > $n){
+                echo '<i class="fas fa-heart etat-icon"></i> ' ;
+              } else{
+                echo '<i class="far fa-heart etat-icon"></i> ' ;
+              }
+            }
+            ?>
+            </span>
+          </div>
+        </div>
 
-    <div class="item-date-container">
-      <i class='far fa-calendar item-icon'></i> récupéré le <?php echo $item['date_ajout_fr']; ?>
+        <div class="item-info-line">
+          <i class='fas fa-cubes item-icon'></i>
+          <div class="item-info"><?php echo $piece; ?></div>
+        </div>
+
+      </div>
+
+      <div class='item-tags-container'>
+
+        <div class="item-info-line">
+          <i class='fas fa-tag item-icon'></i>
+          <div class="item-info">
+            <?php
+              for($n = 0; $n < count($tags); $n++){
+                echo '<a class="tag" href=#>#' . $tags[$n] . '</a>';
+                if($n!=count($tags)-1){ echo ', '; }
+              }
+            ?>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="item-date-container">
+
+        <div class="item-info-line">
+          <i class='far fa-calendar item-icon'></i>
+          <div class="item-info">récupéré le <?php echo $item['date_ajout_fr']; ?></div>
+        </div>
+
+      </div>
+
     </div>
 
   </div>
 
 </div>
+
 </a>

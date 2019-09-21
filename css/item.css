@@ -1,0 +1,121 @@
+
+/* ----- ITEM -----*/
+
+/* --- le gros div qui regroupe les items quand il y en a plusieur */
+.items-container{
+  /* max-width: 900px; */
+  margin: 12px;
+}
+
+/* --- le div qui encadre un item quand il y en a 1 seul */
+
+.item-single-back{
+  background: #F0F0F0;
+  text-align: center;
+}
+
+.item-single-container{
+  /* quand on est sur la page ou ya 1 seul item */
+  display: inline-block;
+}
+
+.item-link{
+  text-decoration: none;
+}
+
+/* ----- construction de l'item en tant que tel */
+
+.item{
+  text-align: left;
+  background: #FFFFFF;
+  margin: 6px;
+  padding: 12px;
+}
+
+.items-container .item{
+  border-bottom: 1px solid #E0E0E0;
+}
+
+/* largeur maximum de la photo et du text qui determine
+celle de l'item en lui meme en ajoutant les marges */
+.item-photo-container, .item-text-container{
+  max-width: 500px;
+}
+
+.item-photo-container{
+  padding-bottom: 12px;
+}
+
+.item-photo{
+  width: 100%;
+}
+
+/* ----- les boites d'infos qui compose l'item */
+
+.item-categorie{
+  color: #606060;
+}
+
+.item-souscategorie{
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.item-categorie-container{
+  padding-bottom: 12px;
+}
+
+.item-date-container{
+  padding-top: 12px;
+}
+
+.item-single-container .item-info-container:after,
+.item-single-container .item-info-plus-container::after,
+.item-single-container .item-tags-container::after{
+  content: "";
+  display: block;
+  margin: auto;
+  width: 60%;
+  height: 1px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
+  background: #E0E0E0;
+}
+
+/* ----- une ligne de l'item (icone + texte) */
+
+.item-info-line{
+  display: flex;
+  white-space: nowrap;
+  align-items: baseline;
+}
+
+.item-date-container .item-info-line{
+  justify-content: flex-end;
+  color: #909090;
+}
+
+.item-icon{
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.item-info{
+  white-space: normal;
+}
+
+/* dans l'affichage catalogue on coupe l'info si elle dépasse */
+.items-container .item-info{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.item-icon, .etat-icon{
+  color: #909090;
+}
+
+.etat-icon-container{
+  padding-left: 6px;
+}
