@@ -1,6 +1,6 @@
 
-html{
-
+html, body{
+  background: #F0F0F0;
 }
 
 body{
@@ -11,11 +11,6 @@ body{
 
 html, body, p, h1, h2, h3, h4, h5, h6{
   font-family:, 'Open Sans', Helvetica, arial, sans-serif;
-}
-
-.color-theme{
-  background: #606060;
-  color: #FFFFFF;
 }
 
 /* ----- HEADER -----*/
