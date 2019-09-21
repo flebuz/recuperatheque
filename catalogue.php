@@ -15,7 +15,9 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <!-- to have icon of the font awesome 5 -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/item.css">
 
 
 </head>
@@ -27,20 +29,20 @@
   ?>
 
   <?php
-  //connection database
-  try{
-    $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-    // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+    //connection database
+    try{
+      $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+      // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-  }
-  catch(Exception $e){
-    die('Erreur : '.$e->getMessage());
-  }
+    }
+    catch(Exception $e){
+      die('Erreur : '.$e->getMessage());
+    }
   ?>
 
   <?php
-  //construction de l'objet $system qui résume la structure de catégorie actuelle
-  include('categories_system.php');
+    //construction de l'objet $system qui résume la structure de catégorie actuelle
+    include('categories_system.php');
   ?>
 
   <?php
@@ -78,7 +80,6 @@
     } else{
       $sscatsearch = null;
     }
-
   ?>
 
   <!-- Bar de recherche - formulaire -->
@@ -156,31 +157,29 @@
 
       <!-- search resume -->
       <?php
-      if($query != '' || $catsearch != 0){
-        //si une des deux condition est respacter on affiche le resumer
-        echo '<div class="search-resume">';
+        if($query != '' || $catsearch != 0){
+          //si une des deux condition est respacter on affiche le resumer
+          echo '<div class="search-resume">';
 
-        if($query != ''){
-          echo '"' . $query . '"';
-        }
-        if($sscatsearch != 0){
-          if($query != ''){ echo ' dans '; }
-          //convertit l'ID en nom
-          echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ') ';
-        }
-        elseif($catsearch != 0){
-          if($query != ''){ echo ' dans '; }
-          //convertit l'ID en nom
-          echo $system[$catsearch]['nom'];
-        }
+          if($query != ''){
+            echo '"' . $query . '"';
+          }
+          if($sscatsearch != 0){
+            if($query != ''){ echo ' dans '; }
+            //convertit l'ID en nom
+            echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ') ';
+          }
+          elseif($catsearch != 0){
+            if($query != ''){ echo ' dans '; }
+            //convertit l'ID en nom
+            echo $system[$catsearch]['nom'];
+          }
 
-        echo '<br/>trier par '. mb_strtolower($tri_option[$tri]);
-        echo '<br/><a class="fas fa-times" href=catalogue.php></a>';
-        echo '</div>';
-      }
-
+          echo '<br/>trier par '. mb_strtolower($tri_option[$tri]);
+          echo '<br/><a class="fas fa-times" href=catalogue.php></a>';
+          echo '</div>';
+        }
       ?>
-
 
       <div class="w3-row items-container">
 

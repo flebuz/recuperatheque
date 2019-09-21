@@ -20,14 +20,20 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* ----- HEADER -----*/
 
-.header{
+.header-container{
+  width: 100%;
   background: #606060;
   color: white;
+
+}
+
+.header{
+  max-width: 1200px;
+  margin: auto;
 
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-
   justify-content: flex-start;
   align-items: stretch;
 
@@ -47,6 +53,8 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   padding-bottom: 6px;
   padding-left: 8px;
   padding-right: 8px;
+
+  border-left: 1px solid #707070;
 }
 
 .header a i{
@@ -114,9 +122,12 @@ button:hover{
 
 .menu-title{
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1rem;
   padding: 12px;
   position: relative;
+
+  overflow: hidden;
+  white-space: nowrap;
 
   /* border-top: 1px solid #909090;
   border-bottom: 1px solid #909090; */
@@ -190,79 +201,6 @@ button:hover{
 /* .menu a:hover{
   color: #D0D0D0;
 } */
-
-
-/* ----- ITEM -----*/
-
-.items-container{
-  /* max-width: 900px; */
-  margin: 12px;
-}
-
-.item{
-  background: #FFFFFF;
-  margin: 6px;
-  padding: 12px;
-  border-bottom: 1px solid #E0E0E0;
-}
-
-.item-link
-{
-  text-decoration: none;
-}
-
-.item-photo-container{
-  width: 100%;
-  padding-bottom: 12px;
-}
-
-.item .photo{
-  width: 100%;
-}
-
-.item-categorie-container, .item-info-container, .item-tags-container{
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.item-souscategorie{
-  font-weight: bold;
-  font-size: 1.4em;
-}
-
-.item-categorie{
-  color: #606060;
-}
-
-.item-categorie-container{
-  padding-bottom: 8px;
-}
-
-.item-info-container{
-  padding-bottom: 8px;
-}
-
-.item-tags-container{
-  padding-bottom: 16px;
-}
-
-.item-date-container{
-  color: #909090;
-  text-align: right;
-}
-
-.item-icon, .etat-icon{
-  color: #909090;
-}
-
-.etat-icon-container{
-  padding-left: 6px;
-}
-
-.item-info-container .item-icon, .item-tags-container .item-icon{
-  width: 25px;
-}
 
 
 /*----- FORMS -----*/
