@@ -131,7 +131,7 @@
           <div class="item-info">
             <?php
               for($n = 0; $n < count($tags); $n++){
-                echo '<a class="tag" href=#>#' . $tags[$n] . '</a>';
+                echo '<span class="item-tag" href=#>#' . $tags[$n] . '</span>';
                 if($n!=count($tags)-1){ echo ', '; }
               }
             ?>

@@ -74,6 +74,17 @@
 
       include('item.php'); ?>
 
+      <div class="item-buttons-container">
+
+        <button class="item-button" onclick="window.location.href = 'https://w3docs.com';">Modifier
+          <i class='w3-medium fas fa-edit'></i>
+        </button>
+
+        <button class="item-button" onclick="window.location.href = 'https://w3docs.com';">Vendre
+          <i class='w3-medium fas fa-check'></i>
+        </button>
+      </div>
+
       <?php
     }
     else{

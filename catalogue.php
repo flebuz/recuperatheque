@@ -109,10 +109,10 @@
       <!-- menu categorie et tri -->
       <div class="w3-row menu-bar">
         <button id="cat-button" class="w3-col s6 menu-title separation" onclick="openMenu(event,'categories')">Catégories
-          <span class='w3-medium fas fa-plus menu-icon'></span>
+          <i class='w3-medium fas fa-plus menu-icon'></i>
         </button>
         <button id="tri-button" class="w3-col s6 menu-title" onclick="openMenu(event,'tri')">Tri
-          <span class='w3-medium fas fa-sort menu-icon'></span>
+          <i class='w3-medium fas fa-sort menu-icon'></i>
         </button>
       </div>
 

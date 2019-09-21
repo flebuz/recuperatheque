@@ -30,9 +30,28 @@
 
 .item{
   text-align: left;
-  background: #FFFFFF;
+  background: white;
   margin: 6px;
   padding: 12px;
+}
+
+.item-single-container .item{
+  margin-bottom: 12px;
+}
+
+/* barre des boutons */
+.item-buttons-container{
+  background: white;
+  margin: 6px;
+  padding: 6px;
+
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.item-button{
+  flex-grow: 1;
+  margin: 6px;
 }
 
 .items-container .item{
@@ -68,8 +87,8 @@ celle de l'item en lui meme en ajoutant les marges */
   padding-bottom: 12px;
 }
 
-.item-tags-container .item-info-line{
-  padding-bottom: 12px;
+.items-container .item-date-container{
+  padding-top: 12px;
 }
 
 .items-container .item-info-plus-container{
@@ -125,4 +144,12 @@ celle de l'item en lui meme en ajoutant les marges */
 
 .etat-icon-container{
   padding-left: 6px;
+}
+
+.item-tag{
+  background: lavender;
+  padding: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 0px;
 }
