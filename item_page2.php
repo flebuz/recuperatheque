@@ -69,6 +69,7 @@
 
   <div class='item-single-back'>
   <div class='item-single-container'>
+
     <div class='item'>
 
       <div class="item-photo-container">
@@ -146,10 +147,14 @@
           </span><br/>
 
           <i class='fas fa-cubes item-icon'></i> <?php echo $piece; ?> <br/>
-          <!-- <i class='fas fa-ruler item-icon'></i> <?php echo $dimensions; ?> <br/> -->
-
-
       </div>
+
+      <div class="item-info-plus-container">
+        <!-- les info qui apparaissent dans la page single -->
+        <i class='fas fa-ruler item-icon'></i> <?php echo $dimensions; ?> <br/>
+        <i class='fas fa-info-circle item-icon'></i> <?php echo $item['remarques']; ?> <br/>
+      </div>
+
 
       <div class='item-tags-container'>
           <i class='fas fa-tag item-icon'></i>
