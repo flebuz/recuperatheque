@@ -86,34 +86,33 @@
 
   <div class="content">
 
-    <div class="w3-row">
-      <div class="w3-col s12 m3 l3">
+    <div class="w3-row search-bar-container">
+      <div class="w3-col s12 m4 l4 trick">
+        <!-- tricks daffichage -->.
       </div>
-      <div class="w3-col s12 m9 l9">
-        <div class="search-bar-container">
-          <form class="search-bar" action="catalogue.php" method="GET">
+      <div class="w3-col s12 m8 l8">
+        <form class="search-bar" action="catalogue.php" method="GET">
 
-            <input type="text" class="w3-input search-bar-input" name="q" placeholder="Ajouter un mot clé à la recherche" value="<?php echo $query?>">
-            <button class="w3-xlarge fa fa-search search-bar-button" type="submit"></button>
+          <input type="text" class="search-bar-input" name="q" placeholder="Ajouter un mot clé à la recherche" value="<?php echo $query?>">
+          <button class="w3-xlarge fa fa-search search-bar-button" type="submit"></button>
 
-            <?php
-              // on ajoute cat et sscat si jamais c'est déjà préciser
-              if($catsearch){
-                echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
-              }
-              if($sscatsearch){
-                echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
-              }
-            ?>
+          <?php
+            // on ajoute cat et sscat si jamais c'est déjà préciser
+            if($catsearch){
+              echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
+            }
+            if($sscatsearch){
+              echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
+            }
+          ?>
 
-          </form>
-        </div>
+        </form>
       </div>
     </div>
 
     <div class="w3-row">
 
-      <div class="w3-col s12 m3 l3">
+      <div class="w3-col s12 m4 l4">
 
         <!-- menu categorie et tri -->
         <div class="menu-container">
@@ -167,7 +166,7 @@
 
       </div>
 
-      <div class="w3-col s12 m9 l9">
+      <div class="w3-col s12 m8 l8">
 
 
         <!-- search request -->
@@ -219,7 +218,7 @@
               $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>0)));
               echo '<a href="' . $getURL . '">' . $system[$catsearch]['nom'] . '</a>';
             }
-            echo ' (' . $number_results . ')';
+            echo ' (' . $number_results . ' résultats)';
             echo '</div>';
           }
         ?>

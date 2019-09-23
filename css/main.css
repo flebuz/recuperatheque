@@ -1,6 +1,7 @@
 
 html, body{
   background: #F0F0F0;
+  min-height: 100%;
 }
 
 body{
@@ -16,7 +17,14 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 .content{
   background: white;
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto 24px;
+  padding: 0 24px 0;
+}
+
+@media (max-width: 720px){
+  .content{
+    padding: 0;
+  }
 }
 
 button {
@@ -97,64 +105,6 @@ button:hover{
 
 .header .nav-icon i{
   vertical-align: bottom;
-}
-
-/* ----- SEARCH BAR -----*/
-
-.search-bar-container{
-  background: #F0F0F0;
-}
-
-.search-bar{
-  max-width: 900px;
-  margin: auto;
-
-  padding: 12px;
-
-  /* l'interieur de la barre de recherche strech le bouton vers le haut
-  et reste en une ligne */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-}
-
-/*la barre de recherche grow en longueur if spaces*/
-.search-bar-input{
-  min-width: 0;
-  flex-grow: 1;
-}
-
-.search-bar-button{
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.search-resume{
-  text-align: left;
-  font-size: 1em;
-  line-height: 2em;
-  padding: 16px;
-  border-bottom: 1px solid #E0E0E0;
-
-}
-
-.search-resume a{
-  white-space: nowrap;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  text-decoration: none;
-  background: lavender;
-  border-radius: 8px;
-}
-
-.search-resume a:after{
-  padding-left: 6px;
-  font-size: 1em;
-  font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00d";
-  color: black;
 }
 
 

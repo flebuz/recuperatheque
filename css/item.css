@@ -4,9 +4,7 @@
 /* --- le gros div qui regroupe les items quand il y en a plusieur */
 .items-container{
   /* background: #F0F0F0; */
-  max-width: 900px;
   margin: 6px;
-
 }
 
 /* --- le div qui encadre un item quand il y en a 1 seul */
@@ -26,9 +24,6 @@
   text-align: left;
   background: white;
   padding: 12px;
-}
-
-.item{
   margin: 6px;
   border-bottom: 1px solid #E0E0E0;
 }
@@ -123,7 +118,6 @@ celle de l'item en lui meme en ajoutant les marges */
   height: 1px;
   margin-top: 16px;
   margin-bottom: 16px;
-  /* margin-bottom: 16px; */
   background: #E0E0E0;
 }
 
@@ -150,7 +144,8 @@ celle de l'item en lui meme en ajoutant les marges */
 }
 
 /* dans l'affichage catalogue on coupe l'info si elle dépasse */
-.items-container .item-info{
+.items-container .item-info,
+.items-container .item-categorie-container{
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
