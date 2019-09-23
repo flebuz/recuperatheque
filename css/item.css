@@ -18,31 +18,39 @@
 .item-single-container{
   /* quand on est sur la page ou ya 1 seul item */
   display: inline-block;
-  margin-top: 12px;
-  margin-bottom: 12px;
 }
 
 .item-link{
   text-decoration: none;
 }
 
+
 /* ----- construction de l'item en tant que tel */
+
+.retour{
+  text-align: left;
+  color: #909090;
+  display: block;
+  text-decoration: none;
+  padding: 12px;
+}
 
 .item{
   text-align: left;
   background: white;
-  margin: 6px;
   padding: 12px;
 }
 
+.items-container .item{
+  margin: 6px;
+}
+
 .item-single-container .item{
-  margin-bottom: 12px;
 }
 
 /* barre des boutons */
 .item-buttons-container{
-  background: white;
-  margin: 6px;
+  /* background: white; */
   padding: 6px;
 
   display: flex;

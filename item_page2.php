@@ -50,7 +50,10 @@
   ?>
 
   <div class='item-single-back'>
+
   <div class='item-single-container'>
+
+    <a href="javascript:history.back()" class="retour"> <i class="fas fa-chevron-left"></i> retour à la recherche</a>
 
   <?php
     //get the item
