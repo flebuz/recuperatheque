@@ -1,0 +1,87 @@
+
+/* -----CATEGORY MENU -----*/
+
+@media (min-width: 720px){
+  .menu-container{
+    margin: 12px;
+  }
+}
+
+.menu-title{
+
+}
+
+.menu-title.active{
+  background: white;
+}
+
+.menu{
+  display: none;
+  background: white;
+  text-align: left;
+
+}
+
+.menu.active{
+  display: block;
+}
+
+#cat-button.separation:after{
+  content : "";
+  position: absolute;
+  top: 20%;
+  left: 1px;
+  z-index: 10;
+  height: 60%;
+  width: 100%;
+  border-right: 2px solid black;
+}
+
+
+.categorie-title, .souscategorie-title{
+  text-align: left;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.categorie-title{
+  padding-left: 24px;
+}
+
+.souscategorie-title{
+  padding-left: 48px;
+}
+
+.categorie-count{
+  font-size: 0.8em;
+  padding-left: 6px;
+  color: #606060;
+}
+
+/* bold when selected */
+.categorie-title.selected, .souscategorie-title.selected{
+  font-weight: bold;
+}
+
+/* on rajoute un plus ou moins pour les titre de categorie dans le menu categorie (et pas dans le menu tris) */
+#categories .categorie-title:not(.tout)::after{
+  content: "+";
+  padding-right: 12px;
+  float: right;
+  font-weight: bold;
+}
+
+#categories .categorie-title.open:not(.tout)::after{
+  content: "-";
+  padding-right: 12px;
+  float: right;
+  font-weight: bold;
+}
+
+.menu a{
+  text-decoration: none;
+}
+/* .menu a:hover{
+  color: #D0D0D0;
+} */

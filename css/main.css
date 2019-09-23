@@ -46,6 +46,59 @@ button:hover{
   /* background:#00E676; */
 }
 
+
+/* ----- HEADER -----*/
+
+.header-container{
+  width: 100%;
+  background: #606060;
+  color: white;
+
+}
+
+.header{
+  max-width: 1200px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+
+}
+
+.header a{
+  text-decoration: none;
+}
+
+.header .title{
+  flex-grow: 1;
+  font-size: 1.4rem;
+  padding-left: 24px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+}
+
+.header .nav-icon{
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  color: #909090;
+  border-left: 1px solid #707070;
+}
+
+.header .nav-icon.page-selected{
+  color: white;
+}
+
+.header .nav-icon i{
+  vertical-align: bottom;
+}
+
 /* ----- SEARCH BAR -----*/
 
 .search-bar-container{
@@ -103,93 +156,6 @@ button:hover{
   font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00d";
   color: black;
 }
-
-/* -----CATEGORY MENU -----*/
-
-@media (min-width: 720px){
-  .menu-container{
-    margin: 12px;
-  }
-}
-
-.menu-title{
-
-}
-
-.menu-title.active{
-  background: white;
-}
-
-.menu{
-  display: none;
-  background: white;
-  text-align: left;
-
-}
-
-.menu.active{
-  display: block;
-}
-
-#cat-button.separation:after{
-  content : "";
-  position: absolute;
-  top: 20%;
-  left: 1px;
-  z-index: 10;
-  height: 60%;
-  width: 100%;
-  border-right: 2px solid black;
-}
-
-
-.categorie-title, .souscategorie-title{
-  text-align: left;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #E0E0E0;
-}
-
-.categorie-title{
-  padding-left: 24px;
-}
-
-.souscategorie-title{
-  padding-left: 48px;
-}
-
-.categorie-count{
-  font-size: 0.8em;
-  padding-left: 6px;
-  color: #606060;
-}
-
-/* bold when selected */
-.categorie-title.selected, .souscategorie-title.selected{
-  font-weight: bold;
-}
-
-/* on rajoute un plus ou moins pour les titre de categorie dans le menu categorie (et pas dans le menu tris) */
-#categories .categorie-title:not(.tout)::after{
-  content: "+";
-  padding-right: 12px;
-  float: right;
-  font-weight: bold;
-}
-
-#categories .categorie-title.open:not(.tout)::after{
-  content: "-";
-  padding-right: 12px;
-  float: right;
-  font-weight: bold;
-}
-
-.menu a{
-  text-decoration: none;
-}
-/* .menu a:hover{
-  color: #D0D0D0;
-} */
 
 
 /*----- FORMS -----*/
