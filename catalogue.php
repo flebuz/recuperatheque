@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/item.css">
 
 
@@ -127,7 +128,7 @@
 
           <?php include('categories_menu.php'); ?>
           <?php include('tri_menu.php'); ?>
-          
+
         </div>
 
         <script>
