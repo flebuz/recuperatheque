@@ -1,0 +1,52 @@
+
+/* ----- HEADER -----*/
+
+.header-container{
+  width: 100%;
+  background: #606060;
+  color: white;
+
+}
+
+.header{
+  max-width: 1200px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+
+}
+
+.header a{
+  text-decoration: none;
+}
+
+.header .title{
+  flex-grow: 1;
+  font-size: 1.4rem;
+  padding-left: 24px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+}
+
+.header .nav-icon{
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  color: #909090;
+  border-left: 1px solid #707070;
+}
+
+.header .nav-icon.page-selected{
+  color: white;
+}
+
+.header .nav-icon i{
+  vertical-align: bottom;
+}
