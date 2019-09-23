@@ -3,8 +3,10 @@
 
 /* --- le gros div qui regroupe les items quand il y en a plusieur */
 .items-container{
-  /* max-width: 900px; */
-  margin: 12px;
+  /* background: #F0F0F0; */
+  max-width: 900px;
+  margin: 6px;
+
 }
 
 /* --- le div qui encadre un item quand il y en a 1 seul */
@@ -20,12 +22,37 @@
   display: inline-block;
 }
 
+.item{
+  text-align: left;
+  background: white;
+  padding: 12px;
+}
+
+.item{
+  margin: 6px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.item-single-container .item{
+  margin: 0px;
+  border: none;
+}
+
+/* si on est sur mobile on enleve les marges pour avoir l'item en full-width */
+@media (max-width: 720px){
+ .items-container{
+   margin: 0;
+ }
+ .item{
+   margin: 0;
+ }
+}
+
+/* ----- ce qu'il y a autour de l'item */
+
 .item-link{
   text-decoration: none;
 }
-
-
-/* ----- construction de l'item en tant que tel */
 
 .retour{
   text-align: left;
@@ -33,19 +60,6 @@
   display: block;
   text-decoration: none;
   padding: 12px;
-}
-
-.item{
-  text-align: left;
-  background: white;
-  padding: 12px;
-}
-
-.items-container .item{
-  margin: 6px;
-}
-
-.item-single-container .item{
 }
 
 /* barre des boutons */
@@ -60,10 +74,6 @@
 .item-button{
   flex-grow: 1;
   margin: 6px;
-}
-
-.items-container .item{
-  border-bottom: 1px solid #E0E0E0;
 }
 
 /* largeur maximum de la photo et du text qui determine

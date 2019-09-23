@@ -5,12 +5,45 @@ html, body{
 
 body{
   margin: 0;
-  /* background: #F0F0F0; */
   background: white;
+  background: #F0F0F0;
 }
 
 html, body, p, h1, h2, h3, h4, h5, h6{
   font-family:, 'Open Sans', Helvetica, arial, sans-serif;
+}
+
+.content{
+  background: white;
+  max-width: 1200px;
+  margin: auto;
+}
+
+button {
+  background-color: #E0E0E0;
+  color: black;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0px;
+  padding: 12px;
+  position: relative;
+
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+button i{
+  padding-left: 12px;
+  color: #606060;
+}
+
+button:hover{
+  /* background:#00E676; */
 }
 
 /* ----- HEADER -----*/
@@ -67,33 +100,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* ----- SEARCH BAR -----*/
 
-button {
-  background-color: #E0E0E0;
-  color: black;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-
-  font-weight: bold;
-  font-size: 1rem;
-  margin: 0px;
-  padding: 12px;
-  position: relative;
-
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-button i{
-  padding-left: 12px;
-  color: #606060;
-}
-
-button:hover{
-  /* background:#00E676; */
-}
-
 .search-bar-container{
   background: #F0F0F0;
 }
@@ -124,39 +130,70 @@ button:hover{
 }
 
 .search-resume{
-  text-align: center;
-  font-weight: bold;
-  color: #606060;
+  text-align: left;
+  font-size: 1em;
   padding: 16px;
   border-bottom: 1px solid #E0E0E0;
+
 }
 
-.menu{
-  background: white;
-  margin-bottom: 12px;
-  text-align: left;
-  border-bottom: 3px solid #E0E0E0;
+.search-resume a{
+  white-space: nowrap;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-decoration: none;
+  background: lavender;
+  border-radius: 5px;
+}
+
+.search-resume a:after{
+  padding-left: 6px;
+  font-size: 1em;
+  font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00d";
+  color: black;
+}
+
+/* -----CATEGORY MENU -----*/
+
+@media (min-width: 720px){
+  .menu-container{
+    padding-top: 12px;
+    padding-right: 24px;
+  }
 }
 
 .menu-title{
 
 }
 
+.menu-title.active{
+  background: white;
+}
+
+.menu{
+  display: none;
+  background: white;
+  text-align: left;
+
+}
+
+.menu.active{
+  display: block;
+}
+
 #cat-button.separation:after{
   content : "";
   position: absolute;
   top: 20%;
-  left: 0.5px;
+  left: 1px;
   z-index: 10;
   height: 60%;
   width: 100%;
-  border-right: 1px solid #606060;
+  border-right: 2px solid black;
 }
 
-.menu-open{
-  background: white;
-  /* border-bottom: 1px solid white; */
-}
 
 .categorie-title, .souscategorie-title{
   text-align: left;

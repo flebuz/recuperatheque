@@ -1,6 +1,6 @@
 
 <!-- menu tris -->
-<div id="tri" class="menu" style="display:none">
+<div id="tri" class="menu">
 
   <?php
     foreach($tri_option as $param => $nom){

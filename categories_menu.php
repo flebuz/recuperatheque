@@ -1,6 +1,6 @@
 
 <!-- ouvre le menu -->
-<div id="categories" class="menu" style="display:none">
+<div id="categories" class="menu">
 
   <?php
     //----- construire le menu en parcourant l'arbre
