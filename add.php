@@ -53,6 +53,8 @@ $dimensions= $_POST['dimensions'];
 $localisation = $_POST['localisation'];
 $today = date('Y-m-d');
 
+//la separation des tags devient: 'virgule espace' et plus juste 'virgule'
+$tags = str_replace(",", ", ", $tags);
 
 $description="champ obsolète"; //à supprimer de la bdd et des requêtes
 ?>

@@ -220,7 +220,15 @@ if (isset($_POST['cat'])) {
                       <label for="tags">Tags: (séparés par ' , ' ou ' . ')</label>
                     </div>
                       <i id="prefix_tags" class="fas fa-tag prefix"></i>
-                      <div onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><input class="invisible" id="input-tags" name="tags" type="text"  onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');"></div>
+                      <div onfocus="set_active('', 'prefix_tags');"
+                           onblur="set_inactive('prefix_tags');"
+                           tabindex="-1"
+                           style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+
+                           <input
+                            class="invisible" id="input-tags" name="tags" type="text"
+                            onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');">
+                      </div>
 
                     </div>
 

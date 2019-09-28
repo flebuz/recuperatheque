@@ -87,7 +87,8 @@
   ?>
 
 
-  <div class="catalogue quasi-fullwidth">
+  <div class="quasi-fullwidth">
+    <div class="catalogue">
 
     <div class="w3-row search-bar-container">
       <div class="w3-col s12 m12 l4 trick">
@@ -255,6 +256,7 @@
 
     </div>
 
+    </div>
   </div>
 
 

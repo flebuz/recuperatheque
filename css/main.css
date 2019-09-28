@@ -16,6 +16,8 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* --- global container --- */
 
+.quasi-fullwidth{
+}
 
 @media (min-width: 993px){
   .quasi-fullwidth{

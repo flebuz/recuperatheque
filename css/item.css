@@ -5,6 +5,8 @@
 .items-container{
   background: #F0F0F0;
   padding: 6px 0 6px;
+  overflow: scroll;
+  max-height: 100vh;
 }
 
 .item{
