@@ -16,9 +16,10 @@
   <link rel="stylesheet" href="css/w3.css">
   <!-- to have icon of the font awesome 5 -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- la typo JOST -->
+  <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
 
 

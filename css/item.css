@@ -4,19 +4,18 @@
 
 .items-container{
   background: #F0F0F0;
-  padding: 0;
+  padding: 6px 0 6px;
 }
 
 .item{
   text-align: left;
   background: white;
   padding: 24px 24px 12px;
-  border-bottom: 1px solid #E0E0E0;
 }
 
   /*on rajoute les espacemens et options quand yen a plusieur*/
 .items-container .item{
-  margin-bottom: 12px;
+  margin: 6px 0 6px;
 }
 
 
@@ -25,11 +24,11 @@
 @media (min-width: 601px){
  .items-container{
    background: white;
-   margin: 6px;
-   padding: 0px;
+   padding: 6px;
  }
  .items-container .item{
    margin: 6px;
+   border-bottom: 1px solid #E0E0E0;
  }
  .item{
    padding: 12px;
@@ -78,7 +77,7 @@
   width: 100%;
 }
 
-/* version single desktop */
+/* - version single desktop - */
 @media (min-width: 601px){
   .item-single-container{
     text-align: center;
@@ -96,6 +95,16 @@
   .item-single-container .item-text-container{
     padding: 12px;
     width: 500px;
+  }
+  .item-single-container .item-text-container{
+    display: flex;
+    flex-direction: column;
+  }
+  .item-single-container .item-date-container{
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
   }
 }
 

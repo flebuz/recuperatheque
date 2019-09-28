@@ -25,11 +25,17 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 .catalogue{
-  background: white;
+  background: #F0F0F0;
+}
+
+@media (min-width: 601px){
+  .catalogue{
+  }
 }
 
 @media (min-width: 993px){
   .catalogue{
+    background: white;
     padding: 0 24px 0;
   }
 }
@@ -100,13 +106,10 @@ button:hover{
 }
 
 .header .nav-icon{
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 12px;
 
   color: #909090;
-  border-left: 1px solid #707070;
+  /* border-left: 1px solid #707070; */
 
   display: flex;
   align-items: center;

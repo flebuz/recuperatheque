@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="css/w3.css">
   <!-- to have icon of the font awesome 5 -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- la typo JOST -->
+  <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/menu.css">
@@ -88,10 +90,10 @@
   <div class="catalogue quasi-fullwidth">
 
     <div class="w3-row search-bar-container">
-      <div class="w3-col s12 m4 l4 trick">
+      <div class="w3-col s12 m12 l4 trick">
         <!-- tricks daffichage -->.
       </div>
-      <div class="w3-col s12 m8 l8">
+      <div class="w3-col s12 m12 l8">
         <form class="search-bar" action="catalogue.php" method="GET">
 
           <input type="text" class="search-bar-input" name="q" placeholder="Ajouter un mot clé à la recherche" value="<?php echo $query?>">
@@ -113,7 +115,7 @@
 
     <div class="w3-row">
 
-      <div class="w3-col s12 m4 l4">
+      <div class="w3-col s12 m12 l4">
 
         <!-- menu categorie et tri -->
         <div class="menu-container">
@@ -167,7 +169,7 @@
 
       </div>
 
-      <div class="w3-col s12 m8 l8">
+      <div class="w3-col s12 m12 l8">
 
 
         <!-- search request -->
@@ -199,9 +201,9 @@
 
         <!-- search resume -->
         <?php
+          echo '<div class="search-resume">';
           if($query != '' || $catsearch != 0){
             //si une des deux condition est respacter on affiche le resumer
-            echo '<div class="search-resume">';
 
             if($query != ''){
               $getURL = '?' . http_build_query(array_merge($_GET, array('q'=>'')));
@@ -219,9 +221,9 @@
               $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>0)));
               echo '<a href="' . $getURL . '">' . $system[$catsearch]['nom'] . '</a>';
             }
-            echo ' (' . $number_results . ' résultats)';
-            echo '</div>';
           }
+          echo ' (' . $number_results . ' résultats)';
+          echo '</div>';
         ?>
 
         <div class="w3-row items-container">

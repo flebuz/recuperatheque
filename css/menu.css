@@ -2,6 +2,7 @@
 /* ----- SEARCH BAR -----*/
 
 .search-bar-container{
+  background: white;
 }
 
 .trick{
@@ -28,20 +29,20 @@
 }
 
 .search-bar-button{
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 12px;
 }
 
 
 /* ----- SEARCH RESUME -----*/
 
 .search-resume{
+  background: white;
   text-align: left;
   font-size: 1em;
   line-height: 2em;
   padding: 12px;
-  padding-bottom: 0px;
-  /* border-bottom: 1px solid #E0E0E0; */
+
+  margin-bottom: 12px;
 }
 
 .search-resume a{
@@ -63,6 +64,11 @@
   color: black;
 }
 
+@media(min-width: 993) {
+  .search-resume{
+    margin-bottom: none;
+  }
+}
 
 /* -----CATEGORY MENU -----*/
 
@@ -87,6 +93,13 @@
 
 .menu.active{
   display: block;
+  margin-bottom: 12px;
+}
+
+@media(min-width:992px){
+  .menu.active{
+    margin: 0;
+  }
 }
 
 #cat-button.separation:after{
@@ -113,7 +126,7 @@
 }
 
 .souscategorie-title{
-  padding-left: 48px;
+  padding-left: 36px;
 }
 
 .categorie-count{
@@ -151,25 +164,28 @@
 
 /* ----- DESKTOP SPECIAL AFFICHAGE ----- */
 
-@media (min-width: 720px){
-  .search-bar-container{
-    border-bottom: 1px solid #E0E0E0;
-  }
-  .trick{
-    display: block;
-  }
+@media (min-width: 601px){
   .search-bar{
     padding: 24px;
   }
   .search-resume{
-    /* pcq il devient le padding de l'items container */
-    padding: 24px;
-    padding-bottom: 0px;
+    padding: 12px 24px 12px;
+  }
+}
+
+@media (min-width: 993px){
+  .search-bar-container{
+    border-bottom: 1px solid #E0E0E0;
+  }
+  .search-resume{
+    padding: 30px 24px 0px;
+  }
+  .trick{
+    display: block;
   }
   .menu-container{
     margin: 24px 12px 24px;
     border: 1px solid #E0E0E0;
     border-bottom: none;
-    /* border-right: 1px solid #E0E0E0; */
   }
 }
