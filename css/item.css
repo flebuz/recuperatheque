@@ -85,6 +85,16 @@ celle de l'item en lui meme en ajoutant les marges */
   width: 100%;
 }
 
+/* adaption flex pour desktop-solo */
+@media (min-width: 720px){
+  .item-single-container .item{
+   display: flex;
+  }
+  .item-single-container .item-photo-container, .item-text-container{
+    padding: 12px;
+  }
+}
+
 /* ----- les boites d'infos qui compose l'item */
 
 .item-categorie{

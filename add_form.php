@@ -42,7 +42,7 @@ if (isset($_POST['cat'])) {
 
 <body class="disable-dbl-tap-zoom">
 
-<?php include 'header.php'; ?>
+<?php include 'header2.php'; ?>
 
 
 <main>
