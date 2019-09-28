@@ -529,6 +529,8 @@ function getOrientation(file, callback) {
 
 function DessineVignette(type, elem, orientation) {
 
+  var compression = 1.0;
+
   //si l'image uploadée est passée en argument
   if (type == 'imagesnap') {
 
@@ -580,7 +582,8 @@ function DessineVignette(type, elem, orientation) {
 
     // on affiche le canevas final
     canvas3.classList.remove("invisible");
-    return canvas3.toDataURL("image/jpeg", 0.9);
+    return canvas3.toDataURL("image/jpeg", compression);
+
   } else if ((type == 'videosnap') && (video.readyState === 4)) {
 
     var canvas_streaming = document.getElementById('video_streaming'),
@@ -614,7 +617,7 @@ function DessineVignette(type, elem, orientation) {
       canvas2.classList.remove('flash');
     }, 500);
 
-    return canvas2.toDataURL("image/jpeg", 0.9);
+    return canvas2.toDataURL("image/jpeg", compression);
   }
 
   //retourne une image URI (possible de jouer avec la qualité du jpeg avec .toDataURL)

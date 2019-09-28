@@ -48,11 +48,12 @@
   white-space: nowrap;
   padding-left: 10px;
   padding-right: 10px;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   text-decoration: none;
   background: lavender;
-  border-radius: 8px;
+  border-radius: 10px;
+  line-height: 2.5;
 }
 
 .search-resume a:after{

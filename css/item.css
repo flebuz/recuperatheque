@@ -1,49 +1,43 @@
 
-/* ----- ITEM -----*/
 
-/* --- le gros div qui regroupe les items quand il y en a plusieur */
+/* --- version mobile --- */
+
 .items-container{
-  /* background: #F0F0F0; */
-  margin: 6px;
-}
-
-/* --- le div qui encadre un item quand il y en a 1 seul */
-
-.item-single-back{
   background: #F0F0F0;
-  text-align: center;
-  height: 100%;
-}
-
-.item-single-container{
-  /* quand on est sur la page ou ya 1 seul item */
-  display: inline-block;
+  padding: 0;
 }
 
 .item{
   text-align: left;
   background: white;
-  padding: 12px;
-  margin: 6px;
+  padding: 24px 24px 12px;
   border-bottom: 1px solid #E0E0E0;
 }
 
-.item-single-container .item{
-  margin: 0px;
-  border: none;
+  /*on rajoute les espacemens et options quand yen a plusieur*/
+.items-container .item{
+  margin-bottom: 12px;
 }
 
-/* si on est sur mobile on enleve les marges pour avoir l'item en full-width */
-@media (max-width: 720px){
+
+/* --- version bureau --- */
+
+@media (min-width: 601px){
  .items-container{
-   margin: 0;
+   background: white;
+   margin: 6px;
+   padding: 0px;
+ }
+ .items-container .item{
+   margin: 6px;
  }
  .item{
-   margin: 0;
+   padding: 12px;
  }
 }
 
-/* ----- ce qu'il y a autour de l'item */
+
+/* --- ce qu'il y a autour de l'item --- */
 
 .item-link{
   text-decoration: none;
@@ -59,9 +53,7 @@
 
 /* barre des boutons */
 .item-buttons-container{
-  /* background: white; */
   padding: 6px;
-
   display: flex;
   flex-wrap: nowrap;
 }
@@ -71,8 +63,9 @@
   margin: 6px;
 }
 
-/* largeur maximum de la photo et du text qui determine
-celle de l'item en lui meme en ajoutant les marges */
+
+/* --- boite photo et boite texte --- */
+
 .item-photo-container, .item-text-container{
   max-width: 500px;
 }
@@ -85,15 +78,27 @@ celle de l'item en lui meme en ajoutant les marges */
   width: 100%;
 }
 
-/* adaption flex pour desktop-solo */
-@media (min-width: 720px){
-  .item-single-container .item{
-   display: flex;
+/* version single desktop */
+@media (min-width: 601px){
+  .item-single-container{
+    text-align: center;
   }
-  .item-single-container .item-photo-container, .item-text-container{
-    padding: 12px;
+  .item-single-content{
+    display: inline-block;
   }
 }
+
+@media (min-width: 901px){
+  .item-single-container .item{
+    display: flex;
+  }
+  .item-single-container .item-photo-container,
+  .item-single-container .item-text-container{
+    padding: 12px;
+    width: 500px;
+  }
+}
+
 
 /* ----- les boites d'infos qui compose l'item */
 
@@ -118,6 +123,7 @@ celle de l'item en lui meme en ajoutant les marges */
   display: none;
 }
 
+/* ajout des séparateur d'info quand l'item est seul */
 .item-single-container .item-info-container:after,
 .item-single-container .item-info-plus-container::after,
 .item-single-container .item-tags-container::after{
@@ -130,6 +136,7 @@ celle de l'item en lui meme en ajoutant les marges */
   margin-bottom: 16px;
   background: #E0E0E0;
 }
+
 
 /* ----- une ligne de l'item (icone + texte) */
 
@@ -169,10 +176,14 @@ celle de l'item en lui meme en ajoutant les marges */
   padding-left: 6px;
 }
 
-.item-tag{
+.item-single-container .item-tag{
+  white-space: nowrap;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-decoration: none;
   background: lavender;
-  padding: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
-  border-radius: 0px;
+  border-radius: 10px;
+  line-height: 2.5;
 }

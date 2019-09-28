@@ -16,16 +16,6 @@
 }
 */
 
-h1, h2, h3, h4, h5, h6, li, .breadcrumb{
-  font-family: 'Jost' !important;
-  font-weight:600;
-}
-
-body, p, blockquote, span {
-    font-family: 'Jost' !important;
-    font-weight:400;
-}
-
 
 .no-select {
      -moz-user-select: none; /* Firefox */
@@ -33,19 +23,6 @@ body, p, blockquote, span {
    -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
   -webkit-user-select: none; /* Chrome, Safari, and Opera */
   -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
-}
-
-/*
-|========|
-| header |
-|========|
-*/
-
-.header{
-  background: #202020;
- 	padding: 10px;
- 	color:#FFFFFF;
- 	text-align: center
 }
 
 /*
