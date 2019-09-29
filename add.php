@@ -51,21 +51,16 @@ $prix= $_POST['prix'];
 $remarques= $_POST['remarques'];
 $dimensions= $_POST['dimensions'];
 $localisation = $_POST['localisation'];
-$today = date('Y-m-d');
 
 //la separation des tags devient: 'virgule espace' et plus juste 'virgule'
 $tags = str_replace(",", ", ", $tags);
 
-$description="champ obsolète"; //à supprimer de la bdd et des requêtes
-?>
-
-<?php
-
 try {
 
-    $req = $bdd ->prepare("INSERT INTO catalogue (ID, ID_categorie ,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, date_ajout, poids, prix, localisation) VALUES (:ID, :ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :date_ajout, :poids, :prix, :localisation)");
+    $req = $bdd ->prepare("INSERT INTO catalogue (ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, poids, prix, localisation)
+                                  VALUES (:ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :poids, :prix, :localisation)
+                          ");
 
-$req->bindParam(':ID', $object_id);
 $req->bindParam(':ID_categorie', $categorie);
 $req->bindParam(':ID_souscategorie', $souscategorie);
 $req->bindParam(':pieces', $pieces);
@@ -73,7 +68,6 @@ $req->bindParam(':dimensions', $dimensions);
 $req->bindParam(':etat', $etat);
 $req->bindParam(':tags', $tags);
 $req->bindParam(':remarques', $remarques);
-$req->bindParam(':date_ajout', $today);
 $req->bindParam(':poids', $poids);
 $req->bindParam(':prix', $prix);
 $req->bindParam(':localisation', $localisation);

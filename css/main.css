@@ -6,7 +6,7 @@ html, body{
 }
 
 html, body, p, h1, h2, h3, h4, h5, h6{
-  font-family:, 'Open Sans', Helvetica, arial, sans-serif;
+  font-family:, 'Open Sans', Helvetica, arial, sans-serif !important;
   /* font-family: 'Jost' !important; */
   font-weight: 400;
   font-size: 14px;

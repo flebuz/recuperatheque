@@ -64,6 +64,15 @@
   margin: 6px;
 }
 
+@media(min-width: 993px){
+  .item-buttons-container{
+    padding: 12px;
+  }
+  .item-button{
+    margin: 12px;
+  }
+}
+
 
 /* --- boite photo et boite texte --- */
 
@@ -89,7 +98,7 @@
   }
 }
 
-@media (min-width: 901px){
+@media (min-width: 993px){
   .item-single-container .item{
     display: flex;
   }
@@ -189,12 +198,9 @@
 
 .item-single-container .item-tag{
   white-space: nowrap;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding: 5px 10px 5px 5px;
   text-decoration: none;
   background: lavender;
-  border-radius: 10px;
+  border-radius: 15px;
   line-height: 2.5;
 }

@@ -530,6 +530,7 @@ function getOrientation(file, callback) {
 function DessineVignette(type, elem, orientation) {
 
   var compression = 1.0;
+  var size = 1000;
 
   //si l'image uploadée est passée en argument
   if (type == 'imagesnap') {
@@ -541,10 +542,10 @@ function DessineVignette(type, elem, orientation) {
       vw = elem.width,
       vh = elem.height;
 
-    canvas2.width = 400;
-    canvas2.height = 400;
-    canvas3.width = 400;
-    canvas3.height = 400;
+    canvas2.width = size;
+    canvas2.height = size;
+    canvas3.width = size;
+    canvas3.height = size;
 
     //on calcule le plus grand carré au milieu de l'image
     var dimension = Math.min(vw, vh);
@@ -552,7 +553,7 @@ function DessineVignette(type, elem, orientation) {
     var sy = (vh - dimension) / 2;
 
     //on crop le plus grand carré au milieu de l'image et on la redimensionne dans un carré de 400x400
-    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, 400, 400);
+    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
 
     //on utilise l'orientation EXIF de l'image (le cas échéant) pour réorienter le canevas vers le haut puis on dessine
     if (orientation == 6) {
@@ -591,8 +592,8 @@ function DessineVignette(type, elem, orientation) {
       ctx1 = canvas1.getContext('2d'),
       canvas2 = document.getElementById('snap_final'),
       ctx2 = canvas2.getContext('2d');
-    canvas2.width = 400;
-    canvas2.height = 400;
+    canvas2.width = size;
+    canvas2.height = size;
 
 
     var vw = video.videoWidth,
@@ -610,7 +611,7 @@ function DessineVignette(type, elem, orientation) {
     canvas_streaming.classList.add("invisible");
     canvas2.classList.remove("invisible");
     //Dessine l'image video dans notre Canvas
-    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, 400, 400);
+    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, size, size);
 
     canvas2.classList.add('flash');
     setTimeout(function() {
