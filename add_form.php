@@ -42,7 +42,13 @@ if (isset($_POST['cat'])) {
 
 <body class="disable-dbl-tap-zoom">
 
-<?php include 'header2.php'; ?>
+  <?php
+    include('header.php');
+  ?>
+
+  <?php
+    include('connection_db.php')
+  ?>
 
 
 <main>
@@ -126,15 +132,6 @@ if (isset($_POST['cat'])) {
 
 
   <?php
-  //connection database
-  try {
-    //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-      $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-  } catch (Exception $e) {
-      die('Erreur : '.$e->getMessage());
-  }
-
-
     //prep the request
     //every line is a souscategorie
     $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `categorie` ORDER BY `categorie`.`ID`

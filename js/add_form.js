@@ -38,11 +38,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
   setConstraints();
   init_getusermedia();
 
-
-
-
-
-
 });
 
 function getPreciseConstraints() {
@@ -215,11 +210,6 @@ function init_materialize() {
   var instances = M.FloatingActionButton.init(elems2);
 
 }
-
-
-
-
-
 
 function PlayVideo() {
   /*setConstraints();*/
@@ -527,6 +517,7 @@ function getOrientation(file, callback) {
   reader.readAsArrayBuffer(file.slice(0, 64 * 1024));
 };
 
+
 function DessineVignette(type, elem, orientation) {
 
   var compression = 1.0;
@@ -574,7 +565,6 @@ function DessineVignette(type, elem, orientation) {
     } else {
       ctx3.clearRect(0, 0, canvas2.width, canvas2.height);
       ctx3.drawImage(canvas2, 0, 0);
-
     }
 
     //on cache le svg avec les bords discontinus

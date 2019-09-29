@@ -16,19 +16,12 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
 ?>
 
 <table>
+
+  <?php
+    include('connection_db.php')
+  ?>
+
 <?php
-
-
-    //connection database
-    try{
-
-      // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-     $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-    }
-    catch(Exception $e){
-        die('Erreur : '.$e->getMessage());
-    }
 
       //prep the request
       $req = $bdd->prepare('  SELECT MAX(`ID`)  AS `greatestID` FROM `catalogue`

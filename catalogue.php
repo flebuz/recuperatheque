@@ -29,19 +29,11 @@
 <body>
 
   <?php
-    include('header2.php');
+    include('header.php');
   ?>
 
   <?php
-    //connection database
-    try{
-      $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-      // $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-    }
-    catch(Exception $e){
-      die('Erreur : '.$e->getMessage());
-    }
+    include('connection_db.php')
   ?>
 
   <?php
@@ -90,6 +82,7 @@
   <div class="quasi-fullwidth">
     <div class="catalogue">
 
+    <!-- Bar de recherche -->
     <div class="w3-row search-bar-container">
       <div class="w3-col s12 m12 l4 trick">
         <!-- tricks daffichage -->.
@@ -236,7 +229,7 @@
                 //affichage de l'item
                 ?>
 
-                <a class="item-link" href="item_page2.php?id=<?php echo $item['ID_item']?>">
+                <a class="item-link" href="item_page.php?id=<?php echo $item['ID_item']?>">
                   <div class='w3-col s12 m6 l4'>
                     <?php include('item.php');?>
                   </div>
@@ -258,10 +251,6 @@
 
     </div>
   </div>
-
-
-  <!-- Bar de recherche - formulaire -->
-
 
 </body>
 
