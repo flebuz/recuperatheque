@@ -1,16 +1,15 @@
 
 html, body{
   background: #F0F0F0;
-  min-height: 100%;
   margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 html, body, p, h1, h2, h3, h4, h5, h6{
   font-family:, 'Open Sans', Helvetica, arial, sans-serif !important;
   /* font-family: 'Jost' !important; */
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
 }
 
 
@@ -26,8 +25,14 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   }
 }
 
+/* --- catalogue --- */
+
 .catalogue{
   background: #F0F0F0;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 @media (min-width: 601px){
@@ -42,6 +47,28 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   }
 }
 
+/* ordre pour version mobile et ipad*/
+
+.catalogue > * {
+  flex: 1 100%;
+}
+
+/* ordre et dimension pour bureau */
+@media(min-width:993px){
+  .flex-menu{
+    flex-basis: 30%; /*prend toute la largeur*/
+    border-left: 1px solid #E0E0E0;
+    border-right: 1px solid #E0E0E0;
+    box-sizing: border-box;
+    max-width: 30%;
+    min-height: 100vh;
+    padding-bottom: 48px;
+  }
+  .flex-items{
+    flex-basis: 70%;
+    padding-left: 24px;
+  }
+}
 
 /* --- basic button --- */
 

@@ -1,21 +1,21 @@
 
 /* ----- SEARCH BAR -----*/
 
-.search-bar-container{
-  background: white;
-}
-
 .trick{
   display: none;
   color: white;
 }
 
 .search-bar{
+  background: white;
   padding: 12px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
+
+  height: 42px;
+  box-sizing: content-box;
 }
 
 /*la barre de recherche grow en longueur if spaces*/
@@ -35,13 +35,10 @@
 
 /* ----- SEARCH RESUME -----*/
 
-.search-resume{
+.search-resume-wrapper{
   background: white;
   text-align: left;
-  font-size: 1em;
-  line-height: 2em;
   padding: 12px;
-
   margin-bottom: 12px;
 }
 
@@ -164,28 +161,18 @@
 
 /* ----- DESKTOP SPECIAL AFFICHAGE ----- */
 
-@media (min-width: 601px){
-  .search-bar{
-    padding: 24px;
-  }
-  .search-resume{
-    padding: 12px 24px 12px;
-  }
-}
-
 @media (min-width: 993px){
-  .search-bar-container{
+  .search-bar{
+    padding: 24px 12px 24px;
+  }
+  .search-resume-wrapper{
+    padding: 24px 12px 24px;
     border-bottom: 1px solid #E0E0E0;
-  }
-  .search-resume{
-    padding: 30px 24px 0px;
-  }
-  .trick{
-    display: block;
-  }
-  .menu-container{
-    margin: 24px 12px 24px;
-    border: 1px solid #E0E0E0;
-    border-bottom: none;
+
+    height: 42px;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    align-content: center;
   }
 }
