@@ -103,12 +103,14 @@
 
       <!-- menu categorie et tri -->
       <div class="menu-container">
-        <div class="w3-row menu-bar">
-          <button id="cat-button" class="w3-col s6 menu-title separation" onclick="openMenu(event,'categories')">Catégories
-            <i class='w3-medium fas fa-plus menu-icon'></i>
+        <div class="menu-bar">
+          <button id="cat-button" class="menu-button separation" onclick="openMenu(event,'categories')">
+            <div class="menu-title">Catégories</div>
+            <i class='menu-icon w3-large fas fa-plus menu-icon'></i>
           </button>
-          <button id="tri-button" class="w3-col s6 menu-title" onclick="openMenu(event,'tri')">Tri
-            <i class='w3-medium fas fa-sort menu-icon'></i>
+          <button id="tri-button" class="menu-button" onclick="openMenu(event,'tri')">
+            <div class="menu-title">Tri</div>
+            <i class='menu-icon w3-large fas fa-sort menu-icon'></i>
           </button>
         </div>
 
@@ -138,7 +140,7 @@
               menus[i].className = menus[i].className.replace(" active", "");
             }
             // on reset la couleur des titles
-            var titles = document.getElementsByClassName("menu-title");
+            var titles = document.getElementsByClassName("menu-button");
             for (var i = 0; i < titles.length; i++) {
               titles[i].className = titles[i].className.replace(" active", "");
               titles[i].className = titles[i].className.replace(" separation", "");

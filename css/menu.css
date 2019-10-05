@@ -1,21 +1,16 @@
 
 /* ----- SEARCH BAR -----*/
 
-.trick{
-  display: none;
-  color: white;
-}
-
 .search-bar{
   background: white;
   padding: 12px;
+  height: 48px;
+  box-sizing: content-box;
+
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-
-  height: 42px;
-  box-sizing: content-box;
 }
 
 /*la barre de recherche grow en longueur if spaces*/
@@ -29,7 +24,8 @@
 }
 
 .search-bar-button{
-  padding: 12px;
+  width: 48px;
+  padding: 0;
 }
 
 
@@ -40,6 +36,17 @@
   text-align: left;
   padding: 12px;
   margin-bottom: 12px;
+
+  height: 48px;
+  box-sizing: content-box;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.search-resume{
+
 }
 
 .search-resume a{
@@ -73,12 +80,31 @@
   border-top: 1px solid #E0E0E0;
 }
 
-.menu-title{
-
+.menu-bar{
+  width: 100%;
+  display: flex;
 }
 
-.menu-title.active{
+.menu-button{
+  flex-basis: 50%;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-button.active{
   background: white;
+}
+
+.menu-title{
+  padding-left: 12px;
+}
+
+.menu-icon{
+  width: 48px;
+  text-align: center;
 }
 
 .menu{
@@ -102,10 +128,10 @@
 #cat-button.separation:after{
   content : "";
   position: absolute;
-  top: 25%;
+  top: 0;
   left: 1px;
   z-index: 10;
-  height: 50%;
+  height: 100%;
   width: 100%;
   border-right: 2px solid #909090;
 }
@@ -168,11 +194,5 @@
   .search-resume-wrapper{
     padding: 24px 12px 24px;
     border-bottom: 1px solid #E0E0E0;
-
-    height: 42px;
-    box-sizing: content-box;
-    display: flex;
-    align-items: center;
-    align-content: center;
   }
 }

@@ -1,15 +1,6 @@
 
 
   <?php
-    // calcul du prix
-    if ($item['unitesscat']=='kg'){
-      $prix = $item['prixsscat'] * $item['poids'] / $item['pieces'];
-    }
-    else{
-      $prix = $item['prixsscat'];
-    }
-    $prix = $prix * ($item['etat']/4);
-    //ou
     $prix = $item['prix'];
 
     //pluriel ou non sur le nombre de pièces
@@ -81,9 +72,9 @@
             //echo $item['etat'];
             for($n = 0; $n < 4; $n++){
               if($item['etat'] > $n){
-                echo '<i class="fas fa-heart etat-icon"></i> ' ;
+                echo '<i class="">▬</i> ' ;
               } else{
-                echo '<i class="far fa-heart etat-icon"></i> ' ;
+                echo '<i class=""></i> ' ;
               }
             }
             ?>

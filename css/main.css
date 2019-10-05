@@ -79,20 +79,14 @@ button {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-
+  padding: 0;
   font-weight: bold;
   font-size: 1rem;
   margin: 0px;
-  padding: 12px;
   position: relative;
 
   overflow: hidden;
   white-space: nowrap;
-}
-
-button i{
-  padding-left: 12px;
-  color: #606060;
 }
 
 button:hover{
@@ -104,14 +98,14 @@ button:hover{
 
 .header-container{
   width: 100%;
+  height: 48px;
   background: #606060;
   color: white;
 
 }
 
 .header{
-  max-width: 1200px;
-  margin: auto;
+  height: 100%;
 
   display: flex;
   flex-direction: row;
@@ -135,9 +129,9 @@ button:hover{
 }
 
 .header .nav-button{
-  padding: 12px;
+  /* background: #707070; */
   color: #909090;
-  /* border-left: 1px solid #707070; */
+  margin: 0 0px 0;
 
   display: flex;
   align-items: center;
@@ -145,12 +139,17 @@ button:hover{
 
 .header .nav-title{
   display: none;
+  padding-left: 12px;
+}
+
+.header .nav-icon{
+    width: 48px;
+    text-align: center;
 }
 
 @media(min-width: 601px){
   .header .nav-title{
     display: block;
-    padding-right: 12px;
   }
 }
 
