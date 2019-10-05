@@ -25,6 +25,11 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   }
 }
 
+/* fait de l'espace pour le header en fixed position */
+.space-header{
+  margin-top: 48px;
+}
+
 /* --- catalogue --- */
 
 .catalogue{
@@ -102,6 +107,9 @@ button:hover{
   background: #606060;
   color: white;
 
+  position: fixed;
+  top: 0;
+  z-index: 11;
 }
 
 .header{

@@ -79,7 +79,7 @@
   ?>
 
 
-  <div class="quasi-fullwidth">
+  <div class="quasi-fullwidth space-header">
     <div class="catalogue">
 
     <!-- Bar de recherche -->

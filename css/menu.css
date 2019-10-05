@@ -3,7 +3,7 @@
 
 .search-bar{
   background: white;
-  padding: 12px;
+  padding: 12px 0;
   height: 48px;
   box-sizing: content-box;
 
@@ -28,6 +28,12 @@
   padding: 0;
 }
 
+@media (min-width: 993px){
+  .search-bar{
+    padding: 24px 0px;
+  }
+}
+
 
 /* ----- SEARCH RESUME -----*/
 
@@ -36,13 +42,6 @@
   text-align: left;
   padding: 12px;
   margin-bottom: 12px;
-
-  height: 48px;
-  box-sizing: content-box;
-
-  display: flex;
-  align-items: center;
-  align-content: center;
 }
 
 .search-resume{
@@ -68,9 +67,20 @@
   color: black;
 }
 
-@media(min-width: 993) {
+@media(min-width: 993px) {
   .search-resume{
     margin-bottom: none;
+  }
+  .search-resume-wrapper{
+    height: 48px;
+    box-sizing: content-box;
+
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    padding: 24px 12px 24px;
+    border-bottom: 1px solid #E0E0E0;
   }
 }
 
@@ -184,15 +194,3 @@
 /* .menu a:hover{
   color: #D0D0D0;
 } */
-
-/* ----- DESKTOP SPECIAL AFFICHAGE ----- */
-
-@media (min-width: 993px){
-  .search-bar{
-    padding: 24px 12px 24px;
-  }
-  .search-resume-wrapper{
-    padding: 24px 12px 24px;
-    border-bottom: 1px solid #E0E0E0;
-  }
-}
