@@ -98,6 +98,22 @@ button:hover{
   /* background:#00E676; */
 }
 
+.button-flex{
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-title{
+  padding-left: 12px;
+}
+
+.button-icon{
+  width: 48px;
+  text-align: center;
+}
+
 
 /* ----- HEADER -----*/
 

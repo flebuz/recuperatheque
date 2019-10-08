@@ -100,25 +100,11 @@
 
 .menu-button{
   flex-basis: 50%;
-  height: 48px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .menu-button.active{
   background: white;
   transition: 0.3s;
-}
-
-.menu-title{
-  padding-left: 12px;
-}
-
-.menu-icon{
-  width: 48px;
-  text-align: center;
 }
 
 .menu{

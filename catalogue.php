@@ -105,12 +105,12 @@
       <div class="menu-container" id="menu-container">
         <div class="menu-bar">
           <button id="cat-button" class="menu-button separation" onclick="openMenu(event,'categories')">
-            <div class="menu-title">Catégories</div>
-            <i class='menu-icon w3-large fas fa-plus menu-icon'></i>
+            <div class="button-title">Catégories</div>
+            <i class='button-icon w3-large fas fa-plus'></i>
           </button>
           <button id="tri-button" class="menu-button" onclick="openMenu(event,'tri')">
-            <div class="menu-title">Tri</div>
-            <i class='menu-icon w3-large fas fa-sort menu-icon'></i>
+            <div class="button-title">Tri</div>
+            <i class='button-icon w3-large fas fa-sort'></i>
           </button>
         </div>
 
