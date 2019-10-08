@@ -104,11 +104,11 @@
       <!-- menu categorie et tri -->
       <div class="menu-container" id="menu-container">
         <div class="menu-bar">
-          <button id="cat-button" class="menu-button separation" onclick="openMenu(event,'categories')">
+          <button id="cat-button" class="button-flex menu-button separation" onclick="openMenu(event,'categories')">
             <div class="button-title">Catégories</div>
             <i class='button-icon w3-large fas fa-plus'></i>
           </button>
-          <button id="tri-button" class="menu-button" onclick="openMenu(event,'tri')">
+          <button id="tri-button" class="button-flex menu-button" onclick="openMenu(event,'tri')">
             <div class="button-title">Tri</div>
             <i class='button-icon w3-large fas fa-sort'></i>
           </button>

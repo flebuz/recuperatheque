@@ -1,7 +1,6 @@
 
 <!-- ouvre le menu -->
 <div id="categories" class="menu">
-  <div id="measuring-categories">
 
   <?php
     //----- construire le menu en parcourant l'arbre
@@ -75,7 +74,6 @@
   ?>
 
 </div>
-</div>
 
   <script>
 
@@ -88,30 +86,20 @@
         // on ouvre l'accordeon
         x.style.height = x.scrollHeight+'px';
         x.previousElementSibling.className += " active";
-        // on ajuste la taille du menu entier
-        menu.style.height = 'auto';
-
       } else {
         x.style.height = 0;
         x.previousElementSibling.className = x.previousElementSibling.className.replace(" active", "");
-        // on ajuste la taille du menu entier
-        menu.style.height = 'auto';
       }
     }
 
     function openMenu(evt,menuName){
-      //on anime la height du menu et on mesure la taille du wrapper
+      //on anime la height du menu
       var menu = document.getElementById(menuName);
       var button = evt.currentTarget;
-      var wrapper = document.getElementById('measuring-' + menuName);
-      var size = wrapper.clientHeight + 'px';
 
       // si le menu est celui ouvert on le ferme juste
       if (menu.clientHeight){
-        //avant de desactivate on redonne une taille non-auto
-
         menu.style.transition = '0.3s';
-
         desactive(menu,button);
       }
       else{
@@ -138,19 +126,20 @@
           }
           // on ouvre sans transition
           menu.style.transition = '0s'
-          active(menu, size, button);
+          active(menu, button);
         }
         else{
           // on doit juste ouvrir le menu
           menu.style.transition = '0.3s'
-          active(menu, size, button);
+          active(menu, button);
         }
       }
     }
 
-    function active(menu, size, button){
+    function active(menu, button){
 
-      menu.style.height = size;
+      menu.style.height = menu.scrollHeight + "px";
+      setTimeout(function(){menu.style.height='initial';},200);
 
       menu.className += " active";
       button.className += " active";
@@ -163,7 +152,8 @@
 
     function desactive(menu,button){
 
-      menu.style.height = 0;
+      menu.style.height = menu.scrollHeight + "px";
+      setTimeout(function(){menu.style.height=null;},0);
 
       menu.className = menu.className.replace(" active", "");
       button.className = button.className.replace(" active", "");
