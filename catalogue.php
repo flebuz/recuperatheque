@@ -102,7 +102,7 @@
       </form>
 
       <!-- menu categorie et tri -->
-      <div class="menu-container">
+      <div class="menu-container" id="menu-container">
         <div class="menu-bar">
           <button id="cat-button" class="menu-button separation" onclick="openMenu(event,'categories')">
             <div class="menu-title">Catégories</div>
@@ -119,40 +119,6 @@
 
       </div>
     </div>
-
-      <script>
-        function openMenu(evt,menuName) {
-
-          var menu = document.getElementById(menuName);
-
-          // si il est déjà ouvert on le close
-          if (menu.classList.contains("active")){
-            console.log("coucou");
-            menu.className = menu.className.replace(" active", "");
-            evt.currentTarget.className = evt.currentTarget.className.replace(" active", "");
-            document.getElementById("cat-button").className += " separation";
-          }
-          else{
-            console.log("yup");
-            // on ferme tt les autres
-            var menus = document.getElementsByClassName("menu");
-            for (var i = 0; i < menus.length; i++) {
-              menus[i].className = menus[i].className.replace(" active", "");
-            }
-            // on reset la couleur des titles
-            var titles = document.getElementsByClassName("menu-button");
-            for (var i = 0; i < titles.length; i++) {
-              titles[i].className = titles[i].className.replace(" active", "");
-              titles[i].className = titles[i].className.replace(" separation", "");
-            }
-            //on enlève la séparation
-            // document.getElementById("cat-button").className.replace(" separation", "");
-            //on ouvre le selectionner
-            menu.className += " active";
-            evt.currentTarget.className += " active";
-          }
-        }
-      </script>
 
 
       <!-- search request -->

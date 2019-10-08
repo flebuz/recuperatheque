@@ -122,7 +122,7 @@
           <div class="item-info">
             <?php
               for($n = 0; $n < count($tags); $n++){
-                echo '<span class="item-tag" href=#>#' . $tags[$n] . '</span>';
+                echo '<a class="item-tag" href="catalogue?q=' . $tags[$n] . '">#' . $tags[$n] . '</a>';
                 if($n!=count($tags)-1){ echo ', '; }
               }
             ?>

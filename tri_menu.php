@@ -1,6 +1,7 @@
 
 <!-- menu tris -->
 <div id="tri" class="menu">
+  <div id="measuring-tri">
 
   <?php
     foreach($tri_option as $param => $nom){
@@ -16,4 +17,5 @@
     }
   ?>
 
+  </div>
 </div>

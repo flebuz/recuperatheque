@@ -1,6 +1,7 @@
 
 <!-- ouvre le menu -->
 <div id="categories" class="menu">
+  <div id="measuring-categories">
 
   <?php
     //----- construire le menu en parcourant l'arbre
@@ -10,7 +11,7 @@
   ?>
 
   <a href="<?php echo $getURL;?>"
-    class="w3-block categorie-title tout">
+    class="categorie-title tout">
     Afficher toutes les catégories
   </a>
 
@@ -22,8 +23,8 @@
       if(array_key_exists($catID,$cat_counter)){ ?>
 
         <!-- declare l'accordeon d'une categorie -->
-        <a onclick="myFunction('<?php echo $catID; ?>')"
-          class="w3-block categorie-title <?php if($catsearch==$catID){echo 'selected open'; }?>">
+        <a onclick="openCat('<?php echo $catID; ?>')"
+          class="categorie-title <?php if($catsearch==$catID){echo 'selected active'; }?>">
           <?php
             echo $catData['nom'];
             echo '<span class="categorie-count">(' . $cat_counter[$catID] . ')</span>';
@@ -32,8 +33,7 @@
 
         <!-- ouvre l'accordeon des sscat associées -->
         <div id="<?php echo $catID;?>"
-          class="w3-hide <?php if($catsearch==$catID){echo 'w3-show'; }?>">
-        <div class="accordeon">
+          class="accordeon <?php if($catsearch==$catID){echo 'active'; }?>">
 
         <!-- on ajoute la sscat de toute les sscat -->
         <?php
@@ -41,7 +41,7 @@
           $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>$catID, 'sscatsearch'=>0)));
         ?>
         <a href="<?php echo $getURL;?>"
-          class="w3-block souscategorie-title tout <?php if($catsearch==$catID and $sscatsearch==0){echo 'selected'; }?>">
+          class="souscategorie-title tout <?php if($catsearch==$catID and $sscatsearch==0){echo 'selected'; }?>">
           Tout dans <?php echo $catData['nom']; ?>
         </a>
 
@@ -58,7 +58,7 @@
             $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>$catID, 'sscatsearch'=>$sscatID)));
             ?>
             <a href="<?php echo $getURL;?>"
-              class="w3-block souscategorie-title <?php if($sscatsearch==$sscatID){echo 'selected'; }?>">
+              class="souscategorie-title <?php if($sscatsearch==$sscatID){echo 'selected'; }?>">
               <?php
                 echo $sscatNom;
                 echo '<span class="categorie-count">(' . $sscat_counter[$sscatID] . ')</span>';
@@ -69,22 +69,106 @@
         }
 
         //on ferme l'accordeon
-        echo '</div></div>';
+        echo '</div>';
       }
     }
   ?>
 
+</div>
+</div>
+
   <script>
-    function myFunction(id) {
+
+    // js to open and close the menus and submenu with animation
+
+    function openCat(id) {
       var x = document.getElementById(id);
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-        x.previousElementSibling.className += " open";
+      var menu = document.getElementById('categories');
+      if (!x.clientHeight) {
+        // on ouvre l'accordeon
+        x.style.height = x.scrollHeight+'px';
+        x.previousElementSibling.className += " active";
+        // on ajuste la taille du menu entier
+        menu.style.height = 'auto';
+
       } else {
-        x.className = x.className.replace(" w3-show", "");
-        x.previousElementSibling.className = x.previousElementSibling.className.replace(" open", "");
+        x.style.height = 0;
+        x.previousElementSibling.className = x.previousElementSibling.className.replace(" active", "");
+        // on ajuste la taille du menu entier
+        menu.style.height = 'auto';
       }
     }
-  </script>
 
-</div>
+    function openMenu(evt,menuName){
+      //on anime la height du menu et on mesure la taille du wrapper
+      var menu = document.getElementById(menuName);
+      var button = evt.currentTarget;
+      var wrapper = document.getElementById('measuring-' + menuName);
+      var size = wrapper.clientHeight + 'px';
+
+      // si le menu est celui ouvert on le ferme juste
+      if (menu.clientHeight){
+        //avant de desactivate on redonne une taille non-auto
+
+        menu.style.transition = '0.3s';
+
+        desactive(menu,button);
+      }
+      else{
+        // on regarde si ya qq chose d'ouvert
+        var menus = document.getElementsByClassName("menu");
+        var isSomethingOpen = false;
+        for (var i = 0; i < menus.length; i++){
+          if (menus[i].classList.contains('active')){
+            isSomethingOpen = true;
+          }
+        }
+
+        if(isSomethingOpen){
+          // on ferme tt les autres
+          var menus = document.getElementsByClassName("menu");
+          for (var i = 0; i < menus.length; i++) {
+            menus[i].style.transition = '0s';
+            menus[i].style.height = 0;
+            menus[i].className = menus[i].className.replace(" active", "");
+          }
+          var titles = document.getElementsByClassName("menu-button");
+          for (var i = 0; i < titles.length; i++) {
+            titles[i].className = titles[i].className.replace(" active", "");
+          }
+          // on ouvre sans transition
+          menu.style.transition = '0s'
+          active(menu, size, button);
+        }
+        else{
+          // on doit juste ouvrir le menu
+          menu.style.transition = '0.3s'
+          active(menu, size, button);
+        }
+      }
+    }
+
+    function active(menu, size, button){
+
+      menu.style.height = size;
+
+      menu.className += " active";
+      button.className += " active";
+
+      //ajoute 12px a la marge du container
+      document.getElementById('menu-container').style.marginBottom = '12px';
+      //enleve la seperation
+      document.getElementById("cat-button").className = document.getElementById("cat-button").className.replace(" separation", "");
+    }
+
+    function desactive(menu,button){
+
+      menu.style.height = 0;
+
+      menu.className = menu.className.replace(" active", "");
+      button.className = button.className.replace(" active", "");
+
+      document.getElementById('menu-container').style.marginBottom = '0px';
+      document.getElementById("cat-button").className += " separation";
+    }
+  </script>
