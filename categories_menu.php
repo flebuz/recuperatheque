@@ -21,7 +21,7 @@
       //si la categorie est presente dans le compteur
       if(array_key_exists($catID,$cat_counter)){ ?>
 
-        <!-- declare l'accordeon d'une categorie -->
+        <!-- declare une CATEGORIE -->
         <a onclick="openCat('<?php echo $catID; ?>')"
           class="categorie-title <?php if($catsearch==$catID){echo 'selected active'; }?>">
           <?php
@@ -30,9 +30,10 @@
           ?>
         </a>
 
-        <!-- ouvre l'accordeon des sscat associées -->
+        <!-- ouvre l'ACCORDEON des sscat associées -->
         <div id="<?php echo $catID;?>"
-          class="accordeon <?php if($catsearch==$catID){echo 'active'; }?>">
+          class="accordeon <?php if($catsearch==$catID){echo 'active'; }?>"
+          <?php if($catsearch==$catID){echo 'style="height:auto"'; }?> >
 
         <!-- on ajoute la sscat de toute les sscat -->
         <?php
@@ -85,9 +86,14 @@
       if (!x.clientHeight) {
         // on ouvre l'accordeon
         x.style.height = x.scrollHeight+'px';
+        setTimeout(function(){menu.style.height='initial';},200);
+
         x.previousElementSibling.className += " active";
       } else {
-        x.style.height = 0;
+        // on ferme l'accordeon
+        x.style.height = x.scrollHeight + "px";
+        setTimeout(function(){x.style.height=null;},0);
+
         x.previousElementSibling.className = x.previousElementSibling.className.replace(" active", "");
       }
     }
@@ -161,4 +167,5 @@
       document.getElementById('menu-container').style.marginBottom = '0px';
       document.getElementById("cat-button").className += " separation";
     }
+
   </script>

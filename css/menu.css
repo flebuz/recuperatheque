@@ -44,10 +44,12 @@
   text-align: left;
   padding: 12px;
   margin-bottom: 12px;
-}
 
-.search-resume{
+  border-bottom: 1px solid #E0E0E0;
 
+  position: sticky;
+  top: 48px;
+  z-index: 10;
 }
 
 .search-resume a{
@@ -70,10 +72,9 @@
 }
 
 @media(min-width: 993px) {
-  .search-resume{
-    margin-bottom: none;
-  }
   .search-resume-wrapper{
+    position: static;
+    
     height: 48px;
     box-sizing: content-box;
 

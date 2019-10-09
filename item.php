@@ -72,9 +72,9 @@
             //echo $item['etat'];
             for($n = 0; $n < 4; $n++){
               if($item['etat'] > $n){
-                echo '<i class="">▬</i> ' ;
+                echo '<span class="full">▅</span>' ;
               } else{
-                echo '<i class=""></i> ' ;
+                echo '<span class="empty">▅</span>' ;
               }
             }
             ?>
