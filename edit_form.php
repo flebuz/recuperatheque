@@ -300,7 +300,7 @@ if (isset($_POST['cat'])) {
             <div class="row">
 
                 <div class="col s3 left">
-                  <a class="waves-effect waves-light btn-small grey accent-3" value="edit" onclick="expand('loading_overlay'); " >
+                  <a class="waves-effect waves-light btn-small grey accent-3" value="edit" href="item_page.php?id=<?php echo $id;?>" >
                    <i class="fas fa-arrow-left"></i>
                     Retour
                   </a>
