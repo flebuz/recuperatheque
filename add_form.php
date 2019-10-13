@@ -262,21 +262,17 @@ PlayVideo();"></select>
         </div>
 
         <div id="row_poids" class="row input-field">
-
-            <div class="input-field col s4 m3">
-              <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
-              <label for="indicateur_poids" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
-
-                        <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align:center;">
-                  <span id="" class="postfix">kg</span>
-            </div>
-            <div class="input-field col s8 m9" id="range_div" >
-
-              <div id="slider_poids" class="input-field" overflow-scroll="false" onfocus="set_active('', 'prefix_poids')" onblur="set_inactive('prefix_poids')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div>
-            </div>
-
+          <div class="input-field col s4 m3">
+            <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
+            <label for="indicateur_poids" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
+            <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align:center;">
+            <span id="" class="postfix">kg</span>
+          </div>
+          <div class="input-field col s8 m9" id="range_div" >
+              <div id="slider_poids" class="input-field" overflow-scroll="false" onfocus="set_active('', 'prefix_poids')" onblur="set_inactive('prefix_poids')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+              </div>
+          </div>
         </div>
-
 
 
             <div id="row_etat" class ="row input-field">

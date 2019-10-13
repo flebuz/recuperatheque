@@ -44,7 +44,7 @@
     }
   ?>
 
-  <div class="quasi-fullwidth">
+  <div class="quasi-fullwidth space-header">
   <div class="item-single-container">
   <div class="item-single-content">
 
@@ -74,12 +74,14 @@
 
       <div class="item-buttons-container">
 
-        <button class="item-button" onclick="window.location.href = 'https://w3docs.com';">Modifier
-          <i class='w3-medium fas fa-edit'></i>
+        <button class="button-flex item-button" onclick="window.location.href = 'https://w3docs.com';">
+          <div class="button-title">Modifier</div>
+          <i class='button-icon w3-large fas fa-edit'></i>
         </button>
 
-        <button class="item-button" onclick="window.location.href = 'https://w3docs.com';">Vendre
-          <i class='w3-medium fas fa-check'></i>
+        <button class="button-flex item-button" onclick="window.location.href = 'https://w3docs.com';">
+          <div class="button-title">Vendre</div>
+          <i class='button-icon w3-large fas fa-check'></i>
         </button>
       </div>
 

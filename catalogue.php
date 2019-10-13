@@ -79,7 +79,7 @@
   ?>
 
 
-  <div class="quasi-fullwidth">
+  <div class="quasi-fullwidth space-header">
     <div class="catalogue">
 
     <!-- Bar de recherche -->
@@ -102,13 +102,15 @@
       </form>
 
       <!-- menu categorie et tri -->
-      <div class="menu-container">
-        <div class="w3-row menu-bar">
-          <button id="cat-button" class="w3-col s6 menu-title separation" onclick="openMenu(event,'categories')">Catégories
-            <i class='w3-medium fas fa-plus menu-icon'></i>
+      <div class="menu-container" id="menu-container">
+        <div class="menu-bar">
+          <button id="cat-button" class="button-flex menu-button separation" onclick="openMenu(event,'categories')">
+            <div class="button-title">Catégories</div>
+            <i class='button-icon w3-large fas fa-plus'></i>
           </button>
-          <button id="tri-button" class="w3-col s6 menu-title" onclick="openMenu(event,'tri')">Tri
-            <i class='w3-medium fas fa-sort menu-icon'></i>
+          <button id="tri-button" class="button-flex menu-button" onclick="openMenu(event,'tri')">
+            <div class="button-title">Tri</div>
+            <i class='button-icon w3-large fas fa-sort'></i>
           </button>
         </div>
 
@@ -117,40 +119,6 @@
 
       </div>
     </div>
-
-      <script>
-        function openMenu(evt,menuName) {
-
-          var menu = document.getElementById(menuName);
-
-          // si il est déjà ouvert on le close
-          if (menu.classList.contains("active")){
-            console.log("coucou");
-            menu.className = menu.className.replace(" active", "");
-            evt.currentTarget.className = evt.currentTarget.className.replace(" active", "");
-            document.getElementById("cat-button").className += " separation";
-          }
-          else{
-            console.log("yup");
-            // on ferme tt les autres
-            var menus = document.getElementsByClassName("menu");
-            for (var i = 0; i < menus.length; i++) {
-              menus[i].className = menus[i].className.replace(" active", "");
-            }
-            // on reset la couleur des titles
-            var titles = document.getElementsByClassName("menu-title");
-            for (var i = 0; i < titles.length; i++) {
-              titles[i].className = titles[i].className.replace(" active", "");
-              titles[i].className = titles[i].className.replace(" separation", "");
-            }
-            //on enlève la séparation
-            // document.getElementById("cat-button").className.replace(" separation", "");
-            //on ouvre le selectionner
-            menu.className += " active";
-            evt.currentTarget.className += " active";
-          }
-        }
-      </script>
 
 
       <!-- search request -->

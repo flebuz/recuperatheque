@@ -1,21 +1,17 @@
 
 /* ----- SEARCH BAR -----*/
 
-.trick{
-  display: none;
-  color: white;
-}
-
 .search-bar{
   background: white;
   padding: 12px;
+  height: 48px;
+  box-sizing: content-box;
+
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
 
-  height: 42px;
-  box-sizing: content-box;
 }
 
 /*la barre de recherche grow en longueur if spaces*/
@@ -29,7 +25,15 @@
 }
 
 .search-bar-button{
-  padding: 12px;
+  width: 48px;
+  padding: 0;
+  z-index: 5;
+}
+
+@media (min-width: 993px){
+  .search-bar{
+    padding: 24px 0px;
+  }
 }
 
 
@@ -40,6 +44,12 @@
   text-align: left;
   padding: 12px;
   margin-bottom: 12px;
+
+  border-bottom: 1px solid #E0E0E0;
+
+  position: sticky;
+  top: 48px;
+  z-index: 10;
 }
 
 .search-resume a{
@@ -61,9 +71,19 @@
   color: black;
 }
 
-@media(min-width: 993) {
-  .search-resume{
-    margin-bottom: none;
+@media(min-width: 993px) {
+  .search-resume-wrapper{
+    position: static;
+    
+    height: 48px;
+    box-sizing: content-box;
+
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    padding: 24px 12px 24px;
+    border-bottom: 1px solid #E0E0E0;
   }
 }
 
@@ -71,51 +91,63 @@
 
 .menu-container{
   border-top: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
 }
 
-.menu-title{
-
+.menu-bar{
+  width: 100%;
+  display: flex;
 }
 
-.menu-title.active{
+.menu-button{
+  flex-basis: 50%;
+}
+
+.menu-button.active{
   background: white;
+  transition: 0.3s;
 }
 
 .menu{
-  display: none;
   background: white;
   text-align: left;
 
+  transition: 0.5s;
+  overflow-y: hidden;
+  height: 0;
+  /* max-height: 0; */
 }
 
 .menu.active{
-  display: block;
-  margin-bottom: 12px;
-}
 
-@media(min-width:992px){
-  .menu.active{
-    margin: 0;
-  }
+  /* max-height: 600px; */
 }
 
 #cat-button.separation:after{
   content : "";
   position: absolute;
-  top: 25%;
+  top: 0;
   left: 1px;
   z-index: 10;
-  height: 50%;
+  height: 100%;
   width: 100%;
   border-right: 2px solid #909090;
 }
 
+/* --- categorie */
+
+.accordeon{
+  transition: 0.3s;
+  overflow-y: hidden;
+  height: 0;
+}
 
 .categorie-title, .souscategorie-title{
+  display: block;
   text-align: left;
   padding-top: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #E0E0E0;
+  border-top: 1px solid #E0E0E0;
 }
 
 .categorie-title{
@@ -145,7 +177,7 @@
   font-weight: bold;
 }
 
-#categories .categorie-title.open:not(.tout)::after{
+#categories .categorie-title.active:not(.tout)::after{
   content: "-";
   padding-right: 12px;
   float: right;
@@ -158,21 +190,3 @@
 /* .menu a:hover{
   color: #D0D0D0;
 } */
-
-/* ----- DESKTOP SPECIAL AFFICHAGE ----- */
-
-@media (min-width: 993px){
-  .search-bar{
-    padding: 24px 12px 24px;
-  }
-  .search-resume-wrapper{
-    padding: 24px 12px 24px;
-    border-bottom: 1px solid #E0E0E0;
-
-    height: 42px;
-    box-sizing: content-box;
-    display: flex;
-    align-items: center;
-    align-content: center;
-  }
-}

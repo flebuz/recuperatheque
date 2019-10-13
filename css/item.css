@@ -189,12 +189,22 @@
   white-space: nowrap;
 }
 
-.item-icon, .etat-icon{
+.item-icon{
   color: #909090;
 }
 
 .etat-icon-container{
-  padding-left: 6px;
+  margin-left: 6px;
+  position: relative;
+  bottom: 3px;
+}
+
+.etat-icon-container .full{
+  color: #909090;
+}
+
+.etat-icon-container .empty{
+  color: #E0E0E0;
 }
 
 .item-single-container .item-tag{
