@@ -225,15 +225,7 @@ ul.sidenav a.pagelink {
   color:#606060 ;
 }
 
-main, footer, .barretitre {
-     margin-left:250px;
-   }
 
-   @media only screen and (max-width : 992px) {
-     main, footer, .barretitre  {
-       margin-left:0;
-     }
-   }
 
 .sidenav li > a.nav-titre
 {
