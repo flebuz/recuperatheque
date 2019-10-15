@@ -16,43 +16,45 @@
 
 
 
-
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
-  <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
-  <link rel="stylesheet" href="nouislider/nouislider.css">
+
 
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
 
 
-<?php
-if  ( (!$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) && (!$id = filter_input(INPUT_POST, 'ID_item', FILTER_VALIDATE_INT)) ) {
-$item = 0;
-?>
-<!-- Show modal in case of ID error -->
- <div id="modal_iderror" class="modal">
-   <div class="modal-content">
-    <img src="/assets/sad_android.svg"  style="float:right; width:64px;height:64px;"> <h4>Erreur</h4>
-     <p>Pas d'objet sélectionné ou objet invalide !</p>
-     <p>Si vous pensez qu'il s'agit d'un bug, envoyez un (gentil) courriel à <a href="mailto:federation@recuperatheque.org" style="color:blue">federation@recuperatheque.org<a></p>
-   </div>
-   <div class="modal-footer">
-     <a href="catalogue.php" class="modal-close waves-effect waves-green btn-flat">Retour</a>
-   </div>
- </div>
+
+<?php include 'header.php'; ?>
+
+</head>
 
 
-<?php
-}
+<body class="disable-dbl-tap-zoom">
 
-//Update du formulaire précédent à la base de donnée si $_POST['cat'] est défini-->
+  <?php
 
-if (isset($_POST['cat'])) {
+  // if previous form was submitted to self
+  if (isset($_POST['action'])) {
+    // process the edit/removal
     include 'edit.php';
-    console_log("include de edit.php");
+    console_log("include de add.php");
+
+    }
+  ?>
+<?php
+
+
+if  ( (!$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) && (!$id = filter_input(INPUT_POST, 'ID_item', FILTER_VALIDATE_INT)) )
+ {
+$item = 0;
+$item_status = 0;
 }
+
+
 
       try {
         //  $bdd = new PDO('mysql:host=localhost;dbname=recuperatheques;charset=utf8', 'webappdev', 'datarecoulechemindejerusalem', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -76,25 +78,39 @@ if (isset($_POST['cat'])) {
       //execute the request
       $req->execute();
 
-      $item = $req->fetch();
+      if ($req->rowCount() > 0) {
+        $item = $req->fetch();
+        $item_status =1;
+    }
+    else
+    {  $item = 0;
+    $item_status= 0;}
 
-
-
+    // if the action was a removal
+    if  ( (isset($_POST['action'])) &&($_POST['action'] =='remove') )
+         {
+           //redirect to catalogue in 3 seconds since there is no item to display
+          header("refresh:3; url='catalogue.php'");
+          $item_status=999; //set value to 999 to mean "destroyed"
+         }
 ?>
-
-</head>
-
-<body class="disable-dbl-tap-zoom">
-
-<?php include 'header.php'; ?>
-
-<link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
-
 
 
 
 <main>
+
+  <!-- Show modal in case of ID error -->
+   <div id="modal_iderror" class="modal">
+     <div class="modal-content">
+      <img src="/assets/sad_android.svg"  style="float:right; width:64px;height:64px;"> <h4>Erreur</h4>
+       <p>Pas d'objet sélectionné ou objet invalide !</p>
+       <p>Si vous pensez qu'il s'agit d'un bug, envoyez un (gentil) courriel à <a href="mailto:federation@recuperatheque.org" style="color:blue">federation@recuperatheque.org<a></p>
+     </div>
+     <div class="modal-footer">
+       <a href="catalogue.php" class="modal-close waves-effect waves-green btn-flat">Retour</a>
+     </div>
+   </div>
+
   <div id="loading_overlay" class="overlay invisible">
 
 
@@ -184,7 +200,7 @@ if (isset($_POST['cat'])) {
 
 
           <!-- Début du formulaire-->
-          <form name="edit_form" id="edit_form" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="post" novalidate>
+          <form name="edit_form" id="edit_form" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>?id=<?php echo $item['ID_item']; ?>"  method="post" novalidate>
 
 <input id="ID_item" name="ID_item" class="invisible" value="<?php echo $item['ID_item'];?>">
                 <div id="row_categorisation" class ="row " >
@@ -235,7 +251,7 @@ if (isset($_POST['cat'])) {
                       <div class="input-field col s4">
                         <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
                         <label for="indicateur_poids" class="couleur3-text">Poids:</label>
-                        <input type="number" id="indicateur_poids" name="poids" value="<?php echo $item['poids'];?>" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align:center;">
+                        <input type="number" id="indicateur_poids" name="poids" value="<?php echo $item['poids'];?>" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; " style="inline; text-align:center;">
                       <span id="" class="postfix">kg</span>
                       </div>
 
@@ -317,6 +333,7 @@ if (isset($_POST['cat'])) {
                   Supprimer
                 </a>
 
+                <input id="action" name="action" class="invisible" value="edit">
 
 
               <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
@@ -335,7 +352,7 @@ if (isset($_POST['cat'])) {
                  <p>(Si vous souhaitez vendre l'objet, utiliser la fonction "Vendre" ;) )</p>
                </div>
                <div class="modal-footer">
-                 <a href="#!" class="modal-close waves-effect waves-green btn-flat"> OK</a>
+                 <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="document.getElementById('action').value='remove'; document.forms['edit_form'].submit();"> OK</a>
                  <a href="#!" class="modal-close waves-effect waves-green btn-flat"> Retour</a>
                </div>
              </div>
@@ -359,7 +376,7 @@ if (isset($_POST['cat'])) {
 <script type="text/javascript" src="js/tags-input.js"></script>
 
 <script type="text/javascript" src="js/forms.js"></script>
-<script type="text/javascript">
+
 
 </script>
 
@@ -369,9 +386,17 @@ if (isset($_POST['cat'])) {
 
 <?php
 /*Message de succès ou d'échec du formulaire, si $_POST['cat'] est défini*/
-if (isset($_POST['cat'])) {
+if (isset($_POST['action'])) {
     if ($result == 'success') {
-        echo "<script>M.toast({html:\"L'objet (". $object_id .") ".$item['categorie']." - ".$item['sous_categorie']." a bien été modifié.\"})</script>";
+      if ($_POST['action'] =='edit')
+          {
+          echo "<script>M.toast({html:\"L'objet (". $object_id .") ".$item['categorie']." - ".$item['sous_categorie']." a bien été modifié.\"})</script>";
+          }
+      else if
+      ($_POST['action'] =='remove')
+          {
+            echo "<script>M.toast({html:\"L'objet (". $object_id .") ".$item['categorie']." - ".$item['sous_categorie']." a bien été supprimé.\"})</script>";
+          }
     } else {
         echo $result;
     }
@@ -396,17 +421,25 @@ function init_materialize() {
 
 
 
-      var modal_error = document.getElementById('modal_iderror');
-      if (modal_error)
+      // check php variable to see if an item was found
+      var item_status = "<?php echo $item_status; ?>";
+      if (item_status == 0)
       {
-         var instance = M.Modal.init(modal_error);
+        //initialize modal_error modal
+        var modal_error = document.getElementById('modal_iderror');
+         var instance = M.Modal.init(modal_error, {dismissible: false});
          instance.open();
       }
+      else if (item_status == 999)
+      {
+        expand('loading_overlay');  //show loading overlay to prevent click events
+      }
 
+      // initialize modal_remove modal on call of trigger button
       var modal_remove = document.getElementById('modal_remove');
       var instance = M.Modal.init(modal_remove);
 
-
+      checkhearts(<?php echo $item['etat']; ?>); // updating hearts to match bdd "etat" variable
 
          var elems = document.querySelectorAll('.dropdown-trigger');
          var instance = M.Dropdown.init(elems, {
@@ -427,7 +460,9 @@ function init_materialize() {
 <?php
 
 
-
+function DisplayIDerror() {
+    echo "Hello world!";
+}
 
 //TEMPORAIRE fonction pour logger des messages PHP dans la console via console.log() en JS
   function console_log($output, $with_script_tags = true)
@@ -440,5 +475,6 @@ function init_materialize() {
       echo $js_code;
   }
 ?>
+
 
 </html>
