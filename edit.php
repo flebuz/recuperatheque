@@ -23,8 +23,10 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
 
 <?php
 
-
+$action = $_POST['action'];
 $object_id = $_POST['ID_item'];
+
+
 $categorie = $_POST['cat'];
 $souscategorie = $_POST['souscat'];
 $tags = $_POST['tags'];
@@ -36,30 +38,45 @@ $remarques= $_POST['remarques'];
 $dimensions= $_POST['dimensions'];
 $localisation = $_POST['localisation'];
 $date = date('Y-m-d H:i:s');
-console_log($date);
 
 //la separation des tags devient: 'virgule espace' et plus juste 'virgule'
 $tags = str_replace(",", ", ", $tags);
 
 try {
 
-    $req = $bdd ->prepare("UPDATE catalogue
-                                  SET ID_categorie=:ID_categorie, ID_souscategorie=:ID_souscategorie, pieces=:pieces, dimensions=:dimensions, etat=:etat, tags=:tags, remarques=:remarques, date_ajout=:date_ajout, poids=:poids, prix=:prix, localisation=:localisation
-                                  WHERE ID=:ID_item
-                          ");
-$req->bindParam(':ID_item', $object_id);
-$req->bindParam(':ID_categorie', $categorie);
-$req->bindParam(':ID_souscategorie', $souscategorie);
-$req->bindParam(':pieces', $pieces);
-$req->bindParam(':dimensions', $dimensions);
-$req->bindParam(':etat', $etat);
-$req->bindParam(':tags', $tags);
-$req->bindParam(':remarques', $remarques);
-$req->bindParam(':date_ajout', $date);
-$req->bindParam(':poids', $poids);
-$req->bindParam(':prix', $prix);
-$req->bindParam(':localisation', $localisation);
+    if ($action=='edit')
+    {
 
+      $req = $bdd ->prepare("UPDATE catalogue
+                                    SET ID_categorie=:ID_categorie, ID_souscategorie=:ID_souscategorie, pieces=:pieces, dimensions=:dimensions, etat=:etat, tags=:tags, remarques=:remarques, date_ajout=:date_ajout, poids=:poids, prix=:prix, localisation=:localisation
+                                    WHERE ID=:ID_item
+                            ");
+      $req->bindParam(':ID_item', $object_id);
+      $req->bindParam(':ID_categorie', $categorie);
+      $req->bindParam(':ID_souscategorie', $souscategorie);
+      $req->bindParam(':pieces', $pieces);
+      $req->bindParam(':dimensions', $dimensions);
+      $req->bindParam(':etat', $etat);
+      $req->bindParam(':tags', $tags);
+      $req->bindParam(':remarques', $remarques);
+      $req->bindParam(':date_ajout', $date);
+      $req->bindParam(':poids', $poids);
+      $req->bindParam(':prix', $prix);
+      $req->bindParam(':localisation', $localisation);
+
+
+    }
+
+
+    else if ($action=='remove')
+    {
+      $req = $bdd ->prepare("DELETE FROM catalogue
+                                    WHERE ID=:ID_item
+                            ");
+      $req->bindParam(':ID_item', $object_id);
+
+      /* TO DO : removing the image file from the FTP ! */
+    }
 
 
 $req->execute();
