@@ -3,7 +3,7 @@
 
 .search-bar{
   background: white;
-  padding: 12px;
+  padding: 12px 0px;
   height: 48px;
   box-sizing: content-box;
 
@@ -74,7 +74,7 @@
 @media(min-width: 993px) {
   .search-resume-wrapper{
     position: static;
-    
+
     height: 48px;
     box-sizing: content-box;
 
