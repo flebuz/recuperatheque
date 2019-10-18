@@ -74,7 +74,7 @@
 
       <div class="item-buttons-container">
 
-        <button class="button-flex item-button" onclick="window.location.href = 'https://w3docs.com';">
+        <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
           <div class="button-title">Modifier</div>
           <i class='button-icon w3-large fas fa-edit'></i>
         </button>

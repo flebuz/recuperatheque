@@ -192,24 +192,7 @@ function setConstraints() {
   console.log(constraints);
 }
 
-function init_materialize() {
-  // Sidenav initialisé dans footer.php
-  /*var elems = document.querySelectorAll('.sidenav');
-      var instances = M.Sidenav.init(elems); */
 
-  /* Script requis par Materialize pour activer le composant Dropdown (qui sont définis en "visibility:hidden" trouvent tout en bas de add_form.php)*/
-  var elems = document.querySelectorAll('.dropdown-trigger');
-  var instance = M.Dropdown.init(elems, {
-    coverTrigger: false,
-    constrainWidth: false,
-    outDuration: 250,
-    inDuration: 0
-  });
-
-  var elems2 = document.querySelectorAll('.fixed-action-btn');
-  var instances = M.FloatingActionButton.init(elems2);
-
-}
 
 function PlayVideo() {
   /*setConstraints();*/

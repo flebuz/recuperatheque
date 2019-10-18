@@ -44,14 +44,16 @@ $prix= $_POST['prix'];
 $remarques= $_POST['remarques'];
 $dimensions= $_POST['dimensions'];
 $localisation = $_POST['localisation'];
+$date = date('Y-m-d H:i:s');
+console_log($date);
 
 //la separation des tags devient: 'virgule espace' et plus juste 'virgule'
 $tags = str_replace(",", ", ", $tags);
 
 try {
 
-    $req = $bdd ->prepare("INSERT INTO catalogue (ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, poids, prix, localisation)
-                                  VALUES (:ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :poids, :prix, :localisation)
+    $req = $bdd ->prepare("INSERT INTO catalogue (ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, date_ajout, poids, prix, localisation)
+                                  VALUES (:ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :date_ajout, :poids, :prix, :localisation)
                           ");
 
 $req->bindParam(':ID_categorie', $categorie);
@@ -61,6 +63,7 @@ $req->bindParam(':dimensions', $dimensions);
 $req->bindParam(':etat', $etat);
 $req->bindParam(':tags', $tags);
 $req->bindParam(':remarques', $remarques);
+$req->bindParam(':date_ajout', $date);
 $req->bindParam(':poids', $poids);
 $req->bindParam(':prix', $prix);
 $req->bindParam(':localisation', $localisation);
@@ -68,13 +71,13 @@ $req->bindParam(':localisation', $localisation);
 
 
 $req->execute();
-$add_result="success";
+$result="success";
 
 
 }
 catch(PDOException $e)
     {
-    $add_result=  $e->getMessage();
+    $result=  $e->getMessage();
     }
 
 

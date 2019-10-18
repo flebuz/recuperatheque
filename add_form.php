@@ -147,8 +147,7 @@ if (isset($_POST['cat'])) {
 
         ?>
         <?php
-              // Ici les sous-catégories de matériaux qui s'affichent des les menus déroulants-->
-
+              // Here we prepare to fetch subcategories that display in the dropdown menus
               $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
                                   ');
               //execute the request
@@ -257,9 +256,8 @@ PlayVideo();"></select>
 
               <div id="plus_btn" class="btn plusminus eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
 
-
               <p class="couleur3-text no-select">pièce(s)</p>
-              </div>
+            </div>
           </div>
         </div>
 
@@ -388,17 +386,10 @@ PlayVideo();"></select>
 
 </main>
 
-<?php include 'footer.php';
 
-/*Message de succès ou d'échec du formulaire, si $_POST['cat'] est défini*/
-if (isset($_POST['cat'])) {
-    if ($add_result == 'success') {
-        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été ajouté à la base de données\"})</script>";
-    } else {
-        echo $add_result;
-    }
-}
-?>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/tags-input.js"></script>
+
   <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
 
@@ -408,12 +399,44 @@ if (isset($_POST['cat'])) {
 <script type="text/javascript" src="nouislider/nouislider.js"></script>
 
 
-  <!-- On active le composant Tabs -->
+<?php
+
+/*Message de succès ou d'échec du formulaire, si $_POST['cat'] est défini*/
+if (isset($_POST['cat'])) {
+    if ($result == 'success') {
+        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été ajouté à la base de données\"})</script>";
+    } else {
+        echo $result;
+    }
+}
+?>
+
+  <!-- Initializeing Materialize components -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var el;
-    var instance = M.Tabs.init(el, {swipeable : true});
+
+init_materialize();
+
   });
+
+  function init_materialize() {
+    // Sidenav initialisé dans footer.php
+    /*var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems); */
+
+    /* Script requis par Materialize pour activer le composant Dropdown*/
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instance = M.Dropdown.init(elems, {
+      coverTrigger: false,
+      constrainWidth: false,
+      outDuration: 250,
+      inDuration: 0
+    });
+
+    var elems2 = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems2);
+
+  }
 </script>
 
 <script>
