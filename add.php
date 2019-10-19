@@ -31,7 +31,7 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
 
     $object_id= $req->fetchColumn() + 1;
 
-
+console_log("object_id dans la bdd". $object_id);
 
 
 $categorie = $_POST['cat'];
@@ -52,10 +52,11 @@ $tags = str_replace(",", ", ", $tags);
 
 try {
 
-    $req = $bdd ->prepare("INSERT INTO catalogue (ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, date_ajout, poids, prix, localisation)
-                                  VALUES (:ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :date_ajout, :poids, :prix, :localisation)
+    $req = $bdd ->prepare("INSERT INTO catalogue (ID, ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, date_ajout, poids, prix, localisation)
+                                  VALUES (:ID, :ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :date_ajout, :poids, :prix, :localisation)
                           ");
 
+$req->bindParam(':ID', $object_id);
 $req->bindParam(':ID_categorie', $categorie);
 $req->bindParam(':ID_souscategorie', $souscategorie);
 $req->bindParam(':pieces', $pieces);
@@ -100,6 +101,7 @@ catch(PDOException $e)
   //   $password = 'datarecoulechemindejerusalem';
   //   $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
     $remoteFilePath = getcwd().'/photos/'.$object_id.'.jpg';
+    console_log("object_id dans le nom de l'image". $object_id);
   //   $ch = curl_init("sftp://$username:$password@$host$remotePath");
   //
   //   curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_SFTP);
