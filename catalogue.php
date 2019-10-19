@@ -12,7 +12,7 @@
 
   <!-- import the css -->
   <!-- to have w3css class and respponsive design -->
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
   <link rel="stylesheet" href="css/w3.css">
   <!-- to have icon of the font awesome 5 -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
