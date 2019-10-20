@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 15 sep. 2019 à 12:26
+-- Généré le :  Dim 20 oct. 2019 à 17:59
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -38,31 +38,38 @@ CREATE TABLE IF NOT EXISTS `catalogue` (
   `etat` int(11) NOT NULL,
   `tags` text NOT NULL,
   `remarques` text NOT NULL,
-  `date_ajout` datetime NOT NULL,
+  `date_ajout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
+  `localisation` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `catalogue`
 --
 
-INSERT INTO `catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`) VALUES
-(1, 12, 119, 3200, '4cm x 4cm', 3, 'attache, flexible, flex, joint', 'Lot. Fonction originale: équerre pour carton. A partir de 200 pièces.', '2019-08-06 00:00:00', 0, 0),
-(2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 4, 'sapin, baguette, tasseau, rabotté', 'Lot à prendre dans son entièretée', '2019-08-06 00:00:00', 0, 0),
-(3, 18, 125, 1, '10m', 3, 'lance, incendie, tuyau, rouge, eau', 'Lance à incendie sur support raccordée à adaptateur. 10m de longueur.', '2019-08-07 00:00:00', 0, 0),
-(4, 17, 124, 1, '38cm x 25cm', 2, 'coussin, bureau, chaise, bleu, tissus', 'Ancien dossier de chaise de bureau.', '2019-08-08 00:00:00', 0, 0),
-(5, 15, 85, 20, '5mm x 250mm', 3, 'cheville, plastique, blanc', '', '2019-02-14 00:00:00', 0, 0),
-(6, 12, 67, 1, '50.3cm x 19.5xm', 2, 'rayé, transparent, translucide, reconditionnable', '', '2019-04-02 00:00:00', 0, 0),
-(7, 18, 125, 10, '20cm', 3, 'blanc, rouge, orange, cire, feu', 'Lot de 10 bougies de tailles et couleurs différentes.', '2019-05-23 00:00:00', 0, 0),
-(8, 1, 1, 3, '181.5cm x 4.5cm x 2.3cm', 3, 'gîte, poutre, traité, vert, sapin', 'Tranches non traitées.', '2019-06-06 00:00:00', 0, 0),
-(9, 4, 17, 25, '', 3, 'enfant, couleur, coloriage, gallery ', 'Lot de 25.', '2019-06-17 00:00:00', 0, 0),
-(10, 3, 13, 1, '10.5cm x 14cm', 3, 'aurora, carnet, copie', 'Carnet autocopiant de 50 pages détachables.', '2019-06-17 00:00:00', 0, 0),
-(11, 18, 125, 1, '35cm x 35cm', 3, 'feu, gaz, plat, chauffe, alimentation', 'Chauffe plat au gaz.', '2019-07-30 00:00:00', 0, 0),
-(12, 16, 94, 7, '1m', 3, 'electrique, alimentation, plastique', '', '2019-03-22 00:00:00', 0, 0),
-(13, 15, 86, 2, '15cm x 8cm x 8cm', 3, 'grand, oversized, attache, metal', '', '2019-03-20 00:00:00', 0, 0),
-(14, 8, 115, 12, '50cm x 50cm', 2, 'carpette, épais, carré, bleu, paillaisson, tapis', 'Carrés de carpettes de 2 coloris différents.', '2019-06-20 00:00:00', 0, 0);
+INSERT INTO `catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`, `localisation`) VALUES
+(1, 12, 119, 3200, '4cm x 4cm', 3, 'attache, flexible, flex, joint', 'Lot. Fonction originale: équerre pour carton. A partir de 200 pièces.', '2019-08-06 00:00:00', 0, 0, ''),
+(2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 4, 'sapin, baguette, tasseau, rabotté', 'Lot à prendre dans son entièretée', '2019-08-06 00:00:00', 0, 0, ''),
+(3, 18, 125, 1, '10m', 3, 'lance, incendie, tuyau, rouge, eau', 'Lance à incendie sur support raccordée à adaptateur. 10m de longueur.', '2019-08-07 00:00:00', 0, 0, ''),
+(4, 17, 124, 1, '38cm x 25cm', 2, 'coussin, bureau, chaise, bleu, tissus', 'Ancien dossier de chaise de bureau.', '2019-08-08 00:00:00', 0, 0, ''),
+(5, 15, 85, 20, '5mm x 250mm', 3, 'cheville, plastique, blanc', '', '2019-02-14 00:00:00', 0, 0, ''),
+(6, 12, 67, 1, '50.3cm x 19.5xm', 2, 'rayé, transparent, translucide, reconditionnable', '', '2019-04-02 00:00:00', 0, 0, ''),
+(7, 18, 125, 10, '20cm', 3, 'blanc, rouge, orange, cire, feu', 'Lot de 10 bougies de tailles et couleurs différentes.', '2019-05-23 00:00:00', 0, 0, ''),
+(8, 1, 1, 3, '181.5cm x 4.5cm x 2.3cm', 3, 'gîte, poutre, traité, vert, sapin', 'Tranches non traitées.', '2019-06-06 00:00:00', 0, 0, ''),
+(9, 4, 17, 25, '', 3, 'enfant, couleur, coloriage, gallery ', 'Lot de 25.', '2019-06-17 00:00:00', 0, 0, ''),
+(10, 3, 13, 1, '10.5cm x 14cm', 3, 'aurora, carnet, copie', 'Carnet autocopiant de 50 pages détachables.', '2019-06-17 00:00:00', 0, 0, ''),
+(11, 18, 125, 1, '35cm x 35cm', 3, 'feu, gaz, plat, chauffe, alimentation', 'Chauffe plat au gaz.', '2019-07-30 00:00:00', 0, 0, ''),
+(12, 16, 94, 7, '1m', 3, 'electrique, alimentation, plastique', '', '2019-03-22 00:00:00', 0, 0, ''),
+(13, 15, 86, 2, '15cm x 8cm x 8cm', 3, 'grand, oversized, attache, metal', '', '2019-03-20 00:00:00', 0, 0, ''),
+(14, 8, 115, 12, '50cm x 50cm', 2, 'carpette, épais, carré, bleu, paillaisson, tapis', 'Carrés de carpettes de 2 coloris différents.', '2019-06-20 00:00:00', 0, 0, ''),
+(15, 1, 1, 1, '', 4, 'lol, prout, vraiment, longue, liste, de, tags, la, on, en, peut, plus, c, interminable, plus, de, limite', 'u milieu du xixe siècle, l\'Armée britannique est le sujet de plusieurs débats politiques. Si elle gagne de nombreuses guerres coloniales, la guerre de Crimée en 1854-1856 démontre qu\'elle manque d\'effectifs (à cause des troupes dispersées dans tout l\'empire), que ses officiers généraux manquent de professionnalisme et son intendance d\'efficacité. La mutinerie des troupes indiennes en 1857-1858 eut comme conséquence l\'intégration des troupes de la Compagnie des Indes orientales, augmentant la liste des régiments, le plus souvent composés d\'un seul bataillon. Une commission fut donc mandatée en 1858 pour proposer des améliorations, mais son rapport rendu en 1862 déclencha de vives oppositions1.', '2019-09-24 00:00:00', 1, 10, ''),
+(16, 2, 7, 1, '4m x 2m', 2, 'grille,flexible', '', '2019-09-28 00:00:00', 0.1, 0, ''),
+(17, 3, 13, 1, '', 4, 'gros, rouleau, de, papier, lol, big', '', '2019-09-28 00:00:00', 5, 5, ''),
+(18, 8, 49, 1, '', 3, 'rouge, fil, nylon, cachemire', '', '2019-09-29 00:00:00', 0.2, 0, ''),
+(21, 8, 42, 1, '', 1, 'jute, toile, decoupe, effiloché', '', '2019-09-29 10:17:40', 0.5, 0, ''),
+(20, 8, 49, 1, '', 3, 'turquoise, fil, nylon, bobine', '', '2019-09-29 09:43:56', 1, 0, '');
 
 -- --------------------------------------------------------
 
@@ -209,23 +216,23 @@ INSERT INTO `souscategorie` (`ID`, `nom`, `ID_categorie`, `unite`, `prix`) VALUE
 (92, 'Audio', 16, 'pc', 0),
 (93, 'Micro controleur/Micro ordinateur', 16, 'pc', 0),
 (94, 'Cable', 16, 'pc', 0),
-(108, 'Autre', 1, 'kg', 1),
-(109, 'Autre', 2, 'kg', 8),
-(110, 'Autre', 3, 'kg', 3.46),
-(111, 'Autre', 4, 'pc\r\n', 0),
-(112, 'Autre', 5, 'pc', 0),
-(113, 'Autre', 6, 'no', 0),
-(114, 'Autre', 7, 'no', 0),
-(115, 'Autre', 8, 'no', 0),
-(116, 'Autre', 9, 'no', 0),
-(117, 'Autre', 10, 'no', 0),
-(118, 'Autre', 11, 'no', 0),
-(119, 'Autre', 12, 'no', 0),
-(120, 'Autre', 13, 'no', 0),
-(121, 'Autre', 14, 'no', 0),
-(122, 'Autre', 15, 'no', 0),
-(123, 'Autre', 16, 'no', 0),
-(124, 'Autre', 17, 'no', 0),
+(108, 'Autre', 1, 'kg', 0.9),
+(109, 'Autre', 2, 'kg', 2.75),
+(110, 'Autre', 3, 'kg', 2.2),
+(111, 'Autre', 4, 'pc\r\n', 0.75),
+(112, 'Autre', 5, 'pc', 3),
+(113, 'Autre', 6, 'pc', 2.5),
+(114, 'Autre', 7, 'pc', 2.25),
+(115, 'Autre', 8, 'kg', 3),
+(116, 'Autre', 9, 'kg', 0.15),
+(117, 'Autre', 10, 'kg', 0.4),
+(118, 'Autre', 11, 'kg', 3),
+(119, 'Autre', 12, 'kg', 6),
+(120, 'Autre', 13, 'kg', 3.5),
+(121, 'Autre', 14, 'pc', 10),
+(122, 'Autre', 15, 'pc', 0.03),
+(123, 'Autre', 16, 'pc', 6),
+(124, 'Autre', 17, 'pc', 20),
 (125, 'Autre', 18, 'no', 0);
 COMMIT;
 

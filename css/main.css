@@ -53,7 +53,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 /* ordre pour version mobile et ipad*/
-
 .catalogue > * {
   flex: 1 100%;
 }
