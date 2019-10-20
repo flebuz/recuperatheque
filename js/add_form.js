@@ -61,20 +61,14 @@ function getPreciseConstraints() {
         }
       }
       console.log("caméra arrière trouvée : " + final.label);
-      if (verbose !== undefined) {
-        M.toast({
-          html: "caméra arrière trouvée : " + final.label
-        });
+      if (verbose !== undefined) {M.toast({html: "caméra arrière trouvée : " + final.label }); //DEBUG info
       }
       var totalCameras = DEVICES.length;
       //If couldnt find a suitable camera, pick the last one... you can change to what works for you
       if (final == null) {
         console.log("La caméra ne respecte pas les contraintes, on passe à la solution de rechange !");
         //final = DEVICES[totalCameras-1];
-        if (verbose !== undefined) {
-          M.toast({
-            html: "La caméra ne respecte pas les contraintes, on passe à la solution de rechange !"
-          });
+        if (verbose !== undefined) {M.toast({html: "La caméra ne respecte pas les contraintes, on passe à la solution de rechange !" }); //DEBUG info
         }
       } else {
         rearcameraID.value = final.deviceId; //on sauve l'ID dans notre boîte de texte
@@ -83,6 +77,7 @@ function getPreciseConstraints() {
         constraints = {
           audio: false,
           video: {
+            width: {min: 1024, ideal: 1280, max: 1920},
             deviceId: {
               exact: final.deviceId
             }
@@ -156,21 +151,25 @@ function populate_camera_list() {
 
 function setConstraints() {
 
-  if (rearcameraID.value !== '') {
+  if ((rearcameraID.value !== '') && (rearcameraID.value !== 'inconnu')) {
     var rear_deviceID = rearcameraID.value;
     //console.log("cam arrière identifiée et prête: " + rearcameraID.value);
     constraints = {
       audio: false,
       video: {
+        width: {min: 1024, ideal: 1280, max: 1920},
+      /*  height: {min: 776, ideal: 720, max: 1080},*/
         deviceId: {
           exact: rear_deviceID
         }
       }
     };
 
-  } else if (rearcameraID.value == 'inconnu') { // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
+  } else { // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
     constraints = {
       video: {
+        width: {min: 1024, ideal: 1280, max: 1920},
+      /*  height: {min: 776, ideal: 720, max: 1080},*/
         facingMode: {
           exact: 'environment'
         }
@@ -178,16 +177,6 @@ function setConstraints() {
       audio: false
     };
     //constraints = {audio: false, video: {mandatory: {facingMode: 'environment'}}};
-  } else {
-    // Contraintes : préférer la caméra arrière sur mobile ; pas d'audio
-    constraints = {
-      video: {
-        facingMode: {
-          exact: 'environment'
-        }
-      },
-      audio: false
-    };
   }
   console.log(constraints);
 }
@@ -504,7 +493,7 @@ function getOrientation(file, callback) {
 function DessineVignette(type, elem, orientation) {
 
   var compression = 1.0;
-  var size = 3024;
+  var size = 1000;
 
   //si l'image uploadée est passée en argument
   if (type == 'imagesnap') {
@@ -526,7 +515,7 @@ function DessineVignette(type, elem, orientation) {
     var sx = (vw - dimension) / 2;
     var sy = (vh - dimension) / 2;
 
-    //on crop le plus grand carré au milieu de l'image et on la redimensionne dans un carré de 400x400
+    //on crop le plus grand carré au milieu de l'image et on la redimensionne dans un carré de size x size
     ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
 
     //on utilise l'orientation EXIF de l'image (le cas échéant) pour réorienter le canevas vers le haut puis on dessine
@@ -573,6 +562,7 @@ function DessineVignette(type, elem, orientation) {
       vh = video.videoHeight;
     canvas1.width = vw;
     canvas1.height = vh;
+    console.log("vw: "+ vw + "vh: " + vh);
 
     ctx1.drawImage(video, 0, 0, vw, vh, 0, 0, vw, vh);
 
@@ -657,7 +647,7 @@ function DrawVideoOnCanvas() {
 download_img = function(el) {
 
   var canvas_final = document.getElementById('snap_final');
-  var image = canvas_final.toDataURL("image/jpeg", 0.95);
+  var image = canvas_final.toDataURL("image/jpeg", 0.85);
   el.href = image;
 };
 
