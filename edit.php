@@ -87,9 +87,44 @@ $result="success";
 catch(PDOException $e)
     {
     $result=  $e->getMessage();
+   echo "erreur ajout à la base de données : ".$result;
     }
 
 
+
+
+    // Adding a line to the journal
+        try {
+
+    $operation = $action;
+
+            $req = $bdd ->prepare("INSERT INTO journal (operation, ID_objet, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
+                                          VALUES (:operation, :ID_objet, :ID_categorie, :ID_souscategorie, :pieces, :etat, :poids, :prix, :localisation)
+                                  ");
+
+        $req->bindParam(':operation', $operation);
+        $req->bindParam(':ID_objet', $object_id);
+        $req->bindParam(':ID_categorie', $categorie);
+        $req->bindParam(':ID_souscategorie', $souscategorie);
+        $req->bindParam(':pieces', $pieces);
+        $req->bindParam(':etat', $etat);
+        $req->bindParam(':poids', $poids);
+        $req->bindParam(':prix', $prix);
+        $req->bindParam(':localisation', $localisation);
+
+
+
+        $req->execute();
+        $result="success";
+
+
+
+        }
+        catch(PDOException $e)
+            {
+            $result=  $e->getMessage();
+            echo "erreur ajout au journal : ".$result;
+            }
   ?>
 
 
