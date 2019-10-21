@@ -166,7 +166,7 @@ include('connection_db.php');
           ?>
           <?php
                 // Here we prepare to fetch subcategories that display in the dropdown menus
-                $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
+                $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie`, `unite`, `prix` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
                                     ');
                 //execute the request
                 $req->execute();
@@ -179,11 +179,11 @@ include('connection_db.php');
 
           for ($row = 0; $row < sizeof($souscategories); $row++) {
               if ($souscategories[$row]['ID_categorie'] == $current_cat) {
-                  echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
+                  echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."');check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
               } else {
                   echo '</ul>';
                   echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-                  echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
+                  echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
                   $current_cat++;
               }
           }
