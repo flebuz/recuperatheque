@@ -141,14 +141,14 @@ if (isset($_POST['cat'])) {
 
      // displaying buttons with the categories of materials
       while ($cat = $req->fetch()) {
-          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
+          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
       }
 
 
         ?>
         <?php
               // Here we prepare to fetch subcategories that display in the dropdown menus
-              $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
+              $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie`, `unite` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
                                   ');
               //execute the request
               $req->execute();
@@ -161,11 +161,11 @@ if (isset($_POST['cat'])) {
 
         for ($row = 0; $row < sizeof($souscategories); $row++) {
             if ($souscategories[$row]['ID_categorie'] == $current_cat) {
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
             } else {
                 echo '</ul>';
                 echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."')\">".$souscategories[$row]['nom']."</a></li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
                 $current_cat++;
             }
         }
@@ -203,6 +203,9 @@ if (isset($_POST['cat'])) {
                    <div class="col s5 m6 input-field">
                      <input id="nom_souscategorie" class="input_categ" name="souscat" type="text" required readonly>
                     <input id="id_souscategorie" name="souscat" type="text" readonly hidden>
+
+                    <input type="text" id="has_weight" name="has_weight" value="1" readonly hidden>
+
                    </div>
 
                  </div>
@@ -362,7 +365,7 @@ PlayVideo();"></select>
 
             </div>
 
-            <div class="row invisible"><input id="image_final" name="image_final" type="text"></div>
+            <div class="row visible"><input id="image_final" name="image_final" type="text"></div>
             <div class="row"></div>
 
 
