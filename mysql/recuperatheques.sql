@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 20 oct. 2019 à 17:59
--- Version du serveur :  5.7.23
--- Version de PHP :  7.2.10
+-- Généré le :  lun. 21 oct. 2019 à 08:07
+-- Version du serveur :  5.7.26
+-- Version de PHP :  7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `catalogue` (
   `prix` float NOT NULL,
   `localisation` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `catalogue`
@@ -66,7 +66,6 @@ INSERT INTO `catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `di
 (14, 8, 115, 12, '50cm x 50cm', 2, 'carpette, épais, carré, bleu, paillaisson, tapis', 'Carrés de carpettes de 2 coloris différents.', '2019-06-20 00:00:00', 0, 0, ''),
 (15, 1, 1, 1, '', 4, 'lol, prout, vraiment, longue, liste, de, tags, la, on, en, peut, plus, c, interminable, plus, de, limite', 'u milieu du xixe siècle, l\'Armée britannique est le sujet de plusieurs débats politiques. Si elle gagne de nombreuses guerres coloniales, la guerre de Crimée en 1854-1856 démontre qu\'elle manque d\'effectifs (à cause des troupes dispersées dans tout l\'empire), que ses officiers généraux manquent de professionnalisme et son intendance d\'efficacité. La mutinerie des troupes indiennes en 1857-1858 eut comme conséquence l\'intégration des troupes de la Compagnie des Indes orientales, augmentant la liste des régiments, le plus souvent composés d\'un seul bataillon. Une commission fut donc mandatée en 1858 pour proposer des améliorations, mais son rapport rendu en 1862 déclencha de vives oppositions1.', '2019-09-24 00:00:00', 1, 10, ''),
 (16, 2, 7, 1, '4m x 2m', 2, 'grille,flexible', '', '2019-09-28 00:00:00', 0.1, 0, ''),
-(17, 3, 13, 1, '', 4, 'gros, rouleau, de, papier, lol, big', '', '2019-09-28 00:00:00', 5, 5, ''),
 (18, 8, 49, 1, '', 3, 'rouge, fil, nylon, cachemire', '', '2019-09-29 00:00:00', 0.2, 0, ''),
 (21, 8, 42, 1, '', 1, 'jute, toile, decoupe, effiloché', '', '2019-09-29 10:17:40', 0.5, 0, ''),
 (20, 8, 49, 1, '', 3, 'turquoise, fil, nylon, bobine', '', '2019-09-29 09:43:56', 1, 0, '');
@@ -107,6 +106,28 @@ INSERT INTO `categorie` (`ID`, `nom`) VALUES
 (16, 'Électronique'),
 (17, 'Mobilier'),
 (18, 'Insolite');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `journal`
+--
+
+DROP TABLE IF EXISTS `journal`;
+CREATE TABLE IF NOT EXISTS `journal` (
+  `journal_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `operation` varchar(10) NOT NULL,
+  `ID_objet` int(11) NOT NULL,
+  `ID_categorie` int(11) NOT NULL,
+  `ID_souscategorie` int(11) NOT NULL,
+  `pieces` int(11) NOT NULL,
+  `etat` int(11) NOT NULL,
+  `date_operation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `poids` float NOT NULL,
+  `prix` float NOT NULL,
+  `localisation` varchar(255) NOT NULL,
+  PRIMARY KEY (`journal_ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
