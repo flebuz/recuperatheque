@@ -7,7 +7,21 @@ function set_value(id_to_update, value)
   document.getElementById(id_to_update).value= value;
 }
 
-
+function check_default_unit(default_unit, id_to_update)
+{
+  console.log(default_unit);
+  console.log(id_to_update);
+  if (default_unit =='kg')
+  {
+  document.getElementById(id_to_update).classList.remove("invisible");
+  document.getElementById('has_weight').value=1;
+}
+  else if (default_unit =='pc')
+  {
+    document.getElementById(id_to_update).classList.add("invisible");
+    document.getElementById('has_weight').value=0;
+  }
+}
 
 function set_range_value (id_to_update, value)
 {
@@ -24,13 +38,39 @@ document.getElementById(slider_id).noUiSlider.set(value);
 elem.value = value; // to avoid values bigger than slider range being overriden by noUiSlider.set
 }
 
+function update_weight_and_price(final_weight_id, item_weight, nb_unit, final_price_id, item_price)
+{
+  if ((item_weight !== 'N/A') && (item_weight !== ''))
+      {
+
+
+          var final_weight =  nb_unit * item_weight;
+          document.getElementById(final_weight_id).value  = final_weight;
+
+          var final_price = (nb_unit * item_price).toFixed(2);
+
+          document.getElementById(final_price_id).value  = final_price;
+          console.log("nb pieces = " + nb_unit + "; prix/pc = " + item_price + "; poids/pc = " + item_weight+ "; prix total = " + final_price);
+
+      }
+
+      else {
+
+      }
+}
+
+
+
 function set_active(selector, id_to_activate)
 {
   document.getElementById(id_to_activate).classList.add("active");
   if ((selector !== undefined) && (selector !== ''))
   {
-  document.querySelectorAll(selector).forEach(function(node)
-  {node.classList.remove("active");});
+
+      var tabs = document.querySelectorAll(selector);
+      for (i = 0; i < tabs.length; ++i)
+          {tabs[i].classList.remove("active");} //better backwards compatibility than array.forEach (ES6 and later)
+
   }
 }
 
@@ -47,19 +87,7 @@ function Soumettre(formid)
 }
 
 
-function check_unite(unite)
-{
-  if (unite !== undefined)
-  {
-if (unite=='kg')
-{alert("kg");
-expand('row_poids', '', 'down')}
-else if (unite=='pc')
-{alert("pc");
-  expand('', 'row_poids', '')}
 
-  }
-}
 //fonction qui enlève la classe "hidden" d'un élément du DOM
 function unhide(id_to_show)
 {var elem_to_show= document.getElementById(id_to_show);
@@ -70,11 +98,10 @@ elem_to_show.classList.remove("hidden");}
 // en fonction de la variable direction (slide down, slide right, ou fade in (par défaut))
 function expand(id_to_show, id_to_hide, direction)
 {
+  console.log(id_to_show);
   var elem_to_show= document.getElementById(id_to_show);
-
+    console.log(elem_to_show);
   elem_to_show.classList.remove("invisible");
-
-  console.log(elem_to_show);
 
 if (direction=='down')
 { elem_to_show.classList.add("visible-slide-down");}
@@ -134,12 +161,14 @@ function checkhearts(value)
 }
 
 // fonction pour inc/décrementer la valeur d'un élément (utilisé pour "pieces")
-  function Increment(id, increment, min){
+  function Increment(id, increment, min, max){
 
     var value= parseInt(document.getElementById(id).value);
 
     if ( (value+increment) <= min )
     {document.getElementById(id).value= min;}
+    else   if ( (value+increment) >= max )
+      {document.getElementById(id).value= max;}
 
     else
     {
@@ -154,6 +183,23 @@ function checkhearts(value)
 
     if (value=='')
   {document.getElementById(id).value = min;}
+  else
+  {
+    document.getElementById(id).value = parseInt(value);
+  }
+
+}
+  function ValidateValue(id, min, max)
+  {
+
+    var value = document.getElementById(id).value;
+
+    if (value=='')
+  {document.getElementById(id).value = min;}
+  else if (value>=max)
+  {
+    document.getElementById(id).value = max;
+  }
   else
   {
     document.getElementById(id).value = parseInt(value);
