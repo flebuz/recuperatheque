@@ -21,7 +21,7 @@
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/item.css">
-
+  <link rel="stylesheet" href="css/add_form.css">
 
 </head>
 
@@ -35,6 +35,7 @@
     include('connection_db.php')
   ?>
 
+
   <!-- verifier la validité de l'id -->
   <?php
     if (isset($_GET['id'])){
@@ -44,11 +45,12 @@
     }
   ?>
 
+
   <div class="quasi-fullwidth space-header">
   <div class="item-single-container">
   <div class="item-single-content">
 
-    <a href="javascript:history.back()" class="retour"> <i class="fas fa-chevron-left"></i> retour à la recherche</a>
+    <a href="javascript:history.back()" class="retour"> <i class="fas fa-chevron-left"></i> retour à la recherche </a>
 
   <?php
     //get the item
@@ -79,7 +81,7 @@
           <i class='button-icon w3-large fas fa-edit'></i>
         </button>
 
-        <button class="button-flex item-button" onclick="window.location.href = 'https://w3docs.com';">
+        <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
           <div class="button-title">Vendre</div>
           <i class='button-icon w3-large fas fa-check'></i>
         </button>
@@ -89,6 +91,7 @@
     }
     else{
       echo '<h3 class="w3-container"> Cet objet n\'existe pas </h3>';
+      $item=0;
     }
   ?>
 
@@ -96,6 +99,86 @@
   </div>
   </div>
 
+  <div id="modal_sell" class="w3-modal">
+   <div class="w3-modal-content ">
+
+     <header class="w3-container">
+       <span onclick="document.getElementById('modal_sell').style.display='none'"
+       class="w3-button w3-display-topright">&times;</span>
+       <h2>Vendre un objet</h2>
+     </header>
+
+
+<form name="sell_form" id="sell_form" action="sell.php"  method="post" novalidate>
+
+<input class="invisible" name="ID_item" id="ID_item" type="text" value="<?php echo $item['ID_item']; ?>">
+
+     <div class="w3-container sell_form">
+       <p>Quelle quantité voulez-vous vendre ?</p>
+       <div id="row_pieces" class ="w3-row" >
+
+               <div class="w3-col s1">
+                     <i id='prefix_pieces' class="fas fa-cube item-icon"></i>
+               </div>
+               <div class="w3-col s8 m3" >
+
+                       <div class="inline-group" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                           <button type="button" id="minus_btn" class="btn plusminus eztouch-left" onclick="Increment('pieces_vendues', -1, 1, <?php echo $item['pieces'];?>); update_weight_and_price('poids_total', <?php echo $item['poids']; ?>, document.getElementById('pieces_vendues').value, 'prix_total', <?php echo $item['prix']; ?>)"><span class="no-select">-</span></button>
+                           <input class="w3-input" type="number" id="pieces_vendues" name="pieces_vendues" value="1" min="1" max="<?php echo $item['pieces'];?>" step="0.1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateValue(this.id, 1, <?php echo $item['pieces'];?>);
+                           update_weight_and_price('poids_total', <?php echo $item['poids']; ?>, this.value, 'prix_total', <?php echo $item['prix']; ?>)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
+
+                           <button type="button" id="plus_btn" class="btn plusminus eztouch-right"  onclick="Increment('pieces_vendues', 1, 1, <?php echo $item['pieces']; ?>); update_weight_and_price('poids_total', <?php echo $item['poids']; ?>, document.getElementById('pieces_vendues').value, 'prix_total', <?php echo $item['prix']; ?>)"><span class="no-select">+</span></button>
+                           <p class="couleur3-text no-select">pièce(s)</p>
+                       </div>
+
+                   </div>
+                    <div class="w3-col s2"></div>
+
+           </div>
+
+            <div id="row_poids" class ="w3-row" >
+                  <div class="w3-col s1">
+                        <i id='prefix_poids' class="fas fa-weight-hanging item-icon"></i>
+                  </div>
+                  <div class="w3-col s3 inline-group" >
+                  <input id="poids_total" name="poids_total" class="w3-input" value="<?php echo $item['poids']; ?>">&nbsp; kg
+                </div>
+
+         </div>
+
+         <div id="row_prix" class ="row input-field" >
+
+                <div class="w3-col s1">
+                  <i id='prefix_prix' class="fas fa-coins item-icon"></i>
+                </div>
+
+                <div class="w3-col s2 m2">
+                  Prix :
+                </div>
+                <div class="w3-col s3 m3">
+                  <input class="w3-input" id="prix_total" name="prix" type="number" value="<?php echo $item['prix']; ?>" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
+
+                </div>
+           </div>
+
+
+     <footer class="w3-container">
+       <div class="w3-right">
+         <button class="button-flex item-button" onclick="expand('loading_overlay'); document.forms['sell_form'].submit(); ">
+           <div class="button-title">Vendre</div>
+           <i class='button-icon w3-large fas fa-edit'></i>
+         </button>
+       </div>
+     </footer>
+
+   </form>
+   </div>
+ </div>
+ </div>
+
+
+
+<script type="text/javascript" src="js/forms.js"></script>
 </body>
 
 </html>
