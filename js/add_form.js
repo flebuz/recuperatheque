@@ -77,7 +77,7 @@ function getPreciseConstraints() {
         constraints = {
           audio: false,
           video: {
-            width: {min: 1024, ideal: 1280, max: 1920},
+            width: {min: 640, ideal: 1024, max: 1024},
             deviceId: {
               exact: final.deviceId
             }
@@ -200,12 +200,10 @@ function StopVideo() {
   }
 
 
+  for (i = 0; i < tracks.length; ++i) ////better backwards compatibility than tracks.forEach (ES6 and later)
+      {tracks[i].stop();}
 
-  tracks.forEach(function(track) {
-    track.stop();
     is_camera_active = false;
-
-  });
 
   video.srcObject = null;
 }
