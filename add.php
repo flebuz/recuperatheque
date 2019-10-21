@@ -31,29 +31,36 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
 
     $object_id= $req->fetchColumn() + 1;
 
-console_log("object_id dans la bdd". $object_id);
 
+$nom_recuperatheque = "Récupérathèque"; // A ADAPTER EN FONCTION DE LA RECUPERATHEQUE
 
 $categorie = $_POST['cat'];
 $souscategorie = $_POST['souscat'];
 $tags = $_POST['tags'];
 $pieces = $_POST['pieces'];
+$has_weight = $_POST['has_weight'];
 $poids= $_POST['poids'];
 $etat= $_POST['etat'];
 $prix= $_POST['prix'];
 $remarques= $_POST['remarques'];
 $dimensions= $_POST['dimensions'];
 $localisation = $_POST['localisation'];
+if ($localisation=='') {$localisation = $nom_recuperatheque;}
 $date = date('Y-m-d H:i:s');
-console_log($date);
+
 
 //la separation des tags devient: 'virgule espace' et plus juste 'virgule'
 $tags = str_replace(",", ", ", $tags);
 
+if ($has_weight ) {$poids= $_POST['poids'];}
+else {$poids= 0;}
+console_log("poids". $poids);
+
+
 try {
 
-    $req = $bdd ->prepare("INSERT INTO catalogue (ID, ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, date_ajout, poids, prix, localisation)
-                                  VALUES (:ID, :ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :date_ajout, :poids, :prix, :localisation)
+    $req = $bdd ->prepare("INSERT INTO catalogue (ID, ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, poids, prix, localisation)
+                                  VALUES (:ID, :ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :poids, :prix, :localisation)
                           ");
 
 $req->bindParam(':ID', $object_id);
@@ -64,7 +71,6 @@ $req->bindParam(':dimensions', $dimensions);
 $req->bindParam(':etat', $etat);
 $req->bindParam(':tags', $tags);
 $req->bindParam(':remarques', $remarques);
-$req->bindParam(':date_ajout', $date);
 $req->bindParam(':poids', $poids);
 $req->bindParam(':prix', $prix);
 $req->bindParam(':localisation', $localisation);
@@ -75,11 +81,47 @@ $req->execute();
 $result="success";
 
 
+
 }
 catch(PDOException $e)
     {
     $result=  $e->getMessage();
+    echo "erreur ajout à la base de données : ".$result;
     }
+
+
+// Adding a line to the journal
+    try {
+
+$operation = "add";
+
+        $req = $bdd ->prepare("INSERT INTO journal (operation, ID_objet, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
+                                      VALUES (:operation, :ID_objet, :ID_categorie, :ID_souscategorie, :pieces, :etat, :poids, :prix, :localisation)
+                              ");
+
+    $req->bindParam(':operation', $operation);
+    $req->bindParam(':ID_objet', $object_id);
+    $req->bindParam(':ID_categorie', $categorie);
+    $req->bindParam(':ID_souscategorie', $souscategorie);
+    $req->bindParam(':pieces', $pieces);
+    $req->bindParam(':etat', $etat);
+    $req->bindParam(':poids', $poids);
+    $req->bindParam(':prix', $prix);
+    $req->bindParam(':localisation', $localisation);
+
+
+
+    $req->execute();
+    $result="success";
+
+
+
+    }
+    catch(PDOException $e)
+        {
+        $result=  $e->getMessage();
+        echo "erreur ajout au journal : ".$result;
+        }
 
 
 //echo "Opérations sur l'image... <br />";
