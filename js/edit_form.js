@@ -5,10 +5,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
       });
       var source_tags = document.getElementById("source-tags").value;
       var tags = source_tags.split(',');
-
-      tags.forEach((tag, index) =>
+      if (tags[0] !== '')
       {
-      tagInput1.addTag(tags[index]);
-    });
-
+            tags.forEach((tag, index) =>
+            {
+            tagInput1.addTag(tags[index]);
+          });
+      }
 });
