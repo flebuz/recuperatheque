@@ -87,7 +87,7 @@ include('connection_db.php');
     if  ( (isset($_POST['action'])) &&($_POST['action'] =='remove') )
          {
            //redirect to catalogue in 3 seconds since there is no item to display
-          header("refresh:3; url='catalogue.php'");
+          header("refresh:2; url='catalogue.php'");
           $item_status=999; //set value to 999 to mean "destroyed"
          }
 ?>
@@ -155,10 +155,10 @@ include('connection_db.php');
 
               if ($cat['ID']== $item['ID_categorie'])
               {
-                echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text active\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');\"".'\'>'.$cat['nom'].'</a>';
+                echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat active\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');\"".'\'>'.$cat['nom'].'</a>';
               }
               else {
-                echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');\"".'\'>'.$cat['nom'].'</a>';
+                echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');\"".'\'>'.$cat['nom'].'</a>';
               }
         }
 
@@ -301,7 +301,7 @@ include('connection_db.php');
                   <div class="row">
                     <div id="champ-localisation" class="input-field col s7 m9">
                       <i class="fas fa-map-marked-alt prefix"></i>
-                      <input id="localisation" name="localisation" type="text" value="<?php if ($item['localisation']!=='') {echo $item['localisation'];} else {echo "Récupérathèque";}?>">
+                      <input id="localisation" name="localisation" type="text" value="<?php echo $item['localisation'];?>">
                       <label for="localisation">Localisation:</label>
                     </div>
 
@@ -350,7 +350,7 @@ include('connection_db.php');
                </div>
                <div class="modal-footer">
                  <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="document.getElementById('action').value='remove'; document.forms['edit_form'].submit();"> OK</a>
-                 <a href="#!" class="modal-close waves-effect waves-green btn-flat"> Retour</a>
+                 <a href="#!" class="modal-close waves-effect waves-green btn-flat"> Annuler</a>
                </div>
              </div>
 
