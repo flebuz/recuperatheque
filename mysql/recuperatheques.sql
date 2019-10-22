@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 21 oct. 2019 à 08:07
+-- Généré le :  lun. 21 oct. 2019 à 17:43
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -80,6 +80,7 @@ DROP TABLE IF EXISTS `categorie`;
 CREATE TABLE IF NOT EXISTS `categorie` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
+  `score` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
@@ -87,25 +88,25 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 -- Déchargement des données de la table `categorie`
 --
 
-INSERT INTO `categorie` (`ID`, `nom`) VALUES
-(1, 'Bois'),
-(2, 'Métal'),
-(3, 'Papeterie'),
-(4, 'Dessin et Écriture'),
-(5, 'Mesure et Tracé'),
-(6, 'Assemblage'),
-(7, 'Découpe'),
-(8, 'Textile'),
-(9, 'Minéraux'),
-(10, 'Céramique'),
-(11, 'Verre'),
-(12, 'Plastique'),
-(13, 'Peinture'),
-(14, 'Outils'),
-(15, 'Quincaillerie'),
-(16, 'Électronique'),
-(17, 'Mobilier'),
-(18, 'Insolite');
+INSERT INTO `categorie` (`ID`, `nom`, `score`) VALUES
+(1, 'Bois', 18),
+(2, 'Métal', 17),
+(3, 'Papeterie', 16),
+(4, 'Dessin et Écriture', 15),
+(5, 'Mesure et Tracé', 14),
+(6, 'Assemblage', 13),
+(7, 'Découpe', 12),
+(8, 'Textile', 11),
+(9, 'Minéraux', 10),
+(10, 'Céramique', 9),
+(11, 'Verre', 8),
+(12, 'Plastique', 7),
+(13, 'Peinture', 6),
+(14, 'Outils', 5),
+(15, 'Quincaillerie', 4),
+(16, 'Électronique', 3),
+(17, 'Mobilier', 2),
+(18, 'Insolite', 1);
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,83 @@ CREATE TABLE IF NOT EXISTS `journal` (
   `prix` float NOT NULL,
   `localisation` varchar(255) NOT NULL,
   PRIMARY KEY (`journal_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=131 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `journal`
+--
+
+INSERT INTO `journal` (`journal_ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_souscategorie`, `pieces`, `etat`, `date_operation`, `poids`, `prix`, `localisation`) VALUES
+(67, 'add', 28, 7, 39, 1, 1, '2019-10-21 10:43:11', 0, 0, 'Récupérathèque'),
+(66, 'add', 27, 7, 39, 1, 1, '2019-10-21 10:43:02', 0, 0, 'Récupérathèque'),
+(65, 'add', 26, 4, 18, 1, 1, '2019-10-21 10:42:24', 0, 0, 'Récupérathèque'),
+(64, 'add', 25, 11, 63, 1, 1, '2019-10-21 10:41:20', 1, 0, 'Récupérathèque'),
+(63, 'add', 24, 8, 42, 1, 1, '2019-10-21 10:41:06', 1, 0, 'Récupérathèque'),
+(62, 'add', 23, 9, 52, 1, 1, '2019-10-21 10:40:56', 1, 0, 'Récupérathèque'),
+(61, 'add', 22, 4, 19, 1, 1, '2019-10-21 10:40:48', 0, 0, 'Récupérathèque'),
+(68, 'add', 29, 5, 27, 1, 1, '2019-10-21 10:43:22', 0, 0, 'Récupérathèque'),
+(69, 'add', 30, 4, 19, 1, 1, '2019-10-21 10:43:31', 0, 0, 'Récupérathèque'),
+(70, 'add', 31, 3, 15, 1, 1, '2019-10-21 10:43:44', 0, 0, 'Récupérathèque'),
+(71, 'sell', 25, 11, 63, 1, 1, '2019-10-21 10:44:13', 1, 0, 'Récupérathèque'),
+(72, 'sell', 26, 4, 18, 1, 1, '2019-10-21 10:44:20', 0, 0, 'Récupérathèque'),
+(73, 'sell', 31, 3, 15, 1, 1, '2019-10-21 10:44:24', 0, 0, 'Récupérathèque'),
+(74, 'sell', 30, 4, 19, 1, 1, '2019-10-21 10:44:29', 0, 0, 'Récupérathèque'),
+(75, 'sell', 29, 5, 27, 1, 1, '2019-10-21 10:44:34', 0, 0, 'Récupérathèque'),
+(76, 'sell', 28, 7, 39, 1, 1, '2019-10-21 10:44:40', 0, 0, 'Récupérathèque'),
+(77, 'sell', 27, 7, 39, 1, 1, '2019-10-21 10:44:47', 0, 0, 'Récupérathèque'),
+(78, 'add', 25, 18, 125, 1, 1, '2019-10-21 10:45:05', 1, 0, 'Récupérathèque'),
+(79, 'sell', 25, 18, 125, 1, 1, '2019-10-21 10:45:13', 1, 0, 'Récupérathèque'),
+(80, 'remove', 24, 8, 42, 1, 1, '2019-10-21 10:45:25', 1, 0, 'Récupérathèque'),
+(81, 'add', 24, 13, 120, 3, 3, '2019-10-21 10:45:51', 0.4, 25, 'Récupérathèque'),
+(82, 'add', 25, 8, 46, 1, 1, '2019-10-21 10:46:50', 1, 0, 'Récupérathèque'),
+(83, 'add', 26, 1, 2, 3, 3, '2019-10-21 10:53:14', 5, 0, 'Récupérathèque'),
+(84, 'add', 27, 6, 34, 1, 1, '2019-10-21 11:14:47', 0, 0, 'Récupérathèque'),
+(85, 'add', 28, 6, 34, 1, 1, '2019-10-21 11:42:08', 0, 0, 'Récupérathèque'),
+(86, 'add', 29, 5, 26, 1, 1, '2019-10-21 11:43:09', 0, 0, 'Récupérathèque'),
+(87, 'add', 30, 6, 35, 1, 1, '2019-10-21 11:43:25', 0, 0, 'Récupérathèque'),
+(88, 'add', 31, 5, 27, 1, 1, '2019-10-21 11:43:40', 0, 0, 'Récupérathèque'),
+(89, 'add', 32, 12, 69, 1, 1, '2019-10-21 11:44:08', 1, 0, 'Récupérathèque'),
+(90, 'add', 33, 5, 26, 1, 1, '2019-10-21 11:46:10', 0, 0, 'Récupérathèque'),
+(91, 'add', 34, 6, 34, 1, 1, '2019-10-21 11:53:17', 0, 0, 'Récupérathèque'),
+(92, 'remove', 30, 6, 35, 1, 1, '2019-10-21 12:11:54', 0, 0, 'Récupérathèque'),
+(93, 'remove', 33, 5, 26, 1, 1, '2019-10-21 12:12:06', 0, 0, 'Récupérathèque'),
+(94, 'sell', 32, 12, 69, 1, 1, '2019-10-21 12:16:10', 1, 0, 'Récupérathèque'),
+(95, 'sell', 31, 5, 27, 1, 1, '2019-10-21 12:16:16', 0, 0, 'Récupérathèque'),
+(96, 'sell', 28, 6, 34, 1, 1, '2019-10-21 12:16:21', 0, 0, 'Récupérathèque'),
+(97, 'sell', 29, 5, 26, 1, 1, '2019-10-21 12:16:27', 0, 0, 'Récupérathèque'),
+(98, 'sell', 27, 6, 34, 1, 1, '2019-10-21 12:16:32', 0, 0, 'Récupérathèque'),
+(99, 'add', 35, 18, 125, 1, 1, '2019-10-21 12:17:11', 15, 8, 'Récupérathèque'),
+(100, 'add', 36, 18, 125, 2, 3, '2019-10-21 12:17:56', 10, 5, 'Récupérathèque'),
+(101, 'remove', 26, 1, 2, 3, 1, '2019-10-21 12:18:12', 5, 0, 'Récupérathèque'),
+(102, 'sell', 36, 18, 125, 1, 3, '2019-10-21 15:25:10', 10, 5, 'Récupérathèque'),
+(103, 'edit', 22, 4, 19, 9, 1, '2019-10-21 15:30:33', 0, 0, 'Récupérathèque'),
+(104, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:30:42', 0, 0, 'Récupérathèque'),
+(105, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:30:53', 0, 0, 'Récupérathèque'),
+(106, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:31:53', 0, 0, 'Récupérathèque'),
+(107, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:35:15', 0, 0, 'Récupérathèque'),
+(108, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:36:14', 0, 0, 'Récupérathèque'),
+(109, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:24', 0, 0, 'Récupérathèque'),
+(110, 'sell', 36, 18, 125, 1, 3, '2019-10-21 15:37:33', 10, 5, 'Récupérathèque'),
+(111, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:45', 0, 0, 'Récupérathèque'),
+(112, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:56', 0, 0, 'Récupérathèque'),
+(113, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:38:05', 0, 0, 'Récupérathèque'),
+(114, 'add', 36, 2, 7, 1, 1, '2019-10-21 19:32:21', 1, 0.4, 'Récupérathèque'),
+(115, 'add', 37, 2, 7, 1, 1, '2019-10-21 19:32:53', 1, 0.4, 'Récupérathèque'),
+(116, 'add', 38, 2, 10, 1, 1, '2019-10-21 19:33:07', 1, 3.36, 'Récupérathèque'),
+(117, 'add', 39, 4, 20, 1, 1, '2019-10-21 19:33:18', 0, 0, 'Récupérathèque'),
+(118, 'add', 40, 4, 17, 1, 1, '2019-10-21 19:33:26', 0, 1.5, 'Récupérathèque'),
+(119, 'add', 41, 7, 36, 1, 1, '2019-10-21 19:37:43', 0, 1.25, 'Récupérathèque'),
+(120, 'remove', 41, 7, 36, 1, 1, '2019-10-21 19:40:00', 0, 1.25, 'Récupérathèque'),
+(121, 'remove', 40, 4, 17, 1, 1, '2019-10-21 19:40:10', 0, 1.5, 'Récupérathèque'),
+(122, 'remove', 39, 4, 20, 1, 1, '2019-10-21 19:40:19', 0, 0, 'Récupérathèque'),
+(123, 'remove', 38, 2, 10, 1, 1, '2019-10-21 19:40:35', 1, 3.36, 'Récupérathèque'),
+(124, 'remove', 37, 2, 7, 1, 1, '2019-10-21 19:40:44', 1, 0.4, 'Récupérathèque'),
+(125, 'remove', 36, 2, 7, 1, 1, '2019-10-21 19:42:12', 1, 0.4, 'Récupérathèque'),
+(126, 'remove', 35, 18, 125, 1, 1, '2019-10-21 19:42:21', 15, 8, 'Récupérathèque'),
+(127, 'remove', 34, 6, 34, 1, 1, '2019-10-21 19:42:32', 0, 0, 'Récupérathèque'),
+(128, 'remove', 25, 8, 46, 1, 1, '2019-10-21 19:42:40', 1, 0, 'Récupérathèque'),
+(129, 'remove', 24, 13, 120, 3, 1, '2019-10-21 19:42:51', 0.4, 25, 'Récupérathèque'),
+(130, 'sell', 23, 9, 52, 1, 1, '2019-10-21 19:43:00', 1, 0, 'Récupérathèque');
 
 -- --------------------------------------------------------
 
