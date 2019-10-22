@@ -48,7 +48,7 @@ try {
     {
 
       $req = $bdd ->prepare("UPDATE catalogue
-                                    SET ID_categorie=:ID_categorie, ID_souscategorie=:ID_souscategorie, pieces=:pieces, dimensions=:dimensions, etat=:etat, tags=:tags, remarques=:remarques, date_ajout=:date_ajout, poids=:poids, prix=:prix, localisation=:localisation
+                                    SET ID_categorie=:ID_categorie, ID_souscategorie=:ID_souscategorie, pieces=:pieces, dimensions=:dimensions, etat=:etat, tags=:tags, remarques=:remarques, poids=:poids, prix=:prix, localisation=:localisation
                                     WHERE ID=:ID_item
                             ");
       $req->bindParam(':ID_item', $object_id);
@@ -59,7 +59,6 @@ try {
       $req->bindParam(':etat', $etat);
       $req->bindParam(':tags', $tags);
       $req->bindParam(':remarques', $remarques);
-      $req->bindParam(':date_ajout', $date);
       $req->bindParam(':poids', $poids);
       $req->bindParam(':prix', $prix);
       $req->bindParam(':localisation', $localisation);
