@@ -123,6 +123,25 @@ $operation = "add";
         echo "erreur ajout au journal : ".$result;
         }
 
+// update score des catégories
+  try {
+        $req = $bdd ->prepare("UPDATE categorie
+                                       SET score = score +1
+                                       WHERE ID=:ID_categorie
+                               ");
+           $req->bindParam(':ID_categorie', $categorie);
+
+           $req->execute();
+           $result="success";
+
+
+           }
+           catch(PDOException $e)
+               {
+               $result=  $e->getMessage();
+               echo "erreur update score des catégories : ".$result;
+               }
+
 
 //echo "Opérations sur l'image... <br />";
   $img = $_POST['image_final'];
