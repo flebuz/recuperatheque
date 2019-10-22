@@ -94,7 +94,7 @@ include('connection_db.php');
 
 
 
-<main>
+<main class="space-header">
 
   <!-- Show modal in case of ID error -->
    <div id="modal_iderror" class="modal">
@@ -124,7 +124,7 @@ include('connection_db.php');
 
 <div id="cam_col" class="col s12 center-align">
 
-<img class="thumbnail" src="/photos/<?php echo $id ?>.jpg" style="max-width:400px;"></img>
+<img class="thumbnail responsive-img" src="/photos/<?php echo $id ?>.jpg"></img>
 
 <!-- IMAGE ICI -->
 
