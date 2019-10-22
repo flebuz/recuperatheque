@@ -51,10 +51,8 @@ if (isset($_POST['cat'])) {
   ?>
 
 
-<main>
+<main class="space-header">
   <div id="loading_overlay" class="overlay invisible">
-
-
     <!-- Overlay content -->
     <div class="overlay-content">
     <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -101,7 +99,7 @@ if (isset($_POST['cat'])) {
 
 </div>
 
-<div class="col s1 pull-s1 " id="cam_controls">
+<div class="col s1 pull-s1 a" id="cam_controls">
     <div class="row"></div>
     <div class="row"></div>
     <div class="row"></div>
@@ -134,7 +132,7 @@ if (isset($_POST['cat'])) {
   <?php
     //prep the request
     //every line is a souscategorie
-    $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `categorie` ORDER BY `categorie`.`ID`
+    $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `categorie` ORDER BY `categorie`.`score` DESC
                         ');
     //execute the request
     $req->execute();
@@ -161,11 +159,11 @@ if (isset($_POST['cat'])) {
 
         for ($row = 0; $row < sizeof($souscategories); $row++) {
             if ($souscategories[$row]['ID_categorie'] == $current_cat) {
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."');check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
             } else {
                 echo '</ul>';
                 echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
                 $current_cat++;
             }
         }
@@ -268,7 +266,7 @@ PlayVideo();"></select>
           <div class="input-field col s4 m3">
             <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
             <label for="indicateur_poids" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
-            <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this);" style="inline; text-align:center;">
+            <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" style="inline; text-align:center;">
             <span id="" class="postfix">kg</span>
           </div>
           <div class="input-field col s8 m9" id="range_div" >
@@ -287,7 +285,7 @@ PlayVideo();"></select>
              <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
 
               <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-<span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" ontouchstart="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" ontouchstart="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" ontouchstart="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" ontouchstart="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
+<span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(1); set_value('etat',1);compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(2); set_value('etat',2); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(3); set_value('etat',3); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4);compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(4); set_value('etat',4); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span>
 </div>
 <input type="number" name="etat" id="etat" value="1" class="invisible">
 
@@ -300,6 +298,7 @@ PlayVideo();"></select>
               <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
                 <input id="prix" name="prix" type="number" value="0" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
+                <input id="price_per_kg" name="prix" type="number" value="0" readonly hidden>
                 <label for="prix">Prix&nbsp;/&nbsp;pc</label>
               </div>
 
@@ -521,7 +520,7 @@ function ValidateForm(mandatory_fields, fields_visible_name)
              valeur=  Math.round(valeur * 10) / 10;
 
        document.getElementById('indicateur_poids').value= valeur;
-
+      compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');
        });
     slider_poids.noUiSlider.on('start', function( values, handle ) {
       set_active('','prefix_poids');
