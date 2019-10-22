@@ -2,6 +2,7 @@
 <head>
   <link rel="stylesheet" href="css/w3.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/add_form.css">
 </head>
 <body>
 
@@ -120,8 +121,15 @@ catch(PDOException $e)
             }
 
   ?>
+  <div id="loading_overlay" class="overlay visible">
+    <!-- Overlay content -->
+    <div class="overlay-content">
+    <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
 
-  <div id="modal_sold" class="w3-modal">
+  </div>
+
+  <div id="modal_sold" class="w3-modal" style="z-index: 1000;">
    <div class="w3-modal-content">
 
      <header class="w3-container">
@@ -156,6 +164,8 @@ catch(PDOException $e)
 <?php if ($result=='success')
 {
  echo"<script>document.getElementById('modal_sold').style.display='block'</script>";
+
+
  }
 ?>
 
