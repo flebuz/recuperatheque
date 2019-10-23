@@ -21,9 +21,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
   var upload_file_default_btn = document.querySelector('#upload-file-default');
   var file_upload = document.getElementById('file');
   var video = document.querySelector("#video");
+  var canvas_streaming = document.getElementById('video_streaming');
   var is_camera_active = false;
   var snap_final = document.getElementById('snap_final');
 
+
+  canvas_streaming.addEventListener("click", PrisePhoto); //le canvas du streaming video fonctionne comme le bouton prise de vue
   take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
   file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
   //  snap_final.addEventListener("click", UploadFichier); //on active  l'upload de photo en cas de clic sur le snap final
@@ -89,6 +92,7 @@ function getPreciseConstraints() {
           .then(function(stream) {
             console.log("2e call à getusermedia avec les bonnes contraintes");
             var video = document.querySelector('video');
+            snap_final.addEventListener("click", PrisePhoto); //le canvas final du thumbnail fonctionne comme le bouton prise de vue
             // Older browsers may not have srcObject
             if ("srcObject" in video) {
               video.srcObject = stream;
