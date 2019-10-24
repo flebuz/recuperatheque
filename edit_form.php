@@ -28,7 +28,13 @@
 
 
 
-<?php include 'header.php'; ?>
+  <?php
+  // Prevent caching on the catalogue to make sure it is always up-to-date
+  // TO DO : Check if there is a less aggressive way to do it
+  header("Cache-Control: max-age=0");
+  ?>
+
+  <?php include 'header.php'; ?>
 
 </head>
 
@@ -310,32 +316,6 @@ include('connection_db.php');
               <div class="row"></div>
 
 
-            <div class="row">
-
-                <div class="col s3 left">
-                  <a class="waves-effect waves-light btn-small grey accent-3" value="edit" href="item_page.php?id=<?php echo $id;?>" >
-                   <i class="fas fa-arrow-left"></i>
-                    Retour
-                  </a>
-                </div>
-        <div class="col s6 inline-group right">
-
-
-        			 <a class="waves-effect waves-light btn-small green accent-3 " name="submit" value="submit" onclick="expand('loading_overlay'); document.forms['edit_form'].submit(); " >
-                 <i class="fas fa-edit"></i>
-                 Modifier
-               </a>
-               <a class="waves-effect waves-light btn-small red accent-2 modal-trigger" href="#modal_remove"  >
-                  <i class="fas fa-trash-alt"></i>
-                  Supprimer
-                </a>
-
-                <input id="action" name="action" class="invisible" value="edit">
-
-
-              <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
-
-            </div>
 
             <div class="row invisible"><input id="image_final" name="image_final" type="text"></div>
             <div class="row"></div>
@@ -355,13 +335,40 @@ include('connection_db.php');
              </div>
 
 
-		</div>
-</div>
 
 </div>
 
+</div>
+
+<div class="quasi-fullwidth">
+  <div class="row">
+
+      <div class="col s2 left">
+        <a class="waves-effect waves-light btn-small" value="edit" href="item_page.php?id=<?php echo $id;?>" style="background-color: #909090;">
+         <i class="fas fa-arrow-left"></i>
+          Retour
+        </a>
+      </div>
+<div class="col s6 m4 inline-group right">
 
 
+     <a class="waves-effect waves-light btn-small green accent-3 " name="submit" value="submit" onclick="expand('loading_overlay'); document.forms['edit_form'].submit(); " >
+       <i class="fas fa-edit"></i>
+       Modifier
+     </a>
+     <a class="waves-effect waves-light btn-small modal-trigger" href="#modal_remove"  style="background-color: #909090;">
+        <i class="fas fa-trash-alt"></i>
+        Supprimer
+      </a>
+
+      <input id="action" name="action" class="invisible" value="edit">
+
+
+    <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
+
+   </div>
+  </div>
+</div>
 
   </form>
 
