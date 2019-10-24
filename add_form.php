@@ -346,23 +346,7 @@ PlayVideo();"></select>
 
     </div>
 </div>
-<div class="row"></div>
 
-
-            <div class="row hide-on-small-only">
-        			<div class="col s12">
-        			 <a id="submit_mobile" class="waves-effect waves-light btn-small green accent-3 right" value="" onclick="" >
-                 <i class="material-icons">thumb_up_alt</i>
-                 Encoder
-               </a>
-        			<!-- <a class="waves-effect waves-light btn-small " onclick="download_img(this)" >
-                 <i class="material-icons"></i>
-                 Télécharger
-               </a> -->
-        			</div>
-              <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
-
-            </div>
 
             <div class="row invisible"><input id="image_final" name="image_final" type="text"></div>
             <div class="row"></div>
@@ -371,9 +355,30 @@ PlayVideo();"></select>
 
 
 		</div>
-</div>
+
+
 
 </div>
+</div>
+
+<div class="quasi-fullwidth">
+<div class="row hide-on-small-only">
+  <div class="col s12">
+   <a id="submit_mobile" class="waves-effect waves-light btn-small green accent-3 right" value="" onclick="" >
+     <i class="material-icons">thumb_up_alt</i>
+     Encoder
+   </a>
+  <!-- <a class="waves-effect waves-light btn-small " onclick="download_img(this)" >
+     <i class="material-icons"></i>
+     Télécharger
+   </a> -->
+  </div>
+  <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
+
+</div>
+</div>
+
+
 
 
 
@@ -407,7 +412,7 @@ PlayVideo();"></select>
 /*Message de succès ou d'échec du formulaire, si $_POST['cat'] est défini*/
 if (isset($_POST['cat'])) {
     if ($result == 'success') {
-        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été ajouté à la base de données\"})</script>";
+        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été encodé. <a class='btn-flat toast-action' href=item_page.php?id=". $object_id .">Voir l'objet</button>\"})</script>";
     } else {
         echo $result;
     }
