@@ -446,6 +446,7 @@ ul.tabs {
   overflow-y: hidden;
   white-space: nowrap;
   background-color: #F0F0F0;
+  margin-top: 2px;
 }
 
 .scrollingwrapper btn-flat {
