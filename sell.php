@@ -1,5 +1,7 @@
 <html>
 <head>
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile (aussi : , target-densitydpi=device-dpi)-->
+
   <link rel="stylesheet" href="css/w3.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/add_form.css">
