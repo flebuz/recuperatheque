@@ -1,0 +1,20 @@
+{
+  "short_name": "Récupérathèque",
+  "name": "Web App Récupérathèque",
+  "icons": [
+    {
+      "src":"/assets/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "catalogue.php?utm_source=a2hs",
+  "background_color": "#00FF64",
+  "theme_color": "#00FF64",
+  "display": "standalone"
+}
