@@ -300,25 +300,34 @@ function UploadFichier(e) {
     StopVideo();
   }
 
+  //on cache le svg avec les bords discontinus
+  var bords_file_upload = document.getElementById("bords_file_upload");
+  bords_file_upload.classList.add("invisible");
+  var upload_file_default = document.getElementById("upload-file-default");
+  upload_file_default.classList.add("invisible");
+  var spinner_imagesnap = document.getElementById("spinner_imagesnap");
+  spinner_imagesnap.classList.remove("invisible");
+  var canvas_final = document.getElementById('snap_final');
+  canvas_final.classList.add("invisible");
+
   var img = new Image;
   img.src = URL.createObjectURL(e.target.files[0]);
   console.log("UploadFichier");
+
+
   img.onload = function() {
     getOrientation(e.target.files[0], function(orientation) {
 
       document.getElementById('image_final').value = DessineVignette('imagesnap', img, orientation);
     });
 
-    //context.drawImage(img, 0,0);
     console.log("img.onload");
 
     var upload_file_default_btn = document.getElementById("upload-file-default");
-    //upload_file_default_btn.classList.remove("pulse");
-    //upload_file_default_btn.classList.add("grey");
     upload_file_default_btn.classList.add("invisible");
-    var canvas_final = document.getElementById('snap_final');
-    canvas_final.classList.remove("invisible");
 
+    canvas_final.classList.remove("invisible");
+    spinner_imagesnap.classList.add("invisible");
   }
 }
 
@@ -409,12 +418,13 @@ function DessineVignette(type, elem, orientation) {
       ctx3.drawImage(canvas2, 0, 0);
     }
 
-    //on cache le svg avec les bords discontinus
-    var bords_file_upload = document.getElementById("bords_file_upload");
-    bords_file_upload.classList.add("invisible");
+
 
     // on affiche le canevas final
     canvas3.classList.remove("invisible");
+
+  //  canvas3.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
+
     return canvas3.toDataURL("image/jpeg", compression);
 
   } else if ((type == 'videosnap') && (video.readyState === 4)) {
