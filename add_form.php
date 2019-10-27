@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
@@ -80,10 +81,10 @@ if (isset($_POST['cat'])) {
                   <video id="video" autoplay class="invisible"></video>
 
 
-            <canvas id="snap_final" class="invisible"></canvas>
-<label for="file" style>
-                  <div id="file_upload_container" style="display:inline-block; margin:20px 0 20px 0;">
 
+<label for="file" style>
+  <canvas id="snap_final" class="invisible"></canvas>
+                  <div id="file_upload_container" style="display:inline-block; margin:20px 0 20px 0;">
 
                           <div id="bords_file_upload" style="position:absolute; cursor: pointer;"><svg viewBox="0 0 100 100" width="100px" style="width:100px;">
                             <path d="M25,2 L2,2 L2,25" fill="none" stroke="#9e9e9e" stroke-width="3" />
@@ -93,6 +94,7 @@ if (isset($_POST['cat'])) {
                           </svg></div>
 
                           <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="cam_btn_default" style="width:100px; height:100px; cursor:pointer"><i class="material-icons photo-controls" style="font-size: 64px !important; line-height: 100px !important;">camera_alt</i>   </div>
+                          <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                         </label>
                         <input id="file" type="file" accept="image/*" capture class="invisible">
                   </div>
@@ -398,7 +400,8 @@ PlayVideo();"></select>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/tags-input.js"></script>
 
-  <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
+  <!--<script type="text/javascript" src="js/adapter.js"></script> -->
+   <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
@@ -544,7 +547,6 @@ function ValidateForm(mandatory_fields, fields_visible_name)
 </body>
 
 <?php
-
 
 //TEMPORAIRE fonction pour logger des messages PHP dans la console via console.log() en JS
   function console_log($output, $with_script_tags = true)
