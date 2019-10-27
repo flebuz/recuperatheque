@@ -331,7 +331,7 @@ PlayVideo();"></select>
     <label for="dimensions">Dimensions précises :</label>
   </div>
 </div>
-    <div class="row">
+    <div class="row input-field">
       <div class="input-field col s5 m3">
 
             <label>
