@@ -200,9 +200,6 @@
 
 .item-tag{
   white-space: nowrap;
-  background: lavender;
-  border-radius: 15px;
-  line-height: 2.5;
 }
 
 .item-tag:hover{
