@@ -55,7 +55,7 @@
     if (isset($_GET['q'])){
       $query = htmlspecialchars($_GET['q']);
     } else{
-      $query = '';
+      $query = null;
     }
 
     $tri_option = array('date_ajout' => 'Date de récupération',
@@ -104,6 +104,9 @@
           if($sscatsearch){
             echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
           }
+          if($tri){
+            echo '<input type="hidden" name="order" value="' . $tri . '"/>';
+          }
         ?>
 
       </form>
@@ -122,7 +125,6 @@
         </div>
 
         <?php include('categories_menu.php'); ?>
-        <?php include('tri_menu.php'); ?>
 
       </div>
     </div>
@@ -164,23 +166,40 @@
           //si une des deux condition est respacter on affiche le resumer
 
           if($query != ''){
-            $getURL = '?' . http_build_query(array_merge($_GET, array('q'=>'')));
-            echo '<a href="' . $getURL . '">"' . $query . '"</a>';
+            ?>
+              <a href=" <?php echo link_erase(array('q')) ?> ">
+                <?php echo $query ?>
+              </a>
+            <?php
           }
           if($sscatsearch != 0){
             if($query != ''){ echo ' dans '; }
-            //convertit l'ID en nom
-            $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>0, 'sscatsearch'=>0)));
-            echo '<a href="' . $getURL . '">' . $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ')</a>';
+            ?>
+              <a href=" <?php echo link_erase(array('sscatsearch','catsearch')) ?> ">
+                <?php echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ')' ?>
+              </a>
+            <?php
           }
           elseif($catsearch != 0){
             if($query != ''){ echo ' dans '; }
-            //convertit l'ID en nom
-            $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>0)));
-            echo '<a href="' . $getURL . '">' . $system[$catsearch]['nom'] . '</a>';
+            ?>
+              <a href=" <?php echo link_erase(array('sscatsearch','catsearch')) ?> ">
+                <?php echo $system[$catsearch]['nom'] ?>
+              </a>
+            <?php
           }
         }
         echo ' (' . $number_results . ' résultats)';
+
+        function link_erase($params){
+          //retourne une url GET dans laquelle les parametres cité on été remis a NULL
+          $TEMP = $_GET;
+          foreach ($params as $param) {
+            $TEMP[$param] = null;
+          }
+          $getURL = '?' . http_build_query($TEMP);
+          return $getURL;
+        }
       ?>
         </div>
       </div>
