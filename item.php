@@ -72,9 +72,9 @@
             //echo $item['etat'];
             for($n = 0; $n < 4; $n++){
               if($item['etat'] > $n){
-                echo '<span class="full">▅</span>' ;
+                echo '<i class="fas fa-heart"></i>' ;
               } else{
-                echo '<span class="empty">▅</span>' ;
+                echo '<i class="far fa-heart"></i>' ;
               }
             }
             ?>

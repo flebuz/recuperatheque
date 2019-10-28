@@ -193,25 +193,18 @@
   color: #909090;
 }
 
-.etat-icon-container{
-  margin-left: 6px;
-  position: relative;
-  bottom: 3px;
-}
-
-.etat-icon-container .full{
+.etat-icon-container i{
   color: #909090;
+  padding-left: 3px;
 }
 
-.etat-icon-container .empty{
-  color: #E0E0E0;
-}
-
-.item-single-container .item-tag{
+.item-tag{
   white-space: nowrap;
-  padding: 5px 10px 5px 5px;
-  text-decoration: none;
   background: lavender;
   border-radius: 15px;
   line-height: 2.5;
+}
+
+.item-tag:hover{
+  text-decoration: none;
 }

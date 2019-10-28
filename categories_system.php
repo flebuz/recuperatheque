@@ -54,5 +54,5 @@
     }
     $system[$sscat['cat_ID']]['sscats'][$sscat['ID']] = $sscat['nom'];
   }
-  //print_r($system);
+
 ?>
