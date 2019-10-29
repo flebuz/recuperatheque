@@ -7,7 +7,6 @@ function $_GET(q, s) {
   return (s = s.replace(/^\?/, '&').match(re)) ? (typeof s[1] == 'undefined' ? '' : decodeURIComponent(s[1])) : undefined;
 }
 
-
 var constraints = {
   video: {
     width: {
@@ -27,6 +26,7 @@ var verbose = $_GET('verbose');
 
 window.addEventListener('DOMContentLoaded', (event) => {
 
+
   document.querySelector('#rearcameraID').value = '';
 
   var take_photo_btn = document.querySelector('#take-photo');
@@ -43,7 +43,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
   file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
   //  snap_final.addEventListener("click", UploadFichier); //on active  l'upload de photo en cas de clic sur le snap final
 
-
   var tagInput1 = new TagsInput({
     selector: 'input-tags',
   });
@@ -53,7 +52,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
   init_getusermedia();
 
 });
-
 
 
 function getPreciseConstraints() {
@@ -78,7 +76,6 @@ function getPreciseConstraints() {
 
         }
       }
-
 
 
       //If couldnt find a suitable camera, switch to backup solution with input="image" control
@@ -118,10 +115,6 @@ function getPreciseConstraints() {
 
 
 
-
-
-
-
 function PlayVideo() {
 
   call_getusermedia();
@@ -153,15 +146,12 @@ function StopVideo() {
 //méthode tarabiscotée pour lancer getusermedia pour améliorer la compatibilité
 function init_getusermedia() {
 
-
-
   // Older browsers might not implement mediaDevices at all, so we set an empty object first
   if (navigator.mediaDevices === undefined) {
     navigator.mediaDevices = {};
   }
 
-  // Some browsers partially implement mediaDevices. We can't just assign an object
-  // with getUserMedia as it would overwrite existing properties.
+  // Some browsers partially implement mediaDevices.
   // Here, we will just add the getUserMedia property if it's missing.
   if (navigator.mediaDevices.getUserMedia === undefined) {
     navigator.mediaDevices.getUserMedia = function(constraints) {
@@ -280,8 +270,6 @@ function SwitchCameraActiveState() {
 function PrisePhoto(e) {
   e.preventDefault();
 
-
-
   //var vignette = DrawOnCanvas('videopreview');
   document.getElementById('image_final').value = DessineVignette('videosnap');
 
@@ -290,16 +278,12 @@ function PrisePhoto(e) {
   //  take_photo_btn.classList.remove("pulse");
   take_photo_btn.classList.add("inactive");
 
-
-
 }
+
 
 function UploadFichier(e) {
 
-  if (is_camera_active) {
-    StopVideo();
-  }
-
+  console.log("UploadFichier");
   //on cache le svg avec les bords discontinus
   var bords_file_upload = document.getElementById("bords_file_upload");
   bords_file_upload.classList.add("invisible");
@@ -310,24 +294,33 @@ function UploadFichier(e) {
   var canvas_final = document.getElementById('snap_final');
   canvas_final.classList.add("invisible");
 
+
+document.getElementById('image_final').reset;
+
   var img = new Image;
   img.src = URL.createObjectURL(e.target.files[0]);
-  console.log("UploadFichier");
 
 
-  img.onload = function() {
-    getOrientation(e.target.files[0], function(orientation) {
 
-      document.getElementById('image_final').value = DessineVignette('imagesnap', img, orientation);
-    });
+ img.onload = function()
+  {
 
     console.log("img.onload");
+    getOrientation(e.target.files[0], function(orientation)
+      {
+
+        document.getElementById('image_final').value = DessineVignette('imagesnap', img, orientation);
+      });
 
     var upload_file_default_btn = document.getElementById("upload-file-default");
     upload_file_default_btn.classList.add("invisible");
-
     canvas_final.classList.remove("invisible");
     spinner_imagesnap.classList.add("invisible");
+
+  }
+
+  if (is_camera_active) {
+    StopVideo();
   }
 }
 
@@ -371,80 +364,63 @@ function getOrientation(file, callback) {
 
 function DessineVignette(type, elem, orientation) {
 
-  var compression = 1.0;
-  var size = 1000;
+  var compression = 0.9;
+  var size = 600;
 
   //si l'image uploadée est passée en argument
   if (type == 'imagesnap') {
 
-    var canvas2 = document.getElementById('hidden_snap_canvas'),
-      ctx2 = canvas2.getContext('2d'),
-      canvas3 = document.getElementById('snap_final'),
-      ctx3 = canvas3.getContext('2d'),
+    var canvas = document.getElementById('snap_final'),
+      ctx = canvas.getContext('2d'),
       vw = elem.width,
       vh = elem.height;
 
-    canvas2.width = size;
-    canvas2.height = size;
-    canvas3.width = size;
-    canvas3.height = size;
+    canvas.width = size;
+    canvas.height = size;
 
     //on calcule le plus grand carré au milieu de l'image
     var dimension = Math.min(vw, vh);
     var sx = (vw - dimension) / 2;
     var sy = (vh - dimension) / 2;
 
-    //on crop le plus grand carré au milieu de l'image et on la redimensionne dans un carré de size x size
-    ctx2.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
-
+    ctx.clearRect(0, 0, size, size);
     //on utilise l'orientation EXIF de l'image (le cas échéant) pour réorienter le canevas vers le haut puis on dessine
     if (orientation == 6) {
-      ctx3.clearRect(0, 0, canvas2.width, canvas2.height);
-      ctx3.translate(canvas2.width / 2, canvas2.height / 2);
-      ctx3.rotate(90 * Math.PI / 180);
-      ctx3.drawImage(canvas2, -canvas2.width / 2, -canvas2.width / 2);
+
+      ctx.clearRect(0, 0, size, size);
+      ctx.transform(0, 1, -1, 0, size, 0);
+      ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
     } else if (orientation == 8) {
-      ctx3.clearRect(0, 0, canvas2.width, canvas2.height);
-      ctx3.translate(canvas2.width / 2, canvas2.height / 2);
-      ctx3.rotate(270 * Math.PI / 180);
-      ctx3.drawImage(canvas2, -canvas2.width / 2, -canvas2.width / 2);
+
+      ctx.clearRect(0, 0, size, size);
+      ctx.transform(0, -1, 1, 0, 0, size);
+      ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
     } else if (orientation == 3) {
-      ctx3.clearRect(0, 0, canvas2.width, canvas2.height);
-      ctx3.translate(canvas2.width / 2, canvas2.height / 2);
-      ctx3.rotate(180 * Math.PI / 180);
-      ctx3.drawImage(canvas2, -canvas2.width / 2, -canvas2.width / 2);
+
+      ctx.clearRect(0, 0, size, size);
+      ctx.transform(-1, 0, 0, -1, size, size);
+      ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
     } else {
-      ctx3.clearRect(0, 0, canvas2.width, canvas2.height);
-      ctx3.drawImage(canvas2, 0, 0);
+
+
+      ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
     }
 
-
-
     // on affiche le canevas final
-    canvas3.classList.remove("invisible");
+    canvas.classList.remove("invisible");
+    return canvas.toDataURL("image/jpeg", compression);
+  }
 
-  //  canvas3.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
-
-    return canvas3.toDataURL("image/jpeg", compression);
-
-  } else if ((type == 'videosnap') && (video.readyState === 4)) {
+  else if ((type == 'videosnap') && (video.readyState === 4)) {
 
     var canvas_streaming = document.getElementById('video_streaming'),
-      canvas1 = document.getElementById('hidden_snap_canvas'),
-      ctx1 = canvas1.getContext('2d'),
-      canvas2 = document.getElementById('snap_final'),
-      ctx2 = canvas2.getContext('2d');
-    canvas2.width = size;
-    canvas2.height = size;
-
+      canvas = document.getElementById('snap_final'),
+      ctx = canvas.getContext('2d');
+    canvas.width = size;
+    canvas.height = size;
 
     var vw = video.videoWidth,
       vh = video.videoHeight;
-    canvas1.width = vw;
-    canvas1.height = vh;
-    //console.log("vw: "+ vw + "vh: " + vh);
-
-    ctx1.drawImage(video, 0, 0, vw, vh, 0, 0, vw, vh);
 
     var dimension = Math.min(vw, vh);
     var sx = (vw - dimension) / 2;
@@ -452,19 +428,17 @@ function DessineVignette(type, elem, orientation) {
 
     //On cache le canvas avec le streaming
     canvas_streaming.classList.add("invisible");
-    canvas2.classList.remove("invisible");
+    canvas.classList.remove("invisible");
     //Dessine l'image video dans notre Canvas
-    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, size, size);
+    ctx.drawImage(video, sx, sy, dimension, dimension, 0, 0, size, size);
 
-    canvas2.classList.add('flash');
+    canvas.classList.add('flash');
     setTimeout(function() {
-      canvas2.classList.remove('flash');
+      canvas.classList.remove('flash');
     }, 500);
 
-    return canvas2.toDataURL("image/jpeg", compression);
+    return canvas.toDataURL("image/jpeg", compression);
   }
-
-
 
 }
 
@@ -473,44 +447,35 @@ function DessineVignette(type, elem, orientation) {
 function DrawVideoOnCanvas() {
 
   if (video.readyState === 4) {
-    var canvas1 = document.getElementById('hidden_streaming_canvas'),
-      ctx1 = canvas1.getContext('2d'),
-      canvas2 = document.getElementById('video_streaming'),
-      ctx2 = canvas2.getContext('2d');
+    var canvas = document.getElementById('video_streaming'),
+      ctx = canvas.getContext('2d');
 
     var vw = video.videoWidth,
       vh = video.videoHeight;
 
     var div_width;
-    canvas1.width = vw;
-    canvas1.height = vh;
 
-    ctx1.drawImage(video, 0, 0, vw, vh, 0, 0, vw, vh);
+    canvas.style.width = '100%';
+    canvas.style.height = '';
 
-    canvas2.style.width = '100%';
-    canvas2.style.height = '';
-
-    if (canvas2.offsetWidth > 400) {
+    if (canvas.offsetWidth > 400) {
       div_width = 400;
-      canvas2.style.width = '400'
+      canvas.style.width = '400'
     } else {
-      div_width = canvas2.offsetWidth;
+      div_width = canvas.offsetWidth;
     }
 
     // ...then set the internal size to match
-    canvas2.width = div_width;
-    canvas2.height = div_width;
+    canvas.width = div_width;
+    canvas.height = div_width;
 
     var dimension = Math.min(vw, vh);
 
     var sx = (vw - dimension) / 2;
-
     var sy = (vh - dimension) / 2;
 
 
-
-
-    ctx2.drawImage(canvas1, sx, sy, dimension, dimension, 0, 0, div_width, div_width);
+    ctx.drawImage(video, sx, sy, dimension, dimension, 0, 0, div_width, div_width);
   };
   //context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, Math.floor(200*ratio), 200);
   setTimeout(DrawVideoOnCanvas, 20);
