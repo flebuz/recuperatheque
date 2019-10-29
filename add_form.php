@@ -28,7 +28,7 @@ header("Cache-Control: max-age=0");
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
-  <link rel="stylesheet" href="nouislider/nouislider.css">
+  <link rel="stylesheet" href="nouislider/nouislider.min.css">
 
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
@@ -411,7 +411,7 @@ PlayVideo();"></select>
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
 <script type="text/javascript" src="js/forms.js"></script>
 <script type="text/javascript" src="js/add_form.js"></script>
-<script type="text/javascript" src="nouislider/nouislider.js"></script>
+<script type="text/javascript" src="nouislider/nouislider.min.js"></script>
 
 
 <?php
