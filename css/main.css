@@ -8,8 +8,8 @@ html, body{
 }
 
 html, body, p, h1, h2, h3, h4, h5, h6{
-  font-family:, 'Open Sans', Helvetica, arial, sans-serif !important;
-  /* font-family: 'Jost' !important; */
+  /* font-family:, 'Open Sans', Helvetica, arial, sans-serif !important; */
+  font-family: 'Jost', Helvetica, arial, sans-serif !important;
 }
 
 
@@ -178,6 +178,10 @@ button:hover{
 
 .header .nav-button.page-selected{
   color: white;
+}
+
+.w3-large{
+  font-size:18px!important
 }
 
 
