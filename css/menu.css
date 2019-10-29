@@ -187,3 +187,41 @@
 .menu-container a{
   text-decoration: none;
 }
+
+
+/* --- page nav */
+
+.page-nav{
+  background: white;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 12px;
+
+  border-top: 1px solid #E0E0E0;
+}
+
+.page-nav a{
+  text-decoration: none;
+  padding: 0 12px;
+}
+
+.page-nav a.disabled{
+  pointer-events: none;
+  cursor: default;
+  color: #D0D0D0;
+}
+
+@media(min-width: 993px) {
+  .page-nav{
+
+    height: 48px;
+    box-sizing: content-box;
+
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+    margin-top: 12px;
+  }
+}

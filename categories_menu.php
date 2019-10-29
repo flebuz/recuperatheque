@@ -6,7 +6,7 @@
     //----- construire le menu en parcourant l'arbre
   ?>
 
-  <a href= <?php echo link_construct(array('catsearch'=>null, 'sscatsearch'=>null)) ?>
+  <a href= <?php echo link_construct(array('catsearch'=>null, 'sscatsearch'=>null, 'page'=>null)) ?>
     class="categorie-title tout">
     Afficher toutes les catégories
   </a>
@@ -33,7 +33,7 @@
           <?php if($catsearch==$catID){echo 'style="height:auto"'; }?> >
 
         <!-- on ajoute la sscat de toute les sscat -->
-        <a href= <?php echo link_construct(array('catsearch'=>$catID, 'sscatsearch'=>null)) ?>
+        <a href= <?php echo link_construct(array('catsearch'=>$catID, 'sscatsearch'=>null, 'page'=>null)) ?>
           class="souscategorie-title tout <?php if($catsearch==$catID and $sscatsearch==0){echo 'selected'; }?>">
           Tout dans <?php echo $catData['nom']; ?>
         </a>
@@ -49,7 +49,7 @@
             //declare une sscategorie
             ?>
             <a class="souscategorie-title <?php if($sscatsearch==$sscatID){echo 'selected'; }?>"
-               href= <?php echo link_construct(array('catsearch'=>$catID, 'sscatsearch'=>$sscatID)) ?> >
+               href= <?php echo link_construct(array('catsearch'=>$catID, 'sscatsearch'=>$sscatID, 'page'=>null)) ?> >
               <?php
                 echo $sscatNom;
                 echo '<span class="categorie-count">(' . $sscat_counter[$sscatID] . ')</span>';
@@ -73,7 +73,7 @@
   foreach($tri_option as $param => $nom){
     ?>
 
-    <a href= <?php echo link_construct(array('order'=>$param)) ?>
+    <a href= <?php echo link_construct(array('order'=>$param, 'page'=>null)) ?>
       class="w3-block categorie-title <?php if($tri==$param){echo 'selected'; }?>">
       <?php echo $nom; ?>
     </a>
@@ -82,15 +82,6 @@
   }
   ?>
 </div>
-
-
-<?php
-function link_construct($params){
-  $getURL = '?' . http_build_query(array_merge($_GET, $params));
-  return $getURL;
-}
-?>
-
 
 <script>
   // js to open and close the menus and submenu with animation
