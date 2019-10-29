@@ -184,6 +184,14 @@ button:hover{
   font-size:18px!important
 }
 
+/*--- ERREUR ---*/
+
+.erreur{
+  margin-top: 0;
+  padding: 24px;
+  background: white;
+}
+
 
 /*----- FORMS -----*/
 .tabs

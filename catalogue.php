@@ -238,6 +238,7 @@
                 foreach ($params as $param) {
                   $TEMP[$param] = null;
                 }
+                $TEMP['page'] = null;
                 $getURL = '?' . http_build_query($TEMP);
                 return $getURL;
               }
@@ -276,7 +277,7 @@
               }
             }
             else {
-              echo '<h3 class="w3-container"> Aucun résultat ne correspond à la recherche </h3>';
+              echo '<h3 class="erreur"> Aucun résultat ne correspond à la recherche </h3>';
             }
           ?>
 

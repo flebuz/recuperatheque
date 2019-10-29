@@ -99,7 +99,7 @@
       <?php
     }
     else{
-      echo '<h3 class="w3-container"> Cet objet n\'existe pas </h3>';
+      echo '<h3 class="erreur"> Cet objet n\'existe pas </h3>';
       $item=0;
     }
   ?>

@@ -65,7 +65,7 @@
 
 /* barre des boutons */
 .item-buttons-container{
-  padding: 12px;
+  padding: 6px;
 
   display: flex;
   flex-wrap: nowrap;
@@ -76,13 +76,18 @@
   margin: 12px;
 }
 
+@media(min-width: 601px){
+  .back-link-container{
+    margin-bottom: 0px;
+  }
+}
+
 @media(min-width: 993px){
   .back-link-container{
-    background: white;
     margin-bottom: 0px;
+
     height: 48px;
     box-sizing: content-box;
-
     display: flex;
     align-items: center;
     align-content: center;
@@ -92,6 +97,7 @@
   .item-buttons-container{
     background: white;
     border-top: 1px solid #E0E0E0;
+    padding: 12px;
   }
 }
 
