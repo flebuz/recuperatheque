@@ -231,6 +231,7 @@
                 }
               }
               echo ' (' . $total_count . ' résultats)';
+              // echo '<div>Page ' . $page . '</div>';
 
               function link_erase($params){
                 //retourne une url GET dans laquelle les parametres cité on été remis a NULL
