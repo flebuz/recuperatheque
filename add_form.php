@@ -1,6 +1,13 @@
+<!DOCTYPE html>
 <html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
+<?php
+// Prevent caching on this page to make sure it is always up-to-date
+// TO DO : Check if there is a less aggressive way to do it
+header("Cache-Control: max-age=0");
+
+?>
 
 <?php $thisPage="add_form"; ?>
 <head>
@@ -21,7 +28,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
-  <link rel="stylesheet" href="nouislider/nouislider.css">
+  <link rel="stylesheet" href="nouislider/nouislider.min.css">
 
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!--Import materialize.css-->
@@ -68,8 +75,7 @@ if (isset($_POST['cat'])) {
 
 
           <canvas id="hidden_streaming_canvas" class="invisible"></canvas>
-          <canvas id="hidden_snap_canvas" class="invisible"></canvas>
-          <canvas id="hidden_rotate_canvas" class="invisible"></canvas>
+
 <div id="cam_col" class="col s10 m10 l10 center-align">
 
 
@@ -80,10 +86,9 @@ if (isset($_POST['cat'])) {
                   <video id="video" autoplay class="invisible"></video>
 
 
-            <canvas id="snap_final" class="invisible"></canvas>
+  <canvas id="snap_final" class="invisible"></canvas>
 <label for="file" style>
                   <div id="file_upload_container" style="display:inline-block; margin:20px 0 20px 0;">
-
 
                           <div id="bords_file_upload" style="position:absolute; cursor: pointer;"><svg viewBox="0 0 100 100" width="100px" style="width:100px;">
                             <path d="M25,2 L2,2 L2,25" fill="none" stroke="#9e9e9e" stroke-width="3" />
@@ -93,8 +98,9 @@ if (isset($_POST['cat'])) {
                           </svg></div>
 
                           <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="cam_btn_default" style="width:100px; height:100px; cursor:pointer"><i class="material-icons photo-controls" style="font-size: 64px !important; line-height: 100px !important;">camera_alt</i>   </div>
+                          <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                         </label>
-                        <input id="file" type="file" accept="image/*" capture class="invisible">
+                        <input id="file" type="file" accept="image/*" capture="environment" class="invisible">
                   </div>
 
 </div>
@@ -329,7 +335,7 @@ PlayVideo();"></select>
     <label for="dimensions">Dimensions précises :</label>
   </div>
 </div>
-    <div class="row">
+    <div class="row input-field">
       <div class="input-field col s5 m3">
 
             <label>
@@ -348,7 +354,7 @@ PlayVideo();"></select>
 </div>
 
 
-            <div class="row invisible"><input id="image_final" name="image_final" type="text"></div>
+            <div class="row"><input id="image_final" name="image_final" type="text"></div>
             <div class="row"></div>
 
 
@@ -365,7 +371,7 @@ PlayVideo();"></select>
 <div class="row hide-on-small-only">
   <div class="col s12">
    <a id="submit_mobile" class="waves-effect waves-light btn-small green accent-3 right" value="" onclick="" >
-     <i class="material-icons">thumb_up_alt</i>
+     <i class="fa fa-paper-plane"></i>
      Encoder
    </a>
   <!-- <a class="waves-effect waves-light btn-small " onclick="download_img(this)" >
@@ -384,7 +390,7 @@ PlayVideo();"></select>
 
     <div class="fixed-action-btn hide-on-med-and-up">
       <a id="submit_desktop" class="btn-floating btn-large green accent-3" name="" value="" onclick="">
-        <i class="material-icons">thumb_up_alt</i>
+        <i class="fa fa-paper-plane"></i>
       </a>
 
   </form>
@@ -398,13 +404,14 @@ PlayVideo();"></select>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/tags-input.js"></script>
 
-  <script type="text/javascript" src="js/adapter.js"></script> <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
+  <!--<script type="text/javascript" src="js/adapter.js"></script> -->
+   <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
 <script type="text/javascript" src="js/forms.js"></script>
 <script type="text/javascript" src="js/add_form.js"></script>
-<script type="text/javascript" src="nouislider/nouislider.js"></script>
+<script type="text/javascript" src="nouislider/nouislider.min.js"></script>
 
 
 <?php
@@ -544,7 +551,6 @@ function ValidateForm(mandatory_fields, fields_visible_name)
 </body>
 
 <?php
-
 
 //TEMPORAIRE fonction pour logger des messages PHP dans la console via console.log() en JS
   function console_log($output, $with_script_tags = true)

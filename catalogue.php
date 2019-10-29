@@ -23,6 +23,11 @@
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
 
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mycélium">
+
 
 </head>
 
@@ -33,6 +38,7 @@
   // Prevent caching on the catalogue to make sure it is always up-to-date
   // TO DO : Check if there is a less aggressive way to do it
   header("Cache-Control: max-age=0");
+
   ?>
 
   <?php
@@ -298,8 +304,37 @@
     </div>
   </div>
 
-  <!-- infinite scroll -->
-  <!-- <script src="https://unpkg.com/infinite-scroll@3.0.6/dist/infinite-scroll.pkgd.min.js"></script> -->
+  <?php
+
+  //TEMPORAIRE fonction pour logger des messages PHP dans la console via console.log() en JS
+    function console_log($output, $with_script_tags = true)
+    {
+        $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .
+  ');';
+        if ($with_script_tags) {
+            $js_code = '<script>' . $js_code . '</script>';
+        }
+        echo $js_code;
+    }
+  ?>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+    navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+    // Registration was successful
+    console.log('Service worker successfully registered on scope', registration.scope);
+    }, function(err) {
+    // registration failed :(
+    console.log('ServiceWorker registration failed: ', err);
+    }).catch(function(err) {
+    console.log(err);
+    });
+    });
+    } else {
+    console.log('service worker is not supported');
+    }
+    </script>
 
 </body>
 
