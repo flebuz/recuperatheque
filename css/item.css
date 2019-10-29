@@ -26,7 +26,7 @@
    background: white;
  }
  .items-container .item{
-   margin: 6px;
+   margin: 12px;
    /* border-bottom: 1px solid #E0E0E0; */
  }
  .item{
@@ -41,32 +41,57 @@
   text-decoration: none;
 }
 
-.retour{
+.back-link-container{
+  background: white;
+  padding: 12px 24px;
+
+  border-bottom: 1px solid #E0E0E0;
+  margin-bottom: 12px;
+
   text-align: left;
-  color: #909090;
   display: block;
+
+  position: sticky;
+  top: 48px;
+  z-index: 10;
+}
+
+.back-link-container i{
+  padding-right: 12px;
+}
+.back-link-container a{
   text-decoration: none;
-  padding: 12px;
 }
 
 /* barre des boutons */
 .item-buttons-container{
-  padding: 6px;
+  padding: 12px;
+
   display: flex;
   flex-wrap: nowrap;
 }
 
 .item-button{
   flex-grow: 1;
-  margin: 6px;
+  margin: 12px;
 }
 
 @media(min-width: 993px){
-  .item-buttons-container{
-    padding: 12px;
+  .back-link-container{
+    background: white;
+    margin-bottom: 0px;
+    height: 48px;
+    box-sizing: content-box;
+
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    position: static;
   }
-  .item-button{
-    margin: 12px;
+  .item-buttons-container{
+    background: white;
+    border-top: 1px solid #E0E0E0;
   }
 }
 
