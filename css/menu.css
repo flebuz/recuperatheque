@@ -59,7 +59,8 @@
   padding-top: 5px;
   padding-bottom: 5px;
   text-decoration: none;
-  background: lavender;
+  background: #00E676;
+  color: white;
   border-radius: 10px;
   line-height: 2.5;
 }
@@ -68,7 +69,6 @@
   padding-left: 6px;
   font-size: 1em;
   font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00d";
-  color: black;
 }
 
 @media(min-width: 993px) {
@@ -184,9 +184,44 @@
   font-weight: bold;
 }
 
-.menu a{
+.menu-container a{
   text-decoration: none;
 }
-/* .menu a:hover{
+
+
+/* --- page nav */
+
+.page-nav{
+  background: white;
+  text-align: center;
+  font-size: 1rem;
+  padding: 12px;
+
+  border-top: 1px solid #E0E0E0;
+}
+
+.page-nav a{
+  text-decoration: none;
+  padding: 0 12px;
+}
+
+.page-nav a.disabled{
+  pointer-events: none;
+  cursor: default;
   color: #D0D0D0;
-} */
+}
+
+@media(min-width: 993px) {
+  .page-nav{
+
+    height: 48px;
+    box-sizing: content-box;
+
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+    margin-top: 12px;
+  }
+}

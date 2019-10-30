@@ -1,15 +1,12 @@
 
-<!-- ouvre le menu -->
+<!-- menu categorie -->
 <div id="categories" class="menu">
 
   <?php
     //----- construire le menu en parcourant l'arbre
-
-    //on construit l'url get en fonction des param déjà présent
-    $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>0, 'sscatsearch'=>0)));
   ?>
 
-  <a href="<?php echo $getURL;?>"
+  <a href= <?php echo link_construct(array('catsearch'=>null, 'sscatsearch'=>null, 'page'=>null)) ?>
     class="categorie-title tout">
     Afficher toutes les catégories
   </a>
@@ -36,11 +33,7 @@
           <?php if($catsearch==$catID){echo 'style="height:auto"'; }?> >
 
         <!-- on ajoute la sscat de toute les sscat -->
-        <?php
-          //on construit l'url get en fonction des param déjà présent
-          $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>$catID, 'sscatsearch'=>0)));
-        ?>
-        <a href="<?php echo $getURL;?>"
+        <a href= <?php echo link_construct(array('catsearch'=>$catID, 'sscatsearch'=>null, 'page'=>null)) ?>
           class="souscategorie-title tout <?php if($catsearch==$catID and $sscatsearch==0){echo 'selected'; }?>">
           Tout dans <?php echo $catData['nom']; ?>
         </a>
@@ -54,11 +47,9 @@
           if(array_key_exists($sscatID,$sscat_counter)){
 
             //declare une sscategorie
-            //on construit l'url get en fonction des param déjà présent
-            $getURL = '?' . http_build_query(array_merge($_GET, array('catsearch'=>$catID, 'sscatsearch'=>$sscatID)));
             ?>
-            <a href="<?php echo $getURL;?>"
-              class="souscategorie-title <?php if($sscatsearch==$sscatID){echo 'selected'; }?>">
+            <a class="souscategorie-title <?php if($sscatsearch==$sscatID){echo 'selected'; }?>"
+               href= <?php echo link_construct(array('catsearch'=>$catID, 'sscatsearch'=>$sscatID, 'page'=>null)) ?> >
               <?php
                 echo $sscatNom;
                 echo '<span class="categorie-count">(' . $sscat_counter[$sscatID] . ')</span>';
@@ -73,99 +64,113 @@
       }
     }
   ?>
-
 </div>
 
-  <script>
+<!-- menu tris -->
+<div id="tri" class="menu">
 
-    // js to open and close the menus and submenu with animation
+  <?php
+  foreach($tri_option as $param => $nom){
+    ?>
 
-    function openCat(id) {
-      var x = document.getElementById(id);
-      var menu = document.getElementById('categories');
-      if (!x.clientHeight) {
-        // on ouvre l'accordeon
-        x.style.height = x.scrollHeight+'px';
-        setTimeout(function(){menu.style.height='initial';},200);
+    <a href= <?php echo link_construct(array('order'=>$param, 'page'=>null)) ?>
+      class="w3-block categorie-title <?php if($tri==$param){echo 'selected'; }?>">
+      <?php echo $nom; ?>
+    </a>
 
-        x.previousElementSibling.className += " active";
-      } else {
-        // on ferme l'accordeon
-        x.style.height = x.scrollHeight + "px";
-        setTimeout(function(){x.style.height=null;},0);
+    <?php
+  }
+  ?>
+</div>
 
-        x.previousElementSibling.className = x.previousElementSibling.className.replace(" active", "");
-      }
-    }
-
-    function openMenu(evt,menuName){
-      //on anime la height du menu
-      var menu = document.getElementById(menuName);
-      var button = evt.currentTarget;
-
-      // si le menu est celui ouvert on le ferme juste
-      if (menu.clientHeight){
-        menu.style.transition = '0.3s';
-        desactive(menu,button);
-      }
-      else{
-        // on regarde si ya qq chose d'ouvert
-        var menus = document.getElementsByClassName("menu");
-        var isSomethingOpen = false;
-        for (var i = 0; i < menus.length; i++){
-          if (menus[i].classList.contains('active')){
-            isSomethingOpen = true;
-          }
-        }
-
-        if(isSomethingOpen){
-          // on ferme tt les autres
-          var menus = document.getElementsByClassName("menu");
-          for (var i = 0; i < menus.length; i++) {
-            menus[i].style.transition = '0s';
-            menus[i].style.height = 0;
-            menus[i].className = menus[i].className.replace(" active", "");
-          }
-          var titles = document.getElementsByClassName("menu-button");
-          for (var i = 0; i < titles.length; i++) {
-            titles[i].className = titles[i].className.replace(" active", "");
-          }
-          // on ouvre sans transition
-          menu.style.transition = '0s'
-          active(menu, button);
-        }
-        else{
-          // on doit juste ouvrir le menu
-          menu.style.transition = '0.3s'
-          active(menu, button);
-        }
-      }
-    }
-
-    function active(menu, button){
-
-      menu.style.height = menu.scrollHeight + "px";
+<script>
+  // js to open and close the menus and submenu with animation
+  function openCat(id) {
+    var x = document.getElementById(id);
+    var menu = document.getElementById('categories');
+    if (!x.clientHeight) {
+      // on ouvre l'accordeon
+      x.style.height = x.scrollHeight+'px';
       setTimeout(function(){menu.style.height='initial';},200);
 
-      menu.className += " active";
-      button.className += " active";
+      x.previousElementSibling.className += " active";
+    } else {
+      // on ferme l'accordeon
+      x.style.height = x.scrollHeight + "px";
+      setTimeout(function(){x.style.height=null;},0);
 
-      //ajoute 12px a la marge du container
-      document.getElementById('menu-container').style.marginBottom = '12px';
-      //enleve la seperation
-      document.getElementById("cat-button").className = document.getElementById("cat-button").className.replace(" separation", "");
+      x.previousElementSibling.className = x.previousElementSibling.className.replace(" active", "");
     }
+  }
 
-    function desactive(menu,button){
+  function openMenu(evt,menuName){
+    //on anime la height du menu
+    var menu = document.getElementById(menuName);
+    var button = evt.currentTarget;
 
-      menu.style.height = menu.scrollHeight + "px";
-      setTimeout(function(){menu.style.height=null;},0);
-
-      menu.className = menu.className.replace(" active", "");
-      button.className = button.className.replace(" active", "");
-
-      document.getElementById('menu-container').style.marginBottom = '0px';
-      document.getElementById("cat-button").className += " separation";
+    // si le menu est celui ouvert on le ferme juste
+    if (menu.clientHeight){
+      menu.style.transition = '0.3s';
+      desactive(menu,button);
     }
+    else{
+      // on regarde si ya qq chose d'ouvert
+      var menus = document.getElementsByClassName("menu");
+      var isSomethingOpen = false;
+      for (var i = 0; i < menus.length; i++){
+        if (menus[i].classList.contains('active')){
+          isSomethingOpen = true;
+        }
+      }
 
-  </script>
+      if(isSomethingOpen){
+        // on ferme tt les autres
+        var menus = document.getElementsByClassName("menu");
+        for (var i = 0; i < menus.length; i++) {
+          menus[i].style.transition = '0s';
+          menus[i].style.height = 0;
+          menus[i].className = menus[i].className.replace(" active", "");
+        }
+        var titles = document.getElementsByClassName("menu-button");
+        for (var i = 0; i < titles.length; i++) {
+          titles[i].className = titles[i].className.replace(" active", "");
+        }
+        // on ouvre sans transition
+        menu.style.transition = '0s'
+        active(menu, button);
+      }
+      else{
+        // on doit juste ouvrir le menu
+        menu.style.transition = '0.3s'
+        active(menu, button);
+      }
+    }
+  }
+
+  function active(menu, button){
+
+    menu.style.height = menu.scrollHeight + "px";
+    setTimeout(function(){menu.style.height='initial';},200);
+
+    menu.className += " active";
+    button.className += " active";
+
+    //ajoute 12px a la marge du container
+    document.getElementById('menu-container').style.marginBottom = '12px';
+    //enleve la seperation
+    document.getElementById("cat-button").className = document.getElementById("cat-button").className.replace(" separation", "");
+  }
+
+  function desactive(menu,button){
+
+    menu.style.height = menu.scrollHeight + "px";
+    setTimeout(function(){menu.style.height=null;},0);
+
+    menu.className = menu.className.replace(" active", "");
+    button.className = button.className.replace(" active", "");
+
+    document.getElementById('menu-container').style.marginBottom = '0px';
+    document.getElementById("cat-button").className += " separation";
+  }
+
+</script>

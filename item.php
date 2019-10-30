@@ -29,6 +29,8 @@
     }
   ?>
 
+
+
   <div class='item'>
 
     <div class="item-photo-container">
@@ -61,7 +63,7 @@
 
         <div class="item-info-line">
           <i class='fas fa-coins item-icon'></i>
-          <div class="item-info"><?php echo $prix; ?> par pièce </div>
+          <div class="item-info"><?php echo $prix; ?> ₲ (par pièce) </div>
         </div>
 
         <div class="item-info-line">
@@ -72,9 +74,9 @@
             //echo $item['etat'];
             for($n = 0; $n < 4; $n++){
               if($item['etat'] > $n){
-                echo '<span class="full">▅</span>' ;
+                echo '<i class="fas fa-heart"></i>' ;
               } else{
-                echo '<span class="empty">▅</span>' ;
+                echo '<i class="far fa-heart"></i>' ;
               }
             }
             ?>
@@ -122,7 +124,7 @@
           <div class="item-info">
             <?php
               for($n = 0; $n < count($tags); $n++){
-                echo '<a class="item-tag" href="catalogue?q=' . $tags[$n] . '">#' . $tags[$n] . '</a>';
+                echo '<a class="item-tag" href="catalogue.php?q=' . $tags[$n] . '">#' . $tags[$n] . '</a>';
                 if($n!=count($tags)-1){ echo ', '; }
               }
             ?>
