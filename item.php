@@ -33,11 +33,20 @@
 
   <div class='item'>
 
+    <a class="item-link" href="item_page.php?id=<?php echo $item['ID_item']?>">
     <div class="item-photo-container">
         <?php
         echo '<img class="item-photo" src="photos/' . $item['ID_item'] . '.jpg" />'
         ?>
+        <?php
+          //localisation seulement si hors les murs
+          if ($item['localisation']){ ?>
+              <div class="hors-les-murs"> Hors-les-murs </div>
+          <?php
+          }
+        ?>
     </div>
+    </a>
 
     <div class="item-text-container">
 
@@ -114,6 +123,17 @@
           <i class='fas fa-info-circle item-icon'></i>
           <div class="item-info"> <?php echo $remarques; ?> </div>
         </div>
+
+        <?php
+          //localisation seulement si hors les murs
+          if ($item['localisation']){ ?>
+            <div class="item-info-line">
+              <i class="fas fa-map-marker-alt item-icon"></i>
+              <div class="item-info"> <?php echo $item['localisation']; ?> </div>
+            </div>
+          <?php
+          }
+        ?>
 
       </div>
 

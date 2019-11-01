@@ -11,6 +11,12 @@
   background: white;
   padding: 24px;
   max-width: 100vw;
+  transition: 0.4s;
+}
+
+.item:hover{
+  /* background: #f0f0f0; */
+  /* border: 1px solid #00E676; */
 }
 
   /* on rajoute les espacemens et options quand yen a plusieur */
@@ -39,6 +45,11 @@
 
 .item-link{
   text-decoration: none;
+}
+
+.item-single-container .item-link{
+  pointer-events: none;
+  cursor: default;
 }
 
 .back-link-container{
@@ -110,7 +121,15 @@
 }
 
 .item-photo-container{
-  padding-bottom: 12px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.hors-les-murs{
+  background: green;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
 }
 
 .item-photo{
@@ -211,22 +230,24 @@
 
 .item-info-line{
   display: flex;
-  white-space: nowrap;
   align-items: baseline;
+  white-space: nowrap;
 }
+
 
 .item-date-container .item-info-line{
   justify-content: flex-end;
   color: #909090;
 }
-
-.item-icon{
-  width: 32px;
-  flex-shrink: 0;
+.item-date-container .item-info{
+  white-space: nowrap;
 }
 
-.item-info{
-  white-space: normal;
+.item-icon{
+  flex-basis: 20px;
+  margin-right: 16px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 /* dans l'affichage catalogue on coupe l'info si elle dépasse */
@@ -237,6 +258,11 @@
   white-space: nowrap;
 }
 
+.item-info{
+  /* word-wrap: normal; */
+  white-space: normal;
+}
+
 .item-icon{
   color: #909090;
 }
@@ -244,10 +270,6 @@
 .etat-icon-container i{
   color: #909090;
   padding-left: 3px;
-}
-
-.item-tag{
-  white-space: nowrap;
 }
 
 .item-tag:hover{

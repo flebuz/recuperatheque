@@ -266,13 +266,10 @@
                 //affichage de l'item
                 ?>
 
-
-                <a class="item-link" href="item_page.php?id=<?php echo $item['ID_item']?>">
                   <div class='w3-col s12 m6 l4'>
                     <?php include('item.php');?>
                   </div>
-                </a>
-
+                
                 <?php
                 $i++;
               }
