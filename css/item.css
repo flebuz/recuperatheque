@@ -126,10 +126,26 @@
 }
 
 .hors-les-murs{
-  background: green;
+  background: #D0D0D0;
+  color: white;
+  font-weight: bold;
   position: absolute;
   bottom: 0px;
   left: 0px;
+  padding: 4px 18px;
+}
+.hors-les-murs i{
+  padding-right: 6px;
+}
+
+.new{
+  background: #D0D0D0;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  padding: 4px 18px;
 }
 
 .item-photo{
@@ -172,7 +188,7 @@
   }
   .item-single-container .item-photo-container,
   .item-single-container .item-text-container{
-    padding: 12px;
+    margin: 12px;
     width: 500px;
   }
   .item-single-container .item-text-container{

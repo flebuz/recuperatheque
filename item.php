@@ -36,12 +36,19 @@
     <a class="item-link" href="item_page.php?id=<?php echo $item['ID_item']?>">
     <div class="item-photo-container">
         <?php
+          //localisation seulement si hors les murs
+          if ($item['date_ajout_fr']){ ?>
+              <div class="new"> NEW </div>
+          <?php
+          }
+        ?>
+        <?php
         echo '<img class="item-photo" src="photos/' . $item['ID_item'] . '.jpg" />'
         ?>
         <?php
           //localisation seulement si hors les murs
           if ($item['localisation']){ ?>
-              <div class="hors-les-murs"> Hors-les-murs </div>
+              <div class="hors-les-murs"> <i class="fas fa-map-marker-alt"></i> Hors-les-murs </div>
           <?php
           }
         ?>
