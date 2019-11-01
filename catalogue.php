@@ -153,7 +153,7 @@
       <div class="flex-items">
         <?php
 
-          $limit= 6; //items par pages
+          $limit= 12; //items par pages
           $starting_limit = ($page-1)*$limit;
 
           //--- requete qui compte juste les elements de la recherche
