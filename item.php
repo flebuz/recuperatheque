@@ -27,6 +27,11 @@
     else{
       $remarques=$item['remarques'];
     }
+
+    // calculate number of days between $enddate and $startdate
+    $startdate = $item['date_ajout'];
+    $enddate = date('Y-m-d');
+    $days = (strtotime($enddate) - strtotime($startdate)) / (60 * 60 * 24);
   ?>
 
 
@@ -37,7 +42,7 @@
     <div class="item-photo-container">
         <?php
           //localisation seulement si hors les murs
-          if ($item['date_ajout_fr']){ ?>
+          if ($days<7){ ?>
               <div class="new"> NEW </div>
           <?php
           }
