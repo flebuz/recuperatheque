@@ -26,7 +26,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Mycélium">
+  <meta name="apple-mobile-web-app-title" content="Mycélium">
 
 
 </head>
@@ -161,7 +161,7 @@
               <?php if ($item['site']){ ?>
                 <div class="item-info-line">
                   <i class="fas fa-link item-icon"></i>
-                  <div class="item-info"> <?php echo $item['site'];?></div>
+                  <a class="item-info" href="<?php echo $item['site'];?>" target="_blank"> <?php echo $item['site'];?></a>
                 </div>
               <?php
               }
@@ -175,7 +175,10 @@
           <button class="w3-large fa fa-search search-bar-button" type="submit"></button>
 
           <?php
-            // on ajoute cat et sscat si jamais c'est déjà préciser
+            // on ajoute les autre param
+            if($recuperatheque){
+              echo '<input type="hidden" name="r" value="' . $recuperatheque . '"/>';
+            }
             if($catsearch){
               echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
             }
@@ -311,16 +314,7 @@
 
           <?php
             if ($req->rowCount() > 0) {
-              $i=0;
               while($item = $req->fetch()){
-
-                //
-                // if ($i%3==0){
-                //   if ($i!=0){
-                //     echo "</article>";
-                //   }
-                //   echo "<article class='post'>";
-                // }
 
                 //affichage de l'item
                 ?>
@@ -330,7 +324,6 @@
                   </div>
 
                 <?php
-                $i++;
               }
             }
             else {
