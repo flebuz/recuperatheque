@@ -63,7 +63,6 @@
       $recuperatheque = "bag";
     }
     //---> si pas le cas, alors rien afficher!
-
   ?>
 
   <?php

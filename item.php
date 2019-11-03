@@ -38,7 +38,7 @@
 
   <div class='item'>
 
-    <a class="item-link" href="item_page.php?id=<?php echo $item['ID_item']?>">
+    <a class="item-link" href="item_page.php?r=<?php echo $recuperatheque?>&id=<?php echo $item['ID_item']?>">
     <div class="item-photo-container">
         <?php
           //localisation seulement si hors les murs
