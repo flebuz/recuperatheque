@@ -46,9 +46,7 @@
   ?>
 
   <?php
-    //----- check les $_GET de recherche si valide -----
-
-    //1. check si le choix de la recuperatheque est valide
+    //----- check le $_GET de recuperatheque est valide -----
 
     //reprendre la liste des (raccourcis vers les) recuperatheques
     $req = $bdd->prepare(' SELECT raccourci FROM recuperatheques ');
@@ -66,6 +64,16 @@
     }
     //---> si pas le cas, alors rien afficher!
 
+  ?>
+
+  <?php
+    //----- construction de l'objet $system ----
+    //-> résume la structure de catégorie-sscat-comptage de la recuperatheque
+    include('categories_system.php');
+  ?>
+
+  <?php
+    //----- Check la validité des autres parametres $_GET
 
       //check si l'option de recherche est valide
     if (isset($_GET['q'])){
@@ -111,12 +119,6 @@
     include('header.php');
   ?>
 
-  <?php
-    //construction de l'objet $system qui résume la structure de catégorie-sscat-comptage d'item actuelle
-    include('categories_system.php');
-  ?>
-
-
   <div class="quasi-fullwidth space-header">
 
     <?php
@@ -131,6 +133,11 @@
 
       <!-- Bar de recherche -->
       <div class="flex-menu">
+
+        <div class="recuperatheque-info">
+          <?php echo $recuperatheque ?>
+        </div>
+
         <form class="search-bar" action="catalogue.php" method="GET">
 
           <input type="text" class="search-bar-input" name="q" placeholder="Recherche..." value="<?php echo $query?>">
