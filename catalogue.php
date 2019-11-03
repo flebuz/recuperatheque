@@ -307,7 +307,7 @@
         </div>
 
         <!-- items container -->
-        <div class="w3-row items-container">
+        <div class="items-container">
 
           <?php
             if ($req->rowCount() > 0) {
@@ -315,17 +315,17 @@
               while($item = $req->fetch()){
 
                 //
-                if ($i%3==0){
-                  if ($i!=0){
-                    echo "</article>";
-                  }
-                  echo "<article class='post'>";
-                }
+                // if ($i%3==0){
+                //   if ($i!=0){
+                //     echo "</article>";
+                //   }
+                //   echo "<article class='post'>";
+                // }
 
                 //affichage de l'item
                 ?>
 
-                  <div class='w3-col s12 m6 l4'>
+                  <div class="item-wrapper">
                     <?php include('item.php');?>
                   </div>
 
