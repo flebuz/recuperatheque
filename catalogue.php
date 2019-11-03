@@ -42,20 +42,7 @@
   ?>
 
   <?php
-    include('header.php');
-  ?>
-
-  <?php
     include('connection_db.php')
-  ?>
-
-
-  <?php
-    //fonction pratique
-    function link_construct($params){
-      $getURL = '?' . http_build_query(array_merge($_GET, $params));
-      return $getURL;
-    }
   ?>
 
   <?php
@@ -77,8 +64,8 @@
     } else{
       $recuperatheque = "bag";
     }
-
     //---> si pas le cas, alors rien afficher!
+
 
       //check si l'option de recherche est valide
     if (isset($_GET['q'])){
@@ -113,20 +100,33 @@
       $sscatsearch = null;
     }
 
-    if (!isset($_GET['page'])) {
-      $page = 1;
+    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+      $page = (int) htmlspecialchars($_GET['page']);
     } else{
-      $page = htmlspecialchars($_GET['page']);
+      $page = 1;
     }
   ?>
 
   <?php
-  //construction de l'objet $system qui résume la structure de catégorie actuelle
-  include('categories_system.php');
+    include('header.php');
+  ?>
+
+  <?php
+    //construction de l'objet $system qui résume la structure de catégorie-sscat-comptage d'item actuelle
+    include('categories_system.php');
   ?>
 
 
   <div class="quasi-fullwidth space-header">
+
+    <?php
+      //fonction pratique
+      function link_construct($params){
+        $getURL = '?' . http_build_query(array_merge($_GET, $params));
+        return $getURL;
+      }
+    ?>
+
     <div class="catalogue">
 
       <!-- Bar de recherche -->
