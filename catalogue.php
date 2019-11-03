@@ -39,8 +39,6 @@
   // TO DO : Check if there is a less aggressive way to do it
   header("Cache-Control: max-age=0");
 
-  $recuperatheque = "bag";
-
   ?>
 
   <?php
@@ -51,10 +49,6 @@
     include('connection_db.php')
   ?>
 
-  <?php
-    //construction de l'objet $system qui résume la structure de catégorie actuelle
-    include('categories_system.php');
-  ?>
 
   <?php
     //fonction pratique
@@ -65,7 +59,26 @@
   ?>
 
   <?php
-    //check les $_GET de recherche si valide
+    //----- check les $_GET de recherche si valide -----
+
+    //1. check si le choix de la recuperatheque est valide
+
+    //reprendre la liste des (raccourcis vers les) recuperatheques
+    $req = $bdd->prepare(' SELECT raccourci FROM recuperatheques ');
+    $req->execute();
+    $recuperatheques = array();
+    while($item = $req->fetch()){
+      array_push($recuperatheques,$item['raccourci']);
+    }
+
+    //checker si le parametre est set et est dans la liste
+    if (isset($_GET['r']) && in_array($_GET['r'], $recuperatheques)){
+      $recuperatheque = htmlspecialchars($_GET['r']);
+    } else{
+      $recuperatheque = "bag";
+    }
+
+    //---> si pas le cas, alors rien afficher!
 
       //check si l'option de recherche est valide
     if (isset($_GET['q'])){
@@ -105,6 +118,11 @@
     } else{
       $page = htmlspecialchars($_GET['page']);
     }
+  ?>
+
+  <?php
+  //construction de l'objet $system qui résume la structure de catégorie actuelle
+  include('categories_system.php');
   ?>
 
 
