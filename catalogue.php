@@ -134,7 +134,39 @@
       <div class="flex-menu">
 
         <div class="recuperatheque-info">
-          <?php echo $recuperatheque ?>
+          <?php
+            //Afficher les infos de la recuperatheque
+            $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
+            $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
+            $req->execute();
+            while($item = $req->fetch()){?>
+              <h3> <?php echo $item['nom'] ;?> </h3>
+
+              <?php if ($item['adresse']){ ?>
+                <div class="item-info-line">
+                  <i class="fas fa-map-marker-alt item-icon"></i>
+                  <div class="item-info"> <?php echo $item['adresse'];?> </div>
+                </div>
+                <?php
+                }
+              ?>
+              <?php if ($item['telephone']){ ?>
+                <div class="item-info-line">
+                  <i class="fas fa-phone item-icon"></i>
+                  <div class="item-info"> <?php echo $item['telephone'];?> </div>
+                </div>
+                <?php
+                }
+              ?>
+              <?php if ($item['site']){ ?>
+                <div class="item-info-line">
+                  <i class="fas fa-link item-icon"></i>
+                  <div class="item-info"> <?php echo $item['site'];?></div>
+                </div>
+              <?php
+              }
+            }
+          ?>
         </div>
 
         <form class="search-bar" action="catalogue.php" method="GET">

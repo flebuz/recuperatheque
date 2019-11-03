@@ -71,6 +71,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   .flex-items{
     flex-basis: 70%;
     padding-left: 24px;
+    /* border-right: 1px solid #E0E0E0; */
   }
 }
 
@@ -191,7 +192,6 @@ button:hover{
   padding: 24px;
   background: white;
 }
-
 
 /*----- FORMS -----*/
 .tabs

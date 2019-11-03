@@ -1,4 +1,11 @@
 
+/* ----- INFO BOX -----*/
+
+.recuperatheque-info{
+  padding: 12px 24px;
+  background: white;
+}
+
 /* ----- SEARCH BAR -----*/
 
 .search-bar{
