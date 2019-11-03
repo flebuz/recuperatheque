@@ -39,6 +39,8 @@
   // TO DO : Check if there is a less aggressive way to do it
   header("Cache-Control: max-age=0");
 
+  $recuperatheque = "bag";
+
   ?>
 
   <?php
@@ -158,7 +160,7 @@
 
           //--- requete qui compte juste les elements de la recherche
           $req = $bdd->prepare('  SELECT COUNT(*) AS total
-          FROM catalogue c
+          FROM ' . $recuperatheque . ' c
           INNER JOIN categorie cat ON c.ID_categorie=cat.ID
           INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
           WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
@@ -182,7 +184,7 @@
           c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
           cat.ID, cat.nom AS categorie,
           sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-          FROM catalogue c
+          FROM ' . $recuperatheque . ' c
           INNER JOIN categorie cat ON c.ID_categorie=cat.ID
           INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
           WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)

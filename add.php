@@ -32,7 +32,6 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
     $object_id= $req->fetchColumn() + 1;
 
 
-$nom_recuperatheque = "Récupérathèque"; // A ADAPTER EN FONCTION DE LA RECUPERATHEQUE
 
 $categorie = $_POST['cat'];
 $souscategorie = $_POST['souscat'];
@@ -45,7 +44,6 @@ $prix= $_POST['prix'];
 $remarques= $_POST['remarques'];
 $dimensions= $_POST['dimensions'];
 $localisation = $_POST['localisation'];
-if ($localisation=='') {$localisation = $nom_recuperatheque;}
 $date = date('Y-m-d H:i:s');
 
 
