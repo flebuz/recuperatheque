@@ -167,7 +167,7 @@
           <div class="item-info">
             <?php
               for($n = 0; $n < count($tags); $n++){?>
-                <a class="item-tag" href= <?php echo link_construct(array('q'=>$tags[$n])) ?> >#<?php echo $tags[$n];?></a>
+                <a class="item-tag" href= <?php echo link_construct(array('q'=>$tags[$n],'id'=>null), 'catalogue.php') ?> >#<?php echo $tags[$n];?></a>
                 <?php
                 if($n!=count($tags)-1){ echo ', '; }
               }

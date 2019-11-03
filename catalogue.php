@@ -120,14 +120,6 @@
 
   <div class="quasi-fullwidth space-header">
 
-    <?php
-      //fonction pratique
-      function link_construct($params){
-        $getURL = '?' . http_build_query(array_merge($_GET, $params));
-        return $getURL;
-      }
-    ?>
-
     <div class="catalogue">
 
       <!-- Bar de recherche -->
@@ -192,7 +184,6 @@
 
         </form>
 
-        <!-- menu categorie et tri -->
         <div class="menu-container" id="menu-container">
           <div class="menu-bar">
             <button id="cat-button" class="button-flex menu-button separation" onclick="openMenu(event,'categories')">
@@ -208,6 +199,7 @@
           <?php include('categories_menu.php'); ?>
 
         </div>
+
       </div>
 
       <!-- search request -->
@@ -270,7 +262,7 @@
 
                 if($query != ''){
                   ?>
-                    <a href=" <?php echo link_erase(array('q')) ?> ">
+                    <a href=" <?php echo link_construct(array('q'=>null)) ?> ">
                       <?php echo $query ?>
                     </a>
                   <?php
@@ -278,7 +270,7 @@
                 if($sscatsearch != 0){
                   if($query != ''){ echo ' dans '; }
                   ?>
-                    <a href=" <?php echo link_erase(array('sscatsearch','catsearch')) ?> ">
+                    <a href=" <?php echo link_construct(array('sscatsearch'=>null,'catsearch'=>null)) ?> ">
                       <?php echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ')' ?>
                     </a>
                   <?php
@@ -286,7 +278,7 @@
                 elseif($catsearch != 0){
                   if($query != ''){ echo ' dans '; }
                   ?>
-                    <a href=" <?php echo link_erase(array('sscatsearch','catsearch')) ?> ">
+                    <a href=" <?php echo link_construct(array('sscatsearch'=>null,'catsearch'=>null)) ?> ">
                       <?php echo $system[$catsearch]['nom'] ?>
                     </a>
                   <?php
@@ -295,16 +287,6 @@
               echo ' (' . $total_count . ' résultats)';
               // echo '<div>Page ' . $page . '</div>';
 
-              function link_erase($params){
-                //retourne une url GET dans laquelle les parametres cité on été remis a NULL
-                $TEMP = $_GET;
-                foreach ($params as $param) {
-                  $TEMP[$param] = null;
-                }
-                $TEMP['page'] = null;
-                $getURL = '?' . http_build_query($TEMP);
-                return $getURL;
-              }
             ?>
           </div>
         </div>
