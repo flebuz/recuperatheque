@@ -26,7 +26,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Mycélium">
+  <meta name="apple-mobile-web-app-title" content="Mycélium">
 
 
 </head>
@@ -42,28 +42,37 @@
   ?>
 
   <?php
-    include('header.php');
-  ?>
-
-  <?php
     include('connection_db.php')
   ?>
 
   <?php
-    //construction de l'objet $system qui résume la structure de catégorie actuelle
+    //----- check le $_GET de recuperatheque est valide -----
+
+    //reprendre la liste des (raccourcis vers les) recuperatheques
+    $req = $bdd->prepare(' SELECT raccourci FROM recuperatheques ');
+    $req->execute();
+    $recuperatheques = array();
+    while($item = $req->fetch()){
+      array_push($recuperatheques,$item['raccourci']);
+    }
+
+    //checker si le parametre est set et est dans la liste
+    if (isset($_GET['r']) && in_array($_GET['r'], $recuperatheques)){
+      $recuperatheque = htmlspecialchars($_GET['r']);
+    } else{
+      $recuperatheque = "bag";
+    }
+    //---> si pas le cas, alors rien afficher!
+  ?>
+
+  <?php
+    //----- construction de l'objet $system ----
+    //-> résume la structure de catégorie-sscat-comptage de la recuperatheque
     include('categories_system.php');
   ?>
 
   <?php
-    //fonction pratique
-    function link_construct($params){
-      $getURL = '?' . http_build_query(array_merge($_GET, $params));
-      return $getURL;
-    }
-  ?>
-
-  <?php
-    //check les $_GET de recherche si valide
+    //----- Check la validité des autres parametres $_GET
 
       //check si l'option de recherche est valide
     if (isset($_GET['q'])){
@@ -98,26 +107,70 @@
       $sscatsearch = null;
     }
 
-    if (!isset($_GET['page'])) {
-      $page = 1;
+    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+      $page = (int) htmlspecialchars($_GET['page']);
     } else{
-      $page = htmlspecialchars($_GET['page']);
+      $page = 1;
     }
   ?>
 
+  <?php
+    include('header.php');
+  ?>
 
   <div class="quasi-fullwidth space-header">
+
     <div class="catalogue">
 
       <!-- Bar de recherche -->
       <div class="flex-menu">
+
+        <div class="recuperatheque-info">
+          <?php
+            //Afficher les infos de la recuperatheque
+            $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
+            $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
+            $req->execute();
+            while($item = $req->fetch()){?>
+              <h3> <?php echo $item['nom'] ;?> </h3>
+
+              <?php if ($item['adresse']){ ?>
+                <div class="item-info-line">
+                  <i class="fas fa-map-marker-alt item-icon"></i>
+                  <div class="item-info"> <?php echo $item['adresse'];?> </div>
+                </div>
+                <?php
+                }
+              ?>
+              <?php if ($item['telephone']){ ?>
+                <div class="item-info-line">
+                  <i class="fas fa-phone item-icon"></i>
+                  <div class="item-info"> <?php echo $item['telephone'];?> </div>
+                </div>
+                <?php
+                }
+              ?>
+              <?php if ($item['site']){ ?>
+                <div class="item-info-line">
+                  <i class="fas fa-link item-icon"></i>
+                  <a class="item-info" href="<?php echo $item['site'];?>" target="_blank"> <?php echo $item['site'];?></a>
+                </div>
+              <?php
+              }
+            }
+          ?>
+        </div>
+
         <form class="search-bar" action="catalogue.php" method="GET">
 
           <input type="text" class="search-bar-input" name="q" placeholder="Recherche..." value="<?php echo $query?>">
           <button class="w3-large fa fa-search search-bar-button" type="submit"></button>
 
           <?php
-            // on ajoute cat et sscat si jamais c'est déjà préciser
+            // on ajoute les autre param
+            if($recuperatheque){
+              echo '<input type="hidden" name="r" value="' . $recuperatheque . '"/>';
+            }
             if($catsearch){
               echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
             }
@@ -131,7 +184,6 @@
 
         </form>
 
-        <!-- menu categorie et tri -->
         <div class="menu-container" id="menu-container">
           <div class="menu-bar">
             <button id="cat-button" class="button-flex menu-button separation" onclick="openMenu(event,'categories')">
@@ -147,18 +199,19 @@
           <?php include('categories_menu.php'); ?>
 
         </div>
+
       </div>
 
       <!-- search request -->
       <div class="flex-items">
         <?php
 
-          $limit= 6; //items par pages
+          $limit= 12; //items par pages
           $starting_limit = ($page-1)*$limit;
 
           //--- requete qui compte juste les elements de la recherche
           $req = $bdd->prepare('  SELECT COUNT(*) AS total
-          FROM catalogue c
+          FROM ' . $recuperatheque . ' c
           INNER JOIN categorie cat ON c.ID_categorie=cat.ID
           INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
           WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
@@ -178,10 +231,11 @@
           //every lines is an item with joined categorie and subcategorie
           $req = $bdd->prepare('  SELECT
           c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags,
-          c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+          c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation,
+          c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
           cat.ID, cat.nom AS categorie,
           sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-          FROM catalogue c
+          FROM ' . $recuperatheque . ' c
           INNER JOIN categorie cat ON c.ID_categorie=cat.ID
           INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
           WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
@@ -208,7 +262,7 @@
 
                 if($query != ''){
                   ?>
-                    <a href=" <?php echo link_erase(array('q')) ?> ">
+                    <a href=" <?php echo link_construct(array('q'=>null)) ?> ">
                       <?php echo $query ?>
                     </a>
                   <?php
@@ -216,7 +270,7 @@
                 if($sscatsearch != 0){
                   if($query != ''){ echo ' dans '; }
                   ?>
-                    <a href=" <?php echo link_erase(array('sscatsearch','catsearch')) ?> ">
+                    <a href=" <?php echo link_construct(array('sscatsearch'=>null,'catsearch'=>null)) ?> ">
                       <?php echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ')' ?>
                     </a>
                   <?php
@@ -224,7 +278,7 @@
                 elseif($catsearch != 0){
                   if($query != ''){ echo ' dans '; }
                   ?>
-                    <a href=" <?php echo link_erase(array('sscatsearch','catsearch')) ?> ">
+                    <a href=" <?php echo link_construct(array('sscatsearch'=>null,'catsearch'=>null)) ?> ">
                       <?php echo $system[$catsearch]['nom'] ?>
                     </a>
                   <?php
@@ -233,48 +287,25 @@
               echo ' (' . $total_count . ' résultats)';
               // echo '<div>Page ' . $page . '</div>';
 
-              function link_erase($params){
-                //retourne une url GET dans laquelle les parametres cité on été remis a NULL
-                $TEMP = $_GET;
-                foreach ($params as $param) {
-                  $TEMP[$param] = null;
-                }
-                $TEMP['page'] = null;
-                $getURL = '?' . http_build_query($TEMP);
-                return $getURL;
-              }
             ?>
           </div>
         </div>
 
         <!-- items container -->
-        <div class="w3-row items-container">
+        <div class="items-container">
 
           <?php
             if ($req->rowCount() > 0) {
-              $i=0;
               while($item = $req->fetch()){
-
-                //
-                if ($i%3==0){
-                  if ($i!=0){
-                    echo "</article>";
-                  }
-                  echo "<article class='post'>";
-                }
 
                 //affichage de l'item
                 ?>
 
-
-                <a class="item-link" href="item_page.php?id=<?php echo $item['ID_item']?>">
-                  <div class='w3-col s12 m6 l4'>
+                  <div class="item-wrapper">
                     <?php include('item.php');?>
                   </div>
-                </a>
 
                 <?php
-                $i++;
               }
             }
             else {

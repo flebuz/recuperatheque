@@ -27,17 +27,49 @@
     else{
       $remarques=$item['remarques'];
     }
+
+    // calculate number of days between $enddate and $startdate
+    $startdate = $item['date_ajout'];
+    $enddate = date('Y-m-d');
+    $days = (strtotime($enddate) - strtotime($startdate)) / (60 * 60 * 24);
   ?>
 
 
 
   <div class='item'>
 
+    <?php if(basename($_SERVER['PHP_SELF'])=="catalogue.php"){ ?>
+      <!-- on met un lien vers la page de l'item sur la photo s'il on est dans le catalogue -->
+      <a class="item-link" href="item_page.php?r=<?php echo $recuperatheque?>&id=<?php echo $item['ID_item']?>">
+      <?php
+      }
+    ?>
+
     <div class="item-photo-container">
+        <?php
+          //localisation seulement si hors les murs
+          if ($days<7){ ?>
+              <div class="new"> NEW </div>
+          <?php
+          }
+        ?>
         <?php
         echo '<img class="item-photo" src="photos/' . $item['ID_item'] . '.jpg" />'
         ?>
+        <?php
+          //localisation seulement si hors les murs
+          if ($item['localisation']){ ?>
+              <div class="hors-les-murs"> <i class="fas fa-map-marker-alt"></i> Hors-les-murs </div>
+          <?php
+          }
+        ?>
     </div>
+
+    <?php if(basename($_SERVER['PHP_SELF'])=="catalogue.php"){?>
+      </a>
+      <?php
+      }
+    ?>
 
     <div class="item-text-container">
 
@@ -115,6 +147,17 @@
           <div class="item-info"> <?php echo $remarques; ?> </div>
         </div>
 
+        <?php
+          //localisation seulement si hors les murs
+          if ($item['localisation']){ ?>
+            <div class="item-info-line">
+              <i class="fas fa-map-marker-alt item-icon"></i>
+              <div class="item-info"> <?php echo $item['localisation']; ?> </div>
+            </div>
+          <?php
+          }
+        ?>
+
       </div>
 
       <div class='item-tags-container'>
@@ -123,8 +166,9 @@
           <i class='fas fa-tag item-icon'></i>
           <div class="item-info">
             <?php
-              for($n = 0; $n < count($tags); $n++){
-                echo '<a class="item-tag" href="catalogue.php?q=' . $tags[$n] . '">#' . $tags[$n] . '</a>';
+              for($n = 0; $n < count($tags); $n++){?>
+                <a class="item-tag" href= <?php echo link_construct(array('q'=>$tags[$n],'id'=>null), 'catalogue.php') ?> >#<?php echo $tags[$n];?></a>
+                <?php
                 if($n!=count($tags)-1){ echo ', '; }
               }
             ?>

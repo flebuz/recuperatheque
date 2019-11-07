@@ -5,7 +5,7 @@
     <div class="header-title"><a href="catalogue.php">Mycélium</a></div>
 
     <a href="catalogue.php" class="nav-button
-      <?php if(in_array(basename($_SERVER['PHP_SELF']),array("catalogue.php","item_page2.php"))){
+      <?php if(in_array(basename($_SERVER['PHP_SELF']),array("catalogue.php","item_page.php"))){
           echo "page-selected"; } ?>">
       <div class="nav-title">Catalogue</div>
       <i class="nav-icon w3-large fas fa-book-open"></i>

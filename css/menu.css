@@ -1,4 +1,11 @@
 
+/* ----- INFO BOX -----*/
+
+.recuperatheque-info{
+  padding: 12px 24px;
+  background: white;
+}
+
 /* ----- SEARCH BAR -----*/
 
 .search-bar{
@@ -42,7 +49,7 @@
 .search-resume-wrapper{
   background: white;
   text-align: left;
-  padding: 12px;
+  padding: 12px 24px;
   margin-bottom: 12px;
 
   border-bottom: 1px solid #E0E0E0;
@@ -194,7 +201,7 @@
 .page-nav{
   background: white;
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.4rem;
   padding: 12px;
 
   border-top: 1px solid #E0E0E0;

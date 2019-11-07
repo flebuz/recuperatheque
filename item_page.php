@@ -28,7 +28,6 @@
 
 <body>
 
-
   <?php
   // Prevent caching on the catalogue to make sure it is always up-to-date
   // TO DO : Check if there is a less aggressive way to do it
@@ -41,6 +40,26 @@
 
   <?php
     include('connection_db.php')
+  ?>
+
+  <?php
+    //----- check le $_GET de recuperatheque est valide -----
+
+    //reprendre la liste des (raccourcis vers les) recuperatheques
+    $req = $bdd->prepare(' SELECT raccourci FROM recuperatheques ');
+    $req->execute();
+    $recuperatheques = array();
+    while($item = $req->fetch()){
+      array_push($recuperatheques,$item['raccourci']);
+    }
+
+    //checker si le parametre est set et est dans la liste
+    if (isset($_GET['r']) && in_array($_GET['r'], $recuperatheques)){
+      $recuperatheque = htmlspecialchars($_GET['r']);
+    } else{
+      $recuperatheque = "bag";
+    }
+    //---> si pas le cas, alors rien afficher!
   ?>
 
 
@@ -65,10 +84,11 @@
   <?php
     //get the item
     $req = $bdd->prepare('  SELECT
-                            c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                            c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation,
+                            c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                             cat.ID, cat.nom AS categorie,
                             sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-                            FROM catalogue c
+                            FROM ' . $recuperatheque . ' c
                             INNER JOIN categorie cat ON c.ID_categorie=cat.ID
                             INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
                             WHERE c.id=:id');

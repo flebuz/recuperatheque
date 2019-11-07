@@ -5,7 +5,7 @@
   //----- faire deux listes dont les clés sont les ID et les values le nb d'items
 
   //afin de savoir ce qu'il y a dans le catalogue
-  $reqItem = $bdd->prepare('  SELECT * FROM catalogue');
+  $reqItem = $bdd->prepare('  SELECT * FROM ' . $recuperatheque);
   $reqItem->execute();
   $cat_counter = array();
   $sscat_counter = array();
