@@ -4,8 +4,8 @@
 
 <?php $thisPage="add_form"; ?>
 <head>
-  <title>Webapp Recupérathèque - Encoder un objet</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Mycélium : L'app des Recupérathèques - Modifier un objet</title>
+  <meta charset='utf-8'>
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile (aussi : , target-densitydpi=device-dpi)-->
@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/add_form.css">
-
+  <meta name="theme-color" content="#00E676">
 
 
   <!--Import Google Icon Font-->
@@ -25,7 +25,6 @@
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
-
 
 
   <?php
@@ -51,20 +50,15 @@
 
     }
   ?>
+
 <?php
-
-
 if  ( (!$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)) && (!$id = filter_input(INPUT_POST, 'ID_item', FILTER_VALIDATE_INT)) )
  {
 $item = 0;
 $item_status = 0;
 }
 
-
-
-
 include('connection_db.php');
-
 
       //prep the request
       //every line is a souscategorie
@@ -97,7 +91,6 @@ include('connection_db.php');
           $item_status=999; //set value to 999 to mean "destroyed"
          }
 ?>
-
 
 
 <main class="space-header">
