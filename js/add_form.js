@@ -49,10 +49,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   init_materialize();
 
-  init_getusermedia();
-
+  if (!detectAndroidFirefox())
+  {
+    // only initialize getusermedia camera stream if not on Firefox on android (due to https://bugzilla.mozilla.org/show_bug.cgi?id=1250872)
+   init_getusermedia();
+  }
+  //if the above fails : fallback to default with already visible #file_upload_container
 });
 
+
+function detectAndroidFirefox () {
+   var agent = navigator.userAgent.toLowerCase();
+   return (agent.indexOf('firefox') > -1 && agent.indexOf("android") > -1);
+}
 
 function getPreciseConstraints() {
   var DEVICES = [];
@@ -143,7 +152,7 @@ function StopVideo() {
 }
 
 
-//méthode tarabiscotée pour lancer getusermedia pour améliorer la compatibilité
+//polyfill to improve compatibility with older browsers
 function init_getusermedia() {
 
   // Older browsers might not implement mediaDevices at all, so we set an empty object first
@@ -172,7 +181,7 @@ function init_getusermedia() {
     }
   }
 
-  var firstcall = true
+  var firstcall = true;
   console.log("1er call à getusermedia pour accéder aux labels des cameras");
   call_getusermedia(firstcall);
 
@@ -364,8 +373,8 @@ function getOrientation(file, callback) {
 
 function DessineVignette(type, elem, orientation) {
 
-  var compression = 0.9;
-  var size = 600;
+  var compression = 0.95;
+  var size = 1000;
 
   //si l'image uploadée est passée en argument
   if (type == 'imagesnap') {
