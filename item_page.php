@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <title>Webapp Recupérathèque</title>
+  <title>Mycélium : L'app des Recupérathèques</title>
 
   <meta charset="utf-8" />
 
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/item.css">
   <link rel="stylesheet" href="css/add_form.css">
+  <meta name="theme-color" content="#00E676">
 
 </head>
 
