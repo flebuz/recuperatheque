@@ -374,13 +374,7 @@ div.row.flex-input-field {
   padding: 0px 0px 0px 0px !important;
 }
 
-.invisible {
-  display: none !important;
-}
 
-.hidden {
-  visibility: hidden !important;
-}
 
 .centered {
   top: -150px !important;
