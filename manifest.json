@@ -14,7 +14,7 @@
     }
   ],
   "start_url": "catalogue.php?utm_source=a2hs",
-  "background_color": "#00FF64",
-  "theme_color": "#00FF64",
+  "background_color": "#00E676",
+  "theme_color": "#00E676",
   "display": "standalone"
 }
