@@ -2,6 +2,7 @@
 <html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
+
 <?php
 // Prevent caching on this page to make sure it is always up-to-date
 // TO DO : Check if there is a less aggressive way to do it
@@ -11,16 +12,18 @@ header("Cache-Control: max-age=0");
 
 <?php $thisPage="add_form"; ?>
 <head>
-  <title>Webapp Recupérathèque - Encoder un objet</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>Mycélium : L'app des Recupérathèques - Encoder un objet</title>
+  <meta charset='utf-8'>
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile (aussi : , target-densitydpi=device-dpi)-->
-  <meta name="theme-color" content="">
+
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/add_form.css">
-
+  <!-- Chrome -->
+  <meta name="theme-color" content="#00E676">
 
 
 
@@ -97,7 +100,7 @@ if (isset($_POST['cat'])) {
                             <path d="M98,25 L98,2 L75,2" fill="none" stroke="#9e9e9e" stroke-width="3" />
                           </svg></div>
 
-                          <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="cam_btn_default" style="width:100px; height:100px; cursor:pointer"><i class="material-icons photo-controls" style="font-size: 64px !important; line-height: 100px !important;">camera_alt</i>   </div>
+                          <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="cam_btn_default" style="width:100px; height:100px; cursor:pointer"><i class="fas fa-camera" style="font-size: 64px !important; line-height: 100px !important;"></i>  </div>
                           <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                         </label>
                         <input id="file" type="file" accept="image/*" capture="environment" class="invisible">
@@ -354,7 +357,7 @@ PlayVideo();"></select>
 </div>
 
 
-            <div class="row"><input id="image_final" name="image_final" type="text"></div>
+            <div class="row invisible"><input id="image_final" name="image_final" type="text"></div>
             <div class="row"></div>
 
 
@@ -450,9 +453,15 @@ M.toast({html: error_msg });
 console.log("Erreur : formulaire incomplet"+ error_msg);
 return 0;
 }
+
 else {
-      expand('loading_overlay');
-      Soumettre('formulaire_encodage');
+
+      window.setTimeout( function() {
+          M.toast({html: "Connexion lente, veuillez patienter..."});
+      }, 5000 ); // show a Toast after 5 sec to warn of slow loading
+      
+      expand('loading_overlay'); //show loading overlay to prevent clicking
+      Soumettre('formulaire_encodage'); // submit form
     }
 }
 
