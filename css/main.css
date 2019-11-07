@@ -208,60 +208,13 @@ display: flex
 }
 
 
-/* ----- SIDENAV -----*/
 
-.button-menu {
-  position:absolute;
-  right:auto;
-  bottom:auto;
-  left:12px;
-  top:12px;
+/* ----- SHOW / HIDE ELEMENTS ----- */
 
+.invisible {
+  display: none !important;
 }
 
-ul.sidenav {
-  background-color: white;
-}
-ul.sidenav a.pagelink {
- font-variant: small-caps;
- color:white;
- font-size: 1.05rem;
-}
-
-
-
-.user-view
-{
-  margin-bottom: 1.5rem;
-}
-
-.user-view a
-{
-  color:#606060 ;
-}
-
-
-
-.sidenav li > a.nav-titre
-{
-  font-size:1.6rem;
-  line-height: 72px;
-}
-.sidenav .user-view {
-
-    padding: 22px 32px 0 !important;
-
-  }
-
-.w3-sidebar
-{z-index:99 !important;}
-
-.sidebarhover
-{background-color: #ccc !important;}
-
-/* ----- TOP NAV (header)-----*/
-
-   nav .brand-logo.right {
-
-    padding-right: 15px !important;
+.hidden {
+  visibility: hidden !important;
 }
