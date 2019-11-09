@@ -30,7 +30,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* fait de l'espace pour le header en fixed position */
 .space-header{
-  margin-top: 48px;
+  margin-top: 52px;
 }
 
 .container{
@@ -114,6 +114,90 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   }
 }
 
+/* ----- HEADER -----*/
+
+.header-container{
+  height: 52px;
+  width: 100%;
+  background: #404040;
+
+  position: fixed;
+  top: 0;
+  z-index: 11;
+}
+
+.header{
+  height: 100%;
+  padding: 0 24px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.header a{
+  text-decoration: none;
+  color: white;
+}
+
+.header-title{
+  color: white;
+  flex-grow: 1;
+  font-size: 22px;
+
+  display: flex;
+  align-items: center;
+}
+
+.header .nom{
+  font-weight: bold;
+  color: #00E676;
+  display: flex;
+  align-items: center;
+
+  padding-right: 24px;
+  /* border-left: 1px solid #909090; */
+  border-right: 1px solid #909090;
+}
+
+.header .nav-button{
+  color: #909090;
+  display: flex;
+  align-items: center;
+
+  padding-left: 24px;
+}
+
+.header .nav-title{
+  display: none;
+  padding-right: 12px;
+}
+
+.header .nav-icon{
+  font-size: 18px;
+  text-align: center;
+}
+
+@media(min-width: 601px){
+  .header .nav-title{
+    display: block;
+  }
+}
+
+.header .nav-button.page-selected{
+  color: white;
+}
+
+/*--- ERREUR ---*/
+
+.erreur{
+  margin-top: 0;
+  padding: 24px;
+  background: white;
+}
+
 /* --- basic button --- */
 
 button {
@@ -153,87 +237,8 @@ button:hover{
   text-align: center;
 }
 
-
-/* ----- HEADER -----*/
-
-.header-container{
-  width: 100%;
-  height: 48px;
-  background: #404040;
-  color: white;
-
-  position: fixed;
-  top: 0;
-  z-index: 11;
-}
-
-.header{
-  height: 100%;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-
-}
-
-.header a{
-  text-decoration: none;
-}
-
-.header-title{
-  flex-grow: 1;
-  /*font-size: 1.4rem;*/
-  font-size: 19.6px;
-  padding-left: 24px;
-
-  display: flex;
-  align-items: center;
-}
-
-.header .nav-button{
-  /* background: #707070; */
-  color: #909090;
-  margin: 0 0px 0;
-
-  display: flex;
-  align-items: center;
-}
-
-.header .nav-title{
-  display: none;
-  padding-left: 12px;
-}
-
-.header .nav-icon{
-    width: 48px;
-    text-align: center;
-}
-
-@media(min-width: 601px){
-  .header .nav-title{
-    display: block;
-  }
-}
-
-.header .nav-button.page-selected{
-  color: white;
-}
-
-.w3-large{
-  font-size:18px!important
-}
-
-/*--- ERREUR ---*/
-
-.erreur{
-  margin-top: 0;
-  padding: 24px;
-  background: white;
-}
-
 /*----- FORMS -----*/
+
 .tabs
 {
 display: flex
@@ -242,8 +247,6 @@ display: flex
 .disable-dbl-tap-zoom {
   touch-action: manipulation;
 }
-
-
 
 /* ----- SHOW / HIDE ELEMENTS ----- */
 
