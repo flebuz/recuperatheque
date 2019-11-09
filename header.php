@@ -2,7 +2,7 @@
 <div class="header-container">
   <div class="header quasi-fullwidth">
 
-    <div class="header-title"><a href="catalogue.php">Mycélium</a></div>
+    <div class="header-title"><a href="portal.php">Mycélium</a></div>
 
     <?php
 
