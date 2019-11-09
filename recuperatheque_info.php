@@ -19,6 +19,14 @@
       <?php
       }
     ?>
+    <?php if ($item['mail']){ ?>
+      <div class="item-info-line">
+        <i class="fas fa-envelope item-icon"></i>
+        <a class="item-info" href="mailto:<?php echo $item['mail'];?>"> <?php echo $item['mail'];?></a>
+      </div>
+      <?php
+      }
+    ?>
     <?php if ($item['site']){ ?>
       <div class="item-info-line">
         <i class="fas fa-link item-icon"></i>
