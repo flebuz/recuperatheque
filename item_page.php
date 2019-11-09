@@ -74,59 +74,60 @@
 
 
   <div class="quasi-fullwidth space-header">
-  <div class="item-single-container">
-  <div class="item-single-content">
 
     <div class="back-link-container">
       <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i> retour à la recherche </a>
     </div>
 
-  <?php
-    //get the item
-    $req = $bdd->prepare('  SELECT
-                            c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation,
-                            c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
-                            cat.ID, cat.nom AS categorie,
-                            sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-                            FROM ' . $recuperatheque . ' c
-                            INNER JOIN categorie cat ON c.ID_categorie=cat.ID
-                            INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
-                            WHERE c.id=:id');
-
-    $req->bindValue(':id', $id, PDO::PARAM_INT);
-    //execute the request
-    $req->execute();
-  ?>
-
-  <?php
-    if ($req->rowCount() > 0) {
-      $item = $req->fetch();
-
-      include('item.php'); ?>
-
-      <div class="item-buttons-container">
-
-        <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
-          <div class="button-title">Modifier</div>
-          <i class='button-icon w3-large fas fa-edit'></i>
-        </button>
-
-        <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
-          <div class="button-title">Vendre</div>
-          <i class='button-icon w3-large fas fa-check'></i>
-        </button>
-      </div>
+    <div class="item-single-container">
 
       <?php
-    }
-    else{
-      echo '<h3 class="erreur"> Cet objet n\'existe pas </h3>';
-      $item=0;
-    }
-  ?>
+        //get the item
+        $req = $bdd->prepare('  SELECT
+                                c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation,
+                                c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                                cat.ID, cat.nom AS categorie,
+                                sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
+                                FROM ' . $recuperatheque . ' c
+                                INNER JOIN categorie cat ON c.ID_categorie=cat.ID
+                                INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+                                WHERE c.id=:id');
 
+        $req->bindValue(':id', $id, PDO::PARAM_INT);
+        //execute the request
+        $req->execute();
+      ?>
+
+      <?php
+        if ($req->rowCount() > 0) {
+          $item = $req->fetch();
+
+          include('item.php'); ?>
+
+
+          <?php
+        }
+        else{
+          echo '<h3 class="erreur"> Cet objet n\'existe pas </h3>';
+          $item=0;
+        }
+      ?>
+  
   </div>
+
+  <div class="item-buttons-container">
+
+    <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
+      <div class="button-title">Modifier</div>
+      <i class='button-icon w3-large fas fa-edit'></i>
+    </button>
+
+    <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
+      <div class="button-title">Vendre</div>
+      <i class='button-icon w3-large fas fa-check'></i>
+    </button>
   </div>
+
   </div>
 
   <div id="modal_sell" class="w3-modal">

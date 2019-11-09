@@ -95,7 +95,7 @@
 
         <div class="item-info-line">
           <i class='fas fa-coins item-icon'></i>
-          <div class="item-info"><?php echo $prix; ?> ₲ (par pièce) </div>
+          <div class="item-info"><?php echo $prix; ?> (par pièce) </div>
         </div>
 
         <div class="item-info-line">
