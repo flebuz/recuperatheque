@@ -1,10 +1,4 @@
 
-/* ----- INFO BOX -----*/
-
-.recuperatheque-info{
-  padding: 12px 24px;
-  background: white;
-}
 
 /* ----- SEARCH BAR -----*/
 
@@ -47,28 +41,26 @@
 /* ----- SEARCH RESUME -----*/
 
 .search-resume-wrapper{
-  background: white;
-  text-align: left;
-  padding: 12px 24px;
-  margin-bottom: 12px;
-
-  border-bottom: 1px solid #E0E0E0;
-
   position: sticky;
   top: 48px;
   z-index: 10;
 }
+@media(min-width: 993px) {
+  .search-resume-wrapper{
+    position: static;
+  }
+}
 
 .search-resume a{
   white-space: nowrap;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   text-decoration: none;
   background: #00E676;
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   line-height: 2.5;
 }
 
@@ -78,21 +70,24 @@
   font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f00d";
 }
 
-@media(min-width: 993px) {
-  .search-resume-wrapper{
-    position: static;
+/* --- page nav --- */
 
-    height: 48px;
-    box-sizing: content-box;
-
-    display: flex;
-    align-items: center;
-    align-content: center;
-
-    padding: 24px 12px 24px;
-    border-bottom: 1px solid #E0E0E0;
-  }
+.page-nav{
+  text-align: center;
+  font-size: 1.4rem;
 }
+
+.page-nav a{
+  text-decoration: none;
+  padding: 0 12px;
+}
+
+.page-nav a.disabled{
+  pointer-events: none;
+  cursor: default;
+  color: #D0D0D0;
+}
+
 
 /* -----CATEGORY MENU -----*/
 
@@ -193,42 +188,4 @@
 
 .menu-container a{
   text-decoration: none;
-}
-
-
-/* --- page nav */
-
-.page-nav{
-  background: white;
-  text-align: center;
-  font-size: 1.4rem;
-  padding: 12px;
-
-  border-top: 1px solid #E0E0E0;
-}
-
-.page-nav a{
-  text-decoration: none;
-  padding: 0 12px;
-}
-
-.page-nav a.disabled{
-  pointer-events: none;
-  cursor: default;
-  color: #D0D0D0;
-}
-
-@media(min-width: 993px) {
-  .page-nav{
-
-    height: 48px;
-    box-sizing: content-box;
-
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-
-    margin-top: 12px;
-  }
 }

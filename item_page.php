@@ -75,6 +75,8 @@
 
   <div class="quasi-fullwidth space-header">
 
+    <?php include("recuperatheque_info.php"); ?>
+
     <div class="back-link-container">
       <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i> retour à la recherche </a>
     </div>
@@ -104,7 +106,6 @@
 
           include('item.php'); ?>
 
-
           <?php
         }
         else{
@@ -112,21 +113,20 @@
           $item=0;
         }
       ?>
-  
-  </div>
+    </div>
 
-  <div class="item-buttons-container">
+    <div class="item-buttons-container">
 
-    <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
-      <div class="button-title">Modifier</div>
-      <i class='button-icon w3-large fas fa-edit'></i>
-    </button>
+      <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
+        <div class="button-title">Modifier</div>
+        <i class='button-icon w3-large fas fa-edit'></i>
+      </button>
 
-    <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
-      <div class="button-title">Vendre</div>
-      <i class='button-icon w3-large fas fa-check'></i>
-    </button>
-  </div>
+      <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
+        <div class="button-title">Vendre</div>
+        <i class='button-icon w3-large fas fa-check'></i>
+      </button>
+    </div>
 
   </div>
 
