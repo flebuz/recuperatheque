@@ -60,7 +60,7 @@
     if (isset($_GET['r']) && in_array($_GET['r'], $recuperatheques)){
       $recuperatheque = htmlspecialchars($_GET['r']);
     } else{
-      $recuperatheque = "bag";
+      $recuperatheque = null;
     }
     //---> si pas le cas, alors rien afficher!
   ?>
@@ -68,7 +68,9 @@
   <?php
     //----- construction de l'objet $system ----
     //-> résume la structure de catégorie-sscat-comptage de la recuperatheque
-    include('categories_system.php');
+    if($recuperatheque){
+      include('categories_system.php');
+    }
   ?>
 
   <?php
@@ -122,195 +124,205 @@
 
     <div class="catalogue">
 
-      <!-- Bar de recherche -->
-      <div class="flex-menu">
+      <?php
+      if($recuperatheque){?>
 
-        <?php
-          //on recupere tt les info de la bonne recuperatheque
-          $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
-          $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
-          $req->execute();
-          $item = $req->fetch();
-
-          //on recupere la monnaie pour la suite
-          $monnaie = $item['monnaie'];
-
-          //on print l'info box
-          include("recuperatheque_info.php");
-        ?>
-
-        <form class="search-bar" action="catalogue.php" method="GET">
-
-          <input type="text" class="search-bar-input" name="q" placeholder="Recherche..." value="<?php echo $query?>">
-          <button class="w3-large fa fa-search search-bar-button" type="submit"></button>
+        <!-- Bar de recherche -->
+        <div class="flex-menu">
 
           <?php
-            // on ajoute les autre param
-            if($recuperatheque){
-              echo '<input type="hidden" name="r" value="' . $recuperatheque . '"/>';
-            }
-            if($catsearch){
-              echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
-            }
-            if($sscatsearch){
-              echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
-            }
-            if($tri){
-              echo '<input type="hidden" name="order" value="' . $tri . '"/>';
-            }
+            //on recupere tt les info de la bonne recuperatheque
+            $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
+            $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
+            $req->execute();
+            $item = $req->fetch();
+
+            //on recupere la monnaie pour la suite
+            $monnaie = $item['monnaie'];
+
+            //on print l'info box
+            include("recuperatheque_info.php");
           ?>
 
-        </form>
+          <form class="search-bar" action="catalogue.php" method="GET">
 
-        <div class="menu-container" id="menu-container">
-          <div class="menu-bar">
-            <button id="cat-button" class="button-flex menu-button separation" onclick="openMenu(event,'categories')">
-              <div class="button-title">Catégories</div>
-              <i class='button-icon w3-large fas fa-plus'></i>
-            </button>
-            <button id="tri-button" class="button-flex menu-button" onclick="openMenu(event,'tri')">
-              <div class="button-title">Tri</div>
-              <i class='button-icon w3-large fas fa-sort'></i>
-            </button>
-          </div>
+            <input type="text" class="search-bar-input" name="q" placeholder="Recherche..." value="<?php echo $query?>">
+            <button class="w3-large fa fa-search search-bar-button" type="submit"></button>
 
-          <?php include('categories_menu.php'); ?>
-
-        </div>
-
-      </div>
-
-      <!-- search request -->
-      <div class="flex-items">
-        <?php
-
-          $limit= 12; //items par pages
-          $starting_limit = ($page-1)*$limit;
-
-          //--- requete qui compte juste les elements de la recherche
-          $req = $bdd->prepare('  SELECT COUNT(*) AS total
-          FROM ' . $recuperatheque . ' c
-          INNER JOIN categorie cat ON c.ID_categorie=cat.ID
-          INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
-          WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
-          AND (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
-          AND (c.ID_categorie = :catsearch OR :catsearch is null)
-          ');
-
-          //complete parametric values (note: column names are not values, and thus must be hardcoded into the query)
-          $req->bindValue(':search', '%' . $query . '%', PDO::PARAM_STR);
-          $req->bindValue(':sscatsearch', $sscatsearch, PDO::PARAM_INT);
-          $req->bindValue(':catsearch', $catsearch, PDO::PARAM_INT);
-
-          $req->execute();
-          $total_count = $req->fetch()['total'];
-
-          //--- requete qui sort les elements de la recherche, trier, et sequencer en page
-          //every lines is an item with joined categorie and subcategorie
-          $req = $bdd->prepare('  SELECT
-          c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags,
-          c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation,
-          c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
-          cat.ID, cat.nom AS categorie,
-          sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-          FROM ' . $recuperatheque . ' c
-          INNER JOIN categorie cat ON c.ID_categorie=cat.ID
-          INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
-          WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
-          AND (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
-          AND (c.ID_categorie = :catsearch OR :catsearch is null)
-          ORDER BY ' . $tri . ' DESC
-          LIMIT ' . $starting_limit . ', ' . $limit
-          );
-
-          //complete parametric values (note: column names are not values, and thus must be hardcoded into the query)
-          $req->bindValue(':search', '%' . $query . '%', PDO::PARAM_STR);
-          $req->bindValue(':sscatsearch', $sscatsearch, PDO::PARAM_INT);
-          $req->bindValue(':catsearch', $catsearch, PDO::PARAM_INT);
-
-          $req->execute();
-        ?>
-
-        <!-- search resume -->
-        <div class="container border-bottom search-resume-wrapper">
-          <div class="search-resume">
             <?php
-              if($query != '' || $catsearch != 0){
-                //si une des deux condition est respacter on affiche le resumer
-
-                if($query != ''){
-                  ?>
-                    <a href=" <?php echo link_construct(array('q'=>null)) ?> ">
-                      <?php echo $query ?>
-                    </a>
-                  <?php
-                }
-                if($sscatsearch != 0){
-                  if($query != ''){ echo ' dans '; }
-                  ?>
-                    <a href=" <?php echo link_construct(array('sscatsearch'=>null,'catsearch'=>null)) ?> ">
-                      <?php echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ')' ?>
-                    </a>
-                  <?php
-                }
-                elseif($catsearch != 0){
-                  if($query != ''){ echo ' dans '; }
-                  ?>
-                    <a href=" <?php echo link_construct(array('sscatsearch'=>null,'catsearch'=>null)) ?> ">
-                      <?php echo $system[$catsearch]['nom'] ?>
-                    </a>
-                  <?php
-                }
+              // on ajoute les autre param
+              if($recuperatheque){
+                echo '<input type="hidden" name="r" value="' . $recuperatheque . '"/>';
               }
-              echo ' (' . $total_count . ' résultats)';
-              // echo '<div>Page ' . $page . '</div>';
-
+              if($catsearch){
+                echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
+              }
+              if($sscatsearch){
+                echo '<input type="hidden" name="sscatsearch" value="' . $sscatsearch . '"/>';
+              }
+              if($tri){
+                echo '<input type="hidden" name="order" value="' . $tri . '"/>';
+              }
             ?>
+
+          </form>
+
+          <div class="menu-container" id="menu-container">
+            <div class="menu-bar">
+              <button id="cat-button" class="button-flex menu-button separation" onclick="openMenu(event,'categories')">
+                <div class="button-title">Catégories</div>
+                <i class='button-icon w3-large fas fa-plus'></i>
+              </button>
+              <button id="tri-button" class="button-flex menu-button" onclick="openMenu(event,'tri')">
+                <div class="button-title">Tri</div>
+                <i class='button-icon w3-large fas fa-sort'></i>
+              </button>
+            </div>
+
+            <?php include('categories_menu.php'); ?>
+
           </div>
+
         </div>
 
-        <!-- items container -->
-        <div class="items-container">
-
+        <!-- search request -->
+        <div class="flex-items">
           <?php
-            if ($req->rowCount() > 0) {
-              while($item = $req->fetch()){
 
-                //affichage de l'item
-                ?>
+            $limit= 12; //items par pages
+            $starting_limit = ($page-1)*$limit;
 
-                  <div class="item-wrapper">
-                    <?php include('item.php');?>
-                  </div>
+            //--- requete qui compte juste les elements de la recherche
+            $req = $bdd->prepare('  SELECT COUNT(*) AS total
+            FROM ' . $recuperatheque . ' c
+            INNER JOIN categorie cat ON c.ID_categorie=cat.ID
+            INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+            WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
+            AND (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
+            AND (c.ID_categorie = :catsearch OR :catsearch is null)
+            ');
 
-                <?php
-              }
-            }
-            else {
-              echo '<h3 class="erreur"> Aucun résultat ne correspond à la recherche </h3>';
-            }
+            //complete parametric values (note: column names are not values, and thus must be hardcoded into the query)
+            $req->bindValue(':search', '%' . $query . '%', PDO::PARAM_STR);
+            $req->bindValue(':sscatsearch', $sscatsearch, PDO::PARAM_INT);
+            $req->bindValue(':catsearch', $catsearch, PDO::PARAM_INT);
+
+            $req->execute();
+            $total_count = $req->fetch()['total'];
+
+            //--- requete qui sort les elements de la recherche, trier, et sequencer en page
+            //every lines is an item with joined categorie and subcategorie
+            $req = $bdd->prepare('  SELECT
+            c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags,
+            c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation,
+            c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+            cat.ID, cat.nom AS categorie,
+            sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
+            FROM ' . $recuperatheque . ' c
+            INNER JOIN categorie cat ON c.ID_categorie=cat.ID
+            INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+            WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
+            AND (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
+            AND (c.ID_categorie = :catsearch OR :catsearch is null)
+            ORDER BY ' . $tri . ' DESC
+            LIMIT ' . $starting_limit . ', ' . $limit
+            );
+
+            //complete parametric values (note: column names are not values, and thus must be hardcoded into the query)
+            $req->bindValue(':search', '%' . $query . '%', PDO::PARAM_STR);
+            $req->bindValue(':sscatsearch', $sscatsearch, PDO::PARAM_INT);
+            $req->bindValue(':catsearch', $catsearch, PDO::PARAM_INT);
+
+            $req->execute();
           ?>
 
+          <!-- search resume -->
+          <div class="container border-bottom search-resume-wrapper">
+            <div class="search-resume">
+              <?php
+                if($query != '' || $catsearch != 0){
+                  //si une des deux condition est respacter on affiche le resumer
+
+                  if($query != ''){
+                    ?>
+                      <a href=" <?php echo link_construct(array('q'=>null)) ?> ">
+                        <?php echo $query ?>
+                      </a>
+                    <?php
+                  }
+                  if($sscatsearch != 0){
+                    if($query != ''){ echo ' dans '; }
+                    ?>
+                      <a href=" <?php echo link_construct(array('sscatsearch'=>null,'catsearch'=>null)) ?> ">
+                        <?php echo $system[$catsearch]['sscats'][$sscatsearch] . ' (' . $system[$catsearch]['nom'] . ')' ?>
+                      </a>
+                    <?php
+                  }
+                  elseif($catsearch != 0){
+                    if($query != ''){ echo ' dans '; }
+                    ?>
+                      <a href=" <?php echo link_construct(array('sscatsearch'=>null,'catsearch'=>null)) ?> ">
+                        <?php echo $system[$catsearch]['nom'] ?>
+                      </a>
+                    <?php
+                  }
+                }
+                echo ' (' . $total_count . ' résultats)';
+                // echo '<div>Page ' . $page . '</div>';
+
+              ?>
+            </div>
+          </div>
+
+          <!-- items container -->
+          <div class="items-container">
+
+            <?php
+              if ($req->rowCount() > 0) {
+                while($item = $req->fetch()){
+
+                  //affichage de l'item
+                  ?>
+
+                    <div class="item-wrapper">
+                      <?php include('item.php');?>
+                    </div>
+
+                  <?php
+                }
+              }
+              else {
+                echo '<h3 class="erreur"> Aucun résultat ne correspond à la recherche </h3>';
+              }
+            ?>
+
+          </div>
+
+          <!-- page nav -->
+          <div class="container border-top page-nav">
+
+            <a href= <?php echo link_construct(array('page'=>$page-1)) ?>
+               class="<?php if($page-1 <= 0){ echo 'disabled'; } ?>">
+               <i class='fas fa-chevron-left'></i>
+            </a>
+
+            <?php echo $page; ?>
+
+            <a href= <?php echo link_construct(array('page'=>$page+1)) ?>
+               class="<?php if(($page)*$limit >= $total_count){ echo 'disabled'; } ?>">
+               <i class='fas fa-chevron-right'></i>
+            </a>
+
+          </div>
+
         </div>
 
-        <!-- page nav -->
-        <div class="container border-top page-nav">
-
-          <a href= <?php echo link_construct(array('page'=>$page-1)) ?>
-             class="<?php if($page-1 <= 0){ echo 'disabled'; } ?>">
-             <i class='fas fa-chevron-left'></i>
-          </a>
-
-          <?php echo $page; ?>
-
-          <a href= <?php echo link_construct(array('page'=>$page+1)) ?>
-             class="<?php if(($page)*$limit >= $total_count){ echo 'disabled'; } ?>">
-             <i class='fas fa-chevron-right'></i>
-          </a>
-
-        </div>
-
-      </div>
+        <?php
+      }
+      else {
+        echo '<h3 class="erreur"> Pas de récupérathèque valide </h3>';
+      }
+      ?>
 
     </div>
   </div>

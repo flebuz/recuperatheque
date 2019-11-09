@@ -57,7 +57,7 @@
     if (isset($_GET['r']) && in_array($_GET['r'], $recuperatheques)){
       $recuperatheque = htmlspecialchars($_GET['r']);
     } else{
-      $recuperatheque = "bag";
+      $recuperatheque = null;
     }
     //---> si pas le cas, alors rien afficher!
   ?>

@@ -95,7 +95,7 @@
 
         <div class="item-info-line">
           <i class='fas fa-coins item-icon'></i>
-          <div class="item-info"><?php echo $prix; ?> <?php echo $monnaie; ?> (par pièce) </div>
+          <div class="item-info"><?php echo $prix; ?> <b><?php echo $monnaie; ?></b> (par pièce) </div>
         </div>
 
         <div class="item-info-line">
@@ -167,7 +167,7 @@
           <div class="item-info">
             <?php
               for($n = 0; $n < count($tags); $n++){?>
-                <a class="item-tag" href= <?php echo link_construct(array('q'=>$tags[$n],'id'=>null), 'catalogue.php') ?> >#<?php echo $tags[$n];?></a>
+                <a class="item-tag" href= <?php echo link_construct(array('q'=>$tags[$n],'id'=>null, 'page'=>1), 'catalogue.php') ?> >#<?php echo $tags[$n];?></a>
                 <?php
                 if($n!=count($tags)-1){ echo ', '; }
               }
