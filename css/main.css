@@ -16,7 +16,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
     box-sizing: inherit;
 }
 
-/* --- global container --- */
+/* --- BASIXXX --- */
 
 .quasi-fullwidth{
 }
@@ -31,6 +31,25 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 /* fait de l'espace pour le header en fixed position */
 .space-header{
   margin-top: 48px;
+}
+
+.container{
+  background: white;
+  text-align: left;
+  padding: 12px 24px;
+}
+
+.border-top{
+  border-top: 1px solid #E0E0E0;
+}
+.border-bottom{
+  border-bottom: 1px solid #E0E0E0;
+}
+
+@media (min-width:993px){
+  .container{
+    padding: 24px;
+  }
 }
 
 /* --- catalogue --- */
@@ -75,27 +94,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
     flex-basis: 70%;
     padding-left: 24px;
     /* border-right: 1px solid #E0E0E0; */
-  }
-}
-
-/* --- BASIXXX --- */
-
-.container{
-  background: white;
-  text-align: left;
-  padding: 12px 24px;
-}
-
-.border-top{
-  border-top: 1px solid #E0E0E0;
-}
-.border-bottom{
-  border-bottom: 1px solid #E0E0E0;
-}
-
-@media (min-width:993px){
-  .container{
-    padding: 24px;
   }
 }
 
