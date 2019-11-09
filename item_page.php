@@ -75,7 +75,19 @@
 
   <div class="quasi-fullwidth space-header">
 
-    <?php include("recuperatheque_info.php"); ?>
+    <?php
+      //on recupere tt les info de la bonne recuperatheque
+      $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
+      $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
+      $req->execute();
+      $item = $req->fetch();
+
+      //on recupere la monnaie pour la suite
+      $monnaie = $item['monnaie'];
+
+      //on print l'info box
+      include("recuperatheque_info.php");
+    ?>
 
     <div class="back-link-container">
       <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i> retour à la recherche </a>

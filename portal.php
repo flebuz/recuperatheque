@@ -43,7 +43,22 @@
 
   <div class="quasi-fullwidth space-header">
 
-    
+    <?php
+      //--- listage des recupérathèques
+      $req = $bdd->prepare(' SELECT * FROM recuperatheques ');
+      $req->execute();
+
+      while($item = $req->fetch()){
+
+        $url = "catalogue.php";
+        $url = $url . "?r=" . $item['raccourci'];
+
+        echo '<a href=' . $url . '>';
+        include("recuperatheque_info.php");
+        echo '</a>';
+
+      }
+    ?>
 
   </div>
 

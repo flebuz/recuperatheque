@@ -1,17 +1,6 @@
 
 <div class="container border-bottom recuperatheque">
 
-  <?php
-    //Afficher les infos de la recuperatheque
-    $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
-    $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
-    $req->execute();
-    $item = $req->fetch();
-
-    //on recupere la monnaie pour la suite
-    $monnaie = $item['monnaie'];
-    ?>
-
     <h3> <?php echo $item['nom'] ;?> </h3>
 
     <?php if ($item['adresse']){ ?>
