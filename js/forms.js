@@ -104,7 +104,7 @@ function ValidateForm(mandatory_fields, fields_visible_name)
 function Soumettre(formid) {
 
   document.forms[formid].submit();
-  document.getElementById(formid).reset();
+  //document.getElementById(formid).reset();
 }
 
 
