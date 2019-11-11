@@ -89,8 +89,11 @@ if (isset($_POST['cat'])) {
                   <video id="video" autoplay class="invisible"></video>
 
 
-  <canvas id="snap_final" class="invisible"></canvas>
-<label for="file" style>
+
+<label for="file_upload" style>
+
+    <canvas id="snap_final" class="invisible"></canvas>
+
                   <div id="file_upload_container" style="display:inline-block; margin:20px 0 20px 0;">
 
                           <div id="bords_file_upload" style="position:absolute; cursor: pointer;"><svg viewBox="0 0 100 100" width="100px" style="width:100px;">
@@ -103,7 +106,7 @@ if (isset($_POST['cat'])) {
                           <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="cam_btn_default" style="width:100px; height:100px; cursor:pointer"><i class="fas fa-camera" style="font-size: 64px !important; line-height: 100px !important;"></i>  </div>
                           <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                         </label>
-                        <input id="file" type="file" accept="image/*" capture="environment" class="invisible">
+                        <input id="file_upload" type="file" accept="image/*" capture="environment" class="invisible">
                   </div>
 
 </div>
@@ -357,7 +360,7 @@ PlayVideo();"></select>
 </div>
 
 
-            <div class="row invisible"><input id="image_final" name="image_final" type="text"></div>
+            <div class="row invisible"><input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
             <div class="row"></div>
 
 
@@ -438,65 +441,45 @@ document.querySelector('#submit_desktop').addEventListener("click", SubmitForm);
 
 init_materialize();
 
+
   });
 
 function SubmitForm()
 {
   const mandatory_fields = [ 'image_final', 'id_categorie', 'id_souscategorie' ];
   const fields_visible_name = [ "une photo de l'objet", "une catégorie", "une sous-catégorie" ];
-
   var error_msg;
+  var isOnline = window.navigator.onLine;
+
   if (error_msg= ValidateForm(mandatory_fields, fields_visible_name))
-  {
-M.toast({html: "Formulaire incomplet !"});
-M.toast({html: error_msg });
-console.log("Erreur : formulaire incomplet"+ error_msg);
-return 0;
+        {
+        M.toast({html: "Formulaire incomplet !"});
+        M.toast({html: error_msg });
+        console.log("Erreur : formulaire incomplet"+ error_msg);
+        return 0;
+        }
+
+  else if (isOnline == false)
+        {
+            M.toast({html: "Pas de connexion ! Veuillez vous connectez avant d'ajouter l'objet."});
+        }
+
+  else {
+         //the form is validated and we're online, so we can submit it
+          window.setTimeout( function() {
+              M.toast({html: "Connexion lente, veuillez patienter..."});
+          }, 5000 ); // show a Toast after 5 sec to warn of slow loading
+
+          expand('loading_overlay'); //show loading overlay to prevent clicking
+          Soumettre('formulaire_encodage'); // submit form
+       }
 }
 
-else {
 
-      window.setTimeout( function() {
-          M.toast({html: "Connexion lente, veuillez patienter..."});
-      }, 5000 ); // show a Toast after 5 sec to warn of slow loading
-      
-      expand('loading_overlay'); //show loading overlay to prevent clicking
-      Soumettre('formulaire_encodage'); // submit form
-    }
-}
 
-function ValidateForm(mandatory_fields, fields_visible_name)
-{
 
-  var error_msg ='';
 
-  for (i=0; i<mandatory_fields.length; i++) {
-    var field = document.querySelector("#"+mandatory_fields[i]).value;
-      if (field == '' || field == null)
-      {
-
-        /*
-        var denomination_field;
-        switch (mandatory_fields[i]) {
-  case 'image_final':  denomination_field = "une photo de l'objet";  break;
-  case 'id_categorie':  denomination_field = "une catégorie";  break;
-  case 'id_souscategorie': denomination_field = "une sous-catégorie";  break;
-  default : denomination_field = mandatory_fields[i];   break;
-    }
-    */
-
-        error_msg= error_msg.concat("Veuillez entrer "+ fields_visible_name[i] +"<br />");
-        //M.toast({html:mandatory_fields[i]+ " est vide."});
-      }
-    }
-
-    return error_msg;
-}
-
-  function init_materialize() {
-    // Sidenav initialisé dans footer.php
-    /*var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems); */
+function init_materialize() {
 
     /* Script requis par Materialize pour activer le composant Dropdown*/
     var elems = document.querySelectorAll('.dropdown-trigger');
@@ -511,6 +494,8 @@ function ValidateForm(mandatory_fields, fields_visible_name)
     var instances = M.FloatingActionButton.init(elems2);
 
   }
+
+
 </script>
 
 <script>
