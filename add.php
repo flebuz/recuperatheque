@@ -160,7 +160,7 @@ $operation = "add";
   //   $password = 'datarecoulechemindejerusalem';
   //   $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
     $remoteFilePath = getcwd().'/photos/'.$object_id.'.jpg';
-    console_log("object_id dans le nom de l'image". $object_id);
+    console_log("object_id dans le nom de l'image : ". $object_id);
   //   $ch = curl_init("sftp://$username:$password@$host$remotePath");
   //
   //   curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_SFTP);
