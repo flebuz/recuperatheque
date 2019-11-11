@@ -481,7 +481,7 @@ function SubmitForm()
           }, 25000 ); // show a Toast after 25 sec to warn of *anormaly* slow loading and allow user to cancel form submission
 
           expand('loading_overlay'); //show loading overlay to prevent clicking
-          Soumettre('formulaire_encod'); // submit form
+          Soumettre('formulaire_encodage'); // submit form
        }
 }
 
