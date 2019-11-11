@@ -85,10 +85,26 @@ function set_inactive(id_to_deactivate) {
   document.getElementById(id_to_deactivate).classList.remove("active");
 }
 
+
+function ValidateForm(mandatory_fields, fields_visible_name)
+{
+  var error_msg ='';
+
+  for (i=0; i<mandatory_fields.length; i++) {
+    var field = document.querySelector("#"+mandatory_fields[i]).value;
+      if (field == '' || field == null)
+      {
+        error_msg= error_msg.concat("Veuillez entrer "+ fields_visible_name[i] +"<br />");
+      }
+    }
+
+    return error_msg;
+}
+
 function Soumettre(formid) {
 
   document.forms[formid].submit();
-  document.getElementById('client').reset();
+  document.getElementById(formid).reset();
 }
 
 
@@ -103,9 +119,9 @@ function unhide(id_to_show) {
 //fonction expand affiche le div #id_to_show, cache le div #id_to_hide et applique une animation d'entrée
 // en fonction de la variable direction (slide down, slide right, ou fade in (par défaut))
 function expand(id_to_show, id_to_hide, direction) {
-  console.log(id_to_show);
+  //console.log(id_to_show);
   var elem_to_show = document.getElementById(id_to_show);
-  console.log(elem_to_show);
+  //console.log(elem_to_show);
   elem_to_show.classList.remove("invisible");
 
   if (direction == 'down') {
