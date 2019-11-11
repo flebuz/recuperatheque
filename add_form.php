@@ -52,6 +52,7 @@ if (isset($_POST['cat'])) {
 } ?>
 
 
+
 </head>
 
 <body class="disable-dbl-tap-zoom">
@@ -471,16 +472,16 @@ function SubmitForm()
          //the form is validated and we're online, so we can submit it
           window.setTimeout( function() {
               M.toast({html: "Connexion lente, veuillez patienter..."});
-          }, 1 ); // show a Toast after 5 sec to warn of slightly slow loading
+          }, 5000 ); // show a Toast after 5 sec to warn of slightly slow loading
           window.setTimeout( function() {
               M.toast({html: "Pfiou ! Encore un peu de patience..."});
-          }, 10000 ); // show a Toast after 10 sec to warn of really slow loading
+          }, 12000 ); // show a Toast after 12 sec to warn of really slow loading
           window.setTimeout( function() {
               M.toast({html: "La connexion semble anormalement longue :'( <a id='stop_submit' class='btn-flat toast-action' onclick='stopsubmit();''>Interrompre</a>"});
-          }, 30000 ); // show a Toast after 30 sec to warn of *anormaly* slow loading and allow user to cancel form submission
+          }, 25000 ); // show a Toast after 25 sec to warn of *anormaly* slow loading and allow user to cancel form submission
 
           expand('loading_overlay'); //show loading overlay to prevent clicking
-          Soumettre('formulaire_encodage'); // submit form
+          Soumettre('formulaire_encod'); // submit form
        }
 }
 
