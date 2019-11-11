@@ -124,9 +124,65 @@ catch(PDOException $e)
             $result=  $e->getMessage();
             echo "erreur ajout au journal : ".$result;
             }
-  ?>
 
 
+    $img = $_POST['image_final'];
+
+  // if a new image has been uploaded
+    if ($img !== null)
+
+    {
+    $img = str_replace('data:image/jpeg;base64,', '', $img);
+    $img = str_replace(' ', '+', $img);
+    $data = base64_decode($img);
+    //
+    //
+    // // Create temporary file
+     $local_file=fopen('php://temp', 'r+');
+     fwrite($local_file, $data);
+     rewind($local_file);
+    //
+    //   // FTP login
+    //   $host = 'sftp.sd3.gpaas.net';
+    //   $port = 22;
+    //   $username = '1685312';
+    //   $password = 'datarecoulechemindejerusalem';
+    //   $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
+      $remoteFilePath = getcwd().'/photos/'.$object_id.'.jpg';
+      console_log("object_id dans le nom de l'image : ". $object_id);
+    //   $ch = curl_init("sftp://$username:$password@$host$remotePath");
+    //
+    //   curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_SFTP);
+    //   curl_setopt($ch, CURLOPT_SSH_AUTH_TYPES, CURLSSH_AUTH_PUBLICKEY);
+    //   /*curl_setopt($ch, CURLOPT_SSH_PUBLIC_KEYFILE, $_SERVER["DOCUMENT_ROOT"]."/home/.ssh/id_rsa.pub");
+    //   curl_setopt($ch, CURLOPT_SSH_PRIVATE_KEYFILE, $_SERVER["DOCUMENT_ROOT"]."/home/.ssh/id_rsa");*/
+    //   curl_setopt($ch, CURLOPT_VERBOSE, true);
+    //   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    //
+    //
+    //   $response= curl_exec ($ch);
+    //   /*
+    //   if (curl_errno($ch)) {
+    //       $error_msg = curl_error($ch);
+    //   }
+    //
+    //   if (isset($error_msg)) {
+    //        echo "Erreur d'upload de la photo : ".$error_msg;
+    //        //-> renvoie un message d'erreur authentification failed même lorsqu'elle a réussi
+    //   }
+    //   else
+    //   {echo "Photo uploadée avec succès <br />"; */
+    //
+    //
+    //   curl_close ($ch);
+    //
+    //
+    //
+      file_put_contents($remoteFilePath, $local_file);
+
+}
+
+?>
 
 
 </body>
