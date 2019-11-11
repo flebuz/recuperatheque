@@ -18,7 +18,7 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
 <table>
 
   <?php
-    include('connection_db.php')
+    //include_once('connection_db.php')
   ?>
 
 <?php
