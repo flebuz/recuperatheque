@@ -42,6 +42,10 @@ header("Cache-Control: max-age=0");
 
 <!-- Ajout du formulaire précédent à la base de donnée si $_POST['cat'] est défini-->
 <?php
+  include('connection_db.php');
+?>
+
+<?php
 if (isset($_POST['cat'])) {
     include 'add.php';
     console_log("include de add.php");
@@ -56,9 +60,7 @@ if (isset($_POST['cat'])) {
     include('header.php');
   ?>
 
-  <?php
-    include('connection_db.php')
-  ?>
+
 
 
 <main class="space-header">
@@ -425,7 +427,7 @@ PlayVideo();"></select>
 /*Message de succès ou d'échec du formulaire, si $_POST['cat'] est défini*/
 if (isset($_POST['cat'])) {
     if ($result == 'success') {
-        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été encodé. <a class='btn-flat toast-action' href=item_page.php?id=". $object_id .">Voir l'objet</button>\"})</script>";
+        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été encodé. <a class='btn-flat toast-action' href=item_page.php?id=". $object_id .">Voir l'objet</a>\"})</script>";
     } else {
         echo $result;
     }
@@ -438,6 +440,7 @@ if (isset($_POST['cat'])) {
 
 document.querySelector('#submit_mobile').addEventListener("click", SubmitForm);
 document.querySelector('#submit_desktop').addEventListener("click", SubmitForm);
+document.querySelector('#stop_submit').addEventListener("click", stopsubmit);
 
 init_materialize();
 
@@ -468,14 +471,26 @@ function SubmitForm()
          //the form is validated and we're online, so we can submit it
           window.setTimeout( function() {
               M.toast({html: "Connexion lente, veuillez patienter..."});
-          }, 5000 ); // show a Toast after 5 sec to warn of slow loading
+          }, 1 ); // show a Toast after 5 sec to warn of slightly slow loading
+          window.setTimeout( function() {
+              M.toast({html: "Pfiou ! Encore un peu de patience..."});
+          }, 10000 ); // show a Toast after 10 sec to warn of really slow loading
+          window.setTimeout( function() {
+              M.toast({html: "La connexion semble anormalement longue :'( <a id='stop_submit' class='btn-flat toast-action' onclick='stopsubmit();''>Interrompre</a>"});
+          }, 30000 ); // show a Toast after 30 sec to warn of *anormaly* slow loading and allow user to cancel form submission
 
           expand('loading_overlay'); //show loading overlay to prevent clicking
           Soumettre('formulaire_encodage'); // submit form
        }
 }
 
-
+function stopsubmit()
+{
+  event.preventDefault();
+  hide('loading_overlay'); //hide loading overlay to prevent clicking
+  window.history.back();
+   M.Toast.dismissAll();
+}
 
 
 
