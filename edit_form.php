@@ -33,7 +33,10 @@
   header("Cache-Control: max-age=0");
   ?>
 
-  <?php include 'header.php'; ?>
+  <?php
+  include('header.php');
+
+  include('connection_db.php');?>
 
 </head>
 
@@ -41,6 +44,7 @@
 <body class="disable-dbl-tap-zoom">
 
   <?php
+
 
   // if previous form was submitted to self
   if (isset($_POST['action'])) {
@@ -58,7 +62,7 @@ $item = 0;
 $item_status = 0;
 }
 
-include('connection_db.php');
+
 
       //prep the request
       //every line is a souscategorie
