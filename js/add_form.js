@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   var take_photo_btn = document.querySelector('#take-photo');
   var upload_file_default_btn = document.querySelector('#upload-file-default');
-  var file_upload = document.getElementById('file');
+  var file_upload = document.getElementById('file_upload');
   var video = document.querySelector("#video");
   var canvas_streaming = document.getElementById('video_streaming');
   var is_camera_active = false;
@@ -321,8 +321,6 @@ document.getElementById('image_final').reset;
         document.getElementById('image_final').value = DessineVignette('imagesnap', img, orientation);
       });
 
-    var upload_file_default_btn = document.getElementById("upload-file-default");
-    upload_file_default_btn.classList.add("invisible");
     canvas_final.classList.remove("invisible");
     spinner_imagesnap.classList.add("invisible");
 
