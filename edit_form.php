@@ -122,8 +122,16 @@ include('connection_db.php');
     <div class="row nomargin">
 
 <div id="cam_col" class="col s12 center-align">
+  <label for="file_upload" style>
 
-<img class="thumbnail responsive-img" src="/photos/<?php echo $id ?>.jpg"></img>
+      <canvas id="snap_final" class="invisible"></canvas>
+      <img id="snap_original" class="thumbnail responsive-img" src="/photos/<?php echo $id ?>.jpg"></img>
+
+                              <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                          </label>
+                          <input id="file_upload" type="file" accept="image/*" capture="environment" class="invisible">
+
+
 
 <!-- IMAGE ICI -->
 
@@ -306,12 +314,12 @@ include('connection_db.php');
 
                   </div>
               </div>
+
+              <div class="row"><input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
               <div class="row"></div>
 
 
 
-            <div class="row invisible"><input id="image_final" name="image_final" type="text"></div>
-            <div class="row"></div>
 
             <!-- Show modal in case of ID error -->
              <div id="modal_remove" class="modal">
@@ -345,7 +353,7 @@ include('connection_db.php');
 <div class="col s6 m4 inline-group right">
 
 
-     <a class="waves-effect waves-light btn-small green accent-3 " name="submit" value="submit" onclick="expand('loading_overlay'); document.forms['edit_form'].submit(); " >
+     <a class="waves-effect waves-light btn-small green accent-3 " name="submit_edit" id ="submit_edit">
        <i class="fas fa-edit"></i>
        Modifier
      </a>
@@ -405,9 +413,45 @@ if (isset($_POST['action'])) {
 <script>
   document.addEventListener('DOMContentLoaded', function() {
 
+document.querySelector('#submit_edit').addEventListener("click", SubmitForm);
+var file_upload = document.getElementById('file_upload');
+file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
+
     init_materialize();
 
       });
+
+
+      function SubmitForm()
+      {
+        const mandatory_fields = [ 'id_categorie', 'id_souscategorie' ];
+        const fields_visible_name = [ "une catégorie", "une sous-catégorie" ];
+        var error_msg;
+        var isOnline = window.navigator.onLine;
+
+        if (error_msg= ValidateForm(mandatory_fields, fields_visible_name))
+              {
+              M.toast({html: "Formulaire incomplet !"});
+              M.toast({html: error_msg });
+              console.log("Erreur : formulaire incomplet"+ error_msg);
+              return 0;
+              }
+
+        else if (isOnline == false)
+              {
+                  M.toast({html: "Pas de connexion ! Veuillez vous connectez avant d'ajouter l'objet."});
+              }
+
+        else {
+               //the form is validated and we're online, so we can submit it
+                window.setTimeout( function() {
+                    M.toast({html: "Connexion lente, veuillez patienter..."});
+                }, 5000 ); // show a Toast after 5 sec to warn of slow loading
+
+                expand('loading_overlay'); //show loading overlay to prevent clicking
+                Soumettre('edit_form'); // submit form
+             }
+      }
 
 function init_materialize() {
 
@@ -456,10 +500,6 @@ function init_materialize() {
 
 <?php
 
-
-function DisplayIDerror() {
-    echo "Hello world!";
-}
 
 //TEMPORAIRE fonction pour logger des messages PHP dans la console via console.log() en JS
   function console_log($output, $with_script_tags = true)
