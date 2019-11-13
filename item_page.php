@@ -93,7 +93,20 @@
     ?>
 
     <div class="back-link-container">
-      <a href="javascript:history.back()"><i class="fas fa-chevron-left"></i> retour à la recherche </a>
+
+      <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> retour à la recherche </a>
+
+      <script>
+        function back_link(){
+          if(document.referrer.includes("catalogue.php")){
+            document.location.href = document.referrer;
+          }
+          else{
+            document.location.href = 'catalogue.php?r=<?php echo $recuperatheque ?>';
+          }
+        }
+      </script>
+
     </div>
 
     <div class="item-single-container">
