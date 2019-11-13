@@ -10,7 +10,7 @@
       if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
 
         <div class="nom">
-          <span>Bag</span>
+          <span><?php echo $_SESSION['pseudo']; ?></span>
         </div>
 
         <?php
@@ -19,7 +19,8 @@
         ?>
 
         <a href="catalogue.php?r=<?php echo $_SESSION['pseudo']?>" class="nav-button
-          <?php if(in_array(basename($_SERVER['PHP_SELF']),array($cat_url,$solo_url))){
+          <?php if(in_array(basename($_SERVER['PHP_SELF']),array("catalogue.php","item_page.php"))
+                   && $_SESSION['pseudo']==$recuperatheque){
               echo "page-selected"; } ?>">
           <div class="nav-title">Mon Catalogue</div>
           <i class="nav-icon fas fa-book-open"></i>
@@ -64,7 +65,7 @@
   <!-- Modal content -->
   <div class="modal-content">
 
-    <form action="log.php" method="POST">
+    <form action="connection.php" method="POST">
 
       <div class="flex-input">
         <label>Nom: </label>

@@ -57,7 +57,8 @@
         include("recuperatheque_info.php");
       ?>
 
-      <button class="button-flex">
+      <button class="button-flex"
+        onclick="window.location.href='deconnection.php'" >
         <div class="button-title">Deconnection</div>
       </button>
 
