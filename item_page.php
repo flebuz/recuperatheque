@@ -76,17 +76,20 @@
   <div class="quasi-fullwidth space-header">
 
     <?php
-      //on recupere tt les info de la bonne recuperatheque
-      $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
-      $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
-      $req->execute();
-      $item = $req->fetch();
 
-      //on recupere la monnaie pour la suite
-      $monnaie = $item['monnaie'];
+      if($recuperatheque){
 
-      //on print l'info box
-      include("recuperatheque_info.php");
+        //on recupere tt les info de la bonne recuperatheque
+        $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
+        $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
+        $req->execute();
+        $recup_info = $req->fetch();
+
+        //on recupere la monnaie pour la suite
+        $monnaie = $item['monnaie'];
+
+        //on print l'info box
+        include("recuperatheque_info.php");
     ?>
 
     <div class="back-link-container">
@@ -139,6 +142,13 @@
         <i class='button-icon w3-large fas fa-check'></i>
       </button>
     </div>
+
+    <?php
+    }
+    else {
+      echo '<h3 class="erreur"> Pas de récupérathèque valide </h3>';
+    }
+    ?>
 
   </div>
 

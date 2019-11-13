@@ -48,10 +48,10 @@
       $req = $bdd->prepare(' SELECT * FROM recuperatheques ');
       $req->execute();
 
-      while($item = $req->fetch()){
+      while($recup_info = $req->fetch()){
 
         $url = "catalogue.php";
-        $url = $url . "?r=" . $item['raccourci'];
+        $url = $url . "?r=" . $recup_info['raccourci'];
 
         echo '<a href=' . $url . '>';
         include("recuperatheque_info.php");

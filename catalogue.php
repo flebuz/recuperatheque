@@ -135,16 +135,13 @@
             $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
             $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
             $req->execute();
-            $item = $req->fetch();
-
-            //on recupere la monnaie pour la suite
-            $monnaie = $item['monnaie'];
+            $recup_info = $req->fetch();
 
             //on print l'info box
             include("recuperatheque_info.php");
           ?>
 
-          <form class="search-bar" action="catalogue.php" method="GET">
+          <form class="container search-bar" action="catalogue.php" method="GET">
 
             <input type="text" class="search-bar-input" name="q" placeholder="Recherche..." value="<?php echo $query?>">
             <button class="w3-large fa fa-search search-bar-button" type="submit"></button>
@@ -268,7 +265,8 @@
                   }
                 }
                 echo ' (' . $total_count . ' résultats)';
-                // echo '<div>Page ' . $page . '</div>';
+                echo '<b> @ ' . $recup_info['nom'] . '</b>';
+                echo '<span class="page"> - page ' . $page . '</span>';
 
               ?>
             </div>

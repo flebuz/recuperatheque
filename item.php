@@ -95,7 +95,7 @@
 
         <div class="item-info-line">
           <i class='fas fa-coins item-icon'></i>
-          <div class="item-info"><?php echo $prix; ?> <b><?php echo $monnaie; ?></b> (par pièce) </div>
+          <div class="item-info"><?php echo $prix; ?> <b><?php echo $recup_info['monnaie'];; ?></b> /pc </div>
         </div>
 
         <div class="item-info-line">

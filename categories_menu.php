@@ -155,8 +155,6 @@
     menu.className += " active";
     button.className += " active";
 
-    //ajoute 12px a la marge du container
-    document.getElementById('menu-container').style.marginBottom = '12px';
     //enleve la seperation
     document.getElementById("cat-button").className = document.getElementById("cat-button").className.replace(" separation", "");
   }
