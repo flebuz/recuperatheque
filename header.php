@@ -5,10 +5,9 @@
     <div class="header-title"><a href="portal.php">Mycélium</a></div>
 
     <?php
+      session_start();
 
-      $admin = false;
-
-      if($admin){?>
+      if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
 
         <div class="nom">
           <span>Bag</span>
@@ -60,11 +59,11 @@
   <!-- Modal content -->
   <div class="modal-content">
 
-    <form action="catalogue.php" method="POST">
+    <form action="log.php" method="POST">
 
       <div class="flex-input">
         <label>Nom: </label>
-        <input type="text" class="" name="nom">
+        <input type="text" class="" name="pseudo">
       </div>
 
       <div class="flex-input">
@@ -79,9 +78,7 @@
     </form>
 
   </div>
-
 </div>
-
 
 <script>
   var modal = document.getElementById("connection");
