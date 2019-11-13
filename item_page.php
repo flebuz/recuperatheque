@@ -35,11 +35,7 @@
   ?>
 
   <?php
-    include('header.php');
-  ?>
-
-  <?php
-    include('connection_db.php')
+  include('connection_db.php')
   ?>
 
   <?php
@@ -62,7 +58,6 @@
     //---> si pas le cas, alors rien afficher!
   ?>
 
-
   <!-- verifier la validité de l'id -->
   <?php
     if (isset($_GET['id'])){
@@ -72,6 +67,9 @@
     }
   ?>
 
+  <?php
+  include('header.php');
+  ?>
 
   <div class="quasi-fullwidth space-header">
 
@@ -92,7 +90,7 @@
         include("recuperatheque_info.php");
     ?>
 
-    <div class="back-link-container">
+    <div class="container border-bottom back-link-container">
 
       <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> retour à la recherche </a>
 
@@ -143,7 +141,7 @@
       ?>
     </div>
 
-    <div class="item-buttons-container">
+    <div class="container border-top item-buttons-container">
 
       <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
         <div class="button-title">Modifier</div>

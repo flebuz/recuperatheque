@@ -34,10 +34,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
     box-sizing: inherit;
 }
 
-a{
-  text-decoration: none;
-}
-
 /* --- BASIXXX --- */
 
 .quasi-fullwidth{
@@ -301,11 +297,10 @@ button {
   text-decoration: none;
   display: inline-block;
   padding: 0;
+  margin: 0px;
   font-weight: bold;
   font-size: 1rem;
-  margin: 0px;
   position: relative;
-
   overflow: hidden;
   white-space: nowrap;
 }
@@ -324,7 +319,7 @@ button:hover{
 }
 
 .button-icon{
-  width: 48px;
+  padding-left: 12px;
   text-align: center;
 }
 

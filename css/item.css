@@ -80,15 +80,8 @@
 }
 
 .back-link-container{
-  background: white;
-  padding: 12px 24px;
-
-  border-bottom: 1px solid #E0E0E0;
-
-  display: block;
-
   position: sticky;
-  top: 48px;
+  top: 52px;
   z-index: 10;
 }
 .back-link-container i{
@@ -100,8 +93,6 @@
 
 /* barre des boutons */
 .item-buttons-container{
-  padding: 6px;
-
   display: flex;
   flex-wrap: nowrap;
 }
@@ -115,9 +106,6 @@
     position: static;
   }
   .item-buttons-container{
-    background: white;
-    border-top: 1px solid #E0E0E0;
-    padding: 12px;
   }
 }
 
