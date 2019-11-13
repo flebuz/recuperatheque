@@ -70,7 +70,7 @@
       while($recup_info = $req->fetch()){
 
         $url = "catalogue.php";
-        $url = $url . "?r=" . $recup_info['raccourci'];
+        $url = $url . "?r=" . $recup_info['pseudo'];
 
         echo "<a class='border-bottom' href=". $url . ">";
         include("recuperatheque_info.php");

@@ -115,7 +115,7 @@
   /* version mobile */
 .item-photo-container, .item-text-container{
   /* taille max de la photo et donc du text est de 500px */
-  max-width: 500px;
+  max-width: 400px;
 }
 .item-photo-container{
   margin-bottom: 12px;

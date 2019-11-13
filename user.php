@@ -48,7 +48,7 @@
 
       <?php
         //on recupere tt les info de la bonne recuperatheque
-        $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
+        $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE pseudo = :recuperatheque ');
         $req->bindValue(':recuperatheque', $_SESSION['pseudo'] , PDO::PARAM_STR);
         $req->execute();
         $recup_info = $req->fetch();

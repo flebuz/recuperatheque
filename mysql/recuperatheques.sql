@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 09 nov. 2019 à 15:52
+-- Généré le :  mer. 13 nov. 2019 à 16:58
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -251,10 +251,11 @@ CREATE TABLE IF NOT EXISTS `recuperatheques` (
   `adresse` varchar(255) NOT NULL,
   `monnaie` varchar(8) NOT NULL,
   `telephone` varchar(16) NOT NULL,
-  `mdp` varchar(32) NOT NULL,
+  `mdp` varchar(255) NOT NULL,
   `site` varchar(255) NOT NULL,
-  `raccourci` varchar(16) NOT NULL,
+  `pseudo` varchar(16) NOT NULL,
   `mail` varchar(255) NOT NULL,
+  `date_creation` date DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -262,9 +263,9 @@ CREATE TABLE IF NOT EXISTS `recuperatheques` (
 -- Déchargement des données de la table `recuperatheques`
 --
 
-INSERT INTO `recuperatheques` (`ID`, `nom`, `adresse`, `monnaie`, `telephone`, `mdp`, `site`, `raccourci`, `mail`) VALUES
-(1, 'Boite à Gants', '87, rue du Page\r\n1050 Bruxelles (B)\r\nSur le plateau art.', 'Glock', '', '', 'http://erg.be/BAG/index.html', 'bag', 'bag@erg.be'),
-(2, 'Gilbards', 'Rue Abbé Cuylits 44, 1070 Anderlecht', 'G', '', '', 'http://gilbard.be/', 'gilbards', 'info@gilbards.be');
+INSERT INTO `recuperatheques` (`ID`, `nom`, `adresse`, `monnaie`, `telephone`, `mdp`, `site`, `pseudo`, `mail`, `date_creation`) VALUES
+(1, 'Boite à Gants', '87, rue du Page\r\n1050 Bruxelles (B)\r\nSur le plateau art.', 'Glock', '', '$2y$10$DOI1.f9QL/2sjyFI4Uf/r.gQoZj0FsYpK/k9hGBqq3DKcdS1DZ1oC', 'http://erg.be/BAG/index.html', 'bag', 'bag@erg.be', NULL),
+(2, 'Gilbards', 'Rue Abbé Cuylits 44, 1070 Anderlecht', 'G', '', '$2y$10$OE3ShAkWOly0PJqO4XFJFexwZJPVu/O6PJaNxmtbHj.UF8cVEjKCq', 'http://gilbard.be/', 'gilbards', 'info@gilbards.be', NULL);
 
 -- --------------------------------------------------------
 

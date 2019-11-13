@@ -41,12 +41,12 @@
   <?php
     //----- check le $_GET de recuperatheque est valide -----
 
-    //reprendre la liste des (raccourcis vers les) recuperatheques
-    $req = $bdd->prepare(' SELECT raccourci FROM recuperatheques ');
+    //reprendre la liste des (pseudos vers les) recuperatheques
+    $req = $bdd->prepare(' SELECT pseudo FROM recuperatheques ');
     $req->execute();
     $recuperatheques = array();
     while($item = $req->fetch()){
-      array_push($recuperatheques,$item['raccourci']);
+      array_push($recuperatheques,$item['pseudo']);
     }
 
     //checker si le parametre est set et est dans la liste
@@ -78,7 +78,7 @@
       if($recuperatheque){
 
         //on recupere tt les info de la bonne recuperatheque
-        $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
+        $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE pseudo = :recuperatheque ');
         $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
         $req->execute();
         $recup_info = $req->fetch();
