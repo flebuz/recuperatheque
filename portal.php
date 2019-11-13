@@ -72,7 +72,7 @@
         $url = "catalogue.php";
         $url = $url . "?r=" . $recup_info['raccourci'];
 
-        echo '<a href=' . $url . '>';
+        echo "<a class='border-bottom' href=". $url . ">";
         include("recuperatheque_info.php");
         echo '</a>';
 

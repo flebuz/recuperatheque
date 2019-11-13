@@ -13,8 +13,13 @@
           <span>Bag</span>
         </div>
 
-        <a href="catalogue.php" class="nav-button
-          <?php if(in_array(basename($_SERVER['PHP_SELF']),array("catalogue.php","item_page.php"))){
+        <?php
+          $cat_url = "catalogue.php?r=" . $_SESSION['pseudo'];
+          $solo_url = "item_page.php?r=" . $_SESSION['pseudo'];
+        ?>
+
+        <a href="catalogue.php?r=<?php echo $_SESSION['pseudo']?>" class="nav-button
+          <?php if(in_array(basename($_SERVER['PHP_SELF']),array($cat_url,$solo_url))){
               echo "page-selected"; } ?>">
           <div class="nav-title">Mon Catalogue</div>
           <i class="nav-icon fas fa-book-open"></i>
@@ -27,8 +32,8 @@
           <i class="nav-icon fas fa-plus-circle"></i>
         </a>
 
-        <a href="compte.php" class="nav-button
-          <?php if(basename($_SERVER['PHP_SELF'])=="compte.php"){
+        <a href="user.php" class="nav-button
+          <?php if(basename($_SERVER['PHP_SELF'])=="user.php"){
               echo "page-selected"; } ?>">
           <div class="nav-title">Mon Compte</div>
           <i class="nav-icon fas fa-user-lock"></i>
