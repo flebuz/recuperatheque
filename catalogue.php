@@ -168,7 +168,7 @@
             <div class="menu-bar">
               <button id="cat-button" class="button-flex menu-button separation" onclick="openMenu(event,'categories')">
                 <div class="button-title">Catégories</div>
-                <i class='button-icon w3-large fas fa-plus'></i>
+                <i class='button-icon w3-large fas fa-folder'></i>
               </button>
               <button id="tri-button" class="button-flex menu-button" onclick="openMenu(event,'tri')">
                 <div class="button-title">Tri</div>

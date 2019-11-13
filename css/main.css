@@ -227,12 +227,12 @@ a{
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  text-align: center;
+  /* text-align: center; */
 }
 
 /* Modal Content Box */
 .modal-content {
-  display: inline-block;
+  /* display: inline-block; */
   background-color: white;
   margin: 52px auto;
   width: 100%;
@@ -240,9 +240,9 @@ a{
   padding: 24px;
 }
 
-@media(min-width: 993px){
+@media(min-width: 601px){
   .modal-content {
-    width: auto;
+    width: 50%;
     height: auto;
     margin: 104px auto; /* commence 2x plus bas que la hauteur du header */
   }
@@ -260,7 +260,7 @@ a{
   text-align: left;
   font-weight: bold;
   margin-right: 24px;
-  flex-basis: 40%;
+  flex-basis: 25%;
   white-space: nowrap;
 }
 #connection input{
