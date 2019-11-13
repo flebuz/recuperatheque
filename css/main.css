@@ -214,7 +214,64 @@ a{
   color: white;
 }
 
-/*--- ERREUR ---*/
+/* --- MODAL --- */
+
+/* prend tout l'écran */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  text-align: center;
+}
+
+/* Modal Content Box */
+.modal-content {
+  display: inline-block;
+  background-color: white;
+  margin: 52px auto;
+  width: 100%;
+  height: auto;
+  padding: 24px;
+}
+
+@media(min-width: 993px){
+  .modal-content {
+    width: auto;
+    height: auto;
+    margin: 104px auto; /* commence 2x plus bas que la hauteur du header */
+  }
+}
+
+/* --- Connection box --- */
+
+#connection .flex-input{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 24px;
+}
+#connection label{
+  text-align: left;
+  font-weight: bold;
+  margin-right: 24px;
+  flex-basis: 40%;
+  white-space: nowrap;
+}
+#connection input{
+  flex-grow: 1;
+}
+#connection button{
+  width: 100%;
+}
+
+
+/* --- ERREUR --- */
 
 .erreur{
   margin-top: 0;
@@ -223,7 +280,7 @@ a{
   background: white;
 }
 
-/* --- basic button --- */
+/* --- basic button & input --- */
 
 button {
   background-color: #eaeaea;
@@ -251,15 +308,19 @@ button:hover{
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.button-title{
-  padding-left: 12px;
+  padding: 0 12px;
 }
 
 .button-icon{
   width: 48px;
   text-align: center;
+}
+
+input{
+  background: white;
+  border: 1px solid #E0E0E0;
+  padding: 6px 12px;
 }
 
 /*----- FORMS -----*/

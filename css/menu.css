@@ -15,17 +15,11 @@
 
 /*la barre de recherche grow en longueur if spaces*/
 .search-bar-input{
-  background: white;
-  border: 1px solid #E0E0E0;
-  /* min-width: 0; */
   flex-grow: 1;
-
-  padding: 6px 12px;
 }
 
 .search-bar-button{
   padding: 12px;
-  z-index: 5;
 }
 
 /* ----- SEARCH RESUME -----*/
