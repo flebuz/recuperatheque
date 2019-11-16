@@ -34,10 +34,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
     box-sizing: inherit;
 }
 
-a{
-  text-decoration: none;
-}
-
 /* --- BASIXXX --- */
 
 .quasi-fullwidth{
@@ -126,12 +122,12 @@ a{
 .recuperatheque h3{
   margin: 0;
 }
-.recuperatheque .item-info-line{
+.recuperatheque-info{
   display: none;
 }
 @media (min-width: 993px){
-  .recuperatheque .item-info-line{
-    display: flex;
+  .recuperatheque-info{
+    display: block;
   }
   .recuperatheque h3{
     margin: 0 0 12px;
@@ -177,13 +173,24 @@ a{
 
 .header .nom{
   font-weight: bold;
-  color: #00E676;
+  color: white;
   display: flex;
   align-items: center;
 
   padding-right: 24px;
-  /* border-left: 1px solid #909090; */
-  border-right: 1px solid #909090;
+  margin-right: 12px;
+  position: relative;
+}
+
+.header .nom:after{
+  content : "";
+  position: absolute;
+  top: 20%;
+  left: 0;
+  z-index: 10;
+  height: 60%;
+  width: 100%;
+  border-right: 1px solid #606060;
 }
 
 .header .nav-button{
@@ -191,7 +198,7 @@ a{
   display: flex;
   align-items: center;
 
-  padding-left: 24px;
+  padding: 0 12px;
 }
 
 .header .nav-title{
@@ -214,7 +221,64 @@ a{
   color: white;
 }
 
-/*--- ERREUR ---*/
+/* --- MODAL --- */
+
+/* prend tout l'écran */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  /* text-align: center; */
+}
+
+/* Modal Content Box */
+.modal-content {
+  /* display: inline-block; */
+  background-color: white;
+  margin: 52px auto;
+  width: 100%;
+  height: auto;
+  padding: 24px;
+}
+
+@media(min-width: 601px){
+  .modal-content {
+    width: 50%;
+    height: auto;
+    margin: 104px auto; /* commence 2x plus bas que la hauteur du header */
+  }
+}
+
+/* --- Connection box --- */
+
+#connection .flex-input{
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 24px;
+}
+#connection label{
+  text-align: left;
+  font-weight: bold;
+  margin-right: 24px;
+  flex-basis: 25%;
+  white-space: nowrap;
+}
+#connection input{
+  flex-grow: 1;
+}
+#connection button{
+  width: 100%;
+}
+
+
+/* --- ERREUR --- */
 
 .erreur{
   margin-top: 0;
@@ -223,7 +287,7 @@ a{
   background: white;
 }
 
-/* --- basic button --- */
+/* --- basic button & input --- */
 
 button {
   background-color: #eaeaea;
@@ -233,11 +297,10 @@ button {
   text-decoration: none;
   display: inline-block;
   padding: 0;
+  margin: 0px;
   font-weight: bold;
   font-size: 1rem;
-  margin: 0px;
   position: relative;
-
   overflow: hidden;
   white-space: nowrap;
 }
@@ -251,15 +314,19 @@ button:hover{
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.button-title{
-  padding-left: 12px;
+  padding: 0 12px;
 }
 
 .button-icon{
-  width: 48px;
+  padding-left: 12px;
   text-align: center;
+}
+
+input{
+  background: white;
+  border: 1px solid #E0E0E0;
+  padding: 6px 12px;
 }
 
 /*----- FORMS -----*/

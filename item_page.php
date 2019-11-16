@@ -35,22 +35,18 @@
   ?>
 
   <?php
-    include('header.php');
-  ?>
-
-  <?php
-    include('connection_db.php')
+  include('connection_db.php')
   ?>
 
   <?php
     //----- check le $_GET de recuperatheque est valide -----
 
-    //reprendre la liste des (raccourcis vers les) recuperatheques
-    $req = $bdd->prepare(' SELECT raccourci FROM recuperatheques ');
+    //reprendre la liste des (pseudos vers les) recuperatheques
+    $req = $bdd->prepare(' SELECT pseudo FROM recuperatheques ');
     $req->execute();
     $recuperatheques = array();
     while($item = $req->fetch()){
-      array_push($recuperatheques,$item['raccourci']);
+      array_push($recuperatheques,$item['pseudo']);
     }
 
     //checker si le parametre est set et est dans la liste
@@ -62,7 +58,6 @@
     //---> si pas le cas, alors rien afficher!
   ?>
 
-
   <!-- verifier la validité de l'id -->
   <?php
     if (isset($_GET['id'])){
@@ -72,6 +67,9 @@
     }
   ?>
 
+  <?php
+  include('header.php');
+  ?>
 
   <div class="quasi-fullwidth space-header">
 
@@ -80,7 +78,7 @@
       if($recuperatheque){
 
         //on recupere tt les info de la bonne recuperatheque
-        $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE raccourci = :recuperatheque ');
+        $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE pseudo = :recuperatheque ');
         $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
         $req->execute();
         $recup_info = $req->fetch();
@@ -92,7 +90,7 @@
         include("recuperatheque_info.php");
     ?>
 
-    <div class="back-link-container">
+    <div class="container border-bottom back-link-container">
 
       <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> retour à la recherche </a>
 
@@ -143,7 +141,7 @@
       ?>
     </div>
 
-    <div class="item-buttons-container">
+    <div class="container border-top item-buttons-container">
 
       <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
         <div class="button-title">Modifier</div>
@@ -240,8 +238,6 @@
      </div>
    </div>
    </div>
-
-
 
   <script type="text/javascript" src="js/forms.js"></script>
 
