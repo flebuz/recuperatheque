@@ -153,7 +153,7 @@ if (isset($_POST['cat'])) {
 
      // displaying buttons with the categories of materials
       while ($cat = $req->fetch()) {
-          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
+          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"update_categorie(this.id, $cat['nom'], $cat['id']);\"".'\'>'.$cat['nom'].'</a>';
       }
 
 
@@ -446,6 +446,18 @@ init_materialize();
 
 
   });
+
+function  update_categorie(element_id, nom_cat, id_cat)
+  {
+
+ set_active('.dropdown-trigger', element_id);
+ document.querySelector(element_id).classList.add('active');
+ set_value('nom_categorie',nom_cat);
+ set_value('id_categorie',id_cat);
+ set_value('nom_souscategorie',''); set_value('id_souscategorie','');
+ expand('categorisation','', 'down');
+
+  }
 
 function SubmitForm()
 {
