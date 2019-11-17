@@ -153,7 +153,7 @@ if (isset($_POST['cat'])) {
 
      // displaying buttons with the categories of materials
       while ($cat = $req->fetch()) {
-          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
+          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"update_cat(this.id,".$cat['ID'].",'".$cat['nom']."');\"".'\'>'.$cat['nom'].'</a>';
       }
 
 
@@ -173,11 +173,15 @@ if (isset($_POST['cat'])) {
 
         for ($row = 0; $row < sizeof($souscategories); $row++) {
             if ($souscategories[$row]['ID_categorie'] == $current_cat) {
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"update_subcat('".$souscategories[$row]['ID']."' , '".$souscategories[$row]['nom']."', '".$souscategories[$row]['prix']."', '".$souscategories[$row]['unite']."');\"
+                                                                     onclick= \"update_subcat('".$souscategories[$row]['ID']."' , '".$souscategories[$row]['nom']."', '".$souscategories[$row]['prix']."', '".$souscategories[$row]['unite']."');\">".$souscategories[$row]['nom']."</a>
+                     </li>";
             } else {
                 echo '</ul>';
                 echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"update_subcat('".$souscategories[$row]['ID']."' , '".$souscategories[$row]['nom']."', '".$souscategories[$row]['prix']."', '".$souscategories[$row]['unite']."');\"
+                                                                     onclick= \"update_subcat('".$souscategories[$row]['ID']."' , '".$souscategories[$row]['nom']."', '".$souscategories[$row]['prix']."', '".$souscategories[$row]['unite']."');\">".$souscategories[$row]['nom']."</a>
+                     </li>";
                 $current_cat++;
             }
         }
@@ -382,12 +386,7 @@ PlayVideo();"></select>
      <i class="fa fa-paper-plane"></i>
      Encoder
    </a>
-  <!-- <a class="waves-effect waves-light btn-small " onclick="download_img(this)" >
-     <i class="material-icons"></i>
-     Télécharger
-   </a> -->
   </div>
-  <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
 
 </div>
 </div>
@@ -412,8 +411,6 @@ PlayVideo();"></select>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/tags-input.js"></script>
 
-  <!--<script type="text/javascript" src="js/adapter.js"></script> -->
-   <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
@@ -440,7 +437,6 @@ if (isset($_POST['cat'])) {
 
 document.querySelector('#submit_mobile').addEventListener("click", SubmitForm);
 document.querySelector('#submit_desktop').addEventListener("click", SubmitForm);
-document.querySelector('#stop_submit').addEventListener("click", stopsubmit);
 
 init_materialize();
 
