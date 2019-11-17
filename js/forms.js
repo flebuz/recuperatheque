@@ -13,11 +13,11 @@ function compute_price(id_price, id_price_per_kg, id_weight, id_etat) {
   if (weight && price_per_kg && etat)
   {
       var coefficient_etat = 0.2 + (etat * 0.2);
-      console.log("price_per_kg : "+ price_per_kg +"; weight : "+ weight+"; etat : "+etat+ "; coefficient_etat : " + coefficient_etat)
+      //console.log("price_per_kg : "+ price_per_kg +"; weight : "+ weight+"; etat : "+etat+ "; coefficient_etat : " + coefficient_etat)
       var final_price = price_per_kg * weight * coefficient_etat;
 
-      /*final_price= Math.round(final_price * 10) / 10; */
-      final_price= final_price.toFixed(2);
+
+      final_price= final_price.toFixed(2); //restrict number to 2 decimal points
       if ((final_price < 0.01) && (price_per_kg > 0))
       {
         final_price =0.01; // minimum price if price_per_kg is not null
@@ -154,6 +154,14 @@ function check_expand_hide(elem, id_to_show, id_to_hide, direction) {
   } else if (elem.checked == false) {
     hide(id_to_hide)
   }
+}
+
+
+function update_hearts(value)
+{
+  checkhearts(value);
+  set_value('etat',value);
+  compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');
 }
 
 function checkhearts(value) {
