@@ -173,15 +173,11 @@ if (isset($_POST['cat'])) {
 
         for ($row = 0; $row < sizeof($souscategories); $row++) {
             if ($souscategories[$row]['ID_categorie'] == $current_cat) {
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"update_subcat('".$souscategories[$row]['ID']."' , '".$souscategories[$row]['nom']."', '".$souscategories[$row]['prix']."', '".$souscategories[$row]['unite']."');\"
-                                                                     onclick= \"update_subcat('".$souscategories[$row]['ID']."' , '".$souscategories[$row]['nom']."', '".$souscategories[$row]['prix']."', '".$souscategories[$row]['unite']."');\">".$souscategories[$row]['nom']."</a>
-                     </li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"update_subcat('".$souscategories[$row]['ID']."','".$souscategories[$row]['nom']."','".$souscategories[$row]['prix']."','".$souscategories[$row]['unite']."');\" onclick= \"update_subcat('".$souscategories[$row]['ID']."','".$souscategories[$row]['nom']."','".$souscategories[$row]['prix']."','".$souscategories[$row]['unite']."');\">".$souscategories[$row]['nom']."</a></li>";
             } else {
                 echo '</ul>';
                 echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"update_subcat('".$souscategories[$row]['ID']."' , '".$souscategories[$row]['nom']."', '".$souscategories[$row]['prix']."', '".$souscategories[$row]['unite']."');\"
-                                                                     onclick= \"update_subcat('".$souscategories[$row]['ID']."' , '".$souscategories[$row]['nom']."', '".$souscategories[$row]['prix']."', '".$souscategories[$row]['unite']."');\">".$souscategories[$row]['nom']."</a>
-                     </li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"update_subcat('".$souscategories[$row]['ID']."','".$souscategories[$row]['nom']."','".$souscategories[$row]['prix']."','".$souscategories[$row]['unite']."');\" onclick= \"update_subcat('".$souscategories[$row]['ID']."','".$souscategories[$row]['nom']."','".$souscategories[$row]['prix']."','".$souscategories[$row]['unite']."');\">".$souscategories[$row]['nom']."</a></li>";
                 $current_cat++;
             }
         }
@@ -192,14 +188,7 @@ if (isset($_POST['cat'])) {
 
 
 
-
-
-
-
-
       <div class="container no-select" id="formulaire" style="background-color:white">
-          <!-- Les onglets avec les catégories de matériaux-->
-
 
               <!-- Début du formulaire-->
               <form name="formulaire_encodage" id="formulaire_encodage" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="post" novalidate>
@@ -269,11 +258,11 @@ PlayVideo();"></select>
           <div class="input-field col s8 nopadding" >
 
             <div class="inline-group" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-            <div id="minus_btn" class="btn plusminus eztouch-left" onclick="Increment('pieces', -1, 1);"><span class="no-select">-</span></div>
+            <div id="minus_btn" class="btn plusminus eztouch-left"><span class="no-select">-</span></div>
 
-              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
+              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
 
-              <div id="plus_btn" class="btn plusminus eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
+              <div id="plus_btn" class="btn plusminus eztouch-right"><span class="no-select">+</span></div>
 
               <p class="couleur3-text no-select">pièce(s)</p>
             </div>
@@ -284,7 +273,7 @@ PlayVideo();"></select>
           <div class="input-field col s4 m3">
             <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
             <label for="indicateur_poids" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
-            <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" style="inline; text-align:center;">
+            <input type="text" id="indicateur_poids" name="poids" value="1" min="1"  style="inline; text-align:center;">
             <span id="" class="postfix">kg</span>
           </div>
           <div class="input-field col s8 m9" id="range_div" >
@@ -303,9 +292,13 @@ PlayVideo();"></select>
              <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
 
               <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-<span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(1); set_value('etat',1);compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(2); set_value('etat',2); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(3); set_value('etat',3); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4);compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(4); set_value('etat',4); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span>
-</div>
-<input type="number" name="etat" id="etat" value="1" class="invisible">
+                  <span id="heart1" class="checked"><i class="fas fa-heart"></i></span>
+                  <span id="heart2">                <i class="fas fa-heart"></i></span>
+                  <span id="heart3">                <i class="fas fa-heart"></i></span>
+                  <span id="heart4">                <i class="fas fa-heart"></i></span>
+                  <input class="invisible" type="number" name="etat" id="etat" value="1">
+              </div>
+
 
 
             </div>
@@ -315,7 +308,7 @@ PlayVideo();"></select>
            <div id="row_prix" class ="row input-field" >
               <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
-                <input id="prix" name="prix" type="number" value="0" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
+                <input id="prix" name="prix" type="number" value="0" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
                 <input id="price_per_kg" name="prix" type="number" value="0" readonly hidden>
                 <label for="prix">Prix&nbsp;/&nbsp;pc</label>
               </div>
@@ -435,9 +428,32 @@ if (isset($_POST['cat'])) {
 <script>
   document.addEventListener('DOMContentLoaded', function() {
 
-document.querySelector('#submit_mobile').addEventListener("click", SubmitForm);
-document.querySelector('#submit_desktop').addEventListener("click", SubmitForm);
+document.getElementById('submit_mobile').addEventListener("click", SubmitForm);
+document.getElementById('submit_desktop').addEventListener("click", SubmitForm);
+document.getElementById('heart1').addEventListener("click", function(){update_hearts(1)});
+document.getElementById('heart2').addEventListener("click", function(){update_hearts(2)});
+document.getElementById('heart3').addEventListener("click", function(){update_hearts(3)});
+document.getElementById('heart4').addEventListener("click", function(){update_hearts(4)});
+document.getElementById('minus_btn').addEventListener("click", function(){Increment('pieces', -1, 1);});
+document.getElementById('plus_btn').addEventListener("click",  function(){Increment('pieces', 1, 1);});
+document.getElementById('indicateur_poids').addEventListener("click",  function(){this.select();});
+document.getElementById('indicateur_poids').addEventListener("keypress",  function(){return ValidateNumKeyPress(event); alert("gag");});
+document.getElementById('indicateur_poids').addEventListener("focus",  function(){this.oldvalue = this.value;});
+document.getElementById('indicateur_poids').addEventListener("change",  function(){ValidateNumber(this); this.oldvalue = this.value; update_slider('slider_poids',this.value, this); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');});
 
+
+document.getElementById('prix').addEventListener("click",  function(){this.select();});
+document.getElementById('pieces').addEventListener("click",  function(){this.select();});
+
+/*
+var nodes = document.querySelectorAll("[type=text]");
+for (var i=0; i<nodes.length; i++)
+  {
+    console.log(nodes[i]);
+    nodes[i].addEventListener("click", function() {this.select();}  );
+  }
+*/
+//onClick="this.select();"
 init_materialize();
 
 
