@@ -26,8 +26,6 @@ function compute_price(id_price, id_price_per_kg, id_weight, id_etat) {
 }
 
 function check_default_unit(default_unit, id_to_update) {
-  console.log(default_unit);
-  console.log(id_to_update);
   if (default_unit == 'kg') {
     document.getElementById(id_to_update).classList.remove("invisible");
     document.getElementById('has_weight').value = 1;
@@ -50,24 +48,6 @@ function update_slider(slider_id, value, elem) {
   elem.value = value; // to avoid values bigger than slider range being overriden by noUiSlider.set
 }
 
-function update_weight_and_price(final_weight_id, item_weight, nb_unit, final_price_id, item_price) {
-  if ((item_weight !== 'N/A') && (item_weight !== '')) {
-
-
-    var final_weight = nb_unit * item_weight;
-    document.getElementById(final_weight_id).value = final_weight;
-
-    var final_price = (nb_unit * item_price).toFixed(2);
-
-    document.getElementById(final_price_id).value = final_price;
-    console.log("nb pieces = " + nb_unit + "; prix/pc = " + item_price + "; poids/pc = " + item_weight + "; prix total = " + final_price);
-
-  } else {
-
-  }
-}
-
-
 
 function set_active(selector, id_to_activate) {
   document.getElementById(id_to_activate).classList.add("active");
@@ -79,6 +59,26 @@ function set_active(selector, id_to_activate) {
     } //better backwards compatibility than array.forEach (ES6 and later)
 
   }
+}
+
+function update_cat(dropdown_id,cat_id,cat_name)
+{
+  set_active('.dropdown-trigger', dropdown_id);
+  document.getElementById(dropdown_id).classList.add('active');
+  set_value('nom_categorie',cat_name);
+  set_value('id_categorie',cat_id);
+  set_value('nom_souscategorie','');
+  set_value('id_souscategorie','');
+  expand('categorisation','', 'down');
+}
+
+function update_subcat(subcat_id,subcat_name, subcat_price, subcat_unit)
+{
+  set_value('nom_souscategorie',subcat_name);
+  set_value('id_souscategorie',subcat_id);
+  set_value('price_per_kg',subcat_price);
+  compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');
+  check_default_unit(subcat_unit, 'row_poids');
 }
 
 function set_inactive(id_to_deactivate) {
@@ -119,9 +119,9 @@ function unhide(id_to_show) {
 //fonction expand affiche le div #id_to_show, cache le div #id_to_hide et applique une animation d'entrée
 // en fonction de la variable direction (slide down, slide right, ou fade in (par défaut))
 function expand(id_to_show, id_to_hide, direction) {
-  //console.log(id_to_show);
+
   var elem_to_show = document.getElementById(id_to_show);
-  //console.log(elem_to_show);
+
   elem_to_show.classList.remove("invisible");
 
   if (direction == 'down') {
