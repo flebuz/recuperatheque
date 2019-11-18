@@ -23,8 +23,6 @@ header("Cache-Control: max-age=0");
 
 
 
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
   <link rel="stylesheet" href="nouislider/nouislider.min.css">
