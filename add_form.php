@@ -9,20 +9,17 @@ header("Cache-Control: max-age=0");
 
 ?>
 
-<?php $thisPage="add_form"; ?>
 <head>
 
   <title>Mycélium : L'app des Recupérathèques - Encoder un objet</title>
   <meta charset='utf-8'>
 
-  <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile (aussi : , target-densitydpi=device-dpi)-->
 
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/add_form.css">
-  <!-- Chrome -->
-  <meta name="theme-color" content="#00E676">
+  <meta name="theme-color" content="#00E676"><!-- Chrome -->
 
 
 
@@ -113,27 +110,25 @@ if (isset($_POST['cat'])) {
 
 </div>
 
-<div class="col s1 pull-s1 a" id="cam_controls">
-    <div class="row"></div>
-    <div class="row"></div>
-    <div class="row"></div>
+    <div class="col s1 pull-s1 a" id="cam_controls">
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
 
-    <div class="invisible center" id="video_streaming_controls">
-      <div class="row center"><div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large waves-effect"><i class="fas fa-camera"></i></div></div>
+          <div class="invisible center" id="video_streaming_controls">
+            <div class="row center"><div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large waves-effect"><i class="fas fa-camera"></i></div></div>
 
+          </div>
     </div>
-</div>
 
 
 
-      </div>
   </div>
-
-
-
-
-
 </div>
+
+
+
+
 
 
 <div class="quasi-fullwidth" style="background-color:white">
@@ -238,19 +233,15 @@ if (isset($_POST['cat'])) {
 
                   </div>
 
-    <?php if (isset($_GET["camdetails"])) {
-                   echo "<div class='row input-field' id='champs_getusermedia'>";
-               } else {
-                   echo "<div class='row input-field invisible' id='champs_getusermedia'>";
-               }
-        ?>
-<div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
-PlayVideo();"></select>
-</div>
-<div class="col s6 m6 input-field"><input type="text" id="rearcameraID" disabled></div></div>
+    <div class='row input-field invisible' id='champs_getusermedia'>
+          <div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
+          PlayVideo();"></select>
+          </div>
+          <div class="col s6 m6 input-field"><input type="text" id="rearcameraID" disabled></div>
+    </div>
 
 
-        <div id="row_pieces" class ="row input-field" >
+    <div id="row_pieces" class ="row input-field" >
 
           <div class="input-field col s2" style="width:55px !important; ">
             <i id='prefix_pieces' class="fas fa-cube prefix"></i>
@@ -267,7 +258,7 @@ PlayVideo();"></select>
               <p class="couleur3-text no-select">pièce(s)</p>
             </div>
           </div>
-        </div>
+    </div>
 
         <div id="row_poids" class="row input-field">
           <div class="input-field col s4 m3">
@@ -284,24 +275,21 @@ PlayVideo();"></select>
 
 
             <div id="row_etat" class ="row input-field">
-                  <div class="input-field col s3 m2">
+                <div class="input-field col s3 m2">
                     <i id="prefix_rating" class="fas fa-heart-broken prefix"></i>
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
-             <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
+               <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
 
-              <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                  <span id="heart1" class="checked"><i class="fas fa-heart"></i></span>
-                  <span id="heart2">                <i class="fas fa-heart"></i></span>
-                  <span id="heart3">                <i class="fas fa-heart"></i></span>
-                  <span id="heart4">                <i class="fas fa-heart"></i></span>
-                  <input class="invisible" type="number" name="etat" id="etat" value="1">
-              </div>
-
-
-
-            </div>
+                  <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span id="heart1" class="checked"><i class="fas fa-heart"></i></span>
+                      <span id="heart2">                <i class="fas fa-heart"></i></span>
+                      <span id="heart3">                <i class="fas fa-heart"></i></span>
+                      <span id="heart4">                <i class="fas fa-heart"></i></span>
+                      <input class="invisible" type="number" name="etat" id="etat" value="1">
+                  </div>
+                </div>
 
            </div>
 
@@ -312,10 +300,7 @@ PlayVideo();"></select>
                 <input id="price_per_kg" name="prix" type="number" value="0" readonly hidden>
                 <label for="prix">Prix&nbsp;/&nbsp;pc</label>
               </div>
-
           </div>
-
-
 
 
 
@@ -358,18 +343,11 @@ PlayVideo();"></select>
     </div>
 </div>
 
-
             <div class="row invisible"><input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
             <div class="row"></div>
 
-
-
-
 		</div>
 
-
-
-</div>
 </div>
 
 <div class="quasi-fullwidth">
@@ -385,17 +363,13 @@ PlayVideo();"></select>
 </div>
 
 
-
-
-
-    <div class="fixed-action-btn hide-on-med-and-up">
+  <div class="fixed-action-btn hide-on-med-and-up">
       <a id="submit_desktop" class="btn-floating btn-large green accent-3" name="" value="" onclick="">
         <i class="fa fa-paper-plane"></i>
       </a>
+  </div>
 
   </form>
-
-
 
 
 </main>
@@ -403,7 +377,6 @@ PlayVideo();"></select>
 
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/tags-input.js"></script>
-
 
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
@@ -455,7 +428,7 @@ for (var i=0; i<nodes.length; i++)
 */
 //onClick="this.select();"
 init_materialize();
-
+init_nouislider();
 
   });
 
@@ -489,7 +462,7 @@ function SubmitForm()
           }, 12000 ); // show a Toast after 12 sec to warn of really slow loading
           window.setTimeout( function() {
               M.toast({html: "La connexion semble anormalement longue :'( <a id='stop_submit' class='btn-flat toast-action' onclick='stopsubmit();''>Interrompre</a>"});
-          }, 25000 ); // show a Toast after 25 sec to warn of *anormaly* slow loading and allow user to cancel form submission
+          }, 25000 ); // show a Toast after 25 sec to warn of *anormaly slow* loading and allow user to cancel form submission
 
           expand('loading_overlay'); //show loading overlay to prevent clicking
           Soumettre('formulaire_encodage'); // submit form
@@ -523,12 +496,9 @@ function init_materialize() {
   }
 
 
-</script>
-
-<script>
-
+function init_nouislider()
+{
     var slider_poids = document.getElementById('slider_poids');
-
 
             noUiSlider.create(slider_poids, {
                 start: [1],
@@ -543,8 +513,6 @@ function init_materialize() {
                         stepped:true
                       }
             });
-
-
 
 
     slider_poids.noUiSlider.on('update', function( values, handle ) {
@@ -562,7 +530,7 @@ function init_materialize() {
        slider_poids.focus(); //to keep prefix active until blur
        });
 
-
+}
 
 
   </script>
