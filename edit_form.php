@@ -6,7 +6,7 @@
   <title>Mycélium : L'app des Recupérathèques - Modifier un objet</title>
   <meta charset='utf-8'>
 
-  <!--Let browser know website is optimized for mobile-->
+
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile (aussi : , target-densitydpi=device-dpi)-->
   <meta name="theme-color" content="">
 
@@ -15,8 +15,6 @@
   <meta name="theme-color" content="#00E676">
 
 
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
 
 
