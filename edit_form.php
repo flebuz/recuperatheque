@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
 
-<?php $thisPage="add_form"; ?>
 <head>
   <title>Mycélium : L'app des Recupérathèques - Modifier un objet</title>
   <meta charset='utf-8'>
