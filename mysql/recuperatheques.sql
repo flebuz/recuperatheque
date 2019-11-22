@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 13 nov. 2019 à 16:58
--- Version du serveur :  5.7.23
--- Version de PHP :  7.2.10
+-- Généré le :  Dim 17 nov. 2019 à 21:32
+-- Version du serveur :  5.7.26
+-- Version de PHP :  7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -60,6 +60,120 @@ INSERT INTO `bag` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensio
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `catalogue`
+--
+
+DROP TABLE IF EXISTS `catalogue`;
+CREATE TABLE IF NOT EXISTS `catalogue` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_categorie` int(11) NOT NULL,
+  `ID_souscategorie` int(11) NOT NULL,
+  `pieces` int(11) NOT NULL,
+  `dimensions` varchar(255) NOT NULL,
+  `etat` int(11) NOT NULL,
+  `tags` text NOT NULL,
+  `remarques` text NOT NULL,
+  `date_ajout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `poids` float NOT NULL,
+  `prix` float NOT NULL,
+  `localisation` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `catalogue`
+--
+
+INSERT INTO `catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`, `localisation`) VALUES
+(1, 12, 119, 3200, '4cm x 4cm', 3, 'attache, flexible, flex, joint', 'Lot. Fonction originale: équerre pour carton. A partir de 200 pièces.', '2019-08-06 00:00:00', 0, 0, ''),
+(2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 4, 'sapin, baguette, tasseau, rabotté', 'Lot à prendre dans son entièretée', '2019-08-06 00:00:00', 0, 0, ''),
+(3, 18, 125, 1, '10m', 3, 'lance, incendie, tuyau, rouge, eau', 'Lance à incendie sur support raccordée à adaptateur. 10m de longueur.', '2019-08-07 00:00:00', 0, 0, ''),
+(4, 17, 124, 1, '38cm x 25cm', 2, 'coussin, bureau, chaise, bleu, tissus', 'Ancien dossier de chaise de bureau.', '2019-08-08 00:00:00', 0, 0, ''),
+(5, 3, 14, 20, '5mm x 250mm', 1, 'cheville,             plastique,             blanc', '', '2019-02-14 00:00:00', 0, 1.77, ''),
+(6, 12, 67, 1, '50.3cm x 19.5xm', 2, 'rayé, transparent, translucide, reconditionnable', '', '2019-04-02 00:00:00', 0, 0, ''),
+(7, 18, 125, 10, '20cm', 3, 'blanc, rouge, orange, cire, feu', 'Lot de 10 bougies de tailles et couleurs différentes.', '2019-05-23 00:00:00', 0, 0, ''),
+(8, 1, 1, 3, '181.5cm x 4.5cm x 2.3cm', 3, 'gîte, poutre, traité, vert, sapin', 'Tranches non traitées.', '2019-06-06 00:00:00', 0, 0, ''),
+(9, 4, 17, 25, '', 3, 'enfant, couleur, coloriage, gallery ', 'Lot de 25.', '2019-06-17 00:00:00', 0, 0, ''),
+(10, 3, 13, 1, '10.5cm x 14cm', 3, 'aurora, carnet, copie', 'Carnet autocopiant de 50 pages détachables.', '2019-06-17 00:00:00', 0, 0, ''),
+(11, 18, 125, 1, '35cm x 35cm', 3, 'feu, gaz, plat, chauffe, alimentation', 'Chauffe plat au gaz.', '2019-07-30 00:00:00', 0, 0, ''),
+(12, 16, 94, 7, '1m', 3, 'electrique, alimentation, plastique', '', '2019-03-22 00:00:00', 0, 0, ''),
+(13, 15, 86, 2, '15cm x 8cm x 8cm', 3, 'grand, oversized, attache, metal', '', '2019-03-20 00:00:00', 0, 0, ''),
+(14, 8, 115, 12, '50cm x 50cm', 2, 'carpette, épais, carré, bleu, paillaisson, tapis', 'Carrés de carpettes de 2 coloris différents.', '2019-06-20 00:00:00', 0, 0, ''),
+(15, 1, 1, 1, 'Pas dispo', 1, 'lol,     prout,     vraiment,     longue,     liste,     de,     tags,     la,     on,     en,     peut,     plus,     c,     interminable,     limite', 'u milieu du xixe siècle, l\'Armée britannique est le sujet de plusieurs débats politiques. Si elle gagne de nombreuses guerres coloniales, la guerre de Crimée en 1854-1856 démontre qu\'elle manque d\'effectifs (à cause des troupes dispersées dans tout l\'empire), que ses officiers généraux manquent de professionnalisme et son intendance d\'efficacité. La mutinerie des troupes indiennes en 1857-1858 eut comme conséquence l\'intégration des troupes de la Compagnie des Indes orientales, augmentant la liste des régiments, le plus souvent composés d\'un seul bataillon. Une commission fut donc mandatée en 1858 pour proposer des améliorations, mais son rapport rendu en 1862 déclencha de vives oppositions1.', '2019-09-24 00:00:00', 1, 10, ''),
+(16, 2, 7, 1, '4m x 2m', 2, 'grille,flexible', '', '2019-09-28 00:00:00', 0.1, 0, ''),
+(48, 3, 14, 1, '', 1, '', '', '2019-11-10 22:55:24', 1, 1.77, ''),
+(18, 8, 49, 1, 'Pas dispo', 1, 'rouge,   fil,   nylon,   cachemire', '', '2019-09-29 00:00:00', 0.2, 0, ''),
+(21, 8, 42, 1, '', 1, 'jute, toile, decoupe, effiloché', '', '2019-09-29 10:17:40', 0.5, 0, ''),
+(20, 8, 49, 1, '', 3, 'turquoise, fil, nylon, bobine', '', '2019-09-29 09:43:56', 1, 0, ''),
+(22, 2, 9, 1, '', 1, '', '', '2019-10-21 20:02:43', 1, 8.72, 'Récupérathèque'),
+(26, 5, 26, 1, '', 1, '', '', '2019-10-24 10:33:39', 0, 0.62, 'Récupérathèque'),
+(24, 3, 14, 5, 'Pas dispo', 1, '', '', '2019-10-21 18:38:35', 1, 1.77, 'Récupérathèque'),
+(25, 12, 68, 1, '', 1, '', '', '2019-10-21 20:40:27', 1, 3, 'Récupérathèque'),
+(27, 8, 43, 1, '', 1, '', '', '2019-10-24 10:34:44', 1, 5, 'Récupérathèque'),
+(40, 3, 14, 1, '', 1, '', '', '2019-11-07 12:35:40', 1, 1.77, 'Récupérathèque'),
+(29, 1, 3, 4, '', 3, '', '', '2019-10-26 16:36:20', 3, 0.3, 'Récupérathèque'),
+(41, 3, 15, 1, '', 1, '', '', '2019-11-07 12:35:53', 0, 11.62, 'Récupérathèque'),
+(31, 4, 17, 1, '', 1, '', '', '2019-10-27 12:30:47', 0, 1.5, 'Récupérathèque'),
+(39, 3, 14, 1, '', 1, '', '', '2019-10-28 17:24:37', 1, 1.77, 'Récupérathèque'),
+(43, 2, 9, 1, '', 1, '', '', '2019-11-07 12:36:34', 1, 8.72, 'Récupérathèque'),
+(34, 2, 126, 1, '', 1, '', '', '2019-10-28 10:06:59', 1, 8.25, 'Récupérathèque'),
+(35, 7, 38, 1, '', 1, '', '', '2019-10-28 15:01:03', 0, 2, 'Récupérathèque'),
+(36, 6, 34, 1, '', 1, '', '', '2019-10-28 15:10:15', 0, 1, 'Récupérathèque'),
+(49, 4, 19, 1, '', 1, '', '', '2019-11-10 23:02:09', 0, 0.9, ''),
+(44, 2, 9, 1, '', 1, '', '', '2019-11-07 12:36:45', 1, 8.72, 'Récupérathèque'),
+(45, 3, 15, 1, '', 1, '', '', '2019-11-07 12:36:50', 0, 11.62, 'Récupérathèque'),
+(46, 5, 26, 1, '', 1, '', '', '2019-11-07 13:02:17', 0, 0.62, ''),
+(47, 6, 34, 1, '', 1, '', '', '2019-11-10 22:54:58', 0, 1, ''),
+(42, 3, 15, 1, '', 1, '', '', '2019-11-07 12:36:29', 0, 11.62, 'Récupérathèque'),
+(50, 2, 9, 1, '', 1, '', '', '2019-11-10 23:02:57', 1, 8.72, ''),
+(51, 2, 10, 1, '', 1, '', '', '2019-11-10 23:03:11', 1, 3.36, ''),
+(52, 2, 10, 1, '', 1, '', '', '2019-11-10 23:03:58', 1, 3.36, ''),
+(53, 3, 14, 1, '', 1, '', '', '2019-11-10 23:05:32', 1, 1.77, ''),
+(54, 4, 18, 1, '', 1, '', '', '2019-11-10 23:07:03', 0, 2.82, ''),
+(56, 4, 20, 1, '', 1, '', '', '2019-11-10 23:08:43', 0, 0, ''),
+(57, 3, 14, 1, '', 1, '', '', '2019-11-10 23:08:51', 1, 1.77, ''),
+(58, 4, 18, 1, '', 1, '', '', '2019-11-10 23:08:59', 0, 2.82, ''),
+(59, 2, 8, 1, '', 1, '', '', '2019-11-10 23:10:59', 1, 12.5, ''),
+(60, 2, 9, 1, '', 1, '', '', '2019-11-11 09:14:09', 1, 8.72, ''),
+(61, 8, 42, 1, '', 1, '', '', '2019-11-11 09:22:00', 1, 3, ''),
+(62, 3, 15, 1, '', 1, '', '', '2019-11-11 09:22:48', 0, 11.62, ''),
+(63, 5, 27, 1, '', 1, '', '', '2019-11-11 10:35:00', 0, 3.36, ''),
+(64, 4, 19, 1, '', 1, '', '', '2019-11-11 10:41:13', 0, 0.9, ''),
+(65, 8, 42, 1, '', 1, '', '', '2019-11-11 10:55:59', 1, 3, ''),
+(66, 5, 28, 1, '', 1, '', '', '2019-11-11 18:24:45', 0, 25.44, ''),
+(67, 5, 26, 1, '', 1, '', '', '2019-11-11 18:25:00', 0, 0.62, ''),
+(68, 4, 18, 1, '', 1, '', '', '2019-11-11 18:25:11', 0, 2.82, ''),
+(69, 4, 20, 1, '', 1, '', '', '2019-11-11 18:25:30', 0, 0, ''),
+(70, 4, 17, 1, '', 1, '', '', '2019-11-11 18:25:47', 0, 1.5, ''),
+(71, 4, 19, 1, '', 1, '', '', '2019-11-11 18:25:58', 0, 0.9, ''),
+(72, 3, 14, 1, '', 1, '', '', '2019-11-11 18:26:30', 1, 1.77, ''),
+(73, 5, 27, 1, '', 1, '', '', '2019-11-11 18:26:38', 0, 3.36, ''),
+(74, 5, 26, 1, '', 1, '', '', '2019-11-11 18:26:47', 0, 0.62, ''),
+(75, 5, 25, 1, '', 1, '', '', '2019-11-11 18:26:59', 0, 1.89, ''),
+(76, 5, 25, 1, '', 1, '', '', '2019-11-11 18:27:00', 0, 1.89, ''),
+(77, 2, 10, 1, '', 1, '', '', '2019-11-11 18:27:08', 1, 3.36, ''),
+(78, 1, 3, 1, '', 1, '', '', '2019-11-11 18:27:17', 1, 0.3, ''),
+(79, 4, 16, 1, '', 1, '', '', '2019-11-11 18:27:25', 0, 0.5, ''),
+(80, 6, 34, 1, '', 1, '', '', '2019-11-11 18:27:34', 0, 1, ''),
+(81, 5, 26, 1, '', 1, '', '', '2019-11-11 18:28:05', 0, 0.62, ''),
+(82, 3, 13, 1, '', 1, '', '', '2019-11-11 18:28:16', 1, 3.46, ''),
+(83, 4, 18, 1, '', 1, '', '', '2019-11-11 18:28:26', 0, 2.82, ''),
+(84, 1, 4, 1, '', 1, '', '', '2019-11-11 18:28:37', 1, 0.36, ''),
+(85, 1, 5, 1, '', 1, '', '', '2019-11-11 18:28:49', 1, 0.78, ''),
+(86, 6, 34, 1, '', 1, '', '', '2019-11-11 18:29:04', 0, 1, ''),
+(87, 6, 34, 1, '', 1, '', '', '2019-11-11 18:29:19', 0, 1, ''),
+(88, 3, 15, 1, '', 1, '', '', '2019-11-11 18:29:28', 0, 11.62, ''),
+(89, 5, 27, 5, '', 3, '', '', '2019-11-11 19:06:22', 0, 3.36, ''),
+(90, 5, 27, 5, '', 3, '', '', '2019-11-11 19:07:55', 0, 3.36, ''),
+(91, 4, 19, 5, '', 3, '', '', '2019-11-11 19:12:56', 0, 0.9, ''),
+(92, 3, 15, 1, '', 1, '', '', '2019-11-11 19:13:04', 0, 11.62, ''),
+(93, 2, 12, 3, '', 3, '', '', '2019-11-12 10:41:10', 1, 2724, ''),
+(94, 3, 15, 6, '', 1, '', '', '2019-11-17 22:28:55', 0, 11.62, ''),
+(95, 4, 111, 3, '', 3, '', '', '2019-11-17 22:31:58', 0, 0.75, '');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `categorie`
 --
 
@@ -79,7 +193,7 @@ INSERT INTO `categorie` (`ID`, `nom`, `score`) VALUES
 (1, 'Bois', 18),
 (2, 'Métal', 17),
 (3, 'Papeterie', 18),
-(4, 'Dessin et Écriture', 15),
+(4, 'Dessin et Écriture', 16),
 (5, 'Mesure et Tracé', 14),
 (6, 'Assemblage', 13),
 (7, 'Découpe', 12),
@@ -158,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `journal` (
   `prix` float NOT NULL,
   `localisation` varchar(255) NOT NULL,
   PRIMARY KEY (`journal_ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=133 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `journal`
@@ -236,7 +350,8 @@ INSERT INTO `journal` (`journal_ID`, `operation`, `ID_objet`, `ID_categorie`, `I
 (129, 'remove', 24, 13, 120, 3, 1, '2019-10-21 19:42:51', 0.4, 25, 'Récupérathèque'),
 (130, 'sell', 23, 9, 52, 1, 1, '2019-10-21 19:43:00', 1, 0, 'Récupérathèque'),
 (131, 'add', 22, 3, 14, 1, 3, '2019-11-01 19:40:24', 1, 1.77, 'Récupérathèque'),
-(132, 'add', 23, 3, 110, 1, 3, '2019-11-03 13:50:44', 1, 2.2, '');
+(132, 'add', 23, 3, 110, 1, 3, '2019-11-03 13:50:44', 1, 2.2, ''),
+(133, 'add', 95, 4, 111, 3, 3, '2019-11-17 22:31:58', 0, 0.75, '');
 
 -- --------------------------------------------------------
 
@@ -378,7 +493,7 @@ INSERT INTO `souscategorie` (`ID`, `nom`, `ID_categorie`, `unite`, `prix`) VALUE
 (108, 'Autre', 1, 'kg', 0.9),
 (109, 'Autre', 2, 'kg', 2.75),
 (110, 'Autre', 3, 'kg', 2.2),
-(111, 'Autre', 4, 'pc\r\n', 0.75),
+(111, 'Autre', 4, 'pc', 0.75),
 (112, 'Autre', 5, 'pc', 3),
 (113, 'Autre', 6, 'pc', 2.5),
 (114, 'Autre', 7, 'pc', 2.25),

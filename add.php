@@ -39,7 +39,6 @@ $tags = str_replace(",", ", ", $tags);
 
 if ($has_weight ) {$poids= $_POST['poids'];}
 else {$poids= 0;}
-console_log("poids". $poids);
 
 
 try {

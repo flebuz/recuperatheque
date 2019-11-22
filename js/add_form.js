@@ -292,7 +292,6 @@ function PrisePhoto(e) {
 
 function UploadFichier(e) {
 
-  console.log("UploadFichier");
   //on cache le svg avec les bords discontinus
   var bords_file_upload = document.getElementById("bords_file_upload");
   bords_file_upload.classList.add("invisible");

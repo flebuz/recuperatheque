@@ -9,25 +9,20 @@ header("Cache-Control: max-age=0");
 
 ?>
 
-<?php $thisPage="add_form"; ?>
 <head>
 
   <title>Mycélium : L'app des Recupérathèques - Encoder un objet</title>
   <meta charset='utf-8'>
 
-  <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile (aussi : , target-densitydpi=device-dpi)-->
 
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/add_form.css">
-  <!-- Chrome -->
-  <meta name="theme-color" content="#00E676">
+  <meta name="theme-color" content="#00E676"><!-- Chrome -->
 
 
 
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!--Nécessaire pour les icônes des boutons du widget vidéo et bouton Soumettre-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
   <link rel="stylesheet" href="nouislider/nouislider.min.css">
@@ -113,27 +108,25 @@ if (isset($_POST['cat'])) {
 
 </div>
 
-<div class="col s1 pull-s1 a" id="cam_controls">
-    <div class="row"></div>
-    <div class="row"></div>
-    <div class="row"></div>
+    <div class="col s1 pull-s1 a" id="cam_controls">
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
 
-    <div class="invisible center" id="video_streaming_controls">
-      <div class="row center"><div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large waves-effect"><i class="fas fa-camera"></i></div></div>
-      <div class="row center invisible" id="camera_settings_row"><div  id="camera_settings" title="Paramètre camera" class="btn-floating camera_settings waves-effect" onclick="return expand('champs_getusermedia', 'camera_settings_row', 'down');"><i class="fas fa-cog"></i></div></div>
+          <div class="invisible center" id="video_streaming_controls">
+            <div class="row center"><div  id="take-photo" title="Prendre un cliché" class="btn-floating btn-large waves-effect"><i class="fas fa-camera"></i></div></div>
+
+          </div>
     </div>
-</div>
 
 
 
-      </div>
   </div>
-
-
-
-
-
 </div>
+
+
+
+
 
 
 <div class="quasi-fullwidth" style="background-color:white">
@@ -153,7 +146,7 @@ if (isset($_POST['cat'])) {
 
      // displaying buttons with the categories of materials
       while ($cat = $req->fetch()) {
-          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"set_active('.dropdown-trigger', this.id); this.classList.add('active'); set_value('nom_categorie','".$cat['nom']."'); set_value('id_categorie','".$cat['ID']."'); set_value('nom_souscategorie',''); set_value('id_souscategorie','');expand('categorisation','', 'down')\"".'\'>'.$cat['nom'].'</a>';
+          echo '<a id=\'dropdown_cat'.$cat['ID'].'\' class=\'dropdown-trigger btn-flat waves-effect white-text btn-cat\' href=\'#'.$cat['ID'].'\'data-target=\'select-'.$cat['ID']."' onclick= \"update_cat(this.id,".$cat['ID'].",'".$cat['nom']."');\"".'\'>'.$cat['nom'].'</a>';
       }
 
 
@@ -173,11 +166,11 @@ if (isset($_POST['cat'])) {
 
         for ($row = 0; $row < sizeof($souscategories); $row++) {
             if ($souscategories[$row]['ID_categorie'] == $current_cat) {
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"update_subcat('".$souscategories[$row]['ID']."','".$souscategories[$row]['nom']."','".$souscategories[$row]['prix']."','".$souscategories[$row]['unite']."');\" onclick= \"update_subcat('".$souscategories[$row]['ID']."','".$souscategories[$row]['nom']."','".$souscategories[$row]['prix']."','".$souscategories[$row]['unite']."');\">".$souscategories[$row]['nom']."</a></li>";
             } else {
                 echo '</ul>';
                 echo "<ul id='select-".$souscategories[$row]['ID_categorie']."' class='dropdown-content'>";
-                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('price_per_kg','".$souscategories[$row]['prix']."'); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
+                echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"update_subcat('".$souscategories[$row]['ID']."','".$souscategories[$row]['nom']."','".$souscategories[$row]['prix']."','".$souscategories[$row]['unite']."');\" onclick= \"update_subcat('".$souscategories[$row]['ID']."','".$souscategories[$row]['nom']."','".$souscategories[$row]['prix']."','".$souscategories[$row]['unite']."');\">".$souscategories[$row]['nom']."</a></li>";
                 $current_cat++;
             }
         }
@@ -188,14 +181,7 @@ if (isset($_POST['cat'])) {
 
 
 
-
-
-
-
-
       <div class="container no-select" id="formulaire" style="background-color:white">
-          <!-- Les onglets avec les catégories de matériaux-->
-
 
               <!-- Début du formulaire-->
               <form name="formulaire_encodage" id="formulaire_encodage" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="post" novalidate>
@@ -245,19 +231,15 @@ if (isset($_POST['cat'])) {
 
                   </div>
 
-    <?php if (isset($_GET["camdetails"])) {
-                   echo "<div class='row input-field' id='champs_getusermedia'>";
-               } else {
-                   echo "<div class='row input-field invisible' id='champs_getusermedia'>";
-               }
-        ?>
-<div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
-PlayVideo();"></select>
-</div>
-<div class="col s6 m6 input-field"><input type="text" id="rearcameraID" disabled></div></div>
+    <div class='row input-field invisible' id='champs_getusermedia'>
+          <div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
+          PlayVideo();"></select>
+          </div>
+          <div class="col s6 m6 input-field"><input type="text" id="rearcameraID" disabled></div>
+    </div>
 
 
-        <div id="row_pieces" class ="row input-field" >
+    <div id="row_pieces" class ="row input-field" >
 
           <div class="input-field col s2" style="width:55px !important; ">
             <i id='prefix_pieces' class="fas fa-cube prefix"></i>
@@ -265,22 +247,22 @@ PlayVideo();"></select>
           <div class="input-field col s8 nopadding" >
 
             <div class="inline-group" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-            <div id="minus_btn" class="btn plusminus eztouch-left" onclick="Increment('pieces', -1, 1);"><span class="no-select">-</span></div>
+            <div id="minus_btn" class="btn plusminus eztouch-left"><span class="no-select">-</span></div>
 
-              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
+              <input type="number" id="pieces" name="pieces" value="1" min="1" step="1"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
 
-              <div id="plus_btn" class="btn plusminus eztouch-right"  onclick="Increment('pieces', 1, 1);"><span class="no-select">+</span></div>
+              <div id="plus_btn" class="btn plusminus eztouch-right"><span class="no-select">+</span></div>
 
               <p class="couleur3-text no-select">pièce(s)</p>
             </div>
           </div>
-        </div>
+    </div>
 
         <div id="row_poids" class="row input-field">
           <div class="input-field col s4 m3">
             <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
             <label for="indicateur_poids" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
-            <input type="number" id="indicateur_poids" name="poids" value="1" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; update_slider('slider_poids',this.value, this); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" style="inline; text-align:center;">
+            <input type="text" id="indicateur_poids" name="poids" value="1" min="1"  style="inline; text-align:center;">
             <span id="" class="postfix">kg</span>
           </div>
           <div class="input-field col s8 m9" id="range_div" >
@@ -291,34 +273,32 @@ PlayVideo();"></select>
 
 
             <div id="row_etat" class ="row input-field">
-                  <div class="input-field col s3 m2">
+                <div class="input-field col s3 m2">
                     <i id="prefix_rating" class="fas fa-heart-broken prefix"></i>
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
-             <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
+               <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
 
-              <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-<span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(1); set_value('etat',1);compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(2); set_value('etat',2); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(3); set_value('etat',3); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4);compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');" ontouchstart="checkhearts(4); set_value('etat',4); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');"><i class="fas fa-heart"></i></span>
-</div>
-<input type="number" name="etat" id="etat" value="1" class="invisible">
-
-
-            </div>
+                  <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span id="heart1" class="checked"><i class="fas fa-heart"></i></span>
+                      <span id="heart2">                <i class="fas fa-heart"></i></span>
+                      <span id="heart3">                <i class="fas fa-heart"></i></span>
+                      <span id="heart4">                <i class="fas fa-heart"></i></span>
+                      <input class="invisible" type="number" name="etat" id="etat" value="1">
+                  </div>
+                </div>
 
            </div>
 
            <div id="row_prix" class ="row input-field" >
               <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
-                <input id="prix" name="prix" type="number" value="0" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
+                <input id="prix" name="prix" type="number" value="0" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
                 <input id="price_per_kg" name="prix" type="number" value="0" readonly hidden>
                 <label for="prix">Prix&nbsp;/&nbsp;pc</label>
               </div>
-
           </div>
-
-
 
 
 
@@ -361,18 +341,11 @@ PlayVideo();"></select>
     </div>
 </div>
 
-
             <div class="row invisible"><input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
             <div class="row"></div>
 
-
-
-
 		</div>
 
-
-
-</div>
 </div>
 
 <div class="quasi-fullwidth">
@@ -382,28 +355,19 @@ PlayVideo();"></select>
      <i class="fa fa-paper-plane"></i>
      Encoder
    </a>
-  <!-- <a class="waves-effect waves-light btn-small " onclick="download_img(this)" >
-     <i class="material-icons"></i>
-     Télécharger
-   </a> -->
   </div>
-  <!-- https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation -->
 
 </div>
 </div>
 
 
-
-
-
-    <div class="fixed-action-btn hide-on-med-and-up">
+  <div class="fixed-action-btn hide-on-med-and-up">
       <a id="submit_desktop" class="btn-floating btn-large green accent-3" name="" value="" onclick="">
         <i class="fa fa-paper-plane"></i>
       </a>
+  </div>
 
   </form>
-
-
 
 
 </main>
@@ -411,9 +375,6 @@ PlayVideo();"></select>
 
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/tags-input.js"></script>
-
-  <!--<script type="text/javascript" src="js/adapter.js"></script> -->
-   <!-- polyfill pour améliorer la compatibilité de WebRTC (getUserMedia) entre browsers -->
 
 
 <!-- Le script pour afficher la vidéo récupérée par getUserMedia-->
@@ -438,12 +399,34 @@ if (isset($_POST['cat'])) {
 <script>
   document.addEventListener('DOMContentLoaded', function() {
 
-document.querySelector('#submit_mobile').addEventListener("click", SubmitForm);
-document.querySelector('#submit_desktop').addEventListener("click", SubmitForm);
-document.querySelector('#stop_submit').addEventListener("click", stopsubmit);
+document.getElementById('submit_mobile').addEventListener("click", SubmitForm);
+document.getElementById('submit_desktop').addEventListener("click", SubmitForm);
+document.getElementById('heart1').addEventListener("click", function(){update_hearts(1)});
+document.getElementById('heart2').addEventListener("click", function(){update_hearts(2)});
+document.getElementById('heart3').addEventListener("click", function(){update_hearts(3)});
+document.getElementById('heart4').addEventListener("click", function(){update_hearts(4)});
+document.getElementById('minus_btn').addEventListener("click", function(){Increment('pieces', -1, 1);});
+document.getElementById('plus_btn').addEventListener("click",  function(){Increment('pieces', 1, 1);});
+document.getElementById('indicateur_poids').addEventListener("click",  function(){this.select();});
+document.getElementById('indicateur_poids').addEventListener("keypress",  function(){return ValidateNumKeyPress(event); alert("gag");});
+document.getElementById('indicateur_poids').addEventListener("focus",  function(){this.oldvalue = this.value;});
+document.getElementById('indicateur_poids').addEventListener("change",  function(){ValidateNumber(this); this.oldvalue = this.value; update_slider('slider_poids',this.value, this); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');});
 
+
+document.getElementById('prix').addEventListener("click",  function(){this.select();});
+document.getElementById('pieces').addEventListener("click",  function(){this.select();});
+
+/*
+var nodes = document.querySelectorAll("[type=text]");
+for (var i=0; i<nodes.length; i++)
+  {
+    console.log(nodes[i]);
+    nodes[i].addEventListener("click", function() {this.select();}  );
+  }
+*/
+//onClick="this.select();"
 init_materialize();
-
+init_nouislider();
 
   });
 
@@ -477,7 +460,7 @@ function SubmitForm()
           }, 12000 ); // show a Toast after 12 sec to warn of really slow loading
           window.setTimeout( function() {
               M.toast({html: "La connexion semble anormalement longue :'( <a id='stop_submit' class='btn-flat toast-action' onclick='stopsubmit();''>Interrompre</a>"});
-          }, 25000 ); // show a Toast after 25 sec to warn of *anormaly* slow loading and allow user to cancel form submission
+          }, 25000 ); // show a Toast after 25 sec to warn of *anormaly slow* loading and allow user to cancel form submission
 
           expand('loading_overlay'); //show loading overlay to prevent clicking
           Soumettre('formulaire_encodage'); // submit form
@@ -511,12 +494,9 @@ function init_materialize() {
   }
 
 
-</script>
-
-<script>
-
+function init_nouislider()
+{
     var slider_poids = document.getElementById('slider_poids');
-
 
             noUiSlider.create(slider_poids, {
                 start: [1],
@@ -531,8 +511,6 @@ function init_materialize() {
                         stepped:true
                       }
             });
-
-
 
 
     slider_poids.noUiSlider.on('update', function( values, handle ) {
@@ -550,7 +528,7 @@ function init_materialize() {
        slider_poids.focus(); //to keep prefix active until blur
        });
 
-
+}
 
 
   </script>
