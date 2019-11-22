@@ -15,6 +15,7 @@
 
 .item > * {
   /* les composants de l'item (photo et texte) */
+  /* ca veut dire que la largeur d'une photo est limité a 400px */
   box-sizing: content-box;
   max-width: 400px;
   flex-basis: 100%;
@@ -64,16 +65,14 @@
  }
 }
 
-/* --- affichage SINGLE --- */
+/* --- affichage single --- */
 
 .item-single-container{
   background: white;
-  /* centre l'item au milieu */
   display: flex;
   justify-content: flex-start;
 }
 
-/* - version single Desktop - */
 @media (min-width: 993px){
   .item-single-container .item{
     padding: 12px;
@@ -89,7 +88,6 @@
     flex-grow: 1;
   }
 }
-
 
 /* --- boite photo --- */
 
@@ -129,10 +127,10 @@
 }
 
 
-/* ----- les boites d'infos qui compose l'item */
+/* --- les boites d'infos --- */
 
-/* la zone texte est elle-même un flex zone */
 .text-container{
+  /* la zone texte est elle-même un flex zone */
   display: flex;
   flex-direction: column;
 
@@ -173,7 +171,6 @@
   margin-bottom: 16px;
   background: #E0E0E0;
 }
-
 
 /* --- LIGNE D'INFO (icone + texte) --- */
 
