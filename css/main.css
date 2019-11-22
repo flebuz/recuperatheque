@@ -31,7 +31,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 *, *:before, *:after {
-    box-sizing: inherit;
+    /* box-sizing: inherit; */
 }
 
 /* --- BASIXXX --- */
@@ -91,7 +91,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 /* ordre pour version mobile et ipad*/
-#catalogue > * {
+.flex-menu, .flex-items {
   flex: 1 100%;
 }
 
@@ -116,7 +116,93 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 /* --- Item Page --- */
 
 #item-page{
-  
+
+}
+
+/* --- ce qu'il y a autour de l'item --- */
+
+.item-link{
+  text-decoration: none;
+}
+.item-link .item-photo{
+  transition: 0.2s;
+}
+.item-link .item-photo:hover{
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+.back-link-container{
+  position: sticky;
+  top: 52px;
+  z-index: 10;
+}
+.back-link-container i{
+  padding-right: 12px;
+}
+.back-link-container a{
+  text-decoration: none;
+}
+
+/* barre des boutons */
+.item-buttons-container{
+  display: flex;
+  flex-wrap: nowrap;
+}
+.item-button{
+  flex-grow: 1;
+  margin: 12px;
+}
+
+@media(min-width: 993px){
+  .back-link-container{
+    position: static;
+  }
+  .item-buttons-container{
+  }
+}
+
+/* --- ce qu'il y a autour de l'item --- */
+
+.item-link{
+  text-decoration: none;
+}
+.item-link .item-photo{
+  transition: 0.2s;
+}
+.item-link .item-photo:hover{
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+.back-link-container{
+  position: sticky;
+  top: 52px;
+  z-index: 10;
+}
+.back-link-container i{
+  padding-right: 12px;
+}
+.back-link-container a{
+  text-decoration: none;
+}
+
+/* barre des boutons */
+.item-buttons-container{
+  display: flex;
+  flex-wrap: nowrap;
+}
+.item-button{
+  flex-grow: 1;
+  margin: 12px;
+}
+
+@media(min-width: 993px){
+  .back-link-container{
+    position: static;
+  }
+  .item-buttons-container{
+  }
 }
 
 /* --- recuperatheque --- */

@@ -1,5 +1,4 @@
 
-
   <?php
     $prix = $item['prix'];
 
@@ -38,14 +37,7 @@
 
   <div class='item'>
 
-    <?php if(basename($_SERVER['PHP_SELF'])=="catalogue.php"){ ?>
-      <!-- on met un lien vers la page de l'item sur la photo s'il on est dans le catalogue -->
-      <a class="item-link" href="item_page.php?r=<?php echo $recuperatheque?>&id=<?php echo $item['ID_item']?>">
-      <?php
-      }
-    ?>
-
-    <div class="item-photo-container">
+    <div class="photo-container">
         <?php
           //localisation seulement si hors les murs
           if ($days<7){ ?>
@@ -65,42 +57,36 @@
         ?>
     </div>
 
-    <?php if(basename($_SERVER['PHP_SELF'])=="catalogue.php"){?>
-      </a>
-      <?php
-      }
-    ?>
+    <div class="text-container">
 
-    <div class="item-text-container">
-
-      <div class='item-categorie-container'>
+      <div class='categorie-container'>
         <!-- deux choix d'affichage si la sscat est Autre ou pas -->
         <?php
         if ($item['sous_categorie']!='Autre'){
           ?>
-          <span class="item-souscategorie"> <?php echo $item['sous_categorie']; ?> </span>
-          <span class="item-categorie"> (<?php echo $item['categorie']; ?>) </span>
+          <span class="souscat"> <?php echo $item['sous_categorie']; ?> </span>
+          <span class="cat"> (<?php echo $item['categorie']; ?>) </span>
         <?php
         }
         else{
           ?>
-          <span class="item-souscategorie"> <?php echo $item['categorie']; ?> </span>
+          <span class="souscat"> <?php echo $item['categorie']; ?> </span>
         <?php
         }
         ?>
 
       </div>
 
-      <div class="item-info-container">
+      <div class="info-container separateur">
 
-        <div class="item-info-line">
-          <i class='fas fa-coins item-icon'></i>
-          <div class="item-info"><?php echo $prix; ?> <b><?php echo $recup_info['monnaie'];; ?></b> /pc </div>
+        <div class="info-line">
+          <i class='fas fa-coins info-icon'></i>
+          <div class="info-text"><?php echo $prix; ?> <b><?php echo $recup_info['monnaie'];; ?></b> /pc </div>
         </div>
 
-        <div class="item-info-line">
-          <i class='fas fa-heart-broken item-icon'></i>
-          <div class="item-info"> État:
+        <div class="info-line">
+          <i class='fas fa-heart-broken info-icon'></i>
+          <div class="info-text"> État:
             <span class='etat-icon-container'>
             <?php
             //echo $item['etat'];
@@ -116,43 +102,43 @@
           </div>
         </div>
 
-        <div class="item-info-line">
-          <i class='fas fa-cubes item-icon'></i>
-          <div class="item-info"><?php echo $piece; ?></div>
+        <div class="info-line">
+          <i class='fas fa-cubes info-icon'></i>
+          <div class="info-text"><?php echo $piece; ?></div>
         </div>
 
       </div>
 
-      <div class="item-info-plus-container">
+      <div class="info-plus-container separateur">
         <!-- les info qui apparaissent dans la page single -->
 
         <?php
           //poids seulement si c'est dans la sscat
           if ($item['unitesscat']=='kg'){ ?>
-            <div class="item-info-line">
-              <i class='fas fa-weight-hanging item-icon'></i>
-              <div class="item-info"> <?php echo $item['poids']; ?> </div>
+            <div class="info-line">
+              <i class='fas fa-weight-hanging info-icon'></i>
+              <div class="info-text"> <?php echo $item['poids']; ?> </div>
             </div>
           <?php
           }
         ?>
 
-        <div class="item-info-line">
-          <i class='fas fa-ruler item-icon'></i>
-          <div class="item-info"> <?php echo $dimensions; ?> </div>
+        <div class="info-line">
+          <i class='fas fa-ruler info-icon'></i>
+          <div class="info-text"> <?php echo $dimensions; ?> </div>
         </div>
 
-        <div class="item-info-line">
-          <i class='fas fa-info-circle item-icon'></i>
-          <div class="item-info"> <?php echo $remarques; ?> </div>
+        <div class="info-line">
+          <i class='fas fa-info-circle info-icon'></i>
+          <div class="info-text"> <?php echo $remarques; ?> </div>
         </div>
 
         <?php
           //localisation seulement si hors les murs
           if ($item['localisation']){ ?>
-            <div class="item-info-line">
-              <i class="fas fa-map-marker-alt item-icon"></i>
-              <div class="item-info"> <?php echo $item['localisation']; ?> </div>
+            <div class="info-line">
+              <i class="fas fa-map-marker-alt info-icon"></i>
+              <div class="info-text"> <?php echo $item['localisation']; ?> </div>
             </div>
           <?php
           }
@@ -160,14 +146,14 @@
 
       </div>
 
-      <div class='item-tags-container'>
+      <div class='tags-container separateur'>
 
-        <div class="item-info-line">
-          <i class='fas fa-tag item-icon'></i>
-          <div class="item-info">
+        <div class="info-line">
+          <i class='fas fa-tag info-icon'></i>
+          <div class="info-text">
             <?php
               for($n = 0; $n < count($tags); $n++){?>
-                <a class="item-tag" href= <?php echo link_construct(array('q'=>$tags[$n],'id'=>null, 'page'=>1), 'catalogue.php') ?> >#<?php echo $tags[$n];?></a>
+                <a class="tag" href= <?php echo link_construct(array('q'=>$tags[$n],'id'=>null, 'page'=>1), 'catalogue.php') ?> >#<?php echo $tags[$n];?></a>
                 <?php
                 if($n!=count($tags)-1){ echo ', '; }
               }
@@ -177,11 +163,11 @@
 
       </div>
 
-      <div class="item-date-container">
+      <div class="date-container">
 
-        <div class="item-info-line">
-          <i class='far fa-calendar item-icon'></i>
-          <div class="item-info">récupéré le <?php echo $item['date_ajout_fr']; ?></div>
+        <div class="info-line">
+          <i class='far fa-calendar info-icon'></i>
+          <div class="info-text">récupéré le <?php echo $item['date_ajout_fr']; ?></div>
         </div>
 
       </div>

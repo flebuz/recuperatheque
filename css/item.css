@@ -1,6 +1,26 @@
 
+.item{
+  text-align: left;
+  background: white;
+  transition: 0.4s;
 
-/* --- version mobile --- */
+  padding: 24px;
+  max-width: 100vw;
+  flex-basis: 100%;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.item > * {
+  /* les composants de l'item (photo et texte) */
+  box-sizing: content-box;
+  max-width: 400px;
+  flex-basis: 100%;
+}
+
+/* --- catalogue mobile --- */
 
 .items-container{
   display: flex;
@@ -9,36 +29,15 @@
 
   padding-top: 12px;
 }
-
 .item-wrapper{
   width: 100%;
   flex-basis: 100%;
-  flex-grow: 0;
-  flex-shrink: 0;
 }
-
-.item{
-  text-align: left;
-  background: white;
-  padding: 24px;
-  max-width: 100vw;
-  transition: 0.4s;
-
-  /* border: 1px solid #e0e0e0; */
-}
-
-.item:hover{
-  /* background: #f0f0f0; */
-  /* border: 1px solid #00E676; */
-}
-
-  /* on rajoute les espacemens et options quand yen a plusieur */
 .items-container .item{
   margin-bottom: 12px;
 }
 
-
-/* --- version ipad --- */
+/* --- catalogue ipad --- */
 
 @media (min-width: 601px){
  .items-container{
@@ -56,7 +55,7 @@
  }
 }
 
-/* --- version bureau --- */
+/* --- catalogue bureau --- */
 
 @media (min-width: 993px){
  .item-wrapper{
@@ -65,66 +64,42 @@
  }
 }
 
+/* --- affichage SINGLE --- */
 
-/* --- ce qu'il y a autour de l'item --- */
-
-.item-link{
-  text-decoration: none;
-}
-.item-link .item-photo{
-  transition: 0.2s;
-}
-.item-link .item-photo:hover{
-  text-decoration: none;
-  opacity: 0.5;
-}
-
-.back-link-container{
-  position: sticky;
-  top: 52px;
-  z-index: 10;
-}
-.back-link-container i{
-  padding-right: 12px;
-}
-.back-link-container a{
-  text-decoration: none;
-}
-
-/* barre des boutons */
-.item-buttons-container{
+.item-single-container{
+  background: white;
+  /* centre l'item au milieu */
   display: flex;
-  flex-wrap: nowrap;
-}
-.item-button{
-  flex-grow: 1;
-  margin: 12px;
+  justify-content: flex-start;
 }
 
-@media(min-width: 993px){
-  .back-link-container{
-    position: static;
+/* - version single Desktop - */
+@media (min-width: 993px){
+  .item-single-container .item{
+    padding: 12px;
+    flex-wrap: nowrap;
   }
-  .item-buttons-container{
+  .item-single-container .item > * {
+    padding: 24px;
+    margin: 0;
+    flex-basis: 50%;
+  }
+  .item-single-container .text-container {
+    max-width: none;
+    flex-grow: 1;
   }
 }
 
 
-/* --- boite photo et boite texte --- */
+/* --- boite photo --- */
 
-  /* version mobile */
-.item-photo-container, .item-text-container{
-  /* taille max de la photo et donc du text est de 500px */
-  max-width: 400px;
-}
-.item-photo-container{
+.photo-container{
   margin-bottom: 12px;
   position: relative;
 }
 .item-photo{
   width: 100%;
 }
-
 .hors-les-murs{
   background: #D0D0D0;
   color: white;
@@ -154,103 +129,45 @@
 }
 
 
-/* --- affichage SINGLE --- */
-
-.item-single-container{
-  background: white;
-  /* centre l'item au milieu */
-  display: flex;
-  justify-content: center;
-}
-.item-single-container .item{
-  display: flex;
-  flex-grow: row;
-  flex-wrap: wrap;
-
-  flex-grow: 1;
-  justify-content: center;
-}
-.item-single-container .item > * {
-  /* les composants de l'item (photo et text) prenne 100% de la largeur) */
-  flex-basis: 100%;
-}
-
-/* item seul mobile -> photo pleine largeur */
-.item-single-container .item{
-  padding: 0 0 24px;
-}
-.item-single-container .item-text-container{
-  padding: 0 24px;
-}
-
-/* - version single Ipad - */
-@media (min-width: 601px){
-  /* on enleve le pleine largeur de la photo */
-  .item-single-container .item{
-    padding: 24px;
-  }
-  .item-single-container .item-text-container{
-    padding: 0;
-  }
-}
-
-/* - version single Desktop - */
-@media (min-width: 993px){
-  .item-single-container .item{
-    padding: 12px;
-  }
-  .item-single-container .item > * {
-    margin: 12px;
-    /* les composants de l'item (photo et text) prenne 50% de la largeur) */
-    flex-basis: 40%;
-    flex-grow: 1;
-  }
-
-  /* la zone texte est elle-même un flex zone */
-  .item-single-container .item-text-container{
-    display: flex;
-    flex-direction: column;
-  }
-  .item-single-container .item-date-container{
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-  }
-}
-
-
 /* ----- les boites d'infos qui compose l'item */
 
-.item-categorie{
-  color: #606060;
+/* la zone texte est elle-même un flex zone */
+.text-container{
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
 }
 
-.item-souscategorie{
+.categorie-container{
+  padding-bottom: 12px;
+}
+.categorie-container .cat{
+  color: #606060;
+}
+.categorie-container .souscat{
   font-weight: bold;
   font-size: 1.4em;
 }
 
-.item-categorie-container{
-  padding-bottom: 12px;
+.items-container .info-plus-container{
+  /* cache les info non necessaire */
+  display: none;
 }
-
-.items-container .item-date-container{
+.tags-container{
+  /* envoi la date en dessous */
+  flex-grow: 1;
+}
+.items-container .date-container{
   padding-top: 12px;
 }
 
-.items-container .item-info-plus-container{
-  display: none;
-}
-
 /* ajout des séparateur d'info quand l'item est seul */
-.item-single-container .item-info-container:after,
-.item-single-container .item-info-plus-container::after,
-.item-single-container .item-tags-container::after{
+.item-single-container .separateur:after{
   content: "";
   display: block;
   margin: auto;
-  width: 60%;
+  width: 100%;
   height: 1px;
   margin-top: 16px;
   margin-bottom: 16px;
@@ -258,24 +175,19 @@
 }
 
 
-/* ----- une ligne de l'item (icone + texte) */
+/* --- LIGNE D'INFO (icone + texte) --- */
 
-.item-info-line{
+.info-line{
   display: flex;
   align-items: baseline;
-  white-space: nowrap;
 }
-
-
-.item-date-container .item-info-line{
-  justify-content: flex-end;
+.date-container .info-line{
   color: #909090;
-}
-.item-date-container .item-info{
-  white-space: nowrap;
+  justify-content: flex-end;
 }
 
-.item-icon{
+.info-icon{
+  color: #909090;
   flex-basis: 20px;
   margin-right: 16px;
   text-align: center;
@@ -283,20 +195,11 @@
 }
 
 /* dans l'affichage catalogue on coupe l'info si elle dépasse */
-.items-container .item-info,
+.items-container .info-text,
 .items-container .item-categorie-container{
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-}
-
-.item-info{
-  /* word-wrap: normal; */
-  white-space: normal;
-}
-
-.item-icon{
-  color: #909090;
 }
 
 .etat-icon-container i{
@@ -304,10 +207,10 @@
   padding-left: 3px;
 }
 
-.item-tag{
+.tag{
   text-decoration: underline;
 }
-.item-tag:hover{
+.tag:hover{
   text-decoration: none;
   color: #00E676;
 }
