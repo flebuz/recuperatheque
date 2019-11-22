@@ -74,6 +74,8 @@
 
   <div class="quasi-fullwidth space-header">
 
+    <div id="item-page">
+
     <?php
 
       if($recuperatheque){
@@ -161,8 +163,10 @@
       echo '<h3 class="erreur"> Pas de récupérathèque valide </h3>';
     }
     ?>
-
+    
+    </div>
   </div>
+
 
   <div id="modal_sell" class="w3-modal">
    <div class="w3-modal-content ">

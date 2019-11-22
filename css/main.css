@@ -72,26 +72,26 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* --- catalogue --- */
 
-.catalogue{
+#catalogue{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
 @media (min-width: 601px){
-  .catalogue{
+  #catalogue{
   }
 }
 
 @media (min-width: 993px){
-  .catalogue{
+  #catalogue{
     background: white;
     padding: 0 24px 0;
   }
 }
 
 /* ordre pour version mobile et ipad*/
-.catalogue > * {
+#catalogue > * {
   flex: 1 100%;
 }
 
@@ -111,6 +111,12 @@ html, body, p, h1, h2, h3, h4, h5, h6{
     padding-left: 24px;
     /* border-right: 1px solid #E0E0E0; */
   }
+}
+
+/* --- Item Page --- */
+
+#item-page{
+  
 }
 
 /* --- recuperatheque --- */

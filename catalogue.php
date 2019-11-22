@@ -123,7 +123,7 @@
 
   <div class="quasi-fullwidth space-header">
 
-    <div class="catalogue">
+    <div id="catalogue">
 
       <?php
       if($recuperatheque){?>
