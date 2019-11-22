@@ -4,8 +4,8 @@
   include('connection_db.php');
 
   //  Récupération de l'utilisateur et de son pass hashé
-  $req = $bdd->prepare('SELECT id, raccourci, mdp FROM recuperatheques WHERE raccourci = :raccourci');
-  $req->execute(array('raccourci' => $_POST['pseudo']));
+  $req = $bdd->prepare('SELECT id, pseudo, mdp FROM recuperatheques WHERE pseudo = :pseudo');
+  $req->execute(array('pseudo' => $_POST['pseudo']));
 
   $resultat = $req->fetch();
 
@@ -21,10 +21,10 @@
       if ($isPasswordCorrect) {
           session_start();
           $_SESSION['id'] = $resultat['id'];
-          $_SESSION['pseudo'] = $resultat['raccourci'];
+          $_SESSION['pseudo'] = $resultat['pseudo'];
           echo 'Vous êtes connecté !';
           echo $resultat['id'];
-          echo $resultat['raccourci'];
+          echo $resultat['pseudo'];
       }
       else {
           echo 'Mauvais identifiant ou mot de passe';
