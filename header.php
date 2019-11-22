@@ -58,17 +58,47 @@
   </div>
 </div>
 
+<?php
+
+  $connection_refused = false;
+
+  //  si on a envoyé un pseudo/mdp en POST
+  if(isset($_POST['pseudo']) && isset($_POST['mdp'])){
+
+    //  Récupération de l'utilisateur et de son pass hashé
+    $req = $bdd->prepare('SELECT id, pseudo, mdp FROM recuperatheques WHERE pseudo = :pseudo');
+    $req->execute(array('pseudo' => $_POST['pseudo']));
+    $resultat = $req->fetch();
+
+    // Comparaison du pass envoyé via le formulaire avec la base
+    $isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
+
+    if ($resultat && $isPasswordCorrect) {
+      session_start();
+      $_SESSION['id'] = $resultat['id'];
+      $_SESSION['pseudo'] = $resultat['pseudo'];
+
+      header("Location: catalogue.php?r=" . $_POST['pseudo']);
+    }
+    else{
+      $connection_refused = true;
+    }
+
+  }
+?>
+
 
 <!-- boite modal de connection -->
-<div id="connection" class="modal">
+<div id="connection"
+     class="modal <?php if($connection_refused){ echo 'active'; }?>">
 
   <!-- Modal content -->
   <div class="modal-content">
 
-    <form action="connection.php" method="POST">
+    <form method="POST">
 
       <div class="flex-input">
-        <label>Nom: </label>
+        <label>Pseudo: </label>
         <input type="text" class="" name="pseudo">
       </div>
 
@@ -76,6 +106,12 @@
         <label>Mot de passe: </label>
         <input type="password" class="" name="mdp">
       </div>
+
+      <?php
+      if($connection_refused){
+        echo '<div class="flex-input"> Mauvais identifiant ou mot de passe </div>';
+      }
+      ?>
 
       <button class="button-flex" type="submit">
         <div class="button-title">Connection</div>
@@ -92,13 +128,13 @@
 
   // When the user clicks on the button, open the modal
   btn.onclick = function() {
-    modal.style.display = "block";
+    modal.classList.toggle('active');
   }
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
     if (event.target == modal) {
-      modal.style.display = "none";
+      modal.classList.toggle('active');
     }
   }
 </script>
