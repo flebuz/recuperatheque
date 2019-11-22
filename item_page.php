@@ -42,7 +42,7 @@
     //----- check le $_GET de recuperatheque est valide -----
 
     //reprendre la liste des (pseudos vers les) recuperatheques
-    $req = $bdd->prepare(' SELECT pseudo FROM recuperatheques ');
+    $req = $bdd->prepare(' SELECT pseudo FROM _global_recuperatheques ');
     $req->execute();
     $recuperatheques = array();
     while($item = $req->fetch()){
@@ -52,6 +52,7 @@
     //checker si le parametre est set et est dans la liste
     if (isset($_GET['r']) && in_array($_GET['r'], $recuperatheques)){
       $recuperatheque = htmlspecialchars($_GET['r']);
+      $recuperatheque_catalogue = htmlspecialchars($_GET['r']) . '_catalogue';
     } else{
       $recuperatheque = null;
     }
@@ -78,7 +79,7 @@
       if($recuperatheque){
 
         //on recupere tt les info de la bonne recuperatheque
-        $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE pseudo = :recuperatheque ');
+        $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques WHERE pseudo = :recuperatheque ');
         $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
         $req->execute();
         $recup_info = $req->fetch();
@@ -116,9 +117,9 @@
                                 c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                                 cat.ID, cat.nom AS categorie,
                                 sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-                                FROM ' . $recuperatheque . ' c
-                                INNER JOIN categorie cat ON c.ID_categorie=cat.ID
-                                INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+                                FROM ' . $recuperatheque_catalogue . ' c
+                                INNER JOIN _global_categories cat ON c.ID_categorie=cat.ID
+                                INNER JOIN _global_souscategories sscat ON c.ID_souscategorie=sscat.ID
                                 WHERE c.id=:id');
 
         $req->bindValue(':id', $id, PDO::PARAM_INT);

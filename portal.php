@@ -64,7 +64,7 @@
 
     <?php
       //--- listage des recupérathèques
-      $req = $bdd->prepare(' SELECT * FROM recuperatheques ');
+      $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques ');
       $req->execute();
 
       while($recup_info = $req->fetch()){

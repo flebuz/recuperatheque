@@ -5,7 +5,7 @@
   //----- faire deux listes dont les clés sont les ID et les values le nb d'items
 
   //afin de savoir ce qu'il y a dans le catalogue
-  $reqItem = $bdd->prepare('  SELECT * FROM ' . $recuperatheque);
+  $reqItem = $bdd->prepare('  SELECT * FROM ' . $recuperatheque_catalogue);
   $reqItem->execute();
   $cat_counter = array();
   $sscat_counter = array();
@@ -37,8 +37,8 @@
   //requete les sous-categories en joignant les infos de leur categorie associé
   $reqCat = $bdd->prepare('  SELECT cat.ID AS cat_ID, cat.nom AS cat_nom,
                              sscat.ID AS ID, sscat.ID_categorie, sscat.nom AS nom
-                             FROM souscategorie sscat
-                             INNER JOIN categorie cat ON sscat.ID_categorie=cat.ID
+                             FROM _global_souscategories sscat
+                             INNER JOIN _global_categories cat ON sscat.ID_categorie=cat.ID
                              ORDER BY cat.ID, sscat.ID
                              ');
   $reqCat->execute();

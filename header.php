@@ -66,7 +66,7 @@
   if(isset($_POST['pseudo']) && isset($_POST['mdp'])){
 
     //  Récupération de l'utilisateur et de son pass hashé
-    $req = $bdd->prepare('SELECT id, pseudo, mdp FROM recuperatheques WHERE pseudo = :pseudo');
+    $req = $bdd->prepare('SELECT id, pseudo, mdp FROM _global_recuperatheques WHERE pseudo = :pseudo');
     $req->execute(array('pseudo' => $_POST['pseudo']));
     $resultat = $req->fetch();
 

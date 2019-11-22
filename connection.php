@@ -4,7 +4,7 @@
   include('connection_db.php');
 
   //  Récupération de l'utilisateur et de son pass hashé
-  $req = $bdd->prepare('SELECT id, pseudo, mdp FROM recuperatheques WHERE pseudo = :pseudo');
+  $req = $bdd->prepare('SELECT id, pseudo, mdp FROM _global_recuperatheques WHERE pseudo = :pseudo');
   $req->execute(array('pseudo' => $_POST['pseudo']));
 
   $resultat = $req->fetch();
@@ -34,3 +34,4 @@
   header("Location: catalogue.php?r=" . $_POST['pseudo']);
 
 ?>
+_global_recuperatheques

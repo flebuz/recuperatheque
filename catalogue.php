@@ -49,7 +49,7 @@
     //----- check le $_GET de recuperatheque est valide -----
 
     //reprendre la liste des (pseudos vers les) recuperatheques
-    $req = $bdd->prepare(' SELECT pseudo FROM recuperatheques ');
+    $req = $bdd->prepare(' SELECT pseudo FROM _global_recuperatheques ');
     $req->execute();
     $recuperatheques = array();
     while($item = $req->fetch()){
@@ -59,6 +59,7 @@
     //checker si le parametre est set et est dans la liste
     if (isset($_GET['r']) && in_array($_GET['r'], $recuperatheques)){
       $recuperatheque = htmlspecialchars($_GET['r']);
+      $recuperatheque_catalogue = htmlspecialchars($_GET['r']) . '_catalogue';
     } else{
       $recuperatheque = null;
     }
@@ -132,7 +133,7 @@
 
           <?php
             //on recupere tt les info de la bonne recuperatheque
-            $req = $bdd->prepare(' SELECT * FROM recuperatheques WHERE pseudo = :recuperatheque ');
+            $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques WHERE pseudo = :recuperatheque ');
             $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
             $req->execute();
             $recup_info = $req->fetch();
@@ -148,9 +149,8 @@
 
             <?php
               // on ajoute les autre param
-              if($recuperatheque){
-                echo '<input type="hidden" name="r" value="' . $recuperatheque . '"/>';
-              }
+              echo '<input type="hidden" name="r" value="' . $recuperatheque . '"/>';
+
               if($catsearch){
                 echo '<input type="hidden" name="catsearch" value="' . $catsearch . '"/>';
               }
@@ -191,9 +191,9 @@
 
             //--- requete qui compte juste les elements de la recherche
             $req = $bdd->prepare('  SELECT COUNT(*) AS total
-            FROM ' . $recuperatheque . ' c
-            INNER JOIN categorie cat ON c.ID_categorie=cat.ID
-            INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+            FROM ' . $recuperatheque_catalogue . ' c
+            INNER JOIN _global_categories cat ON c.ID_categorie=cat.ID
+            INNER JOIN _global_souscategories sscat ON c.ID_souscategorie=sscat.ID
             WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
             AND (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
             AND (c.ID_categorie = :catsearch OR :catsearch is null)
@@ -215,9 +215,9 @@
             c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
             cat.ID, cat.nom AS categorie,
             sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-            FROM ' . $recuperatheque . ' c
-            INNER JOIN categorie cat ON c.ID_categorie=cat.ID
-            INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+            FROM ' . $recuperatheque_catalogue . ' c
+            INNER JOIN _global_categories cat ON c.ID_categorie=cat.ID
+            INNER JOIN _global_souscategories sscat ON c.ID_souscategorie=sscat.ID
             WHERE (cat.nom LIKE :search OR sscat.nom LIKE :search OR dimensions LIKE :search OR tags LIKE :search OR remarques LIKE :search)
             AND (c.ID_souscategorie = :sscatsearch OR :sscatsearch is null)
             AND (c.ID_categorie = :catsearch OR :catsearch is null)
