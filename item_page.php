@@ -74,100 +74,107 @@
 
   <div class="quasi-fullwidth space-header">
 
-    <div id="item-page">
+    <div id="catalogue">
 
-    <?php
+      <div class="flex-menu">
 
-      if($recuperatheque){
+        <?php
 
-        //on recupere tt les info de la bonne recuperatheque
-        $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques WHERE pseudo = :recuperatheque ');
-        $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
-        $req->execute();
-        $recup_info = $req->fetch();
+          if($recuperatheque){
 
-        //on recupere la monnaie pour la suite
-        $monnaie = $item['monnaie'];
+            //on recupere tt les info de la bonne recuperatheque
+            $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques WHERE pseudo = :recuperatheque ');
+            $req->bindValue(':recuperatheque', $recuperatheque , PDO::PARAM_STR);
+            $req->execute();
+            $recup_info = $req->fetch();
 
-        //on print l'info box
-        include("recuperatheque_info.php");
-    ?>
+            //on recupere la monnaie pour la suite
+            $monnaie = $item['monnaie'];
 
-    <div class="container border-bottom back-link-container">
+            //on print l'info box
+            include("recuperatheque_info.php");
+        ?>
 
-      <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> retour à la recherche </a>
+        <div class="container border-bottom back-link-container">
 
-      <script>
-        function back_link(){
-          if(document.referrer.includes("catalogue.php")){
-            document.location.href = document.referrer;
+          <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> retour à la recherche </a>
+
+          <script>
+            function back_link(){
+              if(document.referrer.includes("catalogue.php")){
+                document.location.href = document.referrer;
+              }
+              else{
+                document.location.href = 'catalogue.php?r=<?php echo $recuperatheque ?>';
+              }
+            }
+          </script>
+
+        </div>
+      </div>
+
+    <div class="flex-items">
+
+      <div class="item-single-container">
+
+        <?php
+          //get the item
+          $req = $bdd->prepare('  SELECT
+                                  c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation,
+                                  c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
+                                  cat.ID, cat.nom AS categorie,
+                                  sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
+                                  FROM ' . $recuperatheque_catalogue . ' c
+                                  INNER JOIN _global_categories cat ON c.ID_categorie=cat.ID
+                                  INNER JOIN _global_souscategories sscat ON c.ID_souscategorie=sscat.ID
+                                  WHERE c.id=:id');
+
+          $req->bindValue(':id', $id, PDO::PARAM_INT);
+          //execute the request
+          $req->execute();
+        ?>
+
+        <?php
+          if ($req->rowCount() > 0) {
+            $item = $req->fetch();
+
+            include('item.php'); ?>
+
+            <?php
           }
           else{
-            document.location.href = 'catalogue.php?r=<?php echo $recuperatheque ?>';
+            echo '<h3 class="erreur"> Cet objet n\'existe pas </h3>';
+            $item=0;
           }
-        }
-      </script>
+        ?>
 
-    </div>
-
-    <div class="item-single-container">
-
-      <?php
-        //get the item
-        $req = $bdd->prepare('  SELECT
-                                c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation,
-                                c.date_ajout AS date_ajout, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
-                                cat.ID, cat.nom AS categorie,
-                                sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-                                FROM ' . $recuperatheque_catalogue . ' c
-                                INNER JOIN _global_categories cat ON c.ID_categorie=cat.ID
-                                INNER JOIN _global_souscategories sscat ON c.ID_souscategorie=sscat.ID
-                                WHERE c.id=:id');
-
-        $req->bindValue(':id', $id, PDO::PARAM_INT);
-        //execute the request
-        $req->execute();
-      ?>
-
-      <?php
-        if ($req->rowCount() > 0) {
-          $item = $req->fetch();
-
-          include('item.php'); ?>
-
-          <?php
-        }
-        else{
-          echo '<h3 class="erreur"> Cet objet n\'existe pas </h3>';
-          $item=0;
-        }
-      ?>
-    </div>
-
-    <?php
-      if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
-
-      <div class="container border-top item-buttons-container">
-        <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
-          <div class="button-title">Modifier</div>
-          <i class='button-icon w3-large fas fa-edit'></i>
-        </button>
-        <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
-          <div class="button-title">Vendre</div>
-          <i class='button-icon w3-large fas fa-check'></i>
-        </button>
       </div>
 
       <?php
-      }
-    ?>
+        if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
 
-    <?php
-    }
-    else {
-      echo '<h3 class="erreur"> Pas de récupérathèque valide </h3>';
-    }
-    ?>
+        <div class="container border-top item-buttons-container">
+          <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
+            <div class="button-title">Modifier</div>
+            <i class='button-icon w3-large fas fa-edit'></i>
+          </button>
+          <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
+            <div class="button-title">Vendre</div>
+            <i class='button-icon w3-large fas fa-check'></i>
+          </button>
+        </div>
+
+        <?php
+        }
+      ?>
+
+      <?php
+      }
+      else {
+        echo '<h3 class="erreur"> Pas de récupérathèque valide </h3>';
+      }
+      ?>
+    </div>
 
     </div>
   </div>

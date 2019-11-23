@@ -37,6 +37,16 @@
 
   <div class='item'>
 
+    <?php
+      if(basename($_SERVER['PHP_SELF'])=="catalogue.php"){
+        // on met un lien vers la page de l'item s'il on est dans le catalogue ?>
+        <a class="item-link" href="item_page.php?r=<?php echo $recuperatheque?>&id=<?php echo $item['ID_item']?>">
+          <span></span>
+        </a>
+      <?php
+      }
+    ?>
+
     <div class="photo-container">
         <?php
           //localisation seulement si hors les murs

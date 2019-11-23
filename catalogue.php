@@ -236,7 +236,11 @@
           <!-- search resume -->
           <div class="container border-bottom search-resume-wrapper">
             <div class="search-resume">
+
               <?php
+
+              echo '<b>' . $recup_info['pseudo'] . ' </b>';
+
                 if($query != '' || $catsearch != 0){
                   //si une des deux condition est respacter on affiche le resumer
 
@@ -265,9 +269,6 @@
                   }
                 }
                 echo ' (' . $total_count . ' résultats)';
-                echo '<b> @ ' . $recup_info['nom'] . '</b>';
-                echo '<span class="page"> - page ' . $page . '</span>';
-
               ?>
             </div>
           </div>
@@ -282,9 +283,9 @@
                   //affichage de l'item
                   ?>
 
-                    <div class="item-wrapper">
+                  <div class="item-wrapper">
                       <?php include('item.php');?>
-                    </div>
+                  </div>
 
                   <?php
                 }
