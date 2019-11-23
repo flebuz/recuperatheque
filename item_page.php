@@ -144,18 +144,23 @@
       ?>
     </div>
 
-    <div class="container border-top item-buttons-container">
+    <?php
+      if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
 
-      <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
-        <div class="button-title">Modifier</div>
-        <i class='button-icon w3-large fas fa-edit'></i>
-      </button>
+      <div class="container border-top item-buttons-container">
+        <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
+          <div class="button-title">Modifier</div>
+          <i class='button-icon w3-large fas fa-edit'></i>
+        </button>
+        <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
+          <div class="button-title">Vendre</div>
+          <i class='button-icon w3-large fas fa-check'></i>
+        </button>
+      </div>
 
-      <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
-        <div class="button-title">Vendre</div>
-        <i class='button-icon w3-large fas fa-check'></i>
-      </button>
-    </div>
+      <?php
+      }
+    ?>
 
     <?php
     }
@@ -163,7 +168,7 @@
       echo '<h3 class="erreur"> Pas de récupérathèque valide </h3>';
     }
     ?>
-    
+
     </div>
   </div>
 
