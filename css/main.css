@@ -42,7 +42,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 @media (min-width: 993px){
   .quasi-fullwidth{
     margin: 0 auto 0;
-    max-width: 80%;
+    max-width: 85%;
   }
 }
 
@@ -56,6 +56,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   background: white;
   text-align: left;
   padding: 12px 24px;
+  width: 100%;
 }
 
 .border-top{
@@ -84,31 +85,36 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* ordre pour version mobile et ipad*/
 .flex-menu{
-  flex: 0 100%;
+  flex: 0 0 100%;
+  box-sizing: border-box;
 }
-.flex-items {
+.flex-items{
   flex: 1 100%;
+  box-sizing: border-box;
 }
 
 /* ordre et dimension pour bureau */
 @media(min-width:993px){
+  .two-side-flex{
+    flex-wrap: nowrap;
+  }
   .flex-menu{
-    flex-basis: 30%; /*prend toute la largeur*/
+    flex-basis: 30%;
+
     border-left: 1px solid #E0E0E0;
     border-right: 1px solid #E0E0E0;
-    box-sizing: border-box;
-    max-width: 30%;
+
     min-height: 100vh;
-    padding-bottom: 48px;
+
   }
   .flex-items{
     flex-basis: 70%;
-    /* padding-left: 24px; */
+
     border-right: 1px solid #E0E0E0;
+
+    min-height: 100vh;
   }
 }
-
-/* --- Item Page --- */
 
 /* --- ce qu'il y a autour de l'item --- */
 
@@ -139,51 +145,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
     position: static;
   }
   .item-buttons-container{
-  }
-}
-
-/* --- ce qu'il y a autour de l'item --- */
-
-.item-link{
-  text-decoration: none;
-}
-.item-link .item-photo{
-  transition: 0.2s;
-}
-.item-link .item-photo:hover{
-  text-decoration: none;
-  opacity: 0.5;
-}
-
-.back-link-container{
-  position: sticky;
-  top: 52px;
-  z-index: 10;
-}
-.back-link-container i{
-  padding-right: 12px;
-}
-.back-link-container a{
-  text-decoration: none;
-}
-
-/* barre des boutons */
-.item-buttons-container{
-  padding: 12px;
-  display: flex;
-  flex-wrap: nowrap;
-}
-.item-button{
-  flex-grow: 1;
-  margin: 12px;
-}
-
-@media(min-width: 993px){
-  .back-link-container{
-    position: static;
-  }
-  .item-buttons-container{
-    padding: 24px;
   }
 }
 
@@ -193,8 +154,8 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 }
 
-.recuperatheque h3{
-  margin: 0;
+.recuperatheque h2{
+  margin-top: 0;
 }
 .recuperatheque-info{
   display: none;
@@ -330,27 +291,17 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   }
 }
 
-/* --- Connection box --- */
+/* --- Form, buttons & input --- */
 
-#connection .flex-input{
-  display: block;
-  align-items: center;
+.input-field{
   margin-bottom: 24px;
 }
-#connection label{
+label{
   display: block;
   text-align: left;
   font-weight: bold;
   margin-bottom: 6px;
 }
-#connection input{
-  width: 100%;
-}
-#connection button{
-  width: 100%;
-}
-
-/* --- basic button & input --- */
 
 button {
   background-color: #eaeaea;
@@ -368,11 +319,8 @@ button {
   white-space: nowrap;
 }
 
-button:hover{
-  /* background:#00E676; */
-}
-
 .button-flex{
+  width: 100%;
   height: 48px;
   display: flex;
   align-items: center;
@@ -388,6 +336,7 @@ button:hover{
 
 input{
   background: white;
+  width: 100%;
   border: 1px solid #E0E0E0;
   padding: 6px 12px;
 }

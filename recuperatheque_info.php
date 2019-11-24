@@ -1,7 +1,7 @@
 
 <div class="container recuperatheque">
 
-    <h3> <?php echo $recup_info['nom'] ;?> </h3>
+    <h2> <?php echo $recup_info['nom'] ;?> </h2>
 
     <div class="recuperatheque-info">
 

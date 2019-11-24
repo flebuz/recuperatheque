@@ -41,10 +41,10 @@
     include('header.php');
   ?>
 
-  <div class="quasi-fullwidth space-header">
+  <div class="quasi-fullwidth space-header two-side-flex">
 
-    <div class="container border-bottom">
-      Connecté.e en tant que:
+    <div class="flex-menu">
+      <div class="container">Connecté.e en tant que:</div>
 
       <?php
         //on recupere tt les info de la bonne recuperatheque
@@ -57,14 +57,69 @@
         include("recuperatheque_info.php");
       ?>
 
-      <button class="button-flex"
-        onclick="window.location.href='deconnection.php'" >
-        <div class="button-title">Deconnection</div>
-      </button>
+      <div class="container border-bottom">
+        <button class="button-flex"
+          onclick="window.location.href='deconnection.php'" >
+          <div class="button-title">Deconnection</div>
+        </button>
+      </div>
 
     </div>
 
-    <div class="container">
+    <div class="flex-items">
+
+
+      <form class="container quasi-fullwidth" action="set_info_recup.php" method="POST">
+
+        <h2>Infos</h2>
+
+        <?php
+        if(isset($_GET['e'])){
+          echo '<div class="input-field"> Mauvais mot de passe </div>';
+        }
+        ?>
+
+        <div class="input-field">
+          <label>Adresse: </label>
+          <input type="text" name="adresse" value="<?php echo $recup_info['adresse']; ?>">
+        </div>
+
+        <div class="input-field">
+          <label>Monnaie: </label>
+          <input type="text" name="monnaie" value="<?php echo $recup_info['monnaie']; ?>">
+        </div>
+
+        <div class="input-field">
+          <label>Telephone: </label>
+          <input type="text" name="telephone" value="<?php echo $recup_info['telephone']; ?>">
+        </div>
+
+        <div class="input-field">
+          <label>Site internet: </label>
+          <input type="text" name="site" value="<?php echo $recup_info['site']; ?>">
+        </div>
+
+        <div class="input-field">
+          <label>Mail: </label>
+          <input type="mail" name="mail" value="<?php echo $recup_info['mail']; ?>">
+        </div>
+
+        <div class="input-field">
+          <label>Mot de passe (ancien): </label>
+          <label>* OBLIGATOIRE *</label>
+          <input type="password"  name="mdp">
+        </div>
+
+        <div class="input-field">
+          <label>Mot de passe (nouveau): </label>
+          <input type="password"  name="mdp_new">
+        </div>
+
+        <button class="button-flex" type="submit">
+          <div class="button-title">Changer mes infos</div>
+        </button>
+
+      </form>
 
 
     </div>

@@ -97,19 +97,19 @@
 
     <form method="POST">
 
-      <div class="flex-input">
+      <div class="input-field">
         <label>Pseudo: </label>
-        <input type="text" class="" name="pseudo">
+        <input type="text" name="pseudo">
       </div>
 
-      <div class="flex-input">
+      <div class="input-field">
         <label>Mot de passe: </label>
-        <input type="password" class="" name="mdp">
+        <input type="password" name="mdp">
       </div>
 
       <?php
       if($connection_refused){
-        echo '<div class="flex-input"> Mauvais identifiant ou mot de passe </div>';
+        echo '<div class="input-field"> Mauvais identifiant ou mot de passe </div>';
       }
       ?>
 
