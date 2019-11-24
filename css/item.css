@@ -153,6 +153,9 @@
 .item-single-container .new{
   display: none;
 }
+.item-single-container .hors-les-murs{
+  display: none;
+}
 
 
 /* --- les boites d'infos --- */

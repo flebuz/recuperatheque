@@ -147,6 +147,10 @@
         <?php
           //localisation seulement si hors les murs
           if ($item['localisation']){ ?>
+            <p>
+              <b>Hors-les-murs</b><br/>
+              (cet objet ne se trouve pas dans notre récupérathèque, mais à l'adresse indiquer ci-dessous)
+            </p>
             <div class="info-line">
               <i class="fas fa-map-marker-alt info-icon"></i>
               <div class="info-text"> <?php echo $item['localisation']; ?> </div>
