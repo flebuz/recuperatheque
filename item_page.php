@@ -72,9 +72,7 @@
   include('header.php');
   ?>
 
-  <div class="quasi-fullwidth space-header">
-
-    <div id="catalogue">
+  <div class="quasi-fullwidth space-header two-side-flex">
 
       <div class="flex-menu">
 
@@ -95,7 +93,7 @@
             include("recuperatheque_info.php");
         ?>
 
-        <div class="container border-bottom back-link-container">
+        <div class="container border-bottom border-top back-link-container">
 
           <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> retour à la recherche </a>
 
@@ -151,9 +149,10 @@
       </div>
 
       <?php
-        if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
+        if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){
+          if($_SESSION['pseudo']==$recuperatheque){?>
 
-        <div class="container border-top item-buttons-container">
+        <div class="border-top item-buttons-container">
           <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
             <div class="button-title">Modifier</div>
             <i class='button-icon w3-large fas fa-edit'></i>
@@ -165,6 +164,7 @@
         </div>
 
         <?php
+          }
         }
       ?>
 
@@ -176,7 +176,6 @@
       ?>
     </div>
 
-    </div>
   </div>
 
 

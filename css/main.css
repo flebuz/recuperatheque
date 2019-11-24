@@ -48,7 +48,8 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* fait de l'espace pour le header en fixed position */
 .space-header{
-  margin-top: 52px;
+  padding-top: 52px;
+  box-sizing: border-box;
 }
 
 .container{
@@ -70,28 +71,22 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   }
 }
 
-/* --- catalogue --- */
+/* --- catalogue & item-page --- */
 
-#catalogue{
+.two-side-flex{
+  background: white;
+  min-height: 100vh;
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-@media (min-width: 601px){
-  #catalogue{
-  }
-}
-
-@media (min-width: 993px){
-  #catalogue{
-    background: white;
-    /* padding: 0 24px 0; */
-  }
-}
-
 /* ordre pour version mobile et ipad*/
-.flex-menu, .flex-items {
+.flex-menu{
+  flex: 0 100%;
+}
+.flex-items {
   flex: 1 100%;
 }
 
@@ -174,6 +169,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* barre des boutons */
 .item-buttons-container{
+  padding: 12px;
   display: flex;
   flex-wrap: nowrap;
 }
@@ -187,6 +183,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
     position: static;
   }
   .item-buttons-container{
+    padding: 24px;
   }
 }
 
@@ -327,7 +324,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 @media(min-width: 601px){
   .modal-content {
-    width: 50%;
+    width: 33%;
     height: auto;
     margin: 104px auto; /* commence 2x plus bas que la hauteur du header */
   }
@@ -336,20 +333,18 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 /* --- Connection box --- */
 
 #connection .flex-input{
-  display: flex;
-  flex-wrap: nowrap;
+  display: block;
   align-items: center;
   margin-bottom: 24px;
 }
 #connection label{
+  display: block;
   text-align: left;
   font-weight: bold;
-  margin-right: 24px;
-  flex-basis: 25%;
-  white-space: nowrap;
+  margin-bottom: 6px;
 }
 #connection input{
-  flex-grow: 1;
+  width: 100%;
 }
 #connection button{
   width: 100%;

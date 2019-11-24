@@ -121,9 +121,7 @@
     include('header.php');
   ?>
 
-  <div class="quasi-fullwidth space-header">
-
-    <div id="catalogue">
+  <div class="quasi-fullwidth space-header two-side-flex">
 
       <?php
       if($recuperatheque){?>
