@@ -56,8 +56,9 @@
           }
         ?>
         <?php
-        echo '<img class="item-photo" src="photos/' . $item['ID_item'] . '.jpg" />'
+          $image_url = 'photos/' . $recuperatheque . '/' . $item['ID_item'] . '.jpg';
         ?>
+        <img class="item-photo" src=<?php echo $image_url; ?> />
         <?php
           //localisation seulement si hors les murs
           if ($item['localisation']){ ?>
