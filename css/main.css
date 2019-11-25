@@ -95,16 +95,21 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-content: flex-start;
+
+  border-left: 1px solid #E0E0E0;
+}
+.two-side-flex > *{
+  border-right: 1px solid #E0E0E0;
+  box-sizing: border-box;
 }
 
 /* ordre pour version mobile et ipad*/
-.flex-menu{
+.flex-third{
   flex: 1 0 100%;
-  box-sizing: border-box;
 }
-.flex-items{
+.flex-half{
   flex: 1 100%;
-  box-sizing: border-box;
 }
 
 /* ordre et dimension pour bureau */
@@ -112,20 +117,13 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   .two-side-flex{
     flex-wrap: nowrap;
   }
-  .flex-menu{
+  .flex-third{
     flex-basis: 30%;
-
-    border-left: 1px solid #E0E0E0;
-    border-right: 1px solid #E0E0E0;
-
+    flex-grow: 0;
     min-height: 100vh;
-
   }
-  .flex-items{
-    flex-basis: 70%;
-
-    border-right: 1px solid #E0E0E0;
-
+  .flex-half{
+    flex-basis: 50%;
     min-height: 100vh;
   }
 }
@@ -177,22 +175,41 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 .recuperatheque{
 
 }
-
 .recuperatheque h2{
   margin: 0;
 }
-.recuperatheque-info{
-  margin-top: 12px;
+.recuperatheque .info{
+  margin: 6px 0px;
+}
+
+/* si menu depliable */
+.recuperatheque.depliable .info{
+  /* hide en mobile */
   display: none;
 }
 @media (min-width: 993px){
-  .recuperatheque-info{
+  .recuperatheque.depliable .info{
+    /* show en desktop */
     display: block;
   }
-  .recuperatheque h3{
-    margin: 0 0 12px;
+}
+
+@media (max-width: 601px){
+  .recuperatheque.depliable h2:after{
+    content: "+";
+    padding-left: 12px;
+    font-weight: bold;
+  }
+  .recuperatheque.depliable.active h2:after{
+    content: "-";
+    padding-left: 12px;
+    font-weight: bold;
+  }
+  .recuperatheque.depliable.active .info{
+    display: block;
   }
 }
+
 
 /* ----- HEADER -----*/
 
@@ -210,7 +227,6 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   height: 100%;
 
   display: flex;
-  flex-wrap: wrap;
   flex-direction: row;
   justify-content: flex-start;
   /* tout les items du header prenne sa hauteur */
@@ -262,6 +278,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 }
 
 .header .nav-title{
+  white-space: nowrap;
   display: none;
   padding-right: 12px;
 }

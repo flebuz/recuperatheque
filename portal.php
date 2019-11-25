@@ -43,30 +43,34 @@
 
   <div class="quasi-fullwidth space-header two-side-flex">
 
-    <div class="flex-menu">
+    <div class="flex-half">
 
       <div class="container border-bottom">
-        <p>
-          Une <b>Récupérathèque</b> est un magasin collaboratif de matériaux de réemploi
-          au sein d’une école de création (arts, architecture, design, stylisme, arts de la scène, etc)
-          fonctionnant avec sa propre monnaie ou son propre système d’échange,
-          et visant à favoriser la durabilité, la solidarité, et la création de lien social.
-        </p>
-        <p>
-          Le <b>Mycélium</b>, est l'appareil végétatif des champignons,
-          composé d'un ensemble de filaments plus ou moins ramifiés,
-          formant un réseaux souterrains entre les champignons et des plantes extérieures. </br>
 
-          Ces réseaux interspécifiques favorisent les transferts de nutriments,
+        <h3>Une Récupérathèque</h3>
+        <p>
+          est un <strong>magasin collaboratif</strong> de matériaux de <strong>réemploi</strong>
+          au sein d’une école de création (arts, architecture, design, stylisme, arts de la scène, etc)
+          fonctionnant avec sa propre monnaie ou son propre <strong>système d’échange</strong>,
+          et visant à favoriser la durabilité, la solidarité, et la création de <strong>lien social</strong>.
+        </p>
+
+        <h3>Le Mycélium</h3>
+        <p>
+          est l'appareil végétatif des <strong>champignons</strong>.
+          Composé d'un ensemble de filaments ramifiés, il
+          forme un <strong>réseau souterrain</strong> entre les champignons et les plantes.</br>
+
+          Ces réseaux <strong>favorisent les transferts</strong> de nutriments,
           notamment de la part de celui qui est en condition favorable (lumière, milieu nutritif)
           et qui encourage la croissance de celui en condition défavorable.
-          Ce lien souterrain entre espèces différentes est vital dans le fonctionnement d'un écosystème.
+          Ces liens souterrain entre espèces différentes est vital dans le fonctionnement d'un <strong>écosystème</strong>.
         </p>
       </div>
 
     </div>
 
-    <div class="flex-menu">
+    <div class="flex-half">
       <div class="recup-list">
 
         <?php
@@ -91,7 +95,7 @@
         ?>
       </div>
     </div>
-    
+
   </div>
 
 </body>

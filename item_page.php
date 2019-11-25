@@ -74,7 +74,7 @@
 
   <div class="quasi-fullwidth space-header two-side-flex">
 
-      <div class="flex-menu">
+      <div class="flex-third">
 
         <?php
 
@@ -111,7 +111,7 @@
         </div>
       </div>
 
-    <div class="flex-items">
+    <div class="flex-half">
 
       <div class="item-single-container">
 

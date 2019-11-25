@@ -127,7 +127,7 @@
       if($recuperatheque){?>
 
         <!-- Bar de recherche -->
-        <div class="flex-menu">
+        <div class="flex-third">
 
           <?php
             //on recupere tt les info de la bonne recuperatheque
@@ -181,7 +181,7 @@
         </div>
 
         <!-- search request -->
-        <div class="flex-items">
+        <div class="flex-half">
           <?php
 
             $limit= 12; //items par pages

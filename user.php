@@ -43,7 +43,8 @@
 
   <div class="quasi-fullwidth space-header two-side-flex">
 
-    <div class="flex-menu">
+    <div class="flex-half">
+
       <div class="container">Connecté.e en tant que:</div>
 
       <?php
@@ -66,10 +67,9 @@
 
     </div>
 
-    <div class="flex-items">
+    <div class="flex-half">
 
-
-      <form class="container quasi-fullwidth" action="set_info_recup.php" method="POST">
+      <form class="container" action="set_info_recup.php" method="POST">
 
         <h2>Infos</h2>
 

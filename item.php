@@ -40,7 +40,7 @@
     <?php
       if(basename($_SERVER['PHP_SELF'])=="catalogue.php"){
         // on met un lien vers la page de l'item s'il on est dans le catalogue ?>
-        <a class="item-link" href="item_page.php?r=<?php echo $recuperatheque?>&id=<?php echo $item['ID_item']?>">
+        <a class="hidden-link" href="item_page.php?r=<?php echo $recuperatheque?>&id=<?php echo $item['ID_item']?>">
           <span></span>
         </a>
       <?php
