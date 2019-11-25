@@ -87,54 +87,60 @@
   }
 ?>
 
+<?php
+  if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
 
-<!-- boite modal de connection -->
-<div id="connection"
-     class="modal <?php if($connection_refused){ echo 'active'; }?>">
+    <!-- boite modal de connection -->
+    <div id="connection"
+         class="modal <?php if($connection_refused){ echo 'active'; }?>">
 
-  <!-- Modal content -->
-  <div class="modal-content">
+      <!-- Modal content -->
+      <div class="modal-content">
 
-    <form method="POST">
+        <form method="POST">
 
-      <div class="input-field">
-        <label>Pseudo: </label>
-        <input type="text" name="pseudo">
+          <div class="input-field">
+            <label>Pseudo: </label>
+            <input type="text" name="pseudo">
+          </div>
+
+          <div class="input-field">
+            <label>Mot de passe: </label>
+            <input type="password" name="mdp">
+          </div>
+
+          <?php
+          if($connection_refused){
+            echo '<div class="input-field"> Mauvais identifiant ou mot de passe </div>';
+          }
+          ?>
+
+          <button class="button-flex" type="submit">
+            <div class="button-title">Connection</div>
+          </button>
+
+        </form>
+
       </div>
+    </div>
 
-      <div class="input-field">
-        <label>Mot de passe: </label>
-        <input type="password" name="mdp">
-      </div>
+    <script>
+      var modal = document.getElementById("connection");
+      var btn = document.getElementById("connection_btn");
 
-      <?php
-      if($connection_refused){
-        echo '<div class="input-field"> Mauvais identifiant ou mot de passe </div>';
+      // When the user clicks on the button, open the modal
+      btn.onclick = function() {
+        modal.classList.toggle('active');
       }
-      ?>
 
-      <button class="button-flex" type="submit">
-        <div class="button-title">Connection</div>
-      </button>
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.classList.toggle('active');
+        }
+      }
+    </script>
 
-    </form>
-
-  </div>
-</div>
-
-<script>
-  var modal = document.getElementById("connection");
-  var btn = document.getElementById("connection_btn");
-
-  // When the user clicks on the button, open the modal
-  btn.onclick = function() {
-    modal.classList.toggle('active');
+  <?php
   }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.classList.toggle('active');
-    }
-  }
-</script>
+?>

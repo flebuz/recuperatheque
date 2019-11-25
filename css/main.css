@@ -3,15 +3,17 @@
 
 COLOR CODE:
 
-background in #F5F5F5
+background in #FAFAFA
 foreground in white
 
-all borders in #E0E0E0
+borders in #E0E0E0
 buttons in #EAEAEA
+
+less important or disabled in #A0A0A0
 
 little icons in #909090
 
-header in #404040
+header in #303030
 
 GREEN (important, flashy or links): #00E676
 
@@ -132,12 +134,14 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* barre des boutons */
 .item-buttons-container{
+  padding: 6px;
   display: flex;
   flex-wrap: nowrap;
 }
+
 .item-button{
   flex-grow: 1;
-  margin: 12px;
+  margin: 6px;
 }
 
 @media(min-width: 993px){
@@ -145,6 +149,10 @@ html, body, p, h1, h2, h3, h4, h5, h6{
     position: static;
   }
   .item-buttons-container{
+    padding: 12px;
+  }
+  .item-button{
+    margin: 12px;
   }
 }
 
