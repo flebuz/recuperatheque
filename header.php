@@ -1,17 +1,14 @@
+<?php
+session_start();
+?>
 
 <div class="header-container">
   <div class="header quasi-fullwidth">
 
-    <div class="header-title"><a href="portal.php">Mycélium</a></div>
+    <div class="title"><a href="portal.php">Mycélium</a></div>
 
     <?php
-      session_start();
-
       if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
-
-        <div class="nom">
-          <span><?php echo $_SESSION['pseudo']; ?></span>
-        </div>
 
         <?php
           $cat_url = "catalogue.php?r=" . $_SESSION['pseudo'];
@@ -19,23 +16,23 @@
         ?>
 
         <a href="catalogue.php?r=<?php echo $_SESSION['pseudo']?>" class="nav-button
-          <?php if(in_array(basename($_SERVER['PHP_SELF']),array("catalogue.php","item_page.php"))
+          <?php if(basename($_SERVER['PHP_SELF'])=="catalogue.php"
                    && $_SESSION['pseudo']==$recuperatheque){
-              echo "page-selected"; } ?>">
+              echo "selected"; } ?>">
           <div class="nav-title">Mon Catalogue</div>
           <i class="nav-icon fas fa-book-open"></i>
         </a>
 
         <a href="add_form.php" class="nav-button
           <?php if(basename($_SERVER['PHP_SELF'])=="add_form.php"){
-              echo "page-selected"; } ?>">
+              echo "selected"; } ?>">
           <div class="nav-title">Ajouter</div>
           <i class="nav-icon fas fa-plus-circle"></i>
         </a>
 
         <a href="user.php" class="nav-button
           <?php if(basename($_SERVER['PHP_SELF'])=="user.php"){
-              echo "page-selected"; } ?>">
+              echo "selected"; } ?>">
           <div class="nav-title">Mon Compte</div>
           <i class="nav-icon fas fa-user-lock"></i>
         </a>
@@ -44,9 +41,7 @@
       }
       else{?>
 
-        <a id="connection_btn" class="nav-button
-          <?php if(basename($_SERVER['PHP_SELF'])=="log.php"){
-              echo "page-selected"; } ?>">
+        <a id="connection_btn" class="nav-button selected" >
           <div class="nav-title">Se Connecter</div>
           <i class="nav-icon fas fa-user-lock"></i>
         </a>
@@ -88,7 +83,7 @@
 ?>
 
 <?php
-  if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
+  if(!isset($_SESSION['id']) AND !isset($_SESSION['pseudo'])){?>
 
     <!-- boite modal de connection -->
     <div id="connection"
