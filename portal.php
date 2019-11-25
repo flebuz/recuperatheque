@@ -41,44 +41,57 @@
     include('header.php');
   ?>
 
-  <div class="quasi-fullwidth space-header">
+  <div class="quasi-fullwidth space-header two-side-flex">
 
-    <div class="container border-bottom">
-      <p>
-        Une <b>Récupérathèque</b> est un magasin collaboratif de matériaux de réemploi
-        au sein d’une école de création (arts, architecture, design, stylisme, arts de la scène, etc)
-        fonctionnant avec sa propre monnaie ou son propre système d’échange,
-        et visant à favoriser la durabilité, la solidarité, et la création de lien social.
-      </p>
-      <p>
-        Le <b>Mycélium</b>, est l'appareil végétatif des champignons,
-        composé d'un ensemble de filaments plus ou moins ramifiés,
-        formant un réseaux souterrains entre les champignons et des plantes extérieures. </br>
+    <div class="flex-menu">
 
-        Ces réseaux interspécifiques favorisent les transferts de nutriments,
-        notamment de la part de celui qui est en condition favorable (lumière, milieu nutritif)
-        et qui encourage la croissance de celui en condition défavorable.
-        Ce lien souterrain entre espèces différentes est vital dans le fonctionnement d'un écosystème.
-      </p>
+      <div class="container border-bottom">
+        <p>
+          Une <b>Récupérathèque</b> est un magasin collaboratif de matériaux de réemploi
+          au sein d’une école de création (arts, architecture, design, stylisme, arts de la scène, etc)
+          fonctionnant avec sa propre monnaie ou son propre système d’échange,
+          et visant à favoriser la durabilité, la solidarité, et la création de lien social.
+        </p>
+        <p>
+          Le <b>Mycélium</b>, est l'appareil végétatif des champignons,
+          composé d'un ensemble de filaments plus ou moins ramifiés,
+          formant un réseaux souterrains entre les champignons et des plantes extérieures. </br>
+
+          Ces réseaux interspécifiques favorisent les transferts de nutriments,
+          notamment de la part de celui qui est en condition favorable (lumière, milieu nutritif)
+          et qui encourage la croissance de celui en condition défavorable.
+          Ce lien souterrain entre espèces différentes est vital dans le fonctionnement d'un écosystème.
+        </p>
+      </div>
+
     </div>
 
-    <?php
-      //--- listage des recupérathèques
-      $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques ');
-      $req->execute();
+    <div class="flex-menu">
+      <div class="recup-list">
 
-      while($recup_info = $req->fetch()){
+        <?php
+          //--- listage des recupérathèques
+          $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques ');
+          $req->execute();
 
-        $url = "catalogue.php";
-        $url = $url . "?r=" . $recup_info['pseudo'];
+          while($recup_info = $req->fetch()){
 
-        echo "<a class='border-bottom' href=". $url . ">";
-        include("recuperatheque_info.php");
-        echo '</a>';
+            $url = "catalogue.php";
+            $url = $url . "?r=" . $recup_info['pseudo'];?>
 
-      }
-    ?>
+            <div class=" border-bottom">
+              <a class="hidden-link" href="<?php echo $url; ?>">
+                <span></span>
+              </a>
+              <?php include("recuperatheque_info.php");?>
+            </div>
 
+          <?php
+          }
+        ?>
+      </div>
+    </div>
+    
   </div>
 
 </body>

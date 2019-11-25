@@ -68,6 +68,18 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   border-bottom: 1px solid #E0E0E0;
 }
 
+.hidden-link span{
+  text-decoration: none;
+
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left: 0;
+
+  z-index: 1;
+}
+
 @media (min-width:993px){
   .container{
     padding: 24px;
@@ -87,7 +99,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* ordre pour version mobile et ipad*/
 .flex-menu{
-  flex: 0 0 100%;
+  flex: 1 0 100%;
   box-sizing: border-box;
 }
 .flex-items{
@@ -158,14 +170,19 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* --- recuperatheque --- */
 
+.recup-list > *{
+  position: relative;
+}
+
 .recuperatheque{
 
 }
 
 .recuperatheque h2{
-  margin-top: 0;
+  margin: 0;
 }
 .recuperatheque-info{
+  margin-top: 12px;
   display: none;
 }
 @media (min-width: 993px){
@@ -197,12 +214,10 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   flex-direction: row;
   justify-content: flex-start;
   /* tout les items du header prenne sa hauteur */
-  align-items: baseline;
-
-  overflow-x: hidden;
+  align-items: stretch;
+  overflow-y: hidden;
 }
 .header > *{
-  height: 100%;
 }
 
 .header .title{
@@ -212,6 +227,9 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
   flex-basis: 50%;
   flex-grow: 1;
+
+  display: flex;
+  align-items: center;
 }
 
 .header .nom{
