@@ -21,6 +21,7 @@
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
   <link rel="stylesheet" href="css/add_form.css">
   <meta name="theme-color" content="#00E676">
@@ -164,11 +165,11 @@
           if($_SESSION['pseudo']==$recuperatheque){?>
 
         <div class="border-top item-buttons-container">
-          <button class="button-flex item-button" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
+          <button class="button-flex" onclick="window.location.href = 'edit_form.php?id=<?php echo $id;?>';">
             <div class="button-title">Modifier</div>
             <i class='button-icon w3-large fas fa-edit'></i>
           </button>
-          <button class="button-flex item-button" onclick="document.getElementById('modal_sell').style.display='block'">
+          <button class="button-flex" onclick="document.getElementById('modal_sell').style.display='block'">
             <div class="button-title">Vendre</div>
             <i class='button-icon w3-large fas fa-check'></i>
           </button>

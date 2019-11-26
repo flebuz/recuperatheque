@@ -51,12 +51,12 @@
     </div>
 
     <div class="flex-half">
+
+      <h4 class="container">Récupérathèques</h4>
+
+      <hr>
+
       <div class="recup-list">
-
-        <h4 class="container">Récupérathèques</h4>
-
-        <hr>
-
         <?php
           //--- listage des recupérathèques
           $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques ');
@@ -69,14 +69,15 @@
 
             <div class=" border-bottom">
 
-              <a class="hidden-link" href="<?php echo $url; ?>">
-                <span></span>
-              </a>
-
+              <div class="info">
               <?php include("recuperatheque_info.php");?>
-
-              <div>
               </div>
+
+
+              <button class="button-flex" onclick="window.location.href='<?php echo $url; ?>'" >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+
 
             </div>
 
