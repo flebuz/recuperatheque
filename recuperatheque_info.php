@@ -46,11 +46,3 @@
     </div>
 
 </div>
-
-<script>
-  var recuperatheque = document.getElementsByClassName("recuperatheque")[0];
-
-  recuperatheque.onclick = function() {
-    recuperatheque.classList.toggle('active');
-  }
-</script>

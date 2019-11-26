@@ -92,8 +92,16 @@
             //on print l'info box
             include("recuperatheque_info.php");
         ?>
+        <script>
+          var recuperatheque = document.getElementsByClassName("recuperatheque")[0];
 
-        <div class="container border-bottom border-top back-link-container">
+          recuperatheque.onclick = function() {
+            recuperatheque.classList.toggle('active');
+          }
+        </script>
+
+        <hr>
+        <div class="container back-link-container">
 
           <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> retour à la recherche </a>
 
@@ -109,6 +117,8 @@
           </script>
 
         </div>
+        <hr>
+
       </div>
 
     <div class="flex-half">

@@ -45,7 +45,7 @@
 
     <div class="flex-half">
 
-      <div class="container">Connecté.e en tant que:</div>
+      <h4 class="container">Connecté.e en tant que:</h4>
 
       <?php
         //on recupere tt les info de la bonne recuperatheque
@@ -58,20 +58,18 @@
         include("recuperatheque_info.php");
       ?>
 
-      <div class="container border-bottom">
+      <div class="container">
         <button class="button-flex"
           onclick="window.location.href='deconnection.php'" >
           <div class="button-title">Deconnection</div>
         </button>
       </div>
 
-    </div>
+      <hr>
 
-    <div class="flex-half">
+      <h4 class="container">Mes Infos</h4>
 
       <form class="container" action="set_info_recup.php" method="POST">
-
-        <h2>Infos</h2>
 
         <?php
         if(isset($_GET['e'])){
@@ -121,6 +119,13 @@
 
       </form>
 
+
+
+    </div>
+
+    <div class="flex-half">
+
+      <h4 class="container">Historique</h4>
 
     </div>
 

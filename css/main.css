@@ -57,8 +57,13 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 .container{
   background: white;
   text-align: left;
-  padding: 12px 24px;
-  width: 100%;
+  margin: 12px 24px;
+}
+
+hr{
+  border: none;
+  border-bottom: 1px solid #E0E0E0;
+  margin: 0;
 }
 
 .border-top{
@@ -82,7 +87,7 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 @media (min-width:993px){
   .container{
-    padding: 24px;
+    margin: 24px;
   }
 }
 
@@ -213,11 +218,14 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 
 /* ----- HEADER -----*/
 
+.header-container, .footer-container{
+  background: #303030;
+  color: white;
+  width: 100%;
+}
+
 .header-container{
   height: 52px;
-  width: 100%;
-  background: #303030;
-
   position: fixed;
   top: 0;
   z-index: 11;
@@ -233,7 +241,20 @@ html, body, p, h1, h2, h3, h4, h5, h6{
   align-items: stretch;
   overflow-y: hidden;
 }
-.header > *{
+.header > * {
+}
+
+.footer{
+  text-align: center;
+  overflow: auto;
+}
+.footer > * {
+  margin: 48px;
+}
+.footer .colophon{
+  padding: 12px;
+  margin: 0;
+  background: #272727;
 }
 
 .header .title{

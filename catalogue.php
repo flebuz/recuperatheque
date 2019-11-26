@@ -139,6 +139,13 @@
             //on print l'info box
             include("recuperatheque_info.php");
           ?>
+          <script>
+            var recuperatheque = document.getElementsByClassName("recuperatheque")[0];
+
+            recuperatheque.onclick = function() {
+              recuperatheque.classList.toggle('active');
+            }
+          </script>
 
           <form class="container search-bar" action="catalogue.php" method="GET">
 
@@ -232,7 +239,7 @@
           ?>
 
           <!-- search resume -->
-          <div class="container border-bottom search-resume-wrapper">
+          <div class="container search-resume-wrapper">
             <div class="search-resume">
 
               <?php
@@ -271,6 +278,8 @@
             </div>
           </div>
 
+          <hr>
+
           <!-- items container -->
           <div class="items-container">
 
@@ -296,7 +305,9 @@
           </div>
 
           <!-- page nav -->
-          <div class="container border-top page-nav">
+          <hr>
+          
+          <div class="container page-nav">
 
             <a href= <?php echo link_construct(array('page'=>$page-1)) ?>
                class="<?php if($page-1 <= 0){ echo 'disabled'; } ?>">
