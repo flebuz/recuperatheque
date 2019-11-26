@@ -57,7 +57,12 @@ html, body, p, h1, h2, h3, h4, h5, h6{
 .container{
   background: white;
   text-align: left;
-  margin: 12px 24px;
+  padding: 12px 24px;
+}
+
+h4.title{
+  padding: 12px 24px 0;
+  margin: 0;
 }
 
 hr{
@@ -87,7 +92,7 @@ hr{
 
 @media (min-width:993px){
   .container{
-    margin: 24px;
+    padding: 24px;
   }
 }
 
@@ -101,11 +106,8 @@ hr{
   flex-direction: row;
   flex-wrap: wrap;
   align-content: flex-start;
-
-  border-left: 1px solid #E0E0E0;
 }
 .two-side-flex > *{
-  border-right: 1px solid #E0E0E0;
   box-sizing: border-box;
 }
 
@@ -121,6 +123,10 @@ hr{
 @media(min-width:993px){
   .two-side-flex{
     flex-wrap: nowrap;
+    border-left: 1px solid #E0E0E0;
+  }
+  .two-side-flex > *{
+    border-right: 1px solid #E0E0E0;
   }
   .flex-third{
     flex-basis: 30%;

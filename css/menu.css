@@ -20,13 +20,13 @@
 
 /* ----- SEARCH RESUME -----*/
 
-.search-resume-wrapper{
+.sticky{
   position: sticky;
   top: 52px;
   z-index: 10;
 }
-@media(min-width: 993px) {
-  .search-resume-wrapper{
+@media(min-width: 993px){
+  .sticky{
     position: static;
   }
 }
@@ -74,18 +74,6 @@
 
 /* --- ce qu'il y a autour de l'item --- */
 
-.back-link-container{
-  position: sticky;
-  top: 52px;
-  z-index: 10;
-}
-.back-link-container i{
-  padding-right: 12px;
-}
-.back-link-container a{
-  text-decoration: none;
-}
-
 /* barre des boutons */
 .item-buttons-container{
   padding: 6px;
@@ -99,9 +87,6 @@
 }
 
 @media(min-width: 993px){
-  .back-link-container{
-    position: static;
-  }
   .item-buttons-container{
     padding: 12px;
   }

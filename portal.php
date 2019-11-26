@@ -52,9 +52,8 @@
 
     <div class="flex-half">
 
-      <h4 class="container">Récupérathèques</h4>
 
-      <hr>
+      <div class="container border-bottom"><h4>Récupérathèques</h4></div>
 
       <div class="recup-list">
         <?php
@@ -67,7 +66,7 @@
             $url = "catalogue.php";
             $url = $url . "?r=" . $recup_info['pseudo'];?>
 
-            <div class=" border-bottom">
+            <div class="border-bottom">
 
               <div class="info">
               <?php include("recuperatheque_info.php");?>

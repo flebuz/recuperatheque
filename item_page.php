@@ -102,10 +102,9 @@
           }
         </script>
 
-        <hr>
-        <div class="container back-link-container">
+        <div class="container border-top border-bottom sticky">
 
-          <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> retour à la recherche </a>
+          <a onclick="back_link()" ><i class="fas fa-chevron-left"></i> &emsp; retour à la recherche </a>
 
           <script>
             function back_link(){
@@ -119,7 +118,6 @@
           </script>
 
         </div>
-        <hr>
 
       </div>
 

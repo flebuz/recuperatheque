@@ -240,7 +240,7 @@
           ?>
 
           <!-- search resume -->
-          <div class="container search-resume-wrapper">
+          <div class="container border-bottom sticky">
             <div class="search-resume">
 
               <?php
@@ -279,7 +279,6 @@
             </div>
           </div>
 
-          <hr>
 
           <!-- items container -->
           <div class="items-container">

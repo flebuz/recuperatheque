@@ -46,7 +46,7 @@
 
     <div class="flex-half">
 
-      <h4 class="container">Connecté.e en tant que:</h4>
+      <h4 class="title">Connecté.e en tant que:</h4>
 
       <?php
         //on recupere tt les info de la bonne recuperatheque
@@ -68,7 +68,7 @@
 
       <hr>
 
-      <h4 class="container">Mes Infos</h4>
+      <h4 class="title">Mes Infos</h4>
 
       <?php
       if(isset($_GET['e'])){
@@ -128,7 +128,7 @@
 
     <div class="flex-half">
 
-      <h4 class="container">Historique</h4>
+      <h4 class="title">Historique</h4>
 
     </div>
 
