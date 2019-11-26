@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
 
@@ -306,7 +307,7 @@
 
           <!-- page nav -->
           <hr>
-          
+
           <div class="container page-nav">
 
             <a href= <?php echo link_construct(array('page'=>$page-1)) ?>

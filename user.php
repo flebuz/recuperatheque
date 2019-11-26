@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
 
@@ -69,13 +70,16 @@
 
       <h4 class="container">Mes Infos</h4>
 
+      <?php
+      if(isset($_GET['e'])){
+        echo '<div class="container"> Mauvais mot de passe </div>';
+      }
+      ?>
+
+      <div class="container">Laisser vide les champs à ne pas modifier</div>
+
       <form class="container" action="set_info_recup.php" method="POST">
 
-        <?php
-        if(isset($_GET['e'])){
-          echo '<div class="input-field"> Mauvais mot de passe </div>';
-        }
-        ?>
 
         <div class="input-field">
           <label>Adresse: </label>

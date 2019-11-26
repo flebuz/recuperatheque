@@ -11,6 +11,7 @@
   <meta name="theme-color" content="">
 
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/add_form.css">
   <meta name="theme-color" content="#00E676">
 

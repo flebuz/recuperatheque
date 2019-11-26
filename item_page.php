@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/item.css">
   <link rel="stylesheet" href="css/add_form.css">
   <meta name="theme-color" content="#00E676">
