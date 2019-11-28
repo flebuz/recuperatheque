@@ -27,8 +27,9 @@ header("Cache-Control: max-age=0");
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!--<link rel="stylesheet" href="extras/noUiSlider/nouislider.css">-->
   <link rel="stylesheet" href="nouislider/nouislider.min.css">
-
+  <!-- la typo JOST -->
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
+
   <!--Import materialize.css-->
 
 
@@ -41,10 +42,14 @@ header("Cache-Control: max-age=0");
 ?>
 
 <?php
-if (isset($_POST['cat'])) {
-    include 'add.php';
-    console_log("include de add.php");
-} ?>
+
+
+
+
+
+?>
+
+
 
 
 
@@ -54,6 +59,26 @@ if (isset($_POST['cat'])) {
 
   <?php
     include('header.php');
+
+    if(isset($_SESSION['pseudo'])){
+            $recuperatheque = $_SESSION['pseudo'];
+            $recuperatheque_catalogue = $recuperatheque . '_catalogue';
+            $recuperatheque_journal = $recuperatheque . '_journal';
+    }
+    ?>
+
+    <?php
+    if (isset($_POST['cat'])) {
+        include 'add.php';
+        console_log("include de add.php");
+    } ?>
+
+    <?php
+    //----- construction de l'objet $system ----
+    //-> résume la structure de catégorie-sscat-comptage de la recuperatheque
+  //  if($recuperatheque){
+  //    include('categories_system.php');
+  //  }
   ?>
 
 
@@ -88,7 +113,7 @@ if (isset($_POST['cat'])) {
 
 
 
-<label for="file_upload" style>
+<label for="file_upload" style="text-align:center">
 
     <canvas id="snap_final" class="invisible"></canvas>
 
@@ -140,7 +165,7 @@ if (isset($_POST['cat'])) {
   <?php
     //prep the request
     //every line is a souscategorie
-    $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `categorie` ORDER BY `categorie`.`score` DESC
+    $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `_global_categories` ORDER BY `_global_categories`.`score` DESC
                         ');
     //execute the request
     $req->execute();
@@ -154,7 +179,7 @@ if (isset($_POST['cat'])) {
         ?>
         <?php
               // Here we prepare to fetch subcategories that display in the dropdown menus
-              $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie`, `unite`, `prix` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
+              $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie`, `unite`, `prix` FROM `_global_souscategories` ORDER BY `_global_souscategories`.`ID_categorie`
                                   ');
               //execute the request
               $req->execute();
@@ -342,7 +367,8 @@ if (isset($_POST['cat'])) {
     </div>
 </div>
 
-            <div class="row invisible"><input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
+            <div class="row invisible" id="hidden_inputs">
+              <input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
             <div class="row"></div>
 
 		</div>
@@ -389,7 +415,7 @@ if (isset($_POST['cat'])) {
 /*Message de succès ou d'échec du formulaire, si $_POST['cat'] est défini*/
 if (isset($_POST['cat'])) {
     if ($result == 'success') {
-        echo "<script>M.toast({html:\"L'objet ". $object_id ." a bien été encodé. <a class='btn-flat toast-action' href=item_page.php?id=". $object_id .">Voir l'objet</a>\"})</script>";
+        echo "<script>M.toast({html:\"L'objet ". $last_id ." a bien été encodé. <a class='btn-flat toast-action' href=item_page.php?r=". $recuperatheque ."&id=". $last_id .">Voir l'objet</a>\"})</script>";
     } else {
         echo $result;
     }
@@ -409,7 +435,7 @@ document.getElementById('heart4').addEventListener("click", function(){update_he
 document.getElementById('minus_btn').addEventListener("click", function(){Increment('pieces', -1, 1);});
 document.getElementById('plus_btn').addEventListener("click",  function(){Increment('pieces', 1, 1);});
 document.getElementById('indicateur_poids').addEventListener("click",  function(){this.select();});
-document.getElementById('indicateur_poids').addEventListener("keypress",  function(){return ValidateNumKeyPress(event); alert("gag");});
+document.getElementById('indicateur_poids').addEventListener("keypress",  function(){return ValidateNumKeyPress(event);});
 document.getElementById('indicateur_poids').addEventListener("focus",  function(){this.oldvalue = this.value;});
 document.getElementById('indicateur_poids').addEventListener("change",  function(){ValidateNumber(this); this.oldvalue = this.value; update_slider('slider_poids',this.value, this); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');});
 

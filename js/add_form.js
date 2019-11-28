@@ -371,7 +371,7 @@ function getOrientation(file, callback) {
 function DessineVignette(type, elem, orientation) {
 
   var compression = 0.95;
-  var size = 1000;
+  var size = 500;
 
   //si l'image uploadée est passée en argument
   if (type == 'imagesnap') {

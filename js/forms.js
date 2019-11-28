@@ -25,6 +25,23 @@ function compute_price(id_price, id_price_per_kg, id_weight, id_etat) {
       document.getElementById(id_price).value = final_price;}
 }
 
+function update_weight_and_price(final_weight_id, item_weight, nb_unit, final_price_id, item_price) {
+  if ((item_weight !== 'N/A') && (item_weight !== '')) {
+
+
+    var final_weight = nb_unit * item_weight;
+    document.getElementById(final_weight_id).value = final_weight;
+
+    var final_price = (nb_unit * item_price).toFixed(2);
+
+    document.getElementById(final_price_id).value = final_price;
+    console.log("nb pieces = " + nb_unit + "; prix/pc = " + item_price + "; poids/pc = " + item_weight + "; prix total = " + final_price);
+
+  } else {
+
+  }
+}
+
 function check_default_unit(default_unit, id_to_update) {
   if (default_unit == 'kg') {
     document.getElementById(id_to_update).classList.remove("invisible");

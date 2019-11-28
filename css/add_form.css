@@ -94,6 +94,12 @@
     max-height:400px;*/
 }
 
+.thumbnail
+{
+  width:100%;
+  max-width: 500px !important;
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;

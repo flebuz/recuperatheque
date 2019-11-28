@@ -8,15 +8,13 @@
     //include_once('connection_db.php')
   ?>
 
-<?php
-
-      //prep the request
-      $req = $bdd->prepare('  SELECT MAX(`ID`)  AS `greatestID` FROM `catalogue`
-                          ');
-      //execute the request
-      $req->execute();
-
-    $object_id= $req->fetchColumn() + 1;
+  <?php
+  if(isset($_SESSION['pseudo']))
+      {
+          $recuperatheque = $_SESSION['pseudo'];
+          $recuperatheque_catalogue = $recuperatheque . '_catalogue';
+          $recuperatheque_journal = $recuperatheque . '_journal';
+      }
 
 
 
@@ -43,11 +41,11 @@ else {$poids= 0;}
 
 try {
 
-    $req = $bdd ->prepare("INSERT INTO catalogue (ID, ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, poids, prix, localisation)
-                                  VALUES (:ID, :ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :poids, :prix, :localisation)
+    $req = $bdd ->prepare("INSERT INTO ".$recuperatheque_catalogue." (ID_categorie,	ID_souscategorie, pieces, dimensions, etat, tags, remarques, poids, prix, localisation)
+                                  VALUES (:ID_categorie, :ID_souscategorie, :pieces, :dimensions, :etat, :tags, :remarques, :poids, :prix, :localisation);
+                          SELECT LAST_INSERT_ID();
                           ");
 
-$req->bindParam(':ID', $object_id);
 $req->bindParam(':ID_categorie', $categorie);
 $req->bindParam(':ID_souscategorie', $souscategorie);
 $req->bindParam(':pieces', $pieces);
@@ -62,6 +60,7 @@ $req->bindParam(':localisation', $localisation);
 
 
 $req->execute();
+
 $result="success";
 
 
@@ -73,18 +72,29 @@ catch(PDOException $e)
     echo "erreur ajout à la base de données : ".$result;
     }
 
+    try {
+          $req = $bdd ->prepare("SELECT LAST_INSERT_ID(); FROM ".$recuperatheque_catalogue
+                                 );
+             $req->execute();
+             $last_id = $req->fetchColumn();
+             }
+             catch(PDOException $e)
+                 {
+                 $error=  $e->getMessage();
+                 echo "Erreur lors de la récupération de l'ID de l'objet ajouté : ".$error;
+                 }
 
 // Adding a line to the journal
     try {
 
 $operation = "add";
 
-        $req = $bdd ->prepare("INSERT INTO journal (operation, ID_objet, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
-                                      VALUES (:operation, :ID_objet, :ID_categorie, :ID_souscategorie, :pieces, :etat, :poids, :prix, :localisation)
+        $req = $bdd ->prepare("INSERT INTO ".$recuperatheque_journal."  (operation, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
+                                      VALUES (:operation, :ID_categorie, :ID_souscategorie, :pieces, :etat, :poids, :prix, :localisation)
                               ");
 
     $req->bindParam(':operation', $operation);
-    $req->bindParam(':ID_objet', $object_id);
+  //  $req->bindParam(':ID_objet', $object_id);
     $req->bindParam(':ID_categorie', $categorie);
     $req->bindParam(':ID_souscategorie', $souscategorie);
     $req->bindParam(':pieces', $pieces);
@@ -107,24 +117,10 @@ $operation = "add";
         echo "erreur ajout au journal : ".$result;
         }
 
-// update score des catégories
-  try {
-        $req = $bdd ->prepare("UPDATE categorie
-                                       SET score = score +1
-                                       WHERE ID=:ID_categorie
-                               ");
-           $req->bindParam(':ID_categorie', $categorie);
-
-           $req->execute();
-           $result="success";
+/*
 
 
-           }
-           catch(PDOException $e)
-               {
-               $result=  $e->getMessage();
-               echo "erreur update score des catégories : ".$result;
-               }
+        */
 
 
 //echo "Opérations sur l'image... <br />";
@@ -145,8 +141,8 @@ $operation = "add";
   //   $username = '1685312';
   //   $password = 'datarecoulechemindejerusalem';
   //   $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
-    $remoteFilePath = getcwd().'/photos/'.$object_id.'.jpg';
-    console_log("object_id dans le nom de l'image : ". $object_id);
+    $remoteFilePath = getcwd().'/photos/'.$recuperatheque.'/'.$last_id.'.jpg';
+    console_log("object_id dans le nom de l'image : ". $last_id);
   //   $ch = curl_init("sftp://$username:$password@$host$remotePath");
   //
   //   curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_SFTP);

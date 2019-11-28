@@ -32,7 +32,6 @@
   ?>
 
   <?php
-  include('header.php');
 
   include('connection_db.php');?>
 
@@ -42,8 +41,16 @@
 <body class="disable-dbl-tap-zoom">
 
   <?php
+    include('header.php');
 
+    if(isset($_SESSION['pseudo'])){
+            $recuperatheque = $_SESSION['pseudo'];
+            $recuperatheque_catalogue = $recuperatheque . '_catalogue';
+            $recuperatheque_journal = $recuperatheque . '_journal';
+    }
+    ?>
 
+  <?php
   // if previous form was submitted to self
   if (isset($_POST['action'])) {
     // process the edit/removal
@@ -68,9 +75,9 @@ $item_status = 0;
                               c.ID AS ID_item, c.ID_categorie, c.ID_souscategorie, c.pieces AS pieces, c.dimensions AS dimensions, c.etat AS etat, c.tags AS tags, c.prix AS prix, c.poids AS poids, c.remarques AS remarques, c.localisation AS localisation, DATE_FORMAT(c.date_ajout, \'%d/%m/%Y\') AS date_ajout_fr,
                               cat.ID, cat.nom AS categorie,
                               sscat.ID AS sscatID, sscat.ID_categorie, sscat.unite AS unitesscat, sscat.prix AS prixsscat, sscat.nom AS sous_categorie
-                              FROM catalogue c
-                              INNER JOIN categorie cat ON c.ID_categorie=cat.ID
-                              INNER JOIN souscategorie sscat ON c.ID_souscategorie=sscat.ID
+                              FROM '. $recuperatheque_catalogue .' c
+                              INNER JOIN _global_categories cat ON c.ID_categorie=cat.ID
+                              INNER JOIN _global_souscategories sscat ON c.ID_souscategorie=sscat.ID
                               WHERE c.id=:id');
 
       $req->bindValue(':id', $id, PDO::PARAM_INT);
@@ -89,7 +96,7 @@ $item_status = 0;
     if  ( (isset($_POST['action'])) &&($_POST['action'] =='remove') )
          {
            //redirect to catalogue in 3 seconds since there is no item to display
-          header("refresh:2; url='catalogue.php'");
+          header("refresh:2; url='catalogue.php?r=$recuperatheque'");
           $item_status=999; //set value to 999 to mean "destroyed"
          }
 ?>
@@ -124,10 +131,10 @@ $item_status = 0;
     <div class="row nomargin">
 
 <div id="cam_col" class="col s12 center-align">
-  <label for="file_upload" style>
+  <label for="file_upload" style="text-align:center">
 
       <canvas id="snap_final" class="invisible"></canvas>
-      <img id="snap_original" class="thumbnail responsive-img" src="/photos/<?php echo $id ?>.jpg"></img>
+      <img id="snap" class="thumbnail responsive-img" src="/photos/<?php echo $recuperatheque ?>/<?php echo $id ?>.jpg"></img>
 
                               <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                           </label>
@@ -154,7 +161,7 @@ $item_status = 0;
     <?php
       //prep the request
       //every line is a souscategorie
-      $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `categorie` ORDER BY `categorie`.`ID`
+      $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `_global_categories` ORDER BY `_global_categories`.`ID`
                           ');
       //execute the request
       $req->execute();
@@ -175,7 +182,7 @@ $item_status = 0;
           ?>
           <?php
                 // Here we prepare to fetch subcategories that display in the dropdown menus
-                $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie`, `unite`, `prix` FROM `souscategorie` ORDER BY `souscategorie`.`ID_categorie`
+                $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie`, `unite`, `prix` FROM `_global_souscategories` ORDER BY `_global_souscategories`.`ID_categorie`
                                     ');
                 //execute the request
                 $req->execute();
@@ -317,7 +324,7 @@ $item_status = 0;
                   </div>
               </div>
 
-              <div class="row"><input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
+              <div class="row invisible"><input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
               <div class="row"></div>
 
 
@@ -347,7 +354,7 @@ $item_status = 0;
   <div class="row">
 
       <div class="col s2 left">
-        <a class="waves-effect waves-light btn-small" value="edit" href="item_page.php?id=<?php echo $id;?>" style="background-color: #909090;">
+        <a class="waves-effect waves-light btn-small" value="edit" href="item_page.php?r=<?php echo $recuperatheque ?>&id=<?php echo $id;?>" style="background-color: #909090;">
          <i class="fas fa-arrow-left"></i>
           Retour
         </a>

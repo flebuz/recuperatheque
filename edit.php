@@ -22,6 +22,12 @@ echo "Les fonctions SSH2 ne sont pas disponibles.";
   ?>
 
 <?php
+if(isset($_SESSION['pseudo']))
+    {
+        $recuperatheque = $_SESSION['pseudo'];
+        $recuperatheque_catalogue = $recuperatheque . '_catalogue';
+        $recuperatheque_journal = $recuperatheque . '_journal';
+    }
 
 $action = $_POST['action'];
 $object_id = $_POST['ID_item'];
@@ -47,7 +53,7 @@ try {
     if ($action=='edit')
     {
 
-      $req = $bdd ->prepare("UPDATE catalogue
+      $req = $bdd ->prepare("UPDATE ".$recuperatheque_catalogue."
                                     SET ID_categorie=:ID_categorie, ID_souscategorie=:ID_souscategorie, pieces=:pieces, dimensions=:dimensions, etat=:etat, tags=:tags, remarques=:remarques, poids=:poids, prix=:prix, localisation=:localisation
                                     WHERE ID=:ID_item
                             ");
@@ -69,7 +75,7 @@ try {
 
     else if ($action=='remove')
     {
-      $req = $bdd ->prepare("DELETE FROM catalogue
+      $req = $bdd ->prepare("DELETE FROM ".$recuperatheque_catalogue."
                                     WHERE ID=:ID_item
                             ");
       $req->bindParam(':ID_item', $object_id);
@@ -90,6 +96,19 @@ catch(PDOException $e)
     }
 
 
+    try {
+          $req = $bdd ->prepare("SELECT LAST_INSERT_ID(); FROM ".$recuperatheque_catalogue
+                                 );
+             $req->execute();
+             $last_id = $req->fetchColumn();
+         }
+   catch(PDOException $e)
+         {
+         $error=  $e->getMessage();
+         echo "Erreur lors de la récupération de l'ID de l'objet ajouté : ".$error;
+         }
+
+
 
 
     // Adding a line to the journal
@@ -97,7 +116,7 @@ catch(PDOException $e)
 
     $operation = $action;
 
-            $req = $bdd ->prepare("INSERT INTO journal (operation, ID_objet, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
+            $req = $bdd ->prepare("INSERT INTO ".$recuperatheque_journal." (operation, ID_objet, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
                                           VALUES (:operation, :ID_objet, :ID_categorie, :ID_souscategorie, :pieces, :etat, :poids, :prix, :localisation)
                                   ");
 
@@ -148,7 +167,7 @@ catch(PDOException $e)
     //   $username = '1685312';
     //   $password = 'datarecoulechemindejerusalem';
     //   $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
-      $remoteFilePath = getcwd().'/photos/'.$object_id.'.jpg';
+      $remoteFilePath = getcwd().'/photos/'.$recuperatheque.'/'.$last_id.'.jpg';
       console_log("object_id dans le nom de l'image : ". $object_id);
     //   $ch = curl_init("sftp://$username:$password@$host$remotePath");
     //

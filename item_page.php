@@ -230,7 +230,7 @@
                           <i id='prefix_poids' class="fas fa-weight-hanging item-icon"></i>
                     </div>
                     <div class="w3-col s3 inline-group" >
-                    <input id="poids_total" name="poids_total" class="w3-input" value="<?php echo $item['poids']; ?>">&nbsp; kg
+                    <input id="poids_total" name="poids_total" class="w3-input" value="<?php echo $item['poids']; ?>" readonly>&nbsp; kg
                   </div>
 
            </div>

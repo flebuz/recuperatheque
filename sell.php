@@ -4,7 +4,13 @@
 
   <link rel="stylesheet" href="css/w3.css">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/add_form.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/menu.css">
+
+  <!-- to have icon of the font awesome 5 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+  <!-- la typo JOST -->
+  <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
 </head>
 <body>
 
@@ -15,14 +21,25 @@ ini_set("display_errors", 1);
 
 */
 ?>
-
-<table>
-
-  <?php
-    include('connection_db.php')
-  ?>
+<?php
+  include('connection_db.php')
+?>
 
 <?php
+include('header.php');
+?>
+<table>
+
+
+
+<?php
+
+if(isset($_SESSION['pseudo']))
+    {
+        $recuperatheque = $_SESSION['pseudo'];
+        $recuperatheque_catalogue = $recuperatheque . '_catalogue';
+        $recuperatheque_journal = $recuperatheque . '_journal';
+    }
 
 
 $object_id = $_POST['ID_item'];
@@ -34,7 +51,7 @@ $prix= $_POST['prix'];
 
 
 $req = $bdd ->prepare("SELECT c.pieces, c.ID_categorie, c.ID_souscategorie, c.etat, c.localisation
-                       FROM catalogue c
+                       FROM ".$recuperatheque_catalogue." c
                        WHERE c.id=:ID_item
                       ");
 $req->bindParam(':ID_item', $object_id);
@@ -56,21 +73,21 @@ else {
 
 
 if ($pieces_restantes >0 )
-{  $req = $bdd ->prepare("UPDATE catalogue
+{  $req = $bdd ->prepare("UPDATE ".$recuperatheque_catalogue."
                                 SET pieces=:pieces
                                 WHERE ID=:ID_item
                         ");
   $req->bindParam(':ID_item', $object_id);
  $req->bindParam(':pieces', $pieces_restantes);
-$redirect="item_page.php?id=".$object_id;
+
 }
 
   else {
-    $req = $bdd ->prepare("DELETE FROM catalogue
+    $req = $bdd ->prepare("DELETE FROM ".$recuperatheque_catalogue."
                                   WHERE ID=:ID_item
                           ");
     $req->bindParam(':ID_item', $object_id);
-    $redirect="catalogue.php";
+
   }
 
 try {
@@ -94,7 +111,7 @@ catch(PDOException $e)
 
     $operation = "sell";
 
-            $req = $bdd ->prepare("INSERT INTO journal (operation, ID_objet, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
+            $req = $bdd ->prepare("INSERT INTO ".$recuperatheque_journal." (operation, ID_objet, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
                                           VALUES (:operation, :ID_objet, :ID_categorie, :ID_souscategorie, :pieces, :etat, :poids, :prix, :localisation)
                                   ");
 
@@ -123,7 +140,7 @@ catch(PDOException $e)
             }
 
   ?>
-  <div id="loading_overlay" class="overlay visible">
+  <div id="loading_overlay" class="overlay invisible">
     <!-- Overlay content -->
     <div class="overlay-content">
     <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -140,7 +157,7 @@ catch(PDOException $e)
 
      <div class="w3-container">
        <p><?php if (isset($pieces_vendues)){
-         header("refresh:2; url='catalogue.php'");
+         header("refresh:2000; url='catalogue.php?r=".$recuperatheque."'");
 
          if ($pieces_vendues>1)
          {echo $pieces_vendues." objets vendus<br /><br />";}
@@ -154,7 +171,7 @@ catch(PDOException $e)
 
      <footer class="w3-container">
        <div class="w3-right">
-         <button class="button-flex item-button" onclick="javascript:window.location.replace('<?php echo $redirect;?>')">
+         <button class="button-flex item-button" onclick="javascript:window.location.replace('catalogue.php?r=<?php echo $recuperatheque ?>')">
            <div class="button-title">OK &nbsp;</div>
          </button>
        </div>

@@ -28,8 +28,8 @@ html, body{
 }
 
 html, body, p, h1, h2, h3, h4, h5, h6{
-  font-family:, 'Open Sans', Helvetica, arial, sans-serif !important;
-  /* font-family: 'Jost', Helvetica, arial, sans-serif !important; */
+ /*  font-family:, 'Open Sans', Helvetica, arial, sans-serif !important; */
+   font-family: 'Jost', Helvetica, arial, sans-serif !important; 
 }
 
 *, *:before, *:after {
@@ -228,6 +228,10 @@ hr{
   width: 100%;
   height: auto;
   padding: 24px;
+}
+.w3-modal
+{
+    z-index: 15;
 }
 
 @media(min-width: 601px){
