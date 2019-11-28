@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 22 nov. 2019 à 12:01
+-- Généré le :  jeu. 28 nov. 2019 à 18:42
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -161,11 +161,101 @@ INSERT INTO `bag_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_so
 -- --------------------------------------------------------
 
 --
--- Structure de la table `gilbards_catalogue`
+-- Structure de la table `cab_catalogue`
 --
 
-DROP TABLE IF EXISTS `gilbards_catalogue`;
-CREATE TABLE IF NOT EXISTS `gilbards_catalogue` (
+DROP TABLE IF EXISTS `cab_catalogue`;
+CREATE TABLE IF NOT EXISTS `cab_catalogue` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_categorie` int(11) NOT NULL,
+  `ID_souscategorie` int(11) NOT NULL,
+  `pieces` int(11) NOT NULL,
+  `dimensions` varchar(255) NOT NULL,
+  `etat` int(11) NOT NULL,
+  `tags` text NOT NULL,
+  `remarques` text NOT NULL,
+  `date_ajout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `poids` float NOT NULL,
+  `prix` float NOT NULL,
+  `localisation` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cab_journal`
+--
+
+DROP TABLE IF EXISTS `cab_journal`;
+CREATE TABLE IF NOT EXISTS `cab_journal` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `operation` varchar(10) NOT NULL,
+  `ID_objet` int(11) NOT NULL,
+  `ID_categorie` int(11) NOT NULL,
+  `ID_souscategorie` int(11) NOT NULL,
+  `pieces` int(11) NOT NULL,
+  `etat` int(11) NOT NULL,
+  `date_operation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `poids` float NOT NULL,
+  `prix` float NOT NULL,
+  `localisation` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `fourmiliere_catalogue`
+--
+
+DROP TABLE IF EXISTS `fourmiliere_catalogue`;
+CREATE TABLE IF NOT EXISTS `fourmiliere_catalogue` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID_categorie` int(11) NOT NULL,
+  `ID_souscategorie` int(11) NOT NULL,
+  `pieces` int(11) NOT NULL,
+  `dimensions` varchar(255) NOT NULL,
+  `etat` int(11) NOT NULL,
+  `tags` text NOT NULL,
+  `remarques` text NOT NULL,
+  `date_ajout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `poids` float NOT NULL,
+  `prix` float NOT NULL,
+  `localisation` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `fourmiliere_journal`
+--
+
+DROP TABLE IF EXISTS `fourmiliere_journal`;
+CREATE TABLE IF NOT EXISTS `fourmiliere_journal` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `operation` varchar(10) NOT NULL,
+  `ID_objet` int(11) NOT NULL,
+  `ID_categorie` int(11) NOT NULL,
+  `ID_souscategorie` int(11) NOT NULL,
+  `pieces` int(11) NOT NULL,
+  `etat` int(11) NOT NULL,
+  `date_operation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `poids` float NOT NULL,
+  `prix` float NOT NULL,
+  `localisation` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `gilbard_catalogue`
+--
+
+DROP TABLE IF EXISTS `gilbard_catalogue`;
+CREATE TABLE IF NOT EXISTS `gilbard_catalogue` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `ID_categorie` int(11) NOT NULL,
   `ID_souscategorie` int(11) NOT NULL,
@@ -182,10 +272,10 @@ CREATE TABLE IF NOT EXISTS `gilbards_catalogue` (
 ) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `gilbards_catalogue`
+-- Déchargement des données de la table `gilbard_catalogue`
 --
 
-INSERT INTO `gilbards_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`, `localisation`) VALUES
+INSERT INTO `gilbard_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`, `localisation`) VALUES
 (1, 12, 119, 3200, '4cm x 4cm', 3, 'attache, flexible, flex, joint', 'Lot. Fonction originale: équerre pour carton. A partir de 200 pièces.', '2019-08-06 00:00:00', 0, 0, 'Rue Abbé Cuylits 44, 1070 Anderlecht'),
 (2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 4, 'sapin, baguette, tasseau, rabotté', 'Lot à prendre dans son entièretée', '2019-08-06 00:00:00', 0, 0, ''),
 (3, 18, 125, 1, '10m', 3, 'lance, incendie, tuyau, rouge, eau', 'Lance à incendie sur support raccordée à adaptateur. 10m de longueur.', '2019-08-07 00:00:00', 0, 0, ''),
@@ -204,11 +294,11 @@ INSERT INTO `gilbards_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pie
 -- --------------------------------------------------------
 
 --
--- Structure de la table `gilbards_journal`
+-- Structure de la table `gilbard_journal`
 --
 
-DROP TABLE IF EXISTS `gilbards_journal`;
-CREATE TABLE IF NOT EXISTS `gilbards_journal` (
+DROP TABLE IF EXISTS `gilbard_journal`;
+CREATE TABLE IF NOT EXISTS `gilbard_journal` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `operation` varchar(10) NOT NULL,
   `ID_objet` int(11) NOT NULL,
@@ -224,10 +314,10 @@ CREATE TABLE IF NOT EXISTS `gilbards_journal` (
 ) ENGINE=MyISAM AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `gilbards_journal`
+-- Déchargement des données de la table `gilbard_journal`
 --
 
-INSERT INTO `gilbards_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_souscategorie`, `pieces`, `etat`, `date_operation`, `poids`, `prix`, `localisation`) VALUES
+INSERT INTO `gilbard_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_souscategorie`, `pieces`, `etat`, `date_operation`, `poids`, `prix`, `localisation`) VALUES
 (67, 'add', 28, 7, 39, 1, 1, '2019-10-21 10:43:11', 0, 0, 'Récupérathèque'),
 (66, 'add', 27, 7, 39, 1, 1, '2019-10-21 10:43:02', 0, 0, 'Récupérathèque'),
 (65, 'add', 26, 4, 18, 1, 1, '2019-10-21 10:42:24', 0, 0, 'Récupérathèque'),
@@ -359,15 +449,17 @@ CREATE TABLE IF NOT EXISTS `_global_recuperatheques` (
   `mail` varchar(255) NOT NULL,
   `date_creation` date DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `_global_recuperatheques`
 --
 
 INSERT INTO `_global_recuperatheques` (`ID`, `nom`, `adresse`, `monnaie`, `telephone`, `mdp`, `site`, `pseudo`, `mail`, `date_creation`) VALUES
-(1, 'Boite à Gants', '87, rue du Page\r\n1050 Bruxelles (B)\r\nSur le plateau art.', 'Glock', '', '$2y$10$DOI1.f9QL/2sjyFI4Uf/r.gQoZj0FsYpK/k9hGBqq3DKcdS1DZ1oC', 'http://erg.be/BAG/index.html', 'bag', 'bag@erg.be', NULL),
-(2, 'Gilbards', 'Rue Abbé Cuylits 44, 1070 Anderlecht', 'G', '', '$2y$10$OE3ShAkWOly0PJqO4XFJFexwZJPVu/O6PJaNxmtbHj.UF8cVEjKCq', 'http://gilbard.be/', 'gilbards', 'info@gilbards.be', NULL);
+(1, 'La Boite à Gants', '87, rue du Page 1050 Bruxelles, sur le plateau art.', 'Glock', '', '$2y$10$0UjV97.WnaUf3ASvvKnukuRF48DMv0F.Oy1DOjeV8BuiAga3sKwDu', 'http://erg.be/BAG/', 'bag', 'bag@erg.be', NULL),
+(2, 'Gilbard', 'Rue Abbé Cuylits 44, 1070 Anderlecht', 'G', '', '$2y$10$0UjV97.WnaUf3ASvvKnukuRF48DMv0F.Oy1DOjeV8BuiAga3sKwDu', 'http://gilbard.be', 'gilbard', 'info@gilbard.be', NULL),
+(3, 'La Fourmilière', '', '', '', '$2y$10$0UjV97.WnaUf3ASvvKnukuRF48DMv0F.Oy1DOjeV8BuiAga3sKwDu', '', 'fourmiliere', 'lafourmiliere.ulb@gmail.com', NULL),
+(4, 'La Caverne d\'Ali Baba', '', '', '', '$2y$10$0UjV97.WnaUf3ASvvKnukuRF48DMv0F.Oy1DOjeV8BuiAga3sKwDu', '', 'cab', '', NULL);
 
 -- --------------------------------------------------------
 
