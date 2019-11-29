@@ -29,7 +29,7 @@ html, body{
 
 html, body, p, h1, h2, h3, h4, h5, h6{
  /*  font-family:, 'Open Sans', Helvetica, arial, sans-serif !important; */
-   font-family: 'Jost', Helvetica, arial, sans-serif !important; 
+   font-family: 'Jost', Helvetica, arial, sans-serif !important;
 }
 
 *, *:before, *:after {
@@ -206,7 +206,7 @@ hr{
 /* --- MODAL --- */
 
 /* prend tout l'écran */
-.modal {
+.modal1 {
   display: none;
   position: fixed;
   z-index: 20;
@@ -217,29 +217,38 @@ hr{
   overflow: auto;
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-.modal.active{
+.modal1.active{
   display: block;
 }
 
 /* Modal Content Box */
-.modal-content {
+.modal1-content {
   background-color: white;
   margin: 52px auto;
   width: 100%;
   height: auto;
   padding: 24px;
 }
-.w3-modal
-{
-    z-index: 15;
-}
+
+
 
 @media(min-width: 601px){
-  .modal-content {
+  .modal1-content {
     width: 33%;
     height: auto;
     margin: 104px auto; /* commence 2x plus bas que la hauteur du header */
   }
+}
+
+
+.w3-modal
+{
+    z-index: 15 !important;
+}
+
+.w3-modal-content
+{
+    padding:24px !important;
 }
 
 /* --- Form, buttons & input --- */
@@ -291,6 +300,11 @@ input{
 input:focus{
   outline: none !important;
   border-color: #00E676;
+}
+
+.w3-input
+{
+  text-align: center;
 }
 
 /*----- FORMS -----*/

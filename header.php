@@ -87,10 +87,10 @@ session_start();
 
     <!-- boite modal de connection -->
     <div id="connection"
-         class="modal <?php if($connection_refused){ echo 'active'; }?>">
+         class="modal1 <?php if($connection_refused){ echo 'active'; }?>">
 
       <!-- Modal content -->
-      <div class="modal-content">
+      <div class="modal1-content">
 
         <form method="POST">
 
