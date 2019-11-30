@@ -13,8 +13,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "catalogue.php?utm_source=a2hs",
-  "background_color": "#00E676",
-  "theme_color": "#00E676",
+  "start_url": "portal.php?utm_source=a2hs",
+  "background_color": "#303030",
+  "theme_color": "#303030",
   "display": "standalone"
 }

@@ -50,19 +50,29 @@
 
       <?php
         //on recupere tt les info de la bonne recuperatheque
+
+        if(isset($_SESSION['pseudo'])){
+                $recuperatheque = $_SESSION['pseudo'];
+                $recuperatheque_catalogue = $recuperatheque . '_catalogue';
+                $recuperatheque_journal = $recuperatheque . '_journal';
+
+
         $req = $bdd->prepare(' SELECT * FROM _global_recuperatheques WHERE pseudo = :recuperatheque ');
         $req->bindValue(':recuperatheque', $_SESSION['pseudo'] , PDO::PARAM_STR);
         $req->execute();
         $recup_info = $req->fetch();
 
+
+
         //on print l'info box
         include("recuperatheque_info.php");
+          }
       ?>
 
       <div class="container">
         <button class="button-flex"
-          onclick="window.location.href='deconnection.php'" >
-          <div class="button-title">Deconnection</div>
+          onclick="window.location.href='deconnexion.php'" >
+          <div class="button-title">Déconnexion</div>
         </button>
       </div>
 
@@ -129,6 +139,50 @@
     <div class="flex-half">
 
       <h4 class="title">Historique</h4>
+
+
+<?php
+
+// Here we prepare to fetch subcategories that display in the dropdown menus
+$req = $bdd->prepare('  SELECT *  FROM '. $recuperatheque_journal.' c
+INNER JOIN _global_categories cat ON c.ID_categorie=cat.ID
+INNER JOIN _global_souscategories sscat ON c.ID_souscategorie=sscat.ID
+'
+                    );
+//execute the request
+$req->execute();
+
+$journal = $req->fetchAll();
+
+
+
+      echo "<ul>";
+
+      for ($row = 0; $row < sizeof($journal); $row++) {
+
+        switch($journal[$row]['operation'])
+        {
+          case "add" :
+            $operation="ajouté"; break;
+          case "sell":
+            $operation="vendu";  break;
+          case "edit":
+            $operation="modifié";  break;
+          case "remove":
+            $operation="supprimé";  break;
+
+        }
+          echo "<li>";
+          //$journal[$row]['operation']
+
+          echo "Le ".$journal[$row]['date_operation'].", l'objet n°".$journal[$row]['ID_objet']." (".$journal[$row]['12'].": ".$journal[$row]['nom'].") a été ".$operation;
+          //print_r($journal[$row]);
+          echo "</li>";
+          }
+
+             ?>
+           </ul>
+
 
     </div>
 

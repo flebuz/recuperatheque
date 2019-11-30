@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/add_form.css">
   <link rel="stylesheet" href="css/menu.css">
-  <meta name="theme-color" content="#00E676">
+  <meta name="theme-color" content="#303030"><!-- Chrome -->
 
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">

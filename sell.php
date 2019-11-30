@@ -6,7 +6,8 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/menu.css">
-
+  <meta name="theme-color" content="#303030"><!-- Chrome -->
+  
   <!-- to have icon of the font awesome 5 -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
   <!-- la typo JOST -->
@@ -157,7 +158,7 @@ catch(PDOException $e)
 
      <div class="w3-container">
        <p><?php if (isset($pieces_vendues)){
-         header("refresh:2000; url='catalogue.php?r=".$recuperatheque."'");
+         header("refresh:2; url='catalogue.php?r=".$recuperatheque."'");
 
          if ($pieces_vendues>1)
          {echo $pieces_vendues." objets vendus<br /><br />";}

@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
   <link rel="stylesheet" href="css/add_form.css">
-  <meta name="theme-color" content="#00E676">
+  <meta name="theme-color" content="#303030"><!-- Chrome -->
 
 </head>
 

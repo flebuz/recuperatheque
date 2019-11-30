@@ -89,12 +89,12 @@ catch(PDOException $e)
 
 $operation = "add";
 
-        $req = $bdd ->prepare("INSERT INTO ".$recuperatheque_journal."  (operation, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
-                                      VALUES (:operation, :ID_categorie, :ID_souscategorie, :pieces, :etat, :poids, :prix, :localisation)
+        $req = $bdd ->prepare("INSERT INTO ".$recuperatheque_journal."  (operation, ID_objet, ID_categorie,	ID_souscategorie, pieces, etat, poids, prix, localisation)
+                                      VALUES (:operation, :ID_objet, :ID_categorie, :ID_souscategorie, :pieces, :etat, :poids, :prix, :localisation)
                               ");
 
     $req->bindParam(':operation', $operation);
-  //  $req->bindParam(':ID_objet', $object_id);
+    $req->bindParam(':ID_objet', $last_id);
     $req->bindParam(':ID_categorie', $categorie);
     $req->bindParam(':ID_souscategorie', $souscategorie);
     $req->bindParam(':pieces', $pieces);
@@ -136,38 +136,38 @@ $operation = "add";
    rewind($local_file);
   //
   //   // FTP login
-  //   $host = 'sftp.sd3.gpaas.net';
-  //   $port = 22;
-  //   $username = '1685312';
-  //   $password = 'datarecoulechemindejerusalem';
-  //   $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
+     $host = 'sftp.sd3.gpaas.net';
+     $port = 22;
+     $username = '1685312';
+     $password = 'datarecoulechemindejerusalem';
+     $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
     $remoteFilePath = getcwd().'/photos/'.$recuperatheque.'/'.$last_id.'.jpg';
     console_log("object_id dans le nom de l'image : ". $last_id);
-  //   $ch = curl_init("sftp://$username:$password@$host$remotePath");
-  //
-  //   curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_SFTP);
-  //   curl_setopt($ch, CURLOPT_SSH_AUTH_TYPES, CURLSSH_AUTH_PUBLICKEY);
-  //   /*curl_setopt($ch, CURLOPT_SSH_PUBLIC_KEYFILE, $_SERVER["DOCUMENT_ROOT"]."/home/.ssh/id_rsa.pub");
-  //   curl_setopt($ch, CURLOPT_SSH_PRIVATE_KEYFILE, $_SERVER["DOCUMENT_ROOT"]."/home/.ssh/id_rsa");*/
-  //   curl_setopt($ch, CURLOPT_VERBOSE, true);
-  //   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  //
-  //
-  //   $response= curl_exec ($ch);
-  //   /*
-  //   if (curl_errno($ch)) {
-  //       $error_msg = curl_error($ch);
-  //   }
-  //
-  //   if (isset($error_msg)) {
-  //        echo "Erreur d'upload de la photo : ".$error_msg;
-  //        //-> renvoie un message d'erreur authentification failed même lorsqu'elle a réussi
-  //   }
-  //   else
-  //   {echo "Photo uploadée avec succès <br />"; */
-  //
-  //
-  //   curl_close ($ch);
+     $ch = curl_init("sftp://$username:$password@$host$remotePath");
+
+     curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_SFTP);
+     curl_setopt($ch, CURLOPT_SSH_AUTH_TYPES, CURLSSH_AUTH_PUBLICKEY);
+     /*curl_setopt($ch, CURLOPT_SSH_PUBLIC_KEYFILE, $_SERVER["DOCUMENT_ROOT"]."/home/.ssh/id_rsa.pub");
+     curl_setopt($ch, CURLOPT_SSH_PRIVATE_KEYFILE, $_SERVER["DOCUMENT_ROOT"]."/home/.ssh/id_rsa");*/
+     curl_setopt($ch, CURLOPT_VERBOSE, true);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+
+     $response= curl_exec ($ch);
+     /*
+     if (curl_errno($ch)) {
+         $error_msg = curl_error($ch);
+     }
+
+     if (isset($error_msg)) {
+          echo "Erreur d'upload de la photo : ".$error_msg;
+          //-> renvoie un message d'erreur authentification failed même lorsqu'elle a réussi
+     }
+     else
+     {echo "Photo uploadée avec succès <br />"; */
+
+
+     curl_close ($ch);
   //
   //
   //

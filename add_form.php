@@ -20,7 +20,7 @@ header("Cache-Control: max-age=0");
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/add_form.css">
-  <meta name="theme-color" content="#00E676"><!-- Chrome -->
+  <meta name="theme-color" content="#303030"><!-- Chrome -->
 
 
 
@@ -420,6 +420,10 @@ document.getElementById('heart1').addEventListener("click", function(){update_he
 document.getElementById('heart2').addEventListener("click", function(){update_hearts(2)});
 document.getElementById('heart3').addEventListener("click", function(){update_hearts(3)});
 document.getElementById('heart4').addEventListener("click", function(){update_hearts(4)});
+document.getElementById('heart1').addEventListener("touchend", function(){update_hearts(1)});
+document.getElementById('heart2').addEventListener("touchend", function(){update_hearts(2)});
+document.getElementById('heart3').addEventListener("touchend", function(){update_hearts(3)});
+document.getElementById('heart4').addEventListener("touchend", function(){update_hearts(4)});
 document.getElementById('minus_btn').addEventListener("click", function(){Increment('pieces', -1, 1);});
 document.getElementById('plus_btn').addEventListener("click",  function(){Increment('pieces', 1, 1);});
 document.getElementById('indicateur_poids').addEventListener("click",  function(){this.select();});
