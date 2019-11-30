@@ -85,6 +85,14 @@
   }
 }
 
+
+.containerbis {
+    background:
+    white;
+    text-align: left;
+    padding: 12px 24px;
+}
+
 #overlayimage {
   position: absolute;
   top: 0px;

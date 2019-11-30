@@ -41,16 +41,6 @@ header("Cache-Control: max-age=0");
   include('connection_db.php');
 ?>
 
-<?php
-
-
-
-
-
-?>
-
-
-
 
 
 </head>

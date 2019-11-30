@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/add_form.css">
+  <link rel="stylesheet" href="css/menu.css">
   <meta name="theme-color" content="#00E676">
 
 
@@ -104,6 +105,12 @@ $item_status = 0;
 
 <main class="space-header">
 
+  <div class="containerbis border-top border-bottom sticky">
+
+    <a href="item_page.php?r=<?php echo $recuperatheque."&id=".$id ?>"><i class="fas fa-chevron-left"></i> &emsp; retour à l'objet</a>
+
+  </div>
+
   <!-- Show modal in case of ID error -->
    <div id="modal_iderror" class="modal">
      <div class="modal-content">
@@ -125,6 +132,8 @@ $item_status = 0;
     </div>
 
   </div>
+
+
 
 
   <div class="container" id="cam_container">
@@ -310,7 +319,7 @@ $item_status = 0;
                 </div>
                 <div class="input-field col s12">
                   <i class="fas fa-ruler prefix"></i>
-                  <input id="dimensions" name="dimensions" type="text" value="<?php if ($item['dimensions']!=='') {echo $item['dimensions'];} else {echo "Pas dispo";}?>">
+                  <input id="dimensions" name="dimensions" type="text" value="<?php if ($item['dimensions']!=='') {echo $item['dimensions'];}?>">
                   <label for="dimensions">Dimensions précises :</label>
                 </div>
               </div>
@@ -325,8 +334,6 @@ $item_status = 0;
               </div>
 
               <div class="row invisible"><input id="image_final" name="image_final" type="text"></div> <!-- hidden input where the blob of the image will be stored -->
-              <div class="row"></div>
-
 
 
 
@@ -344,8 +351,6 @@ $item_status = 0;
                </div>
              </div>
 
-
-
 </div>
 
 </div>
@@ -353,22 +358,17 @@ $item_status = 0;
 <div class="quasi-fullwidth">
   <div class="row">
 
-      <div class="col s2 left">
-        <a class="waves-effect waves-light btn-small" value="edit" href="item_page.php?r=<?php echo $recuperatheque ?>&id=<?php echo $id;?>" style="background-color: #909090;">
-         <i class="fas fa-arrow-left"></i>
-          Retour
-        </a>
-      </div>
-<div class="col s6 m4 inline-group right">
+
+<div class="item-buttons-container right">
 
 
-     <a class="waves-effect waves-light btn-small green accent-3 " name="submit_edit" id ="submit_edit">
-       <i class="fas fa-edit"></i>
+     <a class="waves-effect waves-light btn-small green accent-3" name="submit_edit" id ="submit_edit" style="margin:6px;">
        Modifier
+       <i class="fas fa-edit"></i>
      </a>
-     <a class="waves-effect waves-light btn-small modal-trigger" href="#modal_remove"  style="background-color: #909090;">
-        <i class="fas fa-trash-alt"></i>
+     <a class="waves-effect waves-light btn-small modal-trigger" href="#modal_remove"  style="background-color: #909090; margin:6px;">
         Supprimer
+        <i class="fas fa-trash-alt"></i>
       </a>
 
       <input id="action" name="action" class="invisible" value="edit">
@@ -381,7 +381,6 @@ $item_status = 0;
 </div>
 
   </form>
-
 
 
 </main>
@@ -498,11 +497,8 @@ function init_materialize() {
            outDuration: 250,
            inDuration: 0
          });
-
-
   }
 </script>
-
 
 
 </body>
