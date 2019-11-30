@@ -277,6 +277,12 @@ button {
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+  cursor:pointer;
+}
+
+a
+{
+  cursor:pointer;
 }
 
 .button-flex{
