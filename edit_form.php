@@ -245,19 +245,6 @@ $item_status = 0;
 
 
 
-                  <div id="row_tags" class ="row input-field" >
-                     <div class="input-field col s12">
-                       <i class="fas fa-tag prefix"></i>
-                      <input class="invisible" id="source-tags" name="tags" type="text" value="<?php echo $item['tags'];?>">
-
-                       <input
-                        class="invisible" id="input-tags" name="tags" type="text"
-                        onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');">
-
-                     </div>
-
-                  </div>
-
 
                   <div id="row_pieces" class ="row input-field" >
 
@@ -308,6 +295,19 @@ $item_status = 0;
 
                 </div>
 
+
+                <div id="row_tags" class ="row input-field" >
+                   <div class="input-field col s12">
+                     <i class="fas fa-tag prefix"></i>
+                    <input class="invisible" id="source-tags" name="tags" type="text" value="<?php echo $item['tags'];?>">
+
+                     <input
+                      class="invisible" id="input-tags" name="tags" type="text"
+                      onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');">
+
+                   </div>
+
+                </div>
 
 
               <div id="champs_facultatifs" class="">

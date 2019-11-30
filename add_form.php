@@ -226,27 +226,6 @@ header("Cache-Control: max-age=0");
 
 
 
-                 <div id="row_tags" class ="row flex-input-field" >
-
-                    <div class="col s12 flex-input-field">
-                      <div id="label_bricole" class="row nomargin nopadding" style="margin-left: 3rem !important;">
-                      <label for="tags">Tags: (séparés par ' , ' ou ' . ')</label>
-                    </div>
-                      <i id="prefix_tags" class="fas fa-tag prefix"></i>
-                      <div onfocus="set_active('', 'prefix_tags');"
-                           onblur="set_inactive('prefix_tags');"
-                           tabindex="-1"
-                           style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-
-                           <input
-                            class="invisible" id="input-tags" name="tags" type="text"
-                            onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');">
-                      </div>
-
-                    </div>
-
-                  </div>
-
     <div class='row input-field invisible' id='champs_getusermedia'>
           <div class="col s6 m6 input-field"><select id="videoSelect" class="browser-default" onchange="document.querySelector('#rearcameraID').value=this.value; setConstraints();
           PlayVideo();"></select>
@@ -316,7 +295,26 @@ header("Cache-Control: max-age=0");
               </div>
           </div>
 
+          <div id="row_tags" class ="row flex-input-field" >
 
+             <div class="col s12 flex-input-field">
+               <div id="label_bricole" class="row nomargin nopadding" style="margin-left: 3rem !important;">
+               <label for="tags">Tags: (séparés par ' , ' ou ' . ')</label>
+             </div>
+               <i id="prefix_tags" class="fas fa-tag prefix"></i>
+               <div onfocus="set_active('', 'prefix_tags');"
+                    onblur="set_inactive('prefix_tags');"
+                    tabindex="-1"
+                    style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+
+                    <input
+                     class="invisible" id="input-tags" name="tags" type="text"
+                     onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');">
+               </div>
+
+             </div>
+
+           </div>
 
   <div id="plusdedetails" class="row">
     <div class="col s12">
