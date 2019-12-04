@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/menu.css">
-  
+
 </head>
 
 
@@ -114,6 +114,9 @@ try {
       $req->bindParam(':ID_item', $object_id);
 
       /* TO DO : removing the image file from the FTP ! */
+
+      $remoteFilePath = getcwd().'/photos/'.$recuperatheque.'/'.$object_id.'.jpg';
+      unlink($remoteFilePath);
     }
 
 
@@ -189,7 +192,7 @@ if ($img !== null)
        $username = '1685312';
        $password = 'datarecoulechemindejerusalem';
        $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
-      $remoteFilePath = getcwd().'/photos/'.$recuperatheque.'/'.$last_id.'.jpg';
+      $remoteFilePath = getcwd().'/photos/'.$recuperatheque.'/'.$object_id.'.jpg';
       console_log("object_id dans le nom de l'image : ". $last_id);
        $ch = curl_init("sftp://$username:$password@$host$remotePath");
 
