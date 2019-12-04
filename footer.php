@@ -7,7 +7,7 @@
     <p>
       est un <strong>magasin collaboratif</strong> de matériaux de <strong>réemploi</strong>
       au sein d’une école de création (arts, architecture, design, stylisme, arts de la scène, etc)
-      fonctionnant avec sa propre monnaie ou son propre <strong>système d’échange</strong>,
+      fonctionnant avec <strong>sa propre monnaie</strong> ou son propre <strong>système d’échange</strong>,
       et visant à favoriser la durabilité, la solidarité, et la création de <strong>lien social</strong>.
     </p>
     </div>

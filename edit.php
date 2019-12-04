@@ -134,7 +134,7 @@ catch(PDOException $e)
 
 
 
-/*
+
     // Adding a line to the journal
         try {
 
@@ -168,7 +168,7 @@ catch(PDOException $e)
             echo "erreur ajout au journal : ".$result;
             }
 
-            */
+            
 
 
     $img = $_POST['image_final'];
