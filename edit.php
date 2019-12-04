@@ -1,5 +1,16 @@
+
 <html>
+<head>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/menu.css">
+  
+</head>
+
+
 <body>
+
 
 <?php
 /*
@@ -13,12 +24,17 @@ echo "Les fonctions SSH2 sont disponibles.";
 echo "Les fonctions SSH2 ne sont pas disponibles.";
 }
 */
+
 ?>
 
-<table>
+
+
 
   <?php
-    include_once('connection_db.php')
+    include('connection_db.php')
+  ?>
+  <?php
+  include('header.php');
   ?>
 
 <?php
@@ -45,8 +61,25 @@ $dimensions= $_POST['dimensions'];
 $localisation = $_POST['localisation'];
 $date = date('Y-m-d H:i:s');
 
+echo $action;
+
 //la separation des tags devient: 'virgule espace' et plus juste 'virgule'
 $tags = str_replace(",", ", ", $tags);
+
+
+echo "action: ".$action;
+
+if ($action=='edit')
+{
+header("refresh:0; url='item_page.php?r=$recuperatheque&id=$object_id'");
+
+}
+else  if ($action=='remove')
+  {
+
+    header("refresh:0; url='catalogue.php?r=$recuperatheque'");
+}
+
 
 try {
 
@@ -96,21 +129,9 @@ catch(PDOException $e)
     }
 
 
-    try {
-          $req = $bdd ->prepare("SELECT LAST_INSERT_ID(); FROM ".$recuperatheque_catalogue
-                                 );
-             $req->execute();
-             $last_id = $req->fetchColumn();
-         }
-   catch(PDOException $e)
-         {
-         $error=  $e->getMessage();
-         echo "Erreur lors de la récupération de l'ID de l'objet ajouté : ".$error;
-         }
 
 
-
-
+/*
     // Adding a line to the journal
         try {
 
@@ -121,7 +142,7 @@ catch(PDOException $e)
                                   ");
 
         $req->bindParam(':operation', $operation);
-        $req->bindParam(':ID_objet', $last_id);
+        $req->bindParam(':ID_objet', $object_id);
         $req->bindParam(':ID_categorie', $categorie);
         $req->bindParam(':ID_souscategorie', $souscategorie);
         $req->bindParam(':pieces', $pieces);
@@ -144,12 +165,13 @@ catch(PDOException $e)
             echo "erreur ajout au journal : ".$result;
             }
 
+            */
+
 
     $img = $_POST['image_final'];
 
-  // if a new image has been uploaded
-    if ($img !== null)
-
+// if a new image has been uploaded
+if ($img !== null)
     {
     $img = str_replace('data:image/jpeg;base64,', '', $img);
     $img = str_replace(' ', '+', $img);
@@ -201,7 +223,9 @@ catch(PDOException $e)
 
 }
 
+
 ?>
+
 
 
 </body>

@@ -5,7 +5,7 @@
 <?php
 // Prevent caching on this page to make sure it is always up-to-date
 // TO DO : Check if there is a less aggressive way to do it
-header("Cache-Control: max-age=0");
+// header("Cache-Control: max-age=0");
 
 ?>
 

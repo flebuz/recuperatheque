@@ -26,7 +26,7 @@
   <meta name="theme-color" content="#303030"><!-- Chrome -->
 
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Mycélium">
 
@@ -39,7 +39,7 @@
   <?php
   // Prevent caching on the catalogue to make sure it is always up-to-date
   // TO DO : Check if there is a less aggressive way to do it
-  header("Cache-Control: max-age=0");
+  // header("Cache-Control: max-age=0");
 
   ?>
 

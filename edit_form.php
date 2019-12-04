@@ -29,7 +29,7 @@
   <?php
   // Prevent caching on the catalogue to make sure it is always up-to-date
   // TO DO : Check if there is a less aggressive way to do it
-  header("Cache-Control: max-age=0");
+  // header("Cache-Control: max-age=0");
   ?>
 
   <?php
@@ -222,7 +222,7 @@ $item_status = 0;
 
 
           <!-- Début du formulaire-->
-          <form name="edit_form" id="edit_form" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>?id=<?php echo $item['ID_item']; ?>"  method="post" novalidate>
+          <form name="edit_form" id="edit_form" action="edit.php"  method="post" novalidate>
 
 <input id="ID_item" name="ID_item" class="invisible" value="<?php echo $item['ID_item'];?>">
                 <div id="row_categorisation" class ="row " >
