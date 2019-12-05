@@ -158,7 +158,7 @@ $journal = $req->fetchAll();
 
       echo "<ul>";
 
-      for ($row = sizeof($journal) -1 ; $row > 0; $row--) {
+      for ($row = sizeof($journal) -1 ; $row >= 0; $row--) {
 
         switch($journal[$row]['operation'])
         {
