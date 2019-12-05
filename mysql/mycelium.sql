@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 28 nov. 2019 à 18:42
--- Version du serveur :  5.7.23
--- Version de PHP :  7.2.10
+-- Hôte : localhost
+-- Généré le :  jeu. 05 déc. 2019 à 12:09
+-- Version du serveur :  5.7.23-23-log
+-- Version de PHP :  7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,9 +28,8 @@ SET time_zone = "+00:00";
 -- Structure de la table `bag_catalogue`
 --
 
-DROP TABLE IF EXISTS `bag_catalogue`;
-CREATE TABLE IF NOT EXISTS `bag_catalogue` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `bag_catalogue` (
+  `ID` int(11) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
   `ID_souscategorie` int(11) NOT NULL,
   `pieces` int(11) NOT NULL,
@@ -41,19 +40,18 @@ CREATE TABLE IF NOT EXISTS `bag_catalogue` (
   `date_ajout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
-  `localisation` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+  `localisation` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `bag_catalogue`
 --
 
 INSERT INTO `bag_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`, `localisation`) VALUES
-(16, 2, 7, 1, '4m x 2m', 2, 'grille,flexible', '', '2019-09-28 00:00:00', 0.1, 0, ''),
-(18, 8, 49, 1, '', 3, 'rouge, fil, nylon, cachemire', '', '2019-09-29 00:00:00', 0.2, 0, ''),
+(16, 2, 7, 1, '4m x 2m', 1, 'grille,  flexible', '', '2019-09-28 00:00:00', 0.1, 4, ''),
+(18, 8, 49, 1, '', 1, 'rouge,  fil,  nylon,  cachemire', '', '2019-09-29 00:00:00', 0.2, 1, ''),
 (21, 8, 42, 1, '', 1, 'jute, toile, decoupe, effiloché', '', '2019-09-29 10:17:40', 0.5, 0, ''),
-(20, 8, 49, 1, '', 3, 'turquoise, fil, nylon, bobine', '', '2019-09-29 09:43:56', 1, 0, ''),
+(20, 8, 49, 1, '', 1, 'turquoise,  fil,  nylon,  bobine', '', '2019-09-29 09:43:56', 1, 1, ''),
 (22, 3, 14, 1, '2m', 3, 'long, carton, craft', '', '2019-11-01 19:40:24', 1, 1.77, 'Récupérathèque'),
 (23, 3, 110, 1, '', 3, 'couleur, vraiment, beaucoup, ripcolor, vert, rouge, bleu, mauve, violet, brun, orange, echantillon', '', '2019-11-03 13:50:44', 1, 2.2, '');
 
@@ -63,9 +61,8 @@ INSERT INTO `bag_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`,
 -- Structure de la table `bag_journal`
 --
 
-DROP TABLE IF EXISTS `bag_journal`;
-CREATE TABLE IF NOT EXISTS `bag_journal` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `bag_journal` (
+  `ID` int(11) NOT NULL,
   `operation` varchar(10) NOT NULL,
   `ID_objet` int(11) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
@@ -75,88 +72,8 @@ CREATE TABLE IF NOT EXISTS `bag_journal` (
   `date_operation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
-  `localisation` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `bag_journal`
---
-
-INSERT INTO `bag_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_souscategorie`, `pieces`, `etat`, `date_operation`, `poids`, `prix`, `localisation`) VALUES
-(67, 'add', 28, 7, 39, 1, 1, '2019-10-21 10:43:11', 0, 0, 'Récupérathèque'),
-(66, 'add', 27, 7, 39, 1, 1, '2019-10-21 10:43:02', 0, 0, 'Récupérathèque'),
-(65, 'add', 26, 4, 18, 1, 1, '2019-10-21 10:42:24', 0, 0, 'Récupérathèque'),
-(64, 'add', 25, 11, 63, 1, 1, '2019-10-21 10:41:20', 1, 0, 'Récupérathèque'),
-(63, 'add', 24, 8, 42, 1, 1, '2019-10-21 10:41:06', 1, 0, 'Récupérathèque'),
-(62, 'add', 23, 9, 52, 1, 1, '2019-10-21 10:40:56', 1, 0, 'Récupérathèque'),
-(61, 'add', 22, 4, 19, 1, 1, '2019-10-21 10:40:48', 0, 0, 'Récupérathèque'),
-(68, 'add', 29, 5, 27, 1, 1, '2019-10-21 10:43:22', 0, 0, 'Récupérathèque'),
-(69, 'add', 30, 4, 19, 1, 1, '2019-10-21 10:43:31', 0, 0, 'Récupérathèque'),
-(70, 'add', 31, 3, 15, 1, 1, '2019-10-21 10:43:44', 0, 0, 'Récupérathèque'),
-(71, 'sell', 25, 11, 63, 1, 1, '2019-10-21 10:44:13', 1, 0, 'Récupérathèque'),
-(72, 'sell', 26, 4, 18, 1, 1, '2019-10-21 10:44:20', 0, 0, 'Récupérathèque'),
-(73, 'sell', 31, 3, 15, 1, 1, '2019-10-21 10:44:24', 0, 0, 'Récupérathèque'),
-(74, 'sell', 30, 4, 19, 1, 1, '2019-10-21 10:44:29', 0, 0, 'Récupérathèque'),
-(75, 'sell', 29, 5, 27, 1, 1, '2019-10-21 10:44:34', 0, 0, 'Récupérathèque'),
-(76, 'sell', 28, 7, 39, 1, 1, '2019-10-21 10:44:40', 0, 0, 'Récupérathèque'),
-(77, 'sell', 27, 7, 39, 1, 1, '2019-10-21 10:44:47', 0, 0, 'Récupérathèque'),
-(78, 'add', 25, 18, 125, 1, 1, '2019-10-21 10:45:05', 1, 0, 'Récupérathèque'),
-(79, 'sell', 25, 18, 125, 1, 1, '2019-10-21 10:45:13', 1, 0, 'Récupérathèque'),
-(80, 'remove', 24, 8, 42, 1, 1, '2019-10-21 10:45:25', 1, 0, 'Récupérathèque'),
-(81, 'add', 24, 13, 120, 3, 3, '2019-10-21 10:45:51', 0.4, 25, 'Récupérathèque'),
-(82, 'add', 25, 8, 46, 1, 1, '2019-10-21 10:46:50', 1, 0, 'Récupérathèque'),
-(83, 'add', 26, 1, 2, 3, 3, '2019-10-21 10:53:14', 5, 0, 'Récupérathèque'),
-(84, 'add', 27, 6, 34, 1, 1, '2019-10-21 11:14:47', 0, 0, 'Récupérathèque'),
-(85, 'add', 28, 6, 34, 1, 1, '2019-10-21 11:42:08', 0, 0, 'Récupérathèque'),
-(86, 'add', 29, 5, 26, 1, 1, '2019-10-21 11:43:09', 0, 0, 'Récupérathèque'),
-(87, 'add', 30, 6, 35, 1, 1, '2019-10-21 11:43:25', 0, 0, 'Récupérathèque'),
-(88, 'add', 31, 5, 27, 1, 1, '2019-10-21 11:43:40', 0, 0, 'Récupérathèque'),
-(89, 'add', 32, 12, 69, 1, 1, '2019-10-21 11:44:08', 1, 0, 'Récupérathèque'),
-(90, 'add', 33, 5, 26, 1, 1, '2019-10-21 11:46:10', 0, 0, 'Récupérathèque'),
-(91, 'add', 34, 6, 34, 1, 1, '2019-10-21 11:53:17', 0, 0, 'Récupérathèque'),
-(92, 'remove', 30, 6, 35, 1, 1, '2019-10-21 12:11:54', 0, 0, 'Récupérathèque'),
-(93, 'remove', 33, 5, 26, 1, 1, '2019-10-21 12:12:06', 0, 0, 'Récupérathèque'),
-(94, 'sell', 32, 12, 69, 1, 1, '2019-10-21 12:16:10', 1, 0, 'Récupérathèque'),
-(95, 'sell', 31, 5, 27, 1, 1, '2019-10-21 12:16:16', 0, 0, 'Récupérathèque'),
-(96, 'sell', 28, 6, 34, 1, 1, '2019-10-21 12:16:21', 0, 0, 'Récupérathèque'),
-(97, 'sell', 29, 5, 26, 1, 1, '2019-10-21 12:16:27', 0, 0, 'Récupérathèque'),
-(98, 'sell', 27, 6, 34, 1, 1, '2019-10-21 12:16:32', 0, 0, 'Récupérathèque'),
-(99, 'add', 35, 18, 125, 1, 1, '2019-10-21 12:17:11', 15, 8, 'Récupérathèque'),
-(100, 'add', 36, 18, 125, 2, 3, '2019-10-21 12:17:56', 10, 5, 'Récupérathèque'),
-(101, 'remove', 26, 1, 2, 3, 1, '2019-10-21 12:18:12', 5, 0, 'Récupérathèque'),
-(102, 'sell', 36, 18, 125, 1, 3, '2019-10-21 15:25:10', 10, 5, 'Récupérathèque'),
-(103, 'edit', 22, 4, 19, 9, 1, '2019-10-21 15:30:33', 0, 0, 'Récupérathèque'),
-(104, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:30:42', 0, 0, 'Récupérathèque'),
-(105, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:30:53', 0, 0, 'Récupérathèque'),
-(106, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:31:53', 0, 0, 'Récupérathèque'),
-(107, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:35:15', 0, 0, 'Récupérathèque'),
-(108, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:36:14', 0, 0, 'Récupérathèque'),
-(109, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:24', 0, 0, 'Récupérathèque'),
-(110, 'sell', 36, 18, 125, 1, 3, '2019-10-21 15:37:33', 10, 5, 'Récupérathèque'),
-(111, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:45', 0, 0, 'Récupérathèque'),
-(112, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:56', 0, 0, 'Récupérathèque'),
-(113, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:38:05', 0, 0, 'Récupérathèque'),
-(114, 'add', 36, 2, 7, 1, 1, '2019-10-21 19:32:21', 1, 0.4, 'Récupérathèque'),
-(115, 'add', 37, 2, 7, 1, 1, '2019-10-21 19:32:53', 1, 0.4, 'Récupérathèque'),
-(116, 'add', 38, 2, 10, 1, 1, '2019-10-21 19:33:07', 1, 3.36, 'Récupérathèque'),
-(117, 'add', 39, 4, 20, 1, 1, '2019-10-21 19:33:18', 0, 0, 'Récupérathèque'),
-(118, 'add', 40, 4, 17, 1, 1, '2019-10-21 19:33:26', 0, 1.5, 'Récupérathèque'),
-(119, 'add', 41, 7, 36, 1, 1, '2019-10-21 19:37:43', 0, 1.25, 'Récupérathèque'),
-(120, 'remove', 41, 7, 36, 1, 1, '2019-10-21 19:40:00', 0, 1.25, 'Récupérathèque'),
-(121, 'remove', 40, 4, 17, 1, 1, '2019-10-21 19:40:10', 0, 1.5, 'Récupérathèque'),
-(122, 'remove', 39, 4, 20, 1, 1, '2019-10-21 19:40:19', 0, 0, 'Récupérathèque'),
-(123, 'remove', 38, 2, 10, 1, 1, '2019-10-21 19:40:35', 1, 3.36, 'Récupérathèque'),
-(124, 'remove', 37, 2, 7, 1, 1, '2019-10-21 19:40:44', 1, 0.4, 'Récupérathèque'),
-(125, 'remove', 36, 2, 7, 1, 1, '2019-10-21 19:42:12', 1, 0.4, 'Récupérathèque'),
-(126, 'remove', 35, 18, 125, 1, 1, '2019-10-21 19:42:21', 15, 8, 'Récupérathèque'),
-(127, 'remove', 34, 6, 34, 1, 1, '2019-10-21 19:42:32', 0, 0, 'Récupérathèque'),
-(128, 'remove', 25, 8, 46, 1, 1, '2019-10-21 19:42:40', 1, 0, 'Récupérathèque'),
-(129, 'remove', 24, 13, 120, 3, 1, '2019-10-21 19:42:51', 0.4, 25, 'Récupérathèque'),
-(130, 'sell', 23, 9, 52, 1, 1, '2019-10-21 19:43:00', 1, 0, 'Récupérathèque'),
-(131, 'add', 22, 3, 14, 1, 3, '2019-11-01 19:40:24', 1, 1.77, 'Récupérathèque'),
-(132, 'add', 23, 3, 110, 1, 3, '2019-11-03 13:50:44', 1, 2.2, ''),
-(133, 'add', 95, 4, 111, 3, 3, '2019-11-17 22:31:58', 0, 0.75, '');
+  `localisation` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -164,9 +81,8 @@ INSERT INTO `bag_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_so
 -- Structure de la table `cab_catalogue`
 --
 
-DROP TABLE IF EXISTS `cab_catalogue`;
-CREATE TABLE IF NOT EXISTS `cab_catalogue` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cab_catalogue` (
+  `ID` int(11) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
   `ID_souscategorie` int(11) NOT NULL,
   `pieces` int(11) NOT NULL,
@@ -177,9 +93,15 @@ CREATE TABLE IF NOT EXISTS `cab_catalogue` (
   `date_ajout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
-  `localisation` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+  `localisation` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `cab_catalogue`
+--
+
+INSERT INTO `cab_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`, `localisation`) VALUES
+(1, 18, 125, 1, '', 1, 'dinosaure,  diplodocus,  Jésus', '', '2019-12-05 11:41:20', 600, 999, '');
 
 -- --------------------------------------------------------
 
@@ -187,9 +109,8 @@ CREATE TABLE IF NOT EXISTS `cab_catalogue` (
 -- Structure de la table `cab_journal`
 --
 
-DROP TABLE IF EXISTS `cab_journal`;
-CREATE TABLE IF NOT EXISTS `cab_journal` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cab_journal` (
+  `ID` int(11) NOT NULL,
   `operation` varchar(10) NOT NULL,
   `ID_objet` int(11) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
@@ -199,9 +120,16 @@ CREATE TABLE IF NOT EXISTS `cab_journal` (
   `date_operation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
-  `localisation` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
+  `localisation` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `cab_journal`
+--
+
+INSERT INTO `cab_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_souscategorie`, `pieces`, `etat`, `date_operation`, `poids`, `prix`, `localisation`) VALUES
+(1, 'add', 1, 18, 125, 1, 4, '2019-12-05 11:41:20', 600, 0, ''),
+(2, 'edit', 1, 18, 125, 1, 1, '2019-12-05 11:58:44', 600, 99, '');
 
 -- --------------------------------------------------------
 
@@ -209,9 +137,8 @@ CREATE TABLE IF NOT EXISTS `cab_journal` (
 -- Structure de la table `fourmiliere_catalogue`
 --
 
-DROP TABLE IF EXISTS `fourmiliere_catalogue`;
-CREATE TABLE IF NOT EXISTS `fourmiliere_catalogue` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `fourmiliere_catalogue` (
+  `ID` int(11) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
   `ID_souscategorie` int(11) NOT NULL,
   `pieces` int(11) NOT NULL,
@@ -222,9 +149,15 @@ CREATE TABLE IF NOT EXISTS `fourmiliere_catalogue` (
   `date_ajout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
-  `localisation` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+  `localisation` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `fourmiliere_catalogue`
+--
+
+INSERT INTO `fourmiliere_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`, `localisation`) VALUES
+(1, 16, 123, 1, '', 1, 'Robot,  Tordeur,  Rodriguez,  gentleman', '', '2019-12-05 11:50:36', 0, 200, '');
 
 -- --------------------------------------------------------
 
@@ -232,9 +165,8 @@ CREATE TABLE IF NOT EXISTS `fourmiliere_catalogue` (
 -- Structure de la table `fourmiliere_journal`
 --
 
-DROP TABLE IF EXISTS `fourmiliere_journal`;
-CREATE TABLE IF NOT EXISTS `fourmiliere_journal` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `fourmiliere_journal` (
+  `ID` int(11) NOT NULL,
   `operation` varchar(10) NOT NULL,
   `ID_objet` int(11) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
@@ -244,9 +176,16 @@ CREATE TABLE IF NOT EXISTS `fourmiliere_journal` (
   `date_operation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
-  `localisation` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
+  `localisation` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `fourmiliere_journal`
+--
+
+INSERT INTO `fourmiliere_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_souscategorie`, `pieces`, `etat`, `date_operation`, `poids`, `prix`, `localisation`) VALUES
+(1, 'add', 1, 16, 123, 1, 3, '2019-12-05 11:50:36', 0, 6, ''),
+(2, 'edit', 1, 16, 123, 1, 1, '2019-12-05 11:51:16', 0, 200, '');
 
 -- --------------------------------------------------------
 
@@ -254,9 +193,8 @@ CREATE TABLE IF NOT EXISTS `fourmiliere_journal` (
 -- Structure de la table `gilbard_catalogue`
 --
 
-DROP TABLE IF EXISTS `gilbard_catalogue`;
-CREATE TABLE IF NOT EXISTS `gilbard_catalogue` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `gilbard_catalogue` (
+  `ID` int(11) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
   `ID_souscategorie` int(11) NOT NULL,
   `pieces` int(11) NOT NULL,
@@ -267,29 +205,28 @@ CREATE TABLE IF NOT EXISTS `gilbard_catalogue` (
   `date_ajout` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
-  `localisation` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+  `localisation` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `gilbard_catalogue`
 --
 
 INSERT INTO `gilbard_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `pieces`, `dimensions`, `etat`, `tags`, `remarques`, `date_ajout`, `poids`, `prix`, `localisation`) VALUES
-(1, 12, 119, 3200, '4cm x 4cm', 3, 'attache, flexible, flex, joint', 'Lot. Fonction originale: équerre pour carton. A partir de 200 pièces.', '2019-08-06 00:00:00', 0, 0, 'Rue Abbé Cuylits 44, 1070 Anderlecht'),
-(2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 4, 'sapin, baguette, tasseau, rabotté', 'Lot à prendre dans son entièretée', '2019-08-06 00:00:00', 0, 0, ''),
-(3, 18, 125, 1, '10m', 3, 'lance, incendie, tuyau, rouge, eau', 'Lance à incendie sur support raccordée à adaptateur. 10m de longueur.', '2019-08-07 00:00:00', 0, 0, ''),
-(4, 17, 124, 1, '38cm x 25cm', 2, 'coussin, bureau, chaise, bleu, tissus', 'Ancien dossier de chaise de bureau.', '2019-08-08 00:00:00', 0, 0, ''),
+(1, 12, 119, 1, '4cm x 4cm', 1, 'attache,    flexible,    flex,    joint', 'Vendu par lot de 200. Fonction originale: équerre pour carton.', '2019-08-06 00:00:00', 0, 25, 'Rue Abbé Cuylits 44, 1070 Anderlecht'),
+(2, 1, 1, 1600, '50.8cm x 2cm x 2cm', 1, 'sapin,   baguette,   tasseau,   rabotté', 'Lot à prendre dans son entièreté', '2019-08-06 00:00:00', 0, 50, ''),
+(3, 18, 125, 1, '10m', 1, 'lance,  incendie,  tuyau,  rouge,  eau', 'Lance à incendie sur support raccordée à adaptateur. 10m de longueur.', '2019-08-07 00:00:00', 0, 30, ''),
+(4, 17, 124, 1, '38cm x 25cm', 1, 'coussin,   bureau,   chaise,   bleu,   tissus', 'Ancien dossier de chaise de bureau.', '2019-08-08 00:00:00', 0, 15, ''),
 (5, 15, 85, 20, '5mm x 250mm', 3, 'cheville, plastique, blanc', '', '2019-02-14 00:00:00', 0, 0, ''),
-(6, 12, 67, 1, '50.3cm x 19.5xm', 2, 'rayé, transparent, translucide, reconditionnable', '', '2019-04-02 00:00:00', 0, 0, ''),
-(7, 18, 125, 10, '20cm', 3, 'blanc, rouge, orange, cire, feu', 'Lot de 10 bougies de tailles et couleurs différentes.', '2019-05-23 00:00:00', 0, 0, ''),
-(8, 1, 1, 3, '181.5cm x 4.5cm x 2.3cm', 3, 'gîte, poutre, traité, vert, sapin', 'Tranches non traitées.', '2019-06-06 00:00:00', 0, 0, ''),
+(6, 12, 67, 1, '50.3cm x 19.5xm', 1, 'rayé,  transparent,  translucide,  reconditionnable', '', '2019-04-02 00:00:00', 0, 1, ''),
+(7, 18, 125, 10, '20cm', 1, 'blanc,  rouge,  orange,  cire,  feu', 'Lot de 10 bougies de tailles et couleurs différentes.', '2019-05-23 00:00:00', 0, 3, ''),
+(8, 1, 1, 3, '181.5cm x 4.5cm x 2.3cm', 1, 'gîte,  poutre,  traité,  vert,  sapin', 'Tranches non traitées.', '2019-06-06 00:00:00', 5, 4, ''),
 (9, 4, 17, 25, '', 3, 'enfant, couleur, coloriage, gallery ', 'Lot de 25.', '2019-06-17 00:00:00', 0, 0, ''),
-(10, 3, 13, 1, '10.5cm x 14cm', 3, 'aurora, carnet, copie', 'Carnet autocopiant de 50 pages détachables.', '2019-06-17 00:00:00', 0, 0, ''),
-(11, 18, 125, 1, '35cm x 35cm', 3, 'feu, gaz, plat, chauffe, alimentation', 'Chauffe plat au gaz.', '2019-07-30 00:00:00', 0, 0, 'Rue Abbé Cuylits 44, 1070 Anderlecht'),
-(12, 16, 94, 7, '1m', 3, 'electrique, alimentation, plastique', '', '2019-03-22 00:00:00', 0, 0, ''),
+(10, 3, 13, 1, '10.5cm x 14cm', 1, 'aurora,  carnet,  copie', 'Carnet autocopiant de 50 pages détachables.', '2019-06-17 00:00:00', 0, 15, ''),
+(11, 18, 125, 1, '35cm x 35cm', 1, 'feu,  gaz,  plat,  chauffe,  alimentation', 'Chauffe plat au gaz.', '2019-07-30 00:00:00', 0, 10, 'Rue Abbé Cuylits 44, 1070 Anderlecht'),
+(12, 16, 94, 7, '1m', 1, 'electrique,  alimentation,  plastique', '', '2019-03-22 00:00:00', 0, 4, ''),
 (13, 15, 86, 2, '15cm x 8cm x 8cm', 3, 'grand, oversized, attache, metal', '', '2019-03-20 00:00:00', 0, 0, ''),
-(14, 8, 115, 12, '50cm x 50cm', 2, 'carpette, épais, carré, bleu, paillaisson, tapis', 'Carrés de carpettes de 2 coloris différents.', '2019-06-20 00:00:00', 0, 0, '');
+(14, 8, 115, 12, '50cm x 50cm', 1, 'carpette,  épais,  carré,  bleu,  paillaisson,  tapis', 'Carrés de carpettes de 2 coloris différents.', '2019-06-20 00:00:00', 0, 5, '');
 
 -- --------------------------------------------------------
 
@@ -297,9 +234,8 @@ INSERT INTO `gilbard_catalogue` (`ID`, `ID_categorie`, `ID_souscategorie`, `piec
 -- Structure de la table `gilbard_journal`
 --
 
-DROP TABLE IF EXISTS `gilbard_journal`;
-CREATE TABLE IF NOT EXISTS `gilbard_journal` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `gilbard_journal` (
+  `ID` int(11) NOT NULL,
   `operation` varchar(10) NOT NULL,
   `ID_objet` int(11) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
@@ -309,88 +245,8 @@ CREATE TABLE IF NOT EXISTS `gilbard_journal` (
   `date_operation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `poids` float NOT NULL,
   `prix` float NOT NULL,
-  `localisation` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `gilbard_journal`
---
-
-INSERT INTO `gilbard_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `ID_souscategorie`, `pieces`, `etat`, `date_operation`, `poids`, `prix`, `localisation`) VALUES
-(67, 'add', 28, 7, 39, 1, 1, '2019-10-21 10:43:11', 0, 0, 'Récupérathèque'),
-(66, 'add', 27, 7, 39, 1, 1, '2019-10-21 10:43:02', 0, 0, 'Récupérathèque'),
-(65, 'add', 26, 4, 18, 1, 1, '2019-10-21 10:42:24', 0, 0, 'Récupérathèque'),
-(64, 'add', 25, 11, 63, 1, 1, '2019-10-21 10:41:20', 1, 0, 'Récupérathèque'),
-(63, 'add', 24, 8, 42, 1, 1, '2019-10-21 10:41:06', 1, 0, 'Récupérathèque'),
-(62, 'add', 23, 9, 52, 1, 1, '2019-10-21 10:40:56', 1, 0, 'Récupérathèque'),
-(61, 'add', 22, 4, 19, 1, 1, '2019-10-21 10:40:48', 0, 0, 'Récupérathèque'),
-(68, 'add', 29, 5, 27, 1, 1, '2019-10-21 10:43:22', 0, 0, 'Récupérathèque'),
-(69, 'add', 30, 4, 19, 1, 1, '2019-10-21 10:43:31', 0, 0, 'Récupérathèque'),
-(70, 'add', 31, 3, 15, 1, 1, '2019-10-21 10:43:44', 0, 0, 'Récupérathèque'),
-(71, 'sell', 25, 11, 63, 1, 1, '2019-10-21 10:44:13', 1, 0, 'Récupérathèque'),
-(72, 'sell', 26, 4, 18, 1, 1, '2019-10-21 10:44:20', 0, 0, 'Récupérathèque'),
-(73, 'sell', 31, 3, 15, 1, 1, '2019-10-21 10:44:24', 0, 0, 'Récupérathèque'),
-(74, 'sell', 30, 4, 19, 1, 1, '2019-10-21 10:44:29', 0, 0, 'Récupérathèque'),
-(75, 'sell', 29, 5, 27, 1, 1, '2019-10-21 10:44:34', 0, 0, 'Récupérathèque'),
-(76, 'sell', 28, 7, 39, 1, 1, '2019-10-21 10:44:40', 0, 0, 'Récupérathèque'),
-(77, 'sell', 27, 7, 39, 1, 1, '2019-10-21 10:44:47', 0, 0, 'Récupérathèque'),
-(78, 'add', 25, 18, 125, 1, 1, '2019-10-21 10:45:05', 1, 0, 'Récupérathèque'),
-(79, 'sell', 25, 18, 125, 1, 1, '2019-10-21 10:45:13', 1, 0, 'Récupérathèque'),
-(80, 'remove', 24, 8, 42, 1, 1, '2019-10-21 10:45:25', 1, 0, 'Récupérathèque'),
-(81, 'add', 24, 13, 120, 3, 3, '2019-10-21 10:45:51', 0.4, 25, 'Récupérathèque'),
-(82, 'add', 25, 8, 46, 1, 1, '2019-10-21 10:46:50', 1, 0, 'Récupérathèque'),
-(83, 'add', 26, 1, 2, 3, 3, '2019-10-21 10:53:14', 5, 0, 'Récupérathèque'),
-(84, 'add', 27, 6, 34, 1, 1, '2019-10-21 11:14:47', 0, 0, 'Récupérathèque'),
-(85, 'add', 28, 6, 34, 1, 1, '2019-10-21 11:42:08', 0, 0, 'Récupérathèque'),
-(86, 'add', 29, 5, 26, 1, 1, '2019-10-21 11:43:09', 0, 0, 'Récupérathèque'),
-(87, 'add', 30, 6, 35, 1, 1, '2019-10-21 11:43:25', 0, 0, 'Récupérathèque'),
-(88, 'add', 31, 5, 27, 1, 1, '2019-10-21 11:43:40', 0, 0, 'Récupérathèque'),
-(89, 'add', 32, 12, 69, 1, 1, '2019-10-21 11:44:08', 1, 0, 'Récupérathèque'),
-(90, 'add', 33, 5, 26, 1, 1, '2019-10-21 11:46:10', 0, 0, 'Récupérathèque'),
-(91, 'add', 34, 6, 34, 1, 1, '2019-10-21 11:53:17', 0, 0, 'Récupérathèque'),
-(92, 'remove', 30, 6, 35, 1, 1, '2019-10-21 12:11:54', 0, 0, 'Récupérathèque'),
-(93, 'remove', 33, 5, 26, 1, 1, '2019-10-21 12:12:06', 0, 0, 'Récupérathèque'),
-(94, 'sell', 32, 12, 69, 1, 1, '2019-10-21 12:16:10', 1, 0, 'Récupérathèque'),
-(95, 'sell', 31, 5, 27, 1, 1, '2019-10-21 12:16:16', 0, 0, 'Récupérathèque'),
-(96, 'sell', 28, 6, 34, 1, 1, '2019-10-21 12:16:21', 0, 0, 'Récupérathèque'),
-(97, 'sell', 29, 5, 26, 1, 1, '2019-10-21 12:16:27', 0, 0, 'Récupérathèque'),
-(98, 'sell', 27, 6, 34, 1, 1, '2019-10-21 12:16:32', 0, 0, 'Récupérathèque'),
-(99, 'add', 35, 18, 125, 1, 1, '2019-10-21 12:17:11', 15, 8, 'Récupérathèque'),
-(100, 'add', 36, 18, 125, 2, 3, '2019-10-21 12:17:56', 10, 5, 'Récupérathèque'),
-(101, 'remove', 26, 1, 2, 3, 1, '2019-10-21 12:18:12', 5, 0, 'Récupérathèque'),
-(102, 'sell', 36, 18, 125, 1, 3, '2019-10-21 15:25:10', 10, 5, 'Récupérathèque'),
-(103, 'edit', 22, 4, 19, 9, 1, '2019-10-21 15:30:33', 0, 0, 'Récupérathèque'),
-(104, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:30:42', 0, 0, 'Récupérathèque'),
-(105, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:30:53', 0, 0, 'Récupérathèque'),
-(106, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:31:53', 0, 0, 'Récupérathèque'),
-(107, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:35:15', 0, 0, 'Récupérathèque'),
-(108, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:36:14', 0, 0, 'Récupérathèque'),
-(109, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:24', 0, 0, 'Récupérathèque'),
-(110, 'sell', 36, 18, 125, 1, 3, '2019-10-21 15:37:33', 10, 5, 'Récupérathèque'),
-(111, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:45', 0, 0, 'Récupérathèque'),
-(112, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:37:56', 0, 0, 'Récupérathèque'),
-(113, 'sell', 22, 4, 19, 1, 1, '2019-10-21 15:38:05', 0, 0, 'Récupérathèque'),
-(114, 'add', 36, 2, 7, 1, 1, '2019-10-21 19:32:21', 1, 0.4, 'Récupérathèque'),
-(115, 'add', 37, 2, 7, 1, 1, '2019-10-21 19:32:53', 1, 0.4, 'Récupérathèque'),
-(116, 'add', 38, 2, 10, 1, 1, '2019-10-21 19:33:07', 1, 3.36, 'Récupérathèque'),
-(117, 'add', 39, 4, 20, 1, 1, '2019-10-21 19:33:18', 0, 0, 'Récupérathèque'),
-(118, 'add', 40, 4, 17, 1, 1, '2019-10-21 19:33:26', 0, 1.5, 'Récupérathèque'),
-(119, 'add', 41, 7, 36, 1, 1, '2019-10-21 19:37:43', 0, 1.25, 'Récupérathèque'),
-(120, 'remove', 41, 7, 36, 1, 1, '2019-10-21 19:40:00', 0, 1.25, 'Récupérathèque'),
-(121, 'remove', 40, 4, 17, 1, 1, '2019-10-21 19:40:10', 0, 1.5, 'Récupérathèque'),
-(122, 'remove', 39, 4, 20, 1, 1, '2019-10-21 19:40:19', 0, 0, 'Récupérathèque'),
-(123, 'remove', 38, 2, 10, 1, 1, '2019-10-21 19:40:35', 1, 3.36, 'Récupérathèque'),
-(124, 'remove', 37, 2, 7, 1, 1, '2019-10-21 19:40:44', 1, 0.4, 'Récupérathèque'),
-(125, 'remove', 36, 2, 7, 1, 1, '2019-10-21 19:42:12', 1, 0.4, 'Récupérathèque'),
-(126, 'remove', 35, 18, 125, 1, 1, '2019-10-21 19:42:21', 15, 8, 'Récupérathèque'),
-(127, 'remove', 34, 6, 34, 1, 1, '2019-10-21 19:42:32', 0, 0, 'Récupérathèque'),
-(128, 'remove', 25, 8, 46, 1, 1, '2019-10-21 19:42:40', 1, 0, 'Récupérathèque'),
-(129, 'remove', 24, 13, 120, 3, 1, '2019-10-21 19:42:51', 0.4, 25, 'Récupérathèque'),
-(130, 'sell', 23, 9, 52, 1, 1, '2019-10-21 19:43:00', 1, 0, 'Récupérathèque'),
-(131, 'add', 22, 3, 14, 1, 3, '2019-11-01 19:40:24', 1, 1.77, 'Récupérathèque'),
-(132, 'add', 23, 3, 110, 1, 3, '2019-11-03 13:50:44', 1, 2.2, ''),
-(133, 'add', 95, 4, 111, 3, 3, '2019-11-17 22:31:58', 0, 0.75, '');
+  `localisation` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -398,13 +254,11 @@ INSERT INTO `gilbard_journal` (`ID`, `operation`, `ID_objet`, `ID_categorie`, `I
 -- Structure de la table `_global_categories`
 --
 
-DROP TABLE IF EXISTS `_global_categories`;
-CREATE TABLE IF NOT EXISTS `_global_categories` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `_global_categories` (
+  `ID` int(11) NOT NULL,
   `nom` varchar(255) NOT NULL,
-  `score` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+  `score` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `_global_categories`
@@ -413,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `_global_categories` (
 INSERT INTO `_global_categories` (`ID`, `nom`, `score`) VALUES
 (1, 'Bois', 18),
 (2, 'Métal', 17),
-(3, 'Papeterie', 18),
+(3, 'Papeterie', 15),
 (4, 'Dessin et Écriture', 16),
 (5, 'Mesure et Tracé', 14),
 (6, 'Assemblage', 13),
@@ -436,9 +290,8 @@ INSERT INTO `_global_categories` (`ID`, `nom`, `score`) VALUES
 -- Structure de la table `_global_recuperatheques`
 --
 
-DROP TABLE IF EXISTS `_global_recuperatheques`;
-CREATE TABLE IF NOT EXISTS `_global_recuperatheques` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `_global_recuperatheques` (
+  `ID` int(11) NOT NULL,
   `nom` varchar(255) NOT NULL,
   `adresse` varchar(255) NOT NULL,
   `monnaie` varchar(8) NOT NULL,
@@ -447,9 +300,8 @@ CREATE TABLE IF NOT EXISTS `_global_recuperatheques` (
   `site` varchar(255) NOT NULL,
   `pseudo` varchar(16) NOT NULL,
   `mail` varchar(255) NOT NULL,
-  `date_creation` date DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `date_creation` date DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `_global_recuperatheques`
@@ -467,15 +319,13 @@ INSERT INTO `_global_recuperatheques` (`ID`, `nom`, `adresse`, `monnaie`, `telep
 -- Structure de la table `_global_souscategories`
 --
 
-DROP TABLE IF EXISTS `_global_souscategories`;
-CREATE TABLE IF NOT EXISTS `_global_souscategories` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `_global_souscategories` (
+  `ID` int(11) NOT NULL,
   `nom` varchar(255) NOT NULL,
   `ID_categorie` int(11) NOT NULL,
   `unite` varchar(255) NOT NULL,
-  `prix` float NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=127 DEFAULT CHARSET=latin1;
+  `prix` float NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `_global_souscategories`
@@ -587,6 +437,146 @@ INSERT INTO `_global_souscategories` (`ID`, `nom`, `ID_categorie`, `unite`, `pri
 (123, 'Autre', 16, 'pc', 6),
 (124, 'Autre', 17, 'pc', 20),
 (125, 'Autre', 18, 'no', 0);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `bag_catalogue`
+--
+ALTER TABLE `bag_catalogue`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `bag_journal`
+--
+ALTER TABLE `bag_journal`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `cab_catalogue`
+--
+ALTER TABLE `cab_catalogue`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `cab_journal`
+--
+ALTER TABLE `cab_journal`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `fourmiliere_catalogue`
+--
+ALTER TABLE `fourmiliere_catalogue`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `fourmiliere_journal`
+--
+ALTER TABLE `fourmiliere_journal`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `gilbard_catalogue`
+--
+ALTER TABLE `gilbard_catalogue`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `gilbard_journal`
+--
+ALTER TABLE `gilbard_journal`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `_global_categories`
+--
+ALTER TABLE `_global_categories`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `_global_recuperatheques`
+--
+ALTER TABLE `_global_recuperatheques`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Index pour la table `_global_souscategories`
+--
+ALTER TABLE `_global_souscategories`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `bag_catalogue`
+--
+ALTER TABLE `bag_catalogue`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT pour la table `bag_journal`
+--
+ALTER TABLE `bag_journal`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `cab_catalogue`
+--
+ALTER TABLE `cab_catalogue`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `cab_journal`
+--
+ALTER TABLE `cab_journal`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `fourmiliere_catalogue`
+--
+ALTER TABLE `fourmiliere_catalogue`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `fourmiliere_journal`
+--
+ALTER TABLE `fourmiliere_journal`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `gilbard_catalogue`
+--
+ALTER TABLE `gilbard_catalogue`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
+-- AUTO_INCREMENT pour la table `gilbard_journal`
+--
+ALTER TABLE `gilbard_journal`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `_global_categories`
+--
+ALTER TABLE `_global_categories`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT pour la table `_global_recuperatheques`
+--
+ALTER TABLE `_global_recuperatheques`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `_global_souscategories`
+--
+ALTER TABLE `_global_souscategories`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

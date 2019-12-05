@@ -290,7 +290,7 @@
               <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
                 <input id="prix" name="prix" type="number" value="0" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
-                <input id="price_per_kg" name="prix" type="number" value="0" readonly hidden>
+                <input id="price_per_kg" name="rate" type="number" value="0" readonly hidden>
                 <label for="prix">Prix&nbsp;/&nbsp;pc</label>
               </div>
           </div>
