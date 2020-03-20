@@ -155,8 +155,12 @@
   <?php
     //prep the request
     //every line is a souscategorie
-    $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `_global_categories` ORDER BY `_global_categories`.`score` DESC
-                        ');
+  //  $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `_global_categories` ORDER BY `_global_categories`.`score` DESC
+  //                      ');
+  
+    $req = $bdd->prepare("SELECT * FROM (SELECT ID_categorie, COUNT(ID_categorie) AS count FROM `".$recuperatheque_catalogue."`  GROUP BY `ID_categorie`) t1 RIGHT JOIN (SELECT * FROM _global_categories ) t2 ON t1.ID_categorie = t2.ID ORDER BY (COALESCE(count,0)+ score) DESC, score DESC                         ");
+
+
     //execute the request
     $req->execute();
 

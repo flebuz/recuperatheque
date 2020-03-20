@@ -17,10 +17,10 @@ function compute_price(id_price, id_price_per_kg, id_weight, id_etat) {
       var final_price = price_per_kg * weight * coefficient_etat;
 
 
-      final_price= final_price.toFixed(2); //restrict number to 2 decimal points
-      if ((final_price < 0.01) && (price_per_kg > 0))
+      final_price= Math.round(final_price*2)/2; //restrict number to 2 decimal points
+      if ((final_price < 0.5) && (price_per_kg > 0))
       {
-        final_price =0.01; // minimum price if price_per_kg is not null
+        final_price =0.5; // minimum price if price_per_kg is not null
       }
       document.getElementById(id_price).value = final_price;}
 }
