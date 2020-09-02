@@ -1,20 +1,28 @@
 // Fonctions communes à tous les formulaires (add_form.php, edit_form.php, sell_form.php)
 
 
-//pour mettre à jour la valeur d'un champ sur la page
-function set_value(id_to_update, value) {
+
+function set_value(id_to_update, value)
+//simply updates the value of an element on a page :)
+{
   document.getElementById(id_to_update).value = value;
 }
-//pour mettre à jour la valeur d'un champ sur la page
-function compute_price(id_price, id_price_per_kg, id_weight, id_etat) {
+
+
+
+function compute_price(id_price, id_price_per_kg, id_weight, id_etat)
+// Computes the suggested price of an item in relation to 1) the material's base price per kg
+// (set in the _global_souscategories MySQL table), // 2) the weight of the item and
+// 3) its condition (1 to 4 hearts)
+{
   var weight = document.getElementById(id_weight).value;
   var price_per_kg = document.getElementById(id_price_per_kg).value;
-  var etat = document.getElementById(id_etat).value;
+  var condition = document.getElementById(id_etat).value;
   if (weight && price_per_kg && etat)
   {
-      var coefficient_etat = 0.2 + (etat * 0.2);
-      //console.log("price_per_kg : "+ price_per_kg +"; weight : "+ weight+"; etat : "+etat+ "; coefficient_etat : " + coefficient_etat)
-      var final_price = price_per_kg * weight * coefficient_etat;
+      var coefficient_condition = 0.2 + (condition * 0.2);
+      //console.log("price_per_kg : "+ price_per_kg +"; weight : "+ weight+"; etat : "+etat+ "; coefficient_condition : " + coefficient_condition);
+      var final_price = price_per_kg * weight * coefficient_condition;
 
 
       final_price= Math.round(final_price*2)/2; //restrict number to 2 decimal points
@@ -25,7 +33,9 @@ function compute_price(id_price, id_price_per_kg, id_weight, id_etat) {
       document.getElementById(id_price).value = final_price;}
 }
 
-function update_weight_and_price(final_weight_id, item_weight, nb_unit, final_price_id, item_price) {
+function update_weight_and_price(final_weight_id, item_weight, nb_unit, final_price_id, item_price)
+// Used in the "sell_form" modal in item_page.php to update weight and price based on number of units to sell
+{
   if ((item_weight !== 'N/A') && (item_weight !== '')) {
 
 
@@ -42,31 +52,19 @@ function update_weight_and_price(final_weight_id, item_weight, nb_unit, final_pr
   }
 }
 
-function check_default_unit(default_unit, id_to_update) {
-  if (default_unit == 'kg') {
-    document.getElementById(id_to_update).classList.remove("invisible");
-    document.getElementById('has_weight').value = 1;
-  } else if (default_unit == 'pc') {
-    document.getElementById(id_to_update).classList.add("invisible");
-    document.getElementById('has_weight').value = 0;
-  }
-}
 
-function set_range_value(id_to_update, value) {
-  if (value > 1) {
-    value = (value - 1) * 10 + 1;
-    value = Math.round(value * 10) / 10;
-  }
-  document.getElementById(id_to_update).value = value;
-}
 
-function update_slider(slider_id, value, elem) {
+
+function update_slider(slider_id, value, elem)
+// Updates the weight slider on user input in the weight text field  "indicateur_poids" in add_form.php
+{
   document.getElementById(slider_id).noUiSlider.set(value);
-  elem.value = value; // to avoid values bigger than slider range being overriden by noUiSlider.set
+  elem.value = value; // to avoid bigger values than slider range being overriden by noUiSlider.set
 }
 
 
 function set_active(selector, id_to_activate) {
+// Sets an element as active. Used to highlight in green the "prefix" icon to the left of the field
   document.getElementById(id_to_activate).classList.add("active");
   if ((selector !== undefined) && (selector !== '')) {
 
@@ -80,6 +78,7 @@ function set_active(selector, id_to_activate) {
 
 function update_cat(dropdown_id,cat_id,cat_name)
 {
+  // Called on each change of categories to update relevant fields
   set_active('.dropdown-trigger', dropdown_id);
   document.getElementById(dropdown_id).classList.add('active');
   set_value('nom_categorie',cat_name);
@@ -91,11 +90,25 @@ function update_cat(dropdown_id,cat_id,cat_name)
 
 function update_subcat(subcat_id,subcat_name, subcat_price, subcat_unit)
 {
+  // Called on each change of subcategories to update relevant fields
   set_value('nom_souscategorie',subcat_name);
   set_value('id_souscategorie',subcat_id);
   set_value('price_per_kg',subcat_price);
   compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');
   check_default_unit(subcat_unit, 'row_poids');
+}
+
+function check_default_unit(default_unit, id_to_update) {
+  // Called by update_subcat. Hides and shows certain elements
+  // depending on whether an item's material is measured by weight ('kg')
+  // or is only measured by piece ('pc')
+  if (default_unit == 'kg') {
+    document.getElementById(id_to_update).classList.remove("invisible");
+    document.getElementById('has_weight').value = 1;
+  } else if (default_unit == 'pc') {
+    document.getElementById(id_to_update).classList.add("invisible");
+    document.getElementById('has_weight').value = 0;
+  }
 }
 
 function set_inactive(id_to_deactivate) {
@@ -104,6 +117,7 @@ function set_inactive(id_to_deactivate) {
 
 
 function ValidateForm(mandatory_fields, fields_visible_name)
+// Checks if all mandatory fields are filled before validating a form
 {
   var error_msg ='';
 
@@ -118,7 +132,7 @@ function ValidateForm(mandatory_fields, fields_visible_name)
     return error_msg;
 }
 
-function Soumettre(formid) {
+function submit_form(formid) {
 
   document.forms[formid].submit();
   //document.getElementById(formid).reset();

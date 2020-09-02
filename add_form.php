@@ -157,7 +157,7 @@
     //every line is a souscategorie
   //  $req = $bdd->prepare('  SELECT `nom`, `ID` FROM `_global_categories` ORDER BY `_global_categories`.`score` DESC
   //                      ');
-  
+
     $req = $bdd->prepare("SELECT * FROM (SELECT ID_categorie, COUNT(ID_categorie) AS count FROM `".$recuperatheque_catalogue."`  GROUP BY `ID_categorie`) t1 RIGHT JOIN (SELECT * FROM _global_categories ) t2 ON t1.ID_categorie = t2.ID ORDER BY (COALESCE(count,0)+ score) DESC, score DESC                         ");
 
 
@@ -173,7 +173,7 @@
         ?>
         <?php
               // Here we prepare to fetch subcategories that display in the dropdown menus
-              $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie`, `unite`, `prix` FROM `_global_souscategories` ORDER BY `_global_souscategories`.`ID_categorie`
+              $req = $bdd->prepare('  SELECT `ID`, `nom`, `ID_categorie`, `unite`, `prix` FROM `_global_souscategories` ORDER BY `_global_souscategories`.`ID_categorie`,`_global_souscategories`.`ID`
                                   ');
               //execute the request
               $req->execute();
@@ -368,9 +368,9 @@
 </div>
 
 <div class="quasi-fullwidth">
-<div class="row hide-on-small-only">
+<div class="row">
   <div class="col s12">
-   <a id="submit_mobile" class="waves-effect waves-light btn-small green accent-3 right" value="" onclick="" >
+   <a id="submit_desktop" class="waves-effect waves-light btn-small green accent-3 right" value="" onclick="" >
      <i class="fa fa-paper-plane"></i>
      Encoder
    </a>
@@ -379,12 +379,6 @@
 </div>
 </div>
 
-
-  <div class="fixed-action-btn hide-on-med-and-up">
-      <a id="submit_desktop" class="btn-floating btn-large green accent-3" name="" value="" onclick="">
-        <i class="fa fa-paper-plane"></i>
-      </a>
-  </div>
 
   </form>
 
@@ -418,7 +412,6 @@ if (isset($_POST['cat'])) {
 <script>
   document.addEventListener('DOMContentLoaded', function() {
 
-document.getElementById('submit_mobile').addEventListener("click", SubmitForm);
 document.getElementById('submit_desktop').addEventListener("click", SubmitForm);
 document.getElementById('heart1').addEventListener("click", function(){update_hearts(1)});
 document.getElementById('heart2').addEventListener("click", function(){update_hearts(2)});
@@ -486,7 +479,7 @@ function SubmitForm()
           }, 25000 ); // show a Toast after 25 sec to warn of *anormaly slow* loading and allow user to cancel form submission
 
           expand('loading_overlay'); //show loading overlay to prevent clicking
-          Soumettre('formulaire_encodage'); // submit form
+          submit_form('formulaire_encodage'); // submit form
        }
 }
 

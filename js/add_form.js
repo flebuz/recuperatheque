@@ -222,8 +222,7 @@ function show_input_image_controls() {
 
 
 function call_getusermedia(firstcall) {
-
-
+  //this function attempts to call the getUserMedia method to get the video stream from the back camera
 
   navigator.mediaDevices.getUserMedia(constraints)
     .then(function(stream) {
@@ -240,16 +239,17 @@ function call_getusermedia(firstcall) {
 
       if (firstcall) {
         if (rearcameraID.value == '') {
-
-          //populate_camera_list();
+          // if this is the first call to getUserMedia and the rearcamera has not been identified...
 
           getPreciseConstraints();
+          // calls getPreciseConstraints() to list all camera devices and set the precise constraints for the rear camera
 
         }
         video.onloadedmetadata = function(e) {
           video.play();
           is_camera_active = true;
           show_camera_controls();
+          
         };
       }
 
@@ -291,16 +291,21 @@ function PrisePhoto(e) {
 
 
 function UploadFichier(e) {
+// when the user clicks on the camera icon to upload a picture
+//(simple upload method when the getUserMedia stream doesn't work)
 
-  //on cache le svg avec les bords discontinus
   var bords_file_upload = document.getElementById("bords_file_upload");
   bords_file_upload.classList.add("invisible");
+    // hides the placeholder svg "bords_file_upload"
   var upload_file_default = document.getElementById("upload-file-default");
   upload_file_default.classList.add("invisible");
+  // hides the placeholder icon "upload-file-default"
   var spinner_imagesnap = document.getElementById("spinner_imagesnap");
   spinner_imagesnap.classList.remove("invisible");
+  //displays the loading spinner
   var canvas_final = document.getElementById('snap_final');
   canvas_final.classList.add("invisible");
+  //displays the canvas with the final snapshot above the spinner when it's loaded
 
 
 document.getElementById('image_final').reset;
@@ -313,11 +318,13 @@ document.getElementById('image_final').reset;
  img.onload = function()
   {
 
-    console.log("img.onload");
+
     getOrientation(e.target.files[0], function(orientation)
+    // reads the EXIF orientation of the picture
       {
 
         document.getElementById('image_final').value = DessineVignette('imagesnap', img, orientation);
+        //calls draws the picture on the imagesnap canvas with the EXIF orientation (if available)
       });
 
     canvas_final.classList.remove("invisible");
@@ -330,8 +337,11 @@ document.getElementById('image_final').reset;
   }
 }
 
+
+function getOrientation(file, callback)
+// reads the EXIF data in the picture file to get the picture's orientation
 // from http://stackoverflow.com/a/32490603
-function getOrientation(file, callback) {
+{
   var reader = new FileReader();
 
   reader.onload = function(event) {
@@ -384,13 +394,14 @@ function DessineVignette(type, elem, orientation) {
     canvas.width = size;
     canvas.height = size;
 
-    //on calcule le plus grand carré au milieu de l'image
+    //computes the biggest square at the centre of the picture
     var dimension = Math.min(vw, vh);
     var sx = (vw - dimension) / 2;
     var sy = (vh - dimension) / 2;
 
     ctx.clearRect(0, 0, size, size);
-    //on utilise l'orientation EXIF de l'image (le cas échéant) pour réorienter le canevas vers le haut puis on dessine
+
+    // checks the EXIF orientation found in the file (if any) to re-orient the canvas upside up, before drawing the snapshot
     if (orientation == 6) {
 
       ctx.clearRect(0, 0, size, size);

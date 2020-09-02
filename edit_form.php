@@ -125,10 +125,10 @@ $item_status = 0;
 
   <div id="loading_overlay" class="overlay invisible">
 
-
-    <!-- Overlay content -->
     <div class="overlay-content">
+    <!-- Displays an overlay on content during loading (to prevent further user interaction while the form is being submitted) -->
     <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    <!-- This bunch of divs display an animated CSS spinner during loading -->
     </div>
 
   </div>
@@ -143,15 +143,16 @@ $item_status = 0;
   <label for="file_upload" style="text-align:center">
 
       <canvas id="snap_final" class="invisible"></canvas>
-      <img id="snap" class="thumbnail responsive-img" src="/photos/<?php echo $recuperatheque ?>/<?php echo $id ?>.jpg"></img>
+      <!-- here is the final snapshot of the object, made visible
+      in add_form.js after all upload and treatment  -->
+      <img id="snap" class="thumbnail responsive-img" src="photos/<?php echo $recuperatheque ?>/<?php echo $id ?>.jpg"></img>
 
                               <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                              <!-- this bunch of divs display an animated CSS spinner while the image is loading -->
                           </label>
                           <input id="file_upload" type="file" accept="image/*" capture="environment" class="invisible">
 
 
-
-<!-- IMAGE ICI -->
 
 </div>
 
@@ -457,7 +458,7 @@ file_upload.addEventListener('change', UploadFichier); //on active le bouton d'u
                 }, 5000 ); // show a Toast after 5 sec to warn of slow loading
 
                 expand('loading_overlay'); //show loading overlay to prevent clicking
-                Soumettre('edit_form'); // submit form
+                submit_form('edit_form'); // submit form
              }
       }
 
