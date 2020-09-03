@@ -71,7 +71,7 @@ echo "action: ".$action;
 
 if ($action=='edit')
 {
-header("refresh:0; url='item_page.php?r=$recuperatheque&id=$object_id'");
+header("refresh:0; url='item_page.php?r=$recuperatheque&id=$object_id&update=1'");
 
 }
 else  if ($action=='remove')
@@ -168,7 +168,7 @@ catch(PDOException $e)
             echo "erreur ajout au journal : ".$result;
             }
 
-            
+
 
 
     $img = $_POST['image_final'];
@@ -193,7 +193,7 @@ if ($img !== null)
        $password = 'datarecoulechemindejerusalem';
        $remotePath = '/vhosts/federation.recuperatheque.org/htdocs/photos/';
       $remoteFilePath = getcwd().'/photos/'.$recuperatheque.'/'.$object_id.'.jpg';
-      console_log("object_id dans le nom de l'image : ". $last_id);
+      //console_log("object_id dans le nom de l'image : ". $last_id);
        $ch = curl_init("sftp://$username:$password@$host$remotePath");
 
        curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_SFTP);

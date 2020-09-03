@@ -280,7 +280,7 @@ div.input-field.noUi-target.noUi-ltr.noUi-horizontal {
   color: #00e676 !important
 }
 
-#indicateur_poids {
+#weight_textbox {
   width: calc(100% - 3.5rem) !important;
 }
 

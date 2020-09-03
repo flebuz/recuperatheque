@@ -17,11 +17,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
 
-function UploadFichier(e) {
+function UpdateSnapshot(e) {
 
-  console.log("UploadFichier");
+  console.log("UpdateSnapshot");
   //on cache le svg avec les bords discontinus
-  var snap_original = document.getElementById("snap_original");
+  var snap_original = document.getElementById("snap");
   snap_original.classList.add("invisible");
   var spinner_imagesnap = document.getElementById("spinner_imagesnap");
   spinner_imagesnap.classList.remove("invisible");
@@ -39,7 +39,7 @@ document.getElementById('image_final').reset;
  img.onload = function()
   {
 
-    console.log("img.onload");
+    //console.log("img.onload");
     getOrientation(e.target.files[0], function(orientation)
       {
 

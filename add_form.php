@@ -14,8 +14,8 @@
   <title>Mycélium : L'app des Recupérathèques - Encoder un objet</title>
   <meta charset='utf-8'>
 
-  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"> <!-- zoom désactivé pour éviter les zoom intempestifs sur mobile (aussi : , target-densitydpi=device-dpi)-->
-
+  <!-- the following disable zooming in order to make it more like an "app" experience on mobile (check also, if needed : target-densitydpi=device-dpi)-->
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/header.css">
@@ -31,12 +31,10 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
 
   <!--Import materialize.css-->
-
-
   <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
   <link type="text/css" rel="stylesheet" href="css/tags-input.css"  media="screen,projection"/>
 
-<!-- Ajout du formulaire précédent à la base de donnée si $_POST['cat'] est défini-->
+
 <?php
   include('connection_db.php');
 ?>
@@ -57,6 +55,7 @@
     }
     ?>
 
+<!-- Adds previous form to database if $_POST['cat'] is set-->
     <?php
     if (isset($_POST['cat'])) {
         include 'add.php';
@@ -64,8 +63,10 @@
     } ?>
 
     <?php
+
+    // N.B. : Obsolete code from Dorian ?
     //----- construction de l'objet $system ----
-    //-> résume la structure de catégorie-sscat-comptage de la recuperatheque
+    //-> résume la structure de catégorie-souscategorie-comptage de la recuperatheque
   //  if($recuperatheque){
   //    include('categories_system.php');
   //  }
@@ -76,8 +77,9 @@
 
 <main class="space-header">
   <div id="loading_overlay" class="overlay invisible">
-    <!-- Overlay content -->
+    <!-- When shown, displays an overlay above the content, to prevent further user interaction while the form is submitted -->
     <div class="overlay-content">
+    <!-- This ugly bunch of divs is actually a pretty elegant CSS spinner to show a loading animation :) -->
     <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
 
@@ -116,8 +118,13 @@
                             <path d="M98,25 L98,2 L75,2" fill="none" stroke="#9e9e9e" stroke-width="3" />
                           </svg></div>
 
+                          <!-- This is the backup method to upload a picture if the GetUserMedia stream does not work
+                         -->
                           <div  id="upload-file-default" title="Prendre un cliché / Uploader une photo" class="cam_btn_default" style="width:100px; height:100px; cursor:pointer"><i class="fas fa-camera" style="font-size: 64px !important; line-height: 100px !important;"></i>  </div>
+
+                          <!-- This ugly bunch of divs is a CSS spinner to show a loading animation -->
                           <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+
                         </label>
                         <input id="file_upload" type="file" accept="image/*" capture="environment" class="invisible">
                   </div>
@@ -206,9 +213,11 @@
               <!-- Début du formulaire-->
               <form name="formulaire_encodage" id="formulaire_encodage" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="post" novalidate>
 
-
+<!-- This div displays & stores the category/subcategory, and is only displayed when a category is first selected -->
                 <div id="categorisation" class ="row invisible" >
                    <div class="col s5 m5 input-field">
+
+                     <!-- These input fields store the category name & id -->
                      <input id="nom_categorie" class="input_categ" name="cat" type="text" required readonly>
                      <input id="id_categorie"  name="cat" type="text" readonly hidden>
 
@@ -219,9 +228,13 @@
                    </div>
 
                    <div class="col s5 m6 input-field">
+
+                     <!-- These input fields store the subcategory name & id -->
                      <input id="nom_souscategorie" class="input_categ" name="souscat" type="text" required readonly>
                     <input id="id_souscategorie" name="souscat" type="text" readonly hidden>
 
+                    <!-- These input field stores whether the item's material is measured by weight
+                        This is used in add.php and forms.js to check if "weight" is relevant-->
                     <input type="text" id="has_weight" name="has_weight" value="1" readonly hidden>
 
                    </div>
@@ -248,7 +261,9 @@
             <div class="inline-group" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             <div id="minus_btn" class="btn plusminus eztouch-left"><span class="no-select">-</span></div>
 
+              <!-- This input field stores the quantity of items, and is updated by the minus_btn & plus_btn  -->
               <input type="number" id="pieces" name="pieces" value="1" min="1" step="1"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
+              <!-- This user input chars are limited to numbers, and ValidateNonEmpty make sure that the input field is never empty  -->
 
               <div id="plus_btn" class="btn plusminus eztouch-right"><span class="no-select">+</span></div>
 
@@ -260,8 +275,9 @@
         <div id="row_poids" class="row input-field">
           <div class="input-field col s4 m3">
             <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
-            <label for="indicateur_poids" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
-            <input type="text" id="indicateur_poids" name="poids" value="1" min="1"  style="inline; text-align:center;">
+            <label for="weight_textbox" class="couleur3-text">Poids&nbsp;/&nbsp;pc</label>
+            <!-- This input field stores the weight of the item, and is updated by slider_poids (below)  -->
+            <input type="text" id="weight_textbox" name="poids" value="1" min="1"  style="inline; text-align:center;">
             <span id="" class="postfix">kg</span>
           </div>
           <div class="input-field col s8 m9" id="range_div" >
@@ -277,13 +293,16 @@
                     <label for="range_etat" class="couleur3-text">Etat:</label>
                 </div>
 
-               <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
+               <div class="input-field col s9 m5 no-select" id="etat_hearts" style="max-height:53px; white-space: nowrap;">
 
                   <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
                       <span id="heart1" class="checked"><i class="fas fa-heart"></i></span>
                       <span id="heart2">                <i class="fas fa-heart"></i></span>
                       <span id="heart3">                <i class="fas fa-heart"></i></span>
                       <span id="heart4">                <i class="fas fa-heart"></i></span>
+
+                        <!-- This input field stores the item's condition ("etat" in French), between 1 (bad)
+                        and 4 (outstanding), and is updated on each click or tap on a heart-->
                       <input class="invisible" type="number" name="etat" id="etat" value="1">
                   </div>
                 </div>
@@ -293,7 +312,10 @@
            <div id="row_prix" class ="row input-field" >
               <div class="input-field col s4 m3">
                 <i class="fas fa-coins prefix"></i>
+                <!-- This input field stores the item's price ("prix" in French), and is updated (reset) on each update of the item's weight or condition-->
                 <input id="prix" name="prix" type="number" value="0" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
+
+                <!-- This input field stores the item's base price per kilo, used to compute the item's suggested price (depending on weight and condition)-->
                 <input id="price_per_kg" name="rate" type="number" value="0" readonly hidden>
                 <label for="prix">Prix&nbsp;/&nbsp;pc</label>
               </div>
@@ -302,7 +324,7 @@
           <div id="row_tags" class ="row flex-input-field" >
 
              <div class="col s12 flex-input-field">
-               <div id="label_bricole" class="row nomargin nopadding" style="margin-left: 3rem !important;">
+               <div id="label_tags" class="row nomargin nopadding" style="margin-left: 3rem !important;">
                <label for="tags">Tags: (séparés par ' , ' ou ' . ')</label>
              </div>
                <i id="prefix_tags" class="fas fa-tag prefix"></i>
@@ -311,6 +333,7 @@
                     tabindex="-1"
                     style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
 
+                    <!-- This input field stores the item's tags-->
                     <input
                      class="invisible" id="input-tags" name="tags" type="text"
                      onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');">
@@ -320,9 +343,12 @@
 
            </div>
 
+
   <div id="plusdedetails" class="row">
     <div class="col s12">
-      <div class="" style="margin-top: 1rem;"><a href="" onclick="return expand('champs_facultatifs', 'plusdedetails', 'down');" style="color: #6f6972;"><i class="fas fa-plus-circle separator-label prefix"></i>&nbsp;Plus de détails</a></div>
+      <!-- A click/tap on this div expands the "champs_facultatifs" fields (remarques, dimensions, and the "hors-les-murs" checkbox)-->
+      <div class="" style="margin-top: 1rem;"><a href="" onclick="return expand('champs_facultatifs', 'plusdedetails', 'down');" style="color: #6f6972;">
+        <i class="fas fa-plus-circle separator-label prefix"></i>&nbsp;Plus de détails</a></div>
 
     </div>
   </div>
@@ -412,7 +438,12 @@ if (isset($_POST['cat'])) {
 <script>
   document.addEventListener('DOMContentLoaded', function() {
 
+// these eventlisteners use functions in add_form.js or forms.js to make the form interactive
+
+// Calls the SubmitForm function on click on Submit
 document.getElementById('submit_desktop').addEventListener("click", SubmitForm);
+
+// on each click or tap on a heart update_hearts() updates the item's condition (etat), and calls compute_price to compute a new suggested price
 document.getElementById('heart1').addEventListener("click", function(){update_hearts(1)});
 document.getElementById('heart2').addEventListener("click", function(){update_hearts(2)});
 document.getElementById('heart3').addEventListener("click", function(){update_hearts(3)});
@@ -421,32 +452,28 @@ document.getElementById('heart1').addEventListener("touchend", function(){update
 document.getElementById('heart2').addEventListener("touchend", function(){update_hearts(2)});
 document.getElementById('heart3').addEventListener("touchend", function(){update_hearts(3)});
 document.getElementById('heart4').addEventListener("touchend", function(){update_hearts(4)});
+
 document.getElementById('minus_btn').addEventListener("click", function(){Increment('pieces', -1, 1);});
 document.getElementById('plus_btn').addEventListener("click",  function(){Increment('pieces', 1, 1);});
-document.getElementById('indicateur_poids').addEventListener("click",  function(){this.select();});
-document.getElementById('indicateur_poids').addEventListener("keypress",  function(){return ValidateNumKeyPress(event);});
-document.getElementById('indicateur_poids').addEventListener("focus",  function(){this.oldvalue = this.value;});
-document.getElementById('indicateur_poids').addEventListener("change",  function(){ValidateNumber(this); this.oldvalue = this.value; update_slider('slider_poids',this.value, this); compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');});
+document.getElementById('weight_textbox').addEventListener("click",  function(){this.select();});
+document.getElementById('weight_textbox').addEventListener("keypress",  function(){return ValidateNumKeyPress(event);});
+document.getElementById('weight_textbox').addEventListener("focus",  function(){this.oldvalue = this.value;});
+
+// on each change of the weight_textbox, the slider is updated and a new suggested price is computed
+document.getElementById('weight_textbox').addEventListener("change",  function(){ValidateNumber(this); this.oldvalue = this.value; update_slider('slider_poids',this.value, this); compute_price('prix','price_per_kg', 'weight_textbox', 'etat');});
 
 
 document.getElementById('prix').addEventListener("click",  function(){this.select();});
 document.getElementById('pieces').addEventListener("click",  function(){this.select();});
 
-/*
-var nodes = document.querySelectorAll("[type=text]");
-for (var i=0; i<nodes.length; i++)
-  {
-    console.log(nodes[i]);
-    nodes[i].addEventListener("click", function() {this.select();}  );
-  }
-*/
-//onClick="this.select();"
+
 init_materialize();
 init_nouislider();
 
   });
 
 function SubmitForm()
+// This function checks if the form values are valid and if we are online, and then submits the form
 {
   const mandatory_fields = [ 'image_final', 'id_categorie', 'id_souscategorie' ];
   const fields_visible_name = [ "une photo de l'objet", "une catégorie", "une sous-catégorie" ];
@@ -494,8 +521,7 @@ function stopsubmit()
 
 
 function init_materialize() {
-
-    /* Script requis par Materialize pour activer le composant Dropdown*/
+    /* This is required by Materialize to activate the Dropdown component*/
     var elems = document.querySelectorAll('.dropdown-trigger');
     var instance = M.Dropdown.init(elems, {
       coverTrigger: false,
@@ -503,15 +529,14 @@ function init_materialize() {
       outDuration: 250,
       inDuration: 0
     });
-
     var elems2 = document.querySelectorAll('.fixed-action-btn');
     var instances = M.FloatingActionButton.init(elems2);
-
   }
 
 
 function init_nouislider()
 {
+  /* This is required by noUiSlider to activate the range slider "slider_poids" */
     var slider_poids = document.getElementById('slider_poids');
 
             noUiSlider.create(slider_poids, {
@@ -527,15 +552,13 @@ function init_nouislider()
                         stepped:true
                       }
             });
-
-
     slider_poids.noUiSlider.on('update', function( values, handle ) {
        var valeur = slider_poids.noUiSlider.get();
 
              valeur=  Math.round(valeur * 10) / 10;
 
-       document.getElementById('indicateur_poids').value= valeur;
-      compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');
+       document.getElementById('weight_textbox').value= valeur;
+      compute_price('prix','price_per_kg', 'weight_textbox', 'etat');
        });
     slider_poids.noUiSlider.on('start', function( values, handle ) {
       set_active('','prefix_poids');
@@ -555,7 +578,7 @@ function init_nouislider()
 
 <?php
 
-//TEMPORAIRE fonction pour logger des messages PHP dans la console via console.log() en JS
+//TEMPORARY: function for logging PHP messages in the console through javascript's console.log()
   function console_log($output, $with_script_tags = true)
   {
       $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) .

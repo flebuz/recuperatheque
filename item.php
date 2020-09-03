@@ -56,7 +56,18 @@
           }
         ?>
         <?php
+
+        // If the photo has just been updated (in edit.php)
+        if (isset($_GET['update']) && ($_GET['update']==1))
+        {
+          // Forces updating the cache by querying a random number after the photo filename
+          $image_url = 'photos/' . $recuperatheque . '/' . $item['ID_item'] . '.jpg?'.rand(1,32000);
+          /*N.B. Maxime : this is not optimal. Ideally, the photo url should be unique to each uploaded,
+           and should be stored in the database rather than relying on the ID of the item*/
+        }
+        else {
           $image_url = 'photos/' . $recuperatheque . '/' . $item['ID_item'] . '.jpg';
+        }
         ?>
         <img class="item-photo" src=<?php echo $image_url; ?> />
         <?php
@@ -149,7 +160,7 @@
           if ($item['localisation']){ ?>
             <p>
               <b>Hors-les-murs</b><br/>
-              (cet objet ne se trouve pas dans notre récupérathèque, mais à l'adresse indiquer ci-dessous)
+              Cet objet ne se trouve pas dans notre récupérathèque, mais à l'adresse suivante:
             </p>
             <div class="info-line">
               <i class="fas fa-map-marker-alt info-icon"></i>

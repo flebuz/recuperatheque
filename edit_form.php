@@ -128,7 +128,7 @@ $item_status = 0;
     <div class="overlay-content">
     <!-- Displays an overlay on content during loading (to prevent further user interaction while the form is being submitted) -->
     <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-    <!-- This bunch of divs display an animated CSS spinner during loading -->
+    <!-- This bunch of divs displays an animated CSS spinner during loading -->
     </div>
 
   </div>
@@ -143,12 +143,15 @@ $item_status = 0;
   <label for="file_upload" style="text-align:center">
 
       <canvas id="snap_final" class="invisible"></canvas>
-      <!-- here is the final snapshot of the object, made visible
-      in add_form.js after all upload and treatment  -->
-      <img id="snap" class="thumbnail responsive-img" src="photos/<?php echo $recuperatheque ?>/<?php echo $id ?>.jpg"></img>
+      <!-- here is the snapshot of the object -->
+
+      <img id="snap" class="thumbnail responsive-img" src="photos/<?php echo $recuperatheque ?>/<?php echo $id ?>.jpg?".<? rand(1,32000) ?>></img>
+      <!-- Forces updating the cache by querying a random number after the photo filename-->
+      <!-- N.B. Maxime : this is not optimal ! Ideally, the photo url should be unique to each uploaded,
+       and should be stored in the database rather than relying on the ID of the item*/ -->
 
                               <div id="spinner_imagesnap" class="lds-spinner color-grey invisible"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                              <!-- this bunch of divs display an animated CSS spinner while the image is loading -->
+                              <!-- this bunch of divs displays an animated CSS spinner while the image is loading -->
                           </label>
                           <input id="file_upload" type="file" accept="image/*" capture="environment" class="invisible">
 
@@ -199,7 +202,7 @@ $item_status = 0;
 
                 $souscategories = $req->fetchAll();
 
-
+          // Displaying the subcategories and setting correct values the form according to price & default_unit
           $current_cat=1;
           echo "<ul id='select-".$souscategories[0]['ID_categorie']."' class='dropdown-content'>";
 
@@ -221,38 +224,44 @@ $item_status = 0;
 
   <div class="container no-select" id="formulaire" style="background-color:white">
 
-
-          <!-- Début du formulaire-->
+          <!-- Form begins here-->
           <form name="edit_form" id="edit_form" action="edit.php"  method="post" novalidate>
 
-<input id="ID_item" name="ID_item" class="invisible" value="<?php echo $item['ID_item'];?>">
-                <div id="row_categorisation" class ="row " >
-                   <div class="col s5 m5 input-field">
+
+  <input id="ID_item" name="ID_item" class="invisible" value="<?php echo $item['ID_item'];?>">
+
+  <!-- This text input stores the category-->
+  <div id="row_categorisation" class ="row " >
+          <div class="col s5 m5 input-field">
+
+            <!-- These input fields store the category name & id -->
                      <input id="nom_categorie" class="input_categ" name="cat" type="text" value="<?php echo $item['categorie'];?>" required readonly>
                      <input id="id_categorie"  name="cat" type="text"  value="<?php echo $item['ID_categorie'];?>" readonly hidden>
 
-                   </div>
+           </div>
 
-                   <div class="col s1 input-field center-align">
+           <div class="col s1 input-field center-align">
                       <p>></p>
-                   </div>
+           </div>
 
-                   <div class="col s5 m6 input-field">
-                     <input id="nom_souscategorie" class="input_categ" name="souscat" type="text" value="<?php echo $item['sous_categorie'];?>" required readonly>
-                    <input id="id_souscategorie" name="souscat" type="text" value="<?php echo $item['ID_souscategorie'];?>"  readonly hidden>
-                   </div>
+           <div class="col s5 m6 input-field">
+                     <!-- These input fields store the subcategory name & id -->
+                   <input id="nom_souscategorie" class="input_categ" name="souscat" type="text" value="<?php echo $item['sous_categorie'];?>" required readonly>
+                   <input id="id_souscategorie" name="souscat" type="text" value="<?php echo $item['ID_souscategorie'];?>"  readonly hidden>
+          </div>
 
-                 </div>
+ </div>
 
 
 
 
-                  <div id="row_pieces" class ="row input-field" >
+          <div id="row_pieces" class ="row input-field" >
 
                     <div class="input-field col s6" >
 
                       <div class="inline-group" >
                           <i id='prefix_pieces' class="fas fa-cube prefix"></i>
+                          <!-- This input field stores the quantity of items -->
                           <input type="number" id="pieces" name="pieces" value="<?php echo $item['pieces'];?>" min="1" step="1" onClick="this.select();" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onchange="ValidateNonEmpty(this.id, 1)" onfocus="set_active('','prefix_pieces');" onblur="set_inactive('prefix_pieces');" style="text-align: center; width:45px; ">
                         <span class="couleur3-text no-select postfix">pièce(s)</span>
                         </div>
@@ -260,8 +269,9 @@ $item_status = 0;
 
                       <div class="input-field col s4">
                         <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
-                        <label for="indicateur_poids" class="couleur3-text">Poids:</label>
-                        <input type="number" id="indicateur_poids" name="poids" value="<?php echo $item['poids'];?>" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; " style="inline; text-align:center;">
+                        <label for="weight_textbox" class="couleur3-text">Poids:</label>
+                        <!-- This input field stores the weight of the item -->
+                        <input type="number" id="weight_textbox" name="poids" value="<?php echo $item['poids'];?>" min="1" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value; " style="inline; text-align:center;">
                       <span id="" class="postfix">kg</span>
                       </div>
 
@@ -272,7 +282,7 @@ $item_status = 0;
                   <div id="row_etat" class ="row input-field">
                         <div class="input-field col s3 m2">
                           <i id="prefix_rating" class="fas fa-heart-broken prefix"></i>
-                          <label for="range_etat" class="couleur3-text">Etat:</label>
+                          <label for="range_etat" class="couleur3-text">etat:</label>
                       </div>
 
                       <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
@@ -281,7 +291,8 @@ $item_status = 0;
                           <span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" ontouchstart="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" ontouchstart="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" ontouchstart="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" ontouchstart="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
                           </div>
                           <input type="number" name="etat" id="etat" value="1" class="invisible">
-
+                          <!-- This input field stores the item's condition ("etat" in French), between 1 (bad)
+                          and 4 (outstanding), and is updated on each click or tap on a heart-->
 
                       </div>
 
@@ -290,6 +301,7 @@ $item_status = 0;
                  <div id="row_prix" class ="row input-field" >
                     <div class="input-field col s4 m3">
                       <i class="fas fa-coins prefix"></i>
+                        <!-- This input field stores the item's price ("prix" in French) -->
                         <input id="prix" name="prix" type="number" value="<?php echo $item['prix'];?>" onClick="this.select();" onkeypress="return ValidateNumKeyPress(event);" onfocus="this.oldvalue = this.value;" onchange="ValidateNumber(this);this.oldvalue = this.value" style="text-align: center">
                       <label for="prix">Prix&nbsp;/&nbsp;pc</label>
                     </div>
@@ -302,6 +314,7 @@ $item_status = 0;
                      <i class="fas fa-tag prefix"></i>
                     <input class="invisible" id="source-tags" name="tags" type="text" value="<?php echo $item['tags'];?>">
 
+                    <!-- This input field stores the item's tags-->
                      <input
                       class="invisible" id="input-tags" name="tags" type="text"
                       onfocus="set_active('','prefix_tags');" onblur="set_inactive('prefix_tags');">
@@ -310,7 +323,7 @@ $item_status = 0;
 
                 </div>
 
-
+<!-- In edit_form.php the facultative fields ("champs_facultatifs") are always displayed -->
               <div id="champs_facultatifs" class="">
                 <div class="row">
                 <div class="input-field col s12">
@@ -338,7 +351,7 @@ $item_status = 0;
 
 
 
-            <!-- Show modal in case of ID error -->
+            <!-- Show modal with error message in case of a click on "supprimer" ("remove") -->
              <div id="modal_remove" class="modal">
                <div class="modal-content">
                  <i class="fas fa-trash-alt" style="float:right; font-size:64; color:#606060"></i>
@@ -424,7 +437,7 @@ if (isset($_POST['action'])) {
 
 document.querySelector('#submit_edit').addEventListener("click", SubmitForm);
 var file_upload = document.getElementById('file_upload');
-file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
+file_upload.addEventListener('change', UpdateSnapshot); //on active le bouton d'upload de photo
 
     init_materialize();
 

@@ -1,5 +1,4 @@
-// Fonctions communes à tous les formulaires (add_form.php, edit_form.php, sell_form.php)
-
+// Common functions for all item-related forms (add_form.php, edit_form.php)
 
 
 function set_value(id_to_update, value)
@@ -13,16 +12,16 @@ function set_value(id_to_update, value)
 function compute_price(id_price, id_price_per_kg, id_weight, id_etat)
 // Computes the suggested price of an item in relation to 1) the material's base price per kg
 // (set in the _global_souscategories MySQL table), // 2) the weight of the item and
-// 3) its condition (1 to 4 hearts)
+// 3) its condition ("etat") (1 to 4 hearts)
 {
   var weight = document.getElementById(id_weight).value;
   var price_per_kg = document.getElementById(id_price_per_kg).value;
-  var condition = document.getElementById(id_etat).value;
+  var etat = document.getElementById(id_etat).value;
   if (weight && price_per_kg && etat)
   {
-      var coefficient_condition = 0.2 + (condition * 0.2);
-      //console.log("price_per_kg : "+ price_per_kg +"; weight : "+ weight+"; etat : "+etat+ "; coefficient_condition : " + coefficient_condition);
-      var final_price = price_per_kg * weight * coefficient_condition;
+      var coefficient_etat = 0.2 + (etat * 0.2);
+      //console.log("price_per_kg : "+ price_per_kg +"; weight : "+ weight+"; etat : "+etat+ "; coefficient_etat : " + coefficient_etat);
+      var final_price = price_per_kg * weight * coefficient_etat;
 
 
       final_price= Math.round(final_price*2)/2; //restrict number to 2 decimal points
@@ -54,18 +53,18 @@ function update_weight_and_price(final_weight_id, item_weight, nb_unit, final_pr
 
 
 
-
 function update_slider(slider_id, value, elem)
-// Updates the weight slider on user input in the weight text field  "indicateur_poids" in add_form.php
+// Updates the weight slider on user input in the weight text field  "weight_textbox" in add_form.php
 {
   document.getElementById(slider_id).noUiSlider.set(value);
   elem.value = value; // to avoid bigger values than slider range being overriden by noUiSlider.set
 }
 
 
-function set_active(selector, id_to_activate) {
+function set_active(selector, id_to_activate)
 // Sets an element as active. Used to highlight in green the "prefix" icon to the left of the field
-  document.getElementById(id_to_activate).classList.add("active");
+ {
+     document.getElementById(id_to_activate).classList.add("active");
   if ((selector !== undefined) && (selector !== '')) {
 
     var tabs = document.querySelectorAll(selector);
@@ -77,8 +76,8 @@ function set_active(selector, id_to_activate) {
 }
 
 function update_cat(dropdown_id,cat_id,cat_name)
-{
   // Called on each change of categories to update relevant fields
+{
   set_active('.dropdown-trigger', dropdown_id);
   document.getElementById(dropdown_id).classList.add('active');
   set_value('nom_categorie',cat_name);
@@ -88,15 +87,17 @@ function update_cat(dropdown_id,cat_id,cat_name)
   expand('categorisation','', 'down');
 }
 
+
 function update_subcat(subcat_id,subcat_name, subcat_price, subcat_unit)
-{
   // Called on each change of subcategories to update relevant fields
+{
   set_value('nom_souscategorie',subcat_name);
   set_value('id_souscategorie',subcat_id);
   set_value('price_per_kg',subcat_price);
-  compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');
+  compute_price('prix','price_per_kg', 'weight_textbox', 'etat');
   check_default_unit(subcat_unit, 'row_poids');
 }
+
 
 function check_default_unit(default_unit, id_to_update) {
   // Called by update_subcat. Hides and shows certain elements
@@ -110,6 +111,7 @@ function check_default_unit(default_unit, id_to_update) {
     document.getElementById('has_weight').value = 0;
   }
 }
+
 
 function set_inactive(id_to_deactivate) {
   document.getElementById(id_to_deactivate).classList.remove("active");
@@ -128,28 +130,33 @@ function ValidateForm(mandatory_fields, fields_visible_name)
         error_msg= error_msg.concat("Veuillez entrer "+ fields_visible_name[i] +"<br />");
       }
     }
-
     return error_msg;
 }
+
 
 function submit_form(formid) {
 
   document.forms[formid].submit();
-  //document.getElementById(formid).reset();
+
 }
 
 
 
-//fonction qui enlève la classe "hidden" d'un élément du DOM
-function unhide(id_to_show) {
+function unhide(id_to_show)
+//removes the "hidden" class of a DOM element
+{
   var elem_to_show = document.getElementById(id_to_show);
 
   elem_to_show.classList.remove("hidden");
 }
 
-//fonction expand affiche le div #id_to_show, cache le div #id_to_hide et applique une animation d'entrée
-// en fonction de la variable direction (slide down, slide right, ou fade in (par défaut))
-function expand(id_to_show, id_to_hide, direction) {
+
+
+function expand(id_to_show, id_to_hide, direction)
+// This function shows the div #id_to_show, hides the div #id_to_hide, and uses an entry animation
+// depending on the desired direction (slide down, slide right, or fade in (by defaut)).
+// Used for clickable "Plus de détails" ("More details") div.
+{
 
   var elem_to_show = document.getElementById(id_to_show);
 
@@ -170,62 +177,69 @@ function expand(id_to_show, id_to_hide, direction) {
   return false;
 }
 
-//cache l'élément dont l'id est fourni
-function hide(id_to_hide) {
+
+function hide(id_to_hide)
+// Hides a given element
+{
   if (id_to_hide !== null && id_to_hide !== '') {
     var elem_to_hide = document.getElementById(id_to_hide);
     elem_to_hide.classList.add("invisible");
   }
 }
 
-//fonction pour vérifier si il faut faire apparaitre ou disparaitre un div en fonction de si la case est cochée
-function check_expand_hide(elem, id_to_show, id_to_hide, direction) {
-  if (elem.checked == true) {
+
+function check_expand_hide(current_state, id_to_show, id_to_hide, direction)
+// Checks if a div needs to be displayed or hidden depending on its state, stored in the checkbox "current_state"
+{
+  if (current_state.checked == true) {
     expand(id_to_show, '', direction)
-  } else if (elem.checked == false) {
+  } else if (current_state.checked == false) {
     hide(id_to_hide)
   }
 }
 
 
 function update_hearts(value)
+// updates the item's condition based on user input on the hearts icons (slightly misleading name)
 {
   checkhearts(value);
   set_value('etat',value);
-  compute_price('prix','price_per_kg', 'indicateur_poids', 'etat');
+  compute_price('prix','price_per_kg', 'weight_textbox', 'etat');
 }
 
 function checkhearts(value) {
+// checks or unchecks hearts (which displays them as filled or unfilled) based on a given condition (1 to 4) value
+      if (value >= 1) {
+        document.getElementById('heart1').classList.add("checked");
+      } else {
+        document.getElementById('heart1').classList.remove("checked");
+      }
 
-  if (value >= 1) {
-    document.getElementById('heart1').classList.add("checked");
-  } else {
-    document.getElementById('heart1').classList.remove("checked");
-  }
+      if (value >= 2) {
+        document.getElementById('heart2').classList.add("checked");
+      } else {
+        document.getElementById('heart2').classList.remove("checked");
+      }
 
-  if (value >= 2) {
-    document.getElementById('heart2').classList.add("checked");
-  } else {
-    document.getElementById('heart2').classList.remove("checked");
-  }
+      if (value >= 3) {
+        document.getElementById('heart3').classList.add("checked");
+      } else {
+        document.getElementById('heart3').classList.remove("checked");
+      }
 
-  if (value >= 3) {
-    document.getElementById('heart3').classList.add("checked");
-  } else {
-    document.getElementById('heart3').classList.remove("checked");
-  }
-
-  if (value >= 4) {
-    document.getElementById('heart4').classList.add("checked");
-  } else {
-    document.getElementById('heart4').classList.remove("checked");
-  }
-
+      if (value >= 4) {
+        document.getElementById('heart4').classList.add("checked");
+      } else {
+        document.getElementById('heart4').classList.remove("checked");
+      }
 }
 
-// fonction pour inc/décrementer la valeur d'un élément (utilisé pour "pieces")
-function Increment(id, increment, min, max) {
 
+function Increment(id, increment, min, max)
+// function for incrementing/decrementing the value of an element
+//(used for "pieces" minus_btn and plus_btn in add_form.php)
+
+{
   var value = parseInt(document.getElementById(id).value);
 
   if ((value + increment) <= min) {
@@ -238,7 +252,9 @@ function Increment(id, increment, min, max) {
 }
 
 function ValidateNonEmpty(id, min) {
-
+// Checks if value of an element (whose "id" is given) is not empty.
+// If the element is empty, sets it to "min" value.
+// (Used in add_form.php for "pieces" to make sure a minimal quantity of 1 item is always set)
   var value = document.getElementById(id).value;
 
   if (value == '') {
@@ -249,8 +265,11 @@ function ValidateNonEmpty(id, min) {
 
 }
 
-function ValidateValue(id, min, max) {
-
+function ValidateValue(id, min, max)
+// Checks if value of an element (whose "id" is given) is not empty or above a maximum threshold.
+// If the element is empty, sets it to "min" value. If it is above the threshold, sets the value with "max"
+// (Used in item_page.php)
+{
   var value = document.getElementById(id).value;
 
   if (value == '') {
@@ -260,11 +279,12 @@ function ValidateValue(id, min, max) {
   } else {
     document.getElementById(id).value = parseInt(value);
   }
-
 }
 
 
-function ValidateNumKeyPress(event) {
+function ValidateNumKeyPress(event)
+// Checks the user key press to constraint input to numbers
+{
   var regex = new RegExp(/^-?\d*[.,]?\d*$/);
   var key = String.fromCharCode(event.charCode ? event.which : event.charCode);
   if (!regex.test(key)) {
@@ -273,9 +293,11 @@ function ValidateNumKeyPress(event) {
   }
 }
 
-function ValidateNumber(textbox) {
+function ValidateNumber(textbox)
+// Checks if value of a textbox is a valid number
+// If it's invalid, reverts it to its former value ("oldvalue")
+{
   n = textbox.value;
-
 
   if (isNaN(parseFloat(n.replace(",", ".")))) //on contrôle si n est un nombre (en remplaçant la ',' par un '.' sinon isNaN=true)
   {

@@ -40,8 +40,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   canvas_streaming.addEventListener("click", PrisePhoto); //le canvas du streaming video fonctionne comme le bouton prise de vue
   take_photo_btn.addEventListener("click", PrisePhoto); //on active le bouton prise de vue
-  file_upload.addEventListener('change', UploadFichier); //on active le bouton d'upload de photo
-  //  snap_final.addEventListener("click", UploadFichier); //on active  l'upload de photo en cas de clic sur le snap final
+  file_upload.addEventListener('change', UploadSnapshot); //on active le bouton d'upload de photo
+  //  snap_final.addEventListener("click", UploadSnapshot); //on active  l'upload de photo en cas de clic sur le snap final
 
   var tagInput1 = new TagsInput({
     selector: 'input-tags',
@@ -249,7 +249,7 @@ function call_getusermedia(firstcall) {
           video.play();
           is_camera_active = true;
           show_camera_controls();
-          
+
         };
       }
 
@@ -290,9 +290,9 @@ function PrisePhoto(e) {
 }
 
 
-function UploadFichier(e) {
+function UploadSnapshot(e) {
 // when the user clicks on the camera icon to upload a picture
-//(simple upload method when the getUserMedia stream doesn't work)
+//(simple backup upload method when the getUserMedia stream doesn't work)
 
   var bords_file_upload = document.getElementById("bords_file_upload");
   bords_file_upload.classList.add("invisible");
