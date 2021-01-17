@@ -7,6 +7,14 @@ session_start();
 
     <div class="title"><a href="portal.php">Mycélium</a></div>
 
+    <a href="https://forms.gle/iqQS8WYvnfcpT3dV8" class="nav-button">
+      <div class="nav-title">(Problème ?)</div>
+      <i class="fas fa-exclamation-triangle"></i>
+    </a>
+    <div class="nav-static">
+      <div class="">&nbsp;|&nbsp;</div>
+    </div>
+
     <?php
       if(isset($_SESSION['id']) AND isset($_SESSION['pseudo'])){?>
 
@@ -49,6 +57,10 @@ session_start();
       <?php
       }
     ?>
+
+
+
+
 
   </div>
 </div>
