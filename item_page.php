@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <title>Mycélium : L'app des Recupérathèques</title>
+  <title>Mycelium : L'app des Recupérathèques</title>
 
   <meta charset="utf-8" />
 
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/header.css?17-01">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
   <link rel="stylesheet" href="css/add_form.css">

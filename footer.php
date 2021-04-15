@@ -13,7 +13,7 @@
     </div>
 
     <div>
-    <h4>Le Mycélium</h4>
+    <h4>Le Mycelium</h4>
     <p>
       est l'appareil végétatif des <strong>champignons</strong>.</br>
       Composé d'un ensemble de filaments ramifiés, il

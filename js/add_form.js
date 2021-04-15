@@ -401,27 +401,30 @@ function DessineVignette(type, elem, orientation) {
 
     ctx.clearRect(0, 0, size, size);
 
-    // checks the EXIF orientation found in the file (if any) to re-orient the canvas upside up, before drawing the snapshot
-    if (orientation == 6) {
+   // draws the snapshot without worrying about orientation (apparently the EXIF orientation data are not always consistent for all users)
+    ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
 
-      ctx.clearRect(0, 0, size, size);
-      ctx.transform(0, 1, -1, 0, size, 0);
-      ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
-    } else if (orientation == 8) {
-
-      ctx.clearRect(0, 0, size, size);
-      ctx.transform(0, -1, 1, 0, 0, size);
-      ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
-    } else if (orientation == 3) {
-
-      ctx.clearRect(0, 0, size, size);
-      ctx.transform(-1, 0, 0, -1, size, size);
-      ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
-    } else {
-
-
-      ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
-    }
+    // LEGACY : checks the EXIF orientation found in the file (if any) to re-orient the canvas upside up, before drawing the snapshot
+    // if (orientation == 6) {
+    //
+    //   ctx.clearRect(0, 0, size, size);
+    //   ctx.transform(0, 1, -1, 0, size, 0);
+    //   ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
+    // } else if (orientation == 8) {
+    //
+    //   ctx.clearRect(0, 0, size, size);
+    //   ctx.transform(0, -1, 1, 0, 0, size);
+    //   ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
+    // } else if (orientation == 3) {
+    //
+    //   ctx.clearRect(0, 0, size, size);
+    //   ctx.transform(-1, 0, 0, -1, size, size);
+    //   ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
+    // } else {
+    //
+    //
+    //   ctx.drawImage(elem, sx, sy, dimension, dimension, 0, 0, size, size);
+    // }
 
     // on affiche le canevas final
     canvas.classList.remove("invisible");

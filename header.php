@@ -5,7 +5,7 @@ session_start();
 <div class="header-container">
   <div class="header quasi-fullwidth">
 
-    <div class="title"><a href="portal.php">Mycélium</a></div>
+    <div class="title"><a href="portal.php">Mycelium</a></div>
 
     <a href="https://forms.gle/iqQS8WYvnfcpT3dV8" class="nav-button">
       <div class="nav-title">(Problème ?)</div>

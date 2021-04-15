@@ -163,7 +163,10 @@ hr{
 
 .recuperatheque{
 
+
 }
+
+
 .recuperatheque h2{
   margin: 0;
 }
@@ -173,6 +176,7 @@ hr{
 }
 .recuperatheque a{
   word-break: break-all;
+
 }
 
 /* si menu depliable */

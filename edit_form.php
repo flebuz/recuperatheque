@@ -3,7 +3,7 @@
 
 
 <head>
-  <title>Mycélium : L'app des Recupérathèques - Modifier un objet</title>
+  <title>Mycelium : L'app des Recupérathèques - Modifier un objet</title>
   <meta charset='utf-8'>
 
 
@@ -11,7 +11,7 @@
   <meta name="theme-color" content="">
 
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/header.css?17-01">
   <link rel="stylesheet" href="css/add_form.css">
   <link rel="stylesheet" href="css/menu.css">
   <meta name="theme-color" content="#303030"><!-- Chrome -->
@@ -56,7 +56,7 @@
   if (isset($_POST['action'])) {
     // process the edit/removal
     include 'edit.php';
-    console_log("include de add.php");
+    console_log("include de edit.php");
 
     }
   ?>
@@ -206,6 +206,7 @@ $item_status = 0;
           $current_cat=1;
           echo "<ul id='select-".$souscategories[0]['ID_categorie']."' class='dropdown-content'>";
 
+          // Note : this "for" loop is apparently different from the one in add_form.php, I don't remember why :/ Would be nice to harmonize both
           for ($row = 0; $row < sizeof($souscategories); $row++) {
               if ($souscategories[$row]['ID_categorie'] == $current_cat) {
                   echo "<li><a href='#".$souscategories[$row]['ID']."' ontouchstart= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."');check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\" onclick= \"set_value('nom_souscategorie','".$souscategories[$row]['nom']."'); set_value('id_souscategorie','".$souscategories[$row]['ID']."'); set_value('prix','".$souscategories[$row]['prix']."'); check_default_unit('".$souscategories[$row]['unite']."', 'row_poids');\">".$souscategories[$row]['nom']."</a></li>";
@@ -216,6 +217,9 @@ $item_status = 0;
                   $current_cat++;
               }
           }
+
+
+
                  ?>
                </ul>
   </div>
@@ -237,6 +241,13 @@ $item_status = 0;
             <!-- These input fields store the category name & id -->
                      <input id="nom_categorie" class="input_categ" name="cat" type="text" value="<?php echo $item['categorie'];?>" required readonly>
                      <input id="id_categorie"  name="cat" type="text"  value="<?php echo $item['ID_categorie'];?>" readonly hidden>
+
+            <!-- These input field stores whether the item's material is measured by weight
+             This is used in edit.php and edit_form.js to check if "weight" is relevant
+             (This is also used in add.php and forms.js to check if "weight" is relevant)-->
+            <input type="text" id="has_weight" name="has_weight" value="1" readonly hidden>
+
+
 
            </div>
 
@@ -267,7 +278,7 @@ $item_status = 0;
                         </div>
                     </div>
 
-                      <div class="input-field col s4">
+                      <div id="row_poids" class="input-field col s4">
                         <i id="prefix_poids" class="fas fa-weight-hanging prefix"></i>
                         <label for="weight_textbox" class="couleur3-text">Poids:</label>
                         <!-- This input field stores the weight of the item -->
@@ -287,8 +298,10 @@ $item_status = 0;
 
                       <div class="input-field col s9 m5 no-select" id="etat_coeurs" style="max-height:53px; white-space: nowrap;">
 
+                        <!-- The lines above define the "hearts" icons and update the item's condition ("etat") onclick -->
+                        <!-- This is kinda messy, add_form has a better way to do this through a few addEventListener -->
                       <div class="rating" style="display:inline-block;" onfocus="set_active('', 'prefix_rating')" onblur="set_inactive('prefix_rating')" tabindex="-1" style="outline: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                          <span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" ontouchstart="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" ontouchstart="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" ontouchstart="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" ontouchstart="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
+                          <span id="heart1" class="checked" onclick="checkhearts(1); set_value('etat',1)" onclick="checkhearts(1); set_value('etat',1)"><i class="fas fa-heart"></i></span><span id="heart2"                 onclick="checkhearts(2); set_value('etat',2)" onclick="checkhearts(2); set_value('etat',2)"><i class="fas fa-heart"></i></span><span id="heart3"                 onclick="checkhearts(3); set_value('etat',3)" onclick="checkhearts(3); set_value('etat',3)"><i class="fas fa-heart"></i></span><span id="heart4"                 onclick="checkhearts(4); set_value('etat',4)" onclick="checkhearts(4); set_value('etat',4)"><i class="fas fa-heart"></i></span>
                           </div>
                           <input type="number" name="etat" id="etat" value="1" class="invisible">
                           <!-- This input field stores the item's condition ("etat" in French), between 1 (bad)
@@ -437,7 +450,7 @@ if (isset($_POST['action'])) {
 
 document.querySelector('#submit_edit').addEventListener("click", SubmitForm);
 var file_upload = document.getElementById('file_upload');
-file_upload.addEventListener('change', UpdateSnapshot); //on active le bouton d'upload de photo
+file_upload.addEventListener('change', UpdateSnapshot); //on active le bouton d'upload de photo UpdateSnapshot()
 
     init_materialize();
 

@@ -20,14 +20,14 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/header.css?17-01">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
 
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Mycélium">
+  <meta name="apple-mobile-web-app-title" content="Mycelium">
 
 
 </head>

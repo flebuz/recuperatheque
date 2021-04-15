@@ -26,6 +26,9 @@
         <?php
         }
       ?>
+
+  
+
       <?php if ($recup_info['mail']){ ?>
         <div class="info-line">
           <i class="fas fa-envelope info-icon"></i>

@@ -174,7 +174,7 @@ $operation = "add";
     file_put_contents($remoteFilePath, $local_file);
 
 
-
+console_log("ADD.php");
 
   ?>
 

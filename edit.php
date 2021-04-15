@@ -172,7 +172,6 @@ catch(PDOException $e)
 
 
     $img = $_POST['image_final'];
-
 // if a new image has been uploaded
 if ($img !== null)
     {

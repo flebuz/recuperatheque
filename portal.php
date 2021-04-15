@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
 
   <!-- custom css -->
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?17-01-">
   <link rel="stylesheet" href="css/header.css?17-01">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
@@ -30,7 +30,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Mycélium">
+  <meta name="apple-mobile-web-app-title" content="Mycelium">
 
 </head>
 
@@ -64,25 +64,43 @@
 
           while($recup_info = $req->fetch()){
 
-            $url = "catalogue.php";
-            $url = $url . "?r=" . $recup_info['pseudo'];?>
 
-            <div class="border-bottom">
+//print_r($recup_info);
+           if ($recup_info['ID'] != 999) // "Invisible" account for test purposes - skip from portal
+           {
 
-              <div class="info">
-              <?php include("recuperatheque_info.php");?>
-              </div>
+             $catalogue =  $recup_info['pseudo']. '_catalogue';
+             $request2 = $bdd->prepare(' SELECT NULL FROM`'. $catalogue. '`LIMIT 1'); //check if [recuperatheque].catalogue is empty
+             $request2->execute();
+
+             if ($request2->rowCount() > 0) // if catalogue is not empty, show the recuperatheque on portal
+
+             {
 
 
-              <button class="button-flex" onclick="window.location.href='<?php echo $url; ?>'" >
-                <i class="fas fa-chevron-right"></i>
-              </button>
+                $url = "catalogue.php";
+                $url = $url . "?r=" . $recup_info['pseudo'];?>
 
 
-            </div>
+                <div class="border-bottom" onclick="location.href='<?php echo $url ?>';  event.stopPropagation();" style="cursor: pointer;">
+
+                  <div class="info">
+                  <?php include("recuperatheque_info.php");?>
+                  </div>
+
+
+                  <button class="button-flex" onclick="window.location.href='<?php echo $url; ?>'" >
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+
+
+                </div>
+
 
           <?php
+            }
           }
+        }
         ?>
       </div>
     </div>

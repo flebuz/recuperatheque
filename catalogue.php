@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
   <!-- custom css -->
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/header.css?17-01">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/item.css">
   <meta name="theme-color" content="#303030"><!-- Chrome -->
@@ -28,7 +28,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Mycélium">
+  <meta name="apple-mobile-web-app-title" content="Mycelium">
 
 
 </head>
@@ -193,7 +193,7 @@
         <div class="flex-half">
           <?php
 
-            $limit= 12; //items par pages
+            $limit= 20; //items par pages
             $starting_limit = ($page-1)*$limit;
 
             //--- requete qui compte juste les elements de la recherche
@@ -249,7 +249,7 @@
               echo '<b>' . $recup_info['pseudo'] . ' </b>';
 
                 if($query != '' || $catsearch != 0){
-                  //si une des deux condition est respacter on affiche le resumer
+                  //if one of the two conditions is met, displays the summary
 
                   if($query != ''){
                     ?>
@@ -278,6 +278,23 @@
                 echo ' (' . $total_count . ' résultats)';
               ?>
             </div>
+
+          </div>
+
+          <div class="container page-nav">
+
+            <a href= <?php echo link_construct(array('page'=>$page-1)); ?>
+               class="<?php if($page-1 <= 0){ echo 'disabled'; } ?>">
+               <i class='fas fa-chevron-left'></i>
+            </a>
+
+            <?php echo $page . "&nbsp;/&nbsp;" . ceil($total_count/$limit);?>
+
+            <a href= <?php echo link_construct(array('page'=>$page+1)) ?>
+               class="<?php if(($page)*$limit >= $total_count){ echo 'disabled'; } ?>" >
+               <i class='fas fa-chevron-right'></i>
+            </a>
+
           </div>
 
 
@@ -310,12 +327,12 @@
 
           <div class="container page-nav">
 
-            <a href= <?php echo link_construct(array('page'=>$page-1)) ?>
+            <a href= <?php echo link_construct(array('page'=>$page-1)); ?>
                class="<?php if($page-1 <= 0){ echo 'disabled'; } ?>">
                <i class='fas fa-chevron-left'></i>
             </a>
 
-            <?php echo $page; ?>
+            <?php echo $page . "&nbsp;/&nbsp;" . ceil($total_count/$limit);?>
 
             <a href= <?php echo link_construct(array('page'=>$page+1)) ?>
                class="<?php if(($page)*$limit >= $total_count){ echo 'disabled'; } ?>">
